@@ -2428,16 +2428,50 @@ export default function BricksyTravel() {
     };
   }, []);
 
+  /* ─── Deep-merge helper ──────────────────────────────────────────────────
+     Menggabungkan data yang disimpan (saved) dengan DEFAULT_DATA sehingga:
+     • Semua data lama (konten, gambar, post, pesan, user, dsb.) TETAP ada
+     • Field BARU yang ditambahkan lewat git push (nav6, services, dsb.)
+       otomatis muncul dengan nilai default — tidak perlu reset manual
+     ─────────────────────────────────────────────────────────────────────── */
+  const mergeWithDefaults = (saved, defaults) => {
+    if (!saved || typeof saved !== "object" || Array.isArray(saved)) return saved ?? defaults;
+    const result = { ...defaults };
+    for (const key of Object.keys(saved)) {
+      const sv = saved[key];
+      const dv = defaults?.[key];
+      if (sv !== null && typeof sv === "object" && !Array.isArray(sv) && dv !== null && typeof dv === "object" && !Array.isArray(dv)) {
+        // Objek nested → merge rekursif
+        result[key] = mergeWithDefaults(sv, dv);
+      } else {
+        // Primitif atau array → pakai nilai yang disimpan
+        result[key] = sv;
+      }
+    }
+    return result;
+  };
+
   useEffect(() => {
     (async () => {
       try {
-        // Coba load dari Firestore dulu
+        // 1. Coba load dari Firestore (cloud, utama)
         const fsData = await fsGet("main");
-        if (fsData?.payload) { setData(JSON.parse(fsData.payload)); return; }
-        // Fallback: window.storage (lokal)
+        if (fsData?.payload) {
+          const parsed = JSON.parse(fsData.payload);
+          // Deep-merge: data lama + field baru dari DEFAULT_DATA
+          setData(mergeWithDefaults(parsed, DEFAULT_DATA));
+          return;
+        }
+        // 2. Fallback: window.storage (lokal backup)
         const r = await window.storage?.get("bricksy-v2");
-        if (r?.value) setData(JSON.parse(r.value));
-      } catch {}
+        if (r?.value) {
+          const parsed = JSON.parse(r.value);
+          setData(mergeWithDefaults(parsed, DEFAULT_DATA));
+        }
+      } catch (e) {
+        console.warn("[Arutala] Gagal load data, pakai default.", e);
+        // Biarkan DEFAULT_DATA — jangan setData agar tidak overwrite state yg mungkin sudah ada
+      }
     })();
   }, []);
 
@@ -2455,8 +2489,11 @@ export default function BricksyTravel() {
   }, [data.content.logoImage]);
 
   const save = async (d) => {
-    setData(d);
-    const payload = JSON.stringify(d);
+    // Selalu merge dengan DEFAULT_DATA sebelum simpan:
+    // field baru yang ditambahkan di kode (lewat git push) tidak akan hilang
+    const safeData = mergeWithDefaults(d, DEFAULT_DATA);
+    setData(safeData);
+    const payload = JSON.stringify(safeData);
     // Simpan ke Firestore (cloud) + window.storage (lokal backup)
     await fsSet("main", { payload, updatedAt: Date.now() });
     try { await window.storage?.set("bricksy-v2", payload); } catch {}
