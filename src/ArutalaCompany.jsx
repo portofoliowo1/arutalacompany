@@ -436,8 +436,13 @@ const DEFAULT_DATA = {
     aboutV4Icon: "⭐", aboutV4Title: "Award Winning",     aboutV4Desc: "Best Travel Agency award 3 years running.",
     aboutContactTitle: "Get in Touch",
     aboutContactSub: "We'd love to help plan your next event.",
-    email: "arutala@example.com",
-    phone: "+1 265 013 7253",
+    email: "arutalaorganizer@gmail.com",
+    phone: "+62 857 4557 1442",
+    address: "Malang, Jawa Timur, Indonesia",
+    hours: "Senin – Sabtu: 08.00 – 20.00 WIB",
+    waLink: "https://wa.me/6285745571442",
+    igLink: "https://instagram.com/arutalaorganizer",
+    fbLink: "https://facebook.com/arutalaorganizer",
     logoText: "ARUTALA\nORGANIZER",
     logoImage: "",
     loginBtnText: "LOGIN",
@@ -505,12 +510,124 @@ const DEFAULT_DATA = {
       features: ["Tiket business class", "Hotel bintang 5", "Private tour guide", "Makan fine dining", "Airport transfer VIP", "Asuransi premium", "Itinerary custom", "Concierge 24 jam"],
       highlight: false,
     },
+    {
+      id: 5,
+      category: "traveling",
+      title: "Paket Honeymoon Bali",
+      badge: "Romantis",
+      badgeColor: "#e84393",
+      price: "Rp 8.500.000",
+      priceNote: "/ pasangan",
+      images: ["https://picsum.photos/seed/svc5a/600/400", "https://picsum.photos/seed/svc5b/600/400", "https://picsum.photos/seed/svc5c/600/400"],
+      image: "https://picsum.photos/seed/svc5a/600/400",
+      description: "Rayakan awal kehidupan baru Anda dengan paket honeymoon eksklusif di Pulau Dewata. Vila private, spa couple, dan sunset dinner menjadi kenangan tak terlupakan.",
+      features: ["Vila private dengan kolam renang", "Sarapan romantis setiap hari", "Spa couple 2 jam", "Sunset dinner di tepi pantai", "Dekorasi kamar mewah", "Airport transfer private", "Asuransi perjalanan", "Tour Ubud & Seminyak"],
+      highlight: true,
+    },
+    {
+      id: 6,
+      category: "traveling",
+      title: "Paket Wisata Edukasi Jogja",
+      badge: "Keluarga",
+      badgeColor: "#16a085",
+      price: "Rp 1.800.000",
+      priceNote: "/ orang",
+      images: ["https://picsum.photos/seed/svc6a/600/400", "https://picsum.photos/seed/svc6b/600/400"],
+      image: "https://picsum.photos/seed/svc6a/600/400",
+      description: "Paket wisata keluarga yang menggabungkan petualangan dan edukasi di Kota Budaya Yogyakarta. Cocok untuk liburan sekolah dan family gathering.",
+      features: ["Bus pariwisata ber-AC", "Hotel bintang 3 (2 malam)", "Makan 3x sehari", "Kunjungan Prambanan & Borobudur", "Tour guide berpengalaman", "Asuransi perjalanan", "Souvenir khas Jogja"],
+      highlight: false,
+    },
+    {
+      id: 7,
+      category: "event",
+      title: "Paket Gala Dinner & Award Night",
+      badge: "Premium",
+      badgeColor: "#c0392b",
+      price: "Rp 35.000.000",
+      priceNote: "/ event",
+      images: ["https://picsum.photos/seed/svc7a/600/400", "https://picsum.photos/seed/svc7b/600/400", "https://picsum.photos/seed/svc7c/600/400"],
+      image: "https://picsum.photos/seed/svc7a/600/400",
+      description: "Selenggarakan malam penghargaan perusahaan Anda dengan nuansa mewah dan berkesan. Kami tangani dari dekorasi megah hingga entertainment eksklusif untuk 200–500 tamu.",
+      features: ["Dekorasi ballroom premium", "Sound & lighting profesional", "MC bilingual", "Catering fine dining 300 pax", "Live music & entertainment", "Dokumentasi foto & video sinematik", "Red carpet & photo booth", "Koordinasi penuh hari H"],
+      highlight: true,
+    },
+    {
+      id: 8,
+      category: "event",
+      title: "Paket Team Building Outdoor",
+      badge: "Korporat",
+      badgeColor: "#2980b9",
+      price: "Rp 750.000",
+      priceNote: "/ orang",
+      images: ["https://picsum.photos/seed/svc8a/600/400", "https://picsum.photos/seed/svc8b/600/400"],
+      image: "https://picsum.photos/seed/svc8a/600/400",
+      description: "Perkuat solidaritas tim Anda dengan program team building outdoor yang seru dan berenergi. Dirancang oleh fasilitator bersertifikat dengan aktivitas yang menantang dan menyenangkan.",
+      features: ["Fasilitator bersertifikat", "Games & outbound activities", "Makan siang & snack", "Dokumentasi kegiatan", "Sertifikat peserta", "Shuttle dari titik kumpul", "Evaluasi & debrief sesi", "Min. 30 peserta"],
+      highlight: false,
+    },
+    {
+      id: 9,
+      category: "event",
+      title: "Paket Seminar & Workshop",
+      badge: "Edukatif",
+      badgeColor: "#27ae60",
+      price: "Rp 3.200.000",
+      priceNote: "/ event",
+      images: ["https://picsum.photos/seed/svc9a/600/400", "https://picsum.photos/seed/svc9b/600/400"],
+      image: "https://picsum.photos/seed/svc9a/600/400",
+      description: "Paket penyelenggaraan seminar dan workshop profesional dengan fasilitas lengkap. Ideal untuk training karyawan, seminar publik, dan workshop kreatif hingga 150 peserta.",
+      features: ["Venue kapasitas 150 orang", "Proyektor & sound system", "Backdrop & signage branding", "Coffee break 2x & makan siang", "Registrasi & perlengkapan peserta", "Dokumentasi foto", "Koordinator acara", "Sertifikat digital peserta"],
+      highlight: false,
+    },
+    {
+      id: 10,
+      category: "wedding",
+      title: "Paket Wedding Intimate Garden",
+      badge: "Terlaris",
+      badgeColor: "#e67e22",
+      price: "Rp 18.000.000",
+      priceNote: "/ wedding",
+      images: ["https://picsum.photos/seed/svc10a/600/400", "https://picsum.photos/seed/svc10b/600/400", "https://picsum.photos/seed/svc10c/600/400"],
+      image: "https://picsum.photos/seed/svc10a/600/400",
+      description: "Pernikahan intim nan hangat di taman dengan dekorasi bohemian elegan. Cocok untuk pernikahan kecil 50–100 tamu dengan nuansa natural yang tetap mewah dan berkesan.",
+      features: ["Dekorasi garden bohemian", "Wedding planner dedicated", "Dokumentasi foto & video", "Catering 100 pax", "Pelaminan custom", "Bunga segar premium", "MC profesional", "Koordinasi vendor"],
+      highlight: false,
+    },
+    {
+      id: 11,
+      category: "wedding",
+      title: "Paket Wedding Syar'i Lengkap",
+      badge: "Islami",
+      badgeColor: "#1abc9c",
+      price: "Rp 22.000.000",
+      priceNote: "/ wedding",
+      images: ["https://picsum.photos/seed/svc11a/600/400", "https://picsum.photos/seed/svc11b/600/400"],
+      image: "https://picsum.photos/seed/svc11a/600/400",
+      description: "Wujudkan pernikahan Islami yang penuh berkah dengan konsep syar'i modern. Kami memastikan setiap detail prosesi sesuai nilai Islam dengan tampilan yang tetap elegan dan menawan.",
+      features: ["Dekorasi Islami modern", "Pembatas tamu putra & putri", "Qori & sambutan religi", "Catering halal 200 pax", "Pelaminan syar'i", "Dokumentasi foto & video", "Wedding planner", "Buku tamu & souvenir"],
+      highlight: false,
+    },
+    {
+      id: 12,
+      category: "wedding",
+      title: "Paket Wedding Glamour Ballroom",
+      badge: "Mewah",
+      badgeColor: "#8e44ad",
+      price: "Rp 55.000.000",
+      priceNote: "/ wedding",
+      images: ["https://picsum.photos/seed/svc12a/600/400", "https://picsum.photos/seed/svc12b/600/400", "https://picsum.photos/seed/svc12c/600/400"],
+      image: "https://picsum.photos/seed/svc12a/600/400",
+      description: "Pernikahan megah berkelas di ballroom bintang 5 dengan dekorasi mewah penuh chandelier dan bunga segar premium. Untuk 300–600 tamu dengan layanan all-inclusive terbaik.",
+      features: ["Ballroom hotel bintang 5", "Dekorasi full flowers premium", "Bridal suite 2 malam", "Catering fine dining 400 pax", "Entertainment & live band", "Foto & video sinematik", "Wedding planner senior", "Makeup artist profesional", "Souvenir premium", "Pagar ayu & pager bagus"],
+      highlight: true,
+    },
   ],
   teamMembers: [
-    { id: 1, name: "Budi Santoso", role: "CEO & Founder", quotes: "Setiap momen spesial layak dirayakan dengan sempurna.", photo: "" },
-    { id: 2, name: "Sari Dewi", role: "Wedding Coordinator", quotes: "Kami hadir untuk mewujudkan impian pernikahan Anda.", photo: "" },
-    { id: 3, name: "Raka Pratama", role: "Travel Manager", quotes: "Perjalanan terbaik dimulai dari perencanaan yang matang.", photo: "" },
-    { id: 4, name: "Dini Rahayu", role: "Event Organizer", quotes: "Kreativitas adalah kunci event yang tak terlupakan.", photo: "" },
+    { id: 1, name: "Budi Santoso", role: "CEO & Founder", quotes: "Setiap momen spesial layak dirayakan dengan sempurna.", photo: "https://picsum.photos/seed/team1/300/300" },
+    { id: 2, name: "Sari Dewi", role: "Wedding Coordinator", quotes: "Kami hadir untuk mewujudkan impian pernikahan Anda.", photo: "https://picsum.photos/seed/team2/300/300" },
+    { id: 3, name: "Raka Pratama", role: "Travel Manager", quotes: "Perjalanan terbaik dimulai dari perencanaan yang matang.", photo: "https://picsum.photos/seed/team3/300/300" },
+    { id: 4, name: "Dini Rahayu", role: "Event Organizer", quotes: "Kreativitas adalah kunci event yang tak terlupakan.", photo: "https://picsum.photos/seed/team4/300/300" },
   ],
   users: HARDCODED_USERS.map((u, i) => ({ id: i + 1, ...u, email: `${u.username}@arutala.com`, active: true })),
 };
@@ -867,17 +984,17 @@ const GS = () => (
 );
 
 /* ─────────────── CEF: Content Edit Field (outside main to prevent remount) ─────────────── */
-function CEF({ val, multiline, rows, onChange, onSave }) {
+function CEF({ val, multiline, onChange, onSave }) {
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "flex-start", width: "100%" }}>
       {multiline
-        ? <textarea value={val ?? ""} onChange={onChange} rows={rows || 4}
-            style={{ flex: 1, padding: "8px 10px", border: "1px solid #b8d4e3", borderRadius: 6, fontSize: 14, resize: "vertical", minHeight: 80, lineHeight: 1.6, whiteSpace: "pre-wrap", fontFamily: "inherit" }} />
-        : <input value={val ?? ""} onChange={onChange}
+        ? <textarea value={val} onChange={onChange}
+            style={{ flex: 1, padding: "8px 10px", border: "1px solid #b8d4e3", borderRadius: 6, fontSize: 14, resize: "vertical", minHeight: 80 }} />
+        : <input value={val} onChange={onChange}
             style={{ flex: 1, padding: "8px 10px", border: "1px solid #b8d4e3", borderRadius: 6, fontSize: 14 }} />
       }
       <button onClick={onSave}
-        style={{ padding: "8px 14px", background: "#3d8fab", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", flexShrink: 0 }}>Save</button>
+        style={{ padding: "8px 14px", background: "#3d8fab", color: "#fff", borderRadius: 6, fontSize: 12, border: "none" }}>Save</button>
     </div>
   );
 }
@@ -1671,7 +1788,7 @@ function ArticleDetail({ post, onBack }) {
           {post.price && <span style={{ fontSize: "1.375rem", fontWeight: 700, color: "#1a2e42", fontFamily: "'Playfair Display',serif", marginLeft: "auto" }}>{post.price}</span>}
         </div>
         {post.excerpt && (
-          <p style={{ fontSize: "1.125rem", color: "#334f65", lineHeight: 1.85, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400, whiteSpace: "pre-wrap" }}>
+          <p style={{ fontSize: "1.125rem", color: "#334f65", lineHeight: 1.85, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400 }}>
             {post.excerpt}
           </p>
         )}
@@ -1828,63 +1945,235 @@ function ServicesPage({ content, services, navigateTo }) {
 
   const handleBook = (svc) => {
     const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
-    window.open(`https://wa.me/6285745571442?text=${encodeURIComponent(text)}`, "_blank");
+    window.open(`${content.waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(text)}`, "_blank");
   };
 
-  /* ── Service Detail Page ── */
+  /* ── Service Detail Page — Magazine Aesthetic ── */
   if (selectedService) {
     const svc = selectedService;
     const imgs = (svc.images?.length ? svc.images : [svc.image]).filter(Boolean);
+    const catInfo = CATEGORIES.find(c => c.key === svc.category) || {};
+    const relatedSvcs = services.filter(s => s.id !== svc.id && s.category === svc.category);
+    const facilityImgs = imgs.slice(1);
+
     return (
-      <div style={{ minHeight: "100vh", background: "#f4f9fb" }}>
-        {/* Back Bar */}
-        <div className="article-back-bar" style={{ background: "rgba(250,252,253,.96)", backdropFilter: "blur(10px)", borderBottom: "1px solid #ddeef5", padding: "12px 5%", position: "sticky", top: 72, zIndex: 90 }}>
-          <button onClick={closeDetail} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#2b7a9a", fontWeight: 600, fontSize: "0.875rem", cursor: "pointer" }}>
-            ← Kembali ke Layanan
+      <div style={{ minHeight: "100vh", background: "#f8f5f0", fontFamily: "'DM Sans', sans-serif" }}>
+        <style>{`
+          @keyframes mgFadeUp { from { opacity:0; transform:translateY(28px);} to { opacity:1; transform:none;} }
+          .mg-fade { animation: mgFadeUp .55s cubic-bezier(.22,1,.36,1) both; }
+          .mg-fade-2 { animation: mgFadeUp .55s .12s cubic-bezier(.22,1,.36,1) both; }
+          .mg-fade-3 { animation: mgFadeUp .55s .22s cubic-bezier(.22,1,.36,1) both; }
+          .mg-feat-row:hover { background: #ede8e1 !important; }
+          .mg-related { transition: transform .2s, box-shadow .2s; }
+          .mg-related:hover { transform: translateX(5px); }
+          .mg-cta-wa:hover { background: #0f1e2e !important; }
+          .mg-cta-tel:hover { background: #ede8e1 !important; }
+          .mg-thumb { transition: all .2s; }
+          .mg-thumb:hover { opacity: 1 !important; transform: scale(1.06); }
+          @media(max-width:768px){
+            .mg-hero-grid { grid-template-columns: 1fr !important; }
+            .mg-body-grid { grid-template-columns: 1fr !important; }
+            .mg-deco-shape { display: none !important; }
+            .mg-feat-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
+
+        {/* ── Back Bar ── */}
+        <div style={{ background: "#1a2e42", padding: "0 5%", position: "sticky", top: 72, zIndex: 90, borderBottom: "1px solid #2b4a62" }}>
+          <button onClick={closeDetail} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#7ab8d0", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer", padding: "13px 0", letterSpacing: ".04em", textTransform: "uppercase" }}>
+            <span style={{ fontSize: 18, lineHeight: 1 }}>←</span> Kembali ke Layanan
           </button>
         </div>
 
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 5% 80px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }} className="grid-2">
-            
-            {/* LEFT: Image Gallery */}
-            <div>
-              {/* Main Image */}
-              <div style={{ borderRadius: 14, overflow: "hidden", aspectRatio: "4/3", boxShadow: "0 12px 40px rgba(26,46,66,.16)", position: "relative", marginBottom: 12 }}>
+        {/* ── MAGAZINE HERO ── */}
+        <div className="mg-fade" style={{ position: "relative", background: "#1a2e42", overflow: "hidden" }}>
+          {/* Deco grid lines */}
+          <div style={{ position: "absolute", inset: 0, backgroundImage: "repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0, rgba(255,255,255,.025) 1px, transparent 1px, transparent 80px)", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", top: 32, left: "5%", width: 1, height: "calc(100% - 32px)", background: "rgba(255,255,255,.08)", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", top: 32, right: "5%", width: 1, height: "calc(100% - 32px)", background: "rgba(255,255,255,.08)", pointerEvents: "none" }} />
+
+          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 5%" }}>
+            <div className="mg-hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 460px", gap: 0, minHeight: 480 }}>
+
+              {/* Left: Title & Info */}
+              <div style={{ padding: "56px 40px 48px 0", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,.09)" }}>
+                {/* Category tag */}
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 22 }}>
+                  <div style={{ width: 28, height: 2, background: catInfo.color || "#2b7a9a" }} />
+                  <span style={{ fontSize: "0.625rem", letterSpacing: "3px", color: catInfo.color || "#5bc4e0", fontWeight: 700, textTransform: "uppercase" }}>
+                    {(catInfo.label || svc.category).replace(/[^\w\s]/g, "").trim()}
+                  </span>
+                </div>
+                {/* Badge */}
                 {svc.badge && (
-                  <div style={{ position: "absolute", top: 16, left: 16, zIndex: 2, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 20, padding: "5px 16px", fontSize: "0.75rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
-                    {svc.badge}
+                  <div style={{ display: "inline-flex", alignItems: "center", background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 4, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 18, alignSelf: "flex-start", boxShadow: `0 4px 18px ${svc.badgeColor || "#2b7a9a"}55` }}>
+                    ★ {svc.badge}
                   </div>
                 )}
-                <img src={imgs[activeImg] || "https://picsum.photos/seed/fallback/600/400"} alt={svc.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", transition: "opacity .3s" }}
-                  onError={e => { e.target.src = "https://picsum.photos/seed/fallback/600/400"; }} />
+                {/* Title */}
+                <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem,4vw,3rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: 22, letterSpacing: "-.01em" }}>{svc.title}</h1>
+                {/* Ornamental divider */}
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 22 }}>
+                  <div style={{ height: 1, width: 40, background: catInfo.color || "#5bc4e0", opacity: .8 }} />
+                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: catInfo.color || "#5bc4e0" }} />
+                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,.3)" }} />
+                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,.15)" }} />
+                  <div style={{ height: 1, flex: 1, background: "rgba(255,255,255,.12)" }} />
+                </div>
+                {/* Description */}
+                <p style={{ fontSize: "1rem", color: "rgba(255,255,255,.68)", lineHeight: 1.85, whiteSpace: "pre-wrap", marginBottom: 36 }}>{svc.description}</p>
+                {/* Price inline */}
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 16, flexWrap: "wrap" }}>
+                  <div>
+                    <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: "rgba(255,255,255,.38)", fontWeight: 700, textTransform: "uppercase", marginBottom: 5 }}>Harga Mulai</div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{svc.price}</span>
+                      <span style={{ fontSize: "0.875rem", color: "rgba(255,255,255,.45)", fontWeight: 500 }}>{svc.priceNote}</span>
+                    </div>
+                  </div>
+                  <div style={{ padding: "6px 14px", background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.14)", borderRadius: 20, fontSize: "0.75rem", color: "rgba(255,255,255,.55)", fontStyle: "italic", marginBottom: 4 }}>Nego &amp; Konsultasi</div>
+                </div>
               </div>
-              {/* Thumbnail Strip */}
-              {imgs.length > 1 && (
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  {imgs.map((img, i) => (
-                    <div key={i} onClick={() => setActiveImg(i)}
-                      style={{ width: 72, height: 54, borderRadius: 8, overflow: "hidden", cursor: "pointer", border: activeImg === i ? "2.5px solid #2b7a9a" : "2.5px solid transparent", opacity: activeImg === i ? 1 : 0.65, transition: "all .2s", flexShrink: 0 }}>
-                      <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.target.src = "https://picsum.photos/seed/fallback/80/60"; }} />
+
+              {/* Right: Main Hero Image */}
+              <div style={{ position: "relative", overflow: "hidden", display: "flex", alignItems: "stretch" }}>
+                {/* Deco corner frames */}
+                <div className="mg-deco-shape" style={{ position: "absolute", top: 20, right: 20, width: 70, height: 70, border: `1.5px solid ${catInfo.color || "#5bc4e0"}`, borderRadius: 6, zIndex: 3, opacity: .55, pointerEvents: "none" }} />
+                <div className="mg-deco-shape" style={{ position: "absolute", top: 30, right: 30, width: 70, height: 70, border: "1.5px solid rgba(255,255,255,.12)", borderRadius: 6, zIndex: 3, pointerEvents: "none" }} />
+                <div className="mg-deco-shape" style={{ position: "absolute", bottom: 20, left: -8, width: 50, height: 50, border: "1.5px solid rgba(255,255,255,.15)", borderRadius: 4, zIndex: 3, pointerEvents: "none" }} />
+                <div style={{ flex: 1, position: "relative", minHeight: 400 }}>
+                  <img src={imgs[activeImg] || "https://picsum.photos/seed/fallback/600/500"} alt={svc.title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity .4s" }}
+                    onError={e => { e.target.src = "https://picsum.photos/seed/fallback/600/500"; }} />
+                  {/* Bottom fade */}
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 90, background: "linear-gradient(to top, rgba(26,46,66,.65), transparent)", pointerEvents: "none" }} />
+                  {imgs.length > 1 && (
+                    <div style={{ position: "absolute", bottom: 14, right: 14, background: "rgba(0,0,0,.5)", backdropFilter: "blur(4px)", borderRadius: 20, padding: "4px 12px", fontSize: "0.75rem", color: "#fff", fontWeight: 600 }}>
+                      {activeImg + 1} / {imgs.length}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── THUMBNAIL STRIP ── */}
+        {imgs.length > 1 && (
+          <div className="mg-fade-2" style={{ background: "#152638", borderTop: "1px solid rgba(255,255,255,.07)", padding: "12px 5%" }}>
+            <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", gap: 10, overflowX: "auto", paddingBottom: 2 }}>
+              {imgs.map((img, i) => (
+                <div key={i} className="mg-thumb" onClick={() => setActiveImg(i)}
+                  style={{ width: 80, height: 56, borderRadius: 6, overflow: "hidden", cursor: "pointer", flexShrink: 0, border: activeImg === i ? `2.5px solid ${catInfo.color || "#5bc4e0"}` : "2.5px solid rgba(255,255,255,.12)", opacity: activeImg === i ? 1 : 0.5 }}>
+                  <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.src = "https://picsum.photos/seed/fallback/80/56"} />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── BODY ── */}
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "52px 5% 80px" }}>
+          <div className="mg-body-grid" style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 48, alignItems: "start" }}>
+
+            {/* ── LEFT COLUMN ── */}
+            <div>
+
+              {/* FACILITY GALLERY — only shown if images > 1 */}
+              {facilityImgs.length > 0 && (
+                <div className="mg-fade-2" style={{ marginBottom: 52 }}>
+                  {/* Section heading with ornamental bar */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+                    <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || "#2b7a9a"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+                    <div>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#a0b8c5", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Dokumentasi</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#1a2e42", lineHeight: 1.1 }}>Fasilitas &amp; Suasana</div>
+                    </div>
+                    <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #ddd5c8, transparent)" }} />
+                    {/* Decorative dot cluster */}
+                    <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
+                      {[1,2,3].map(d => <div key={d} style={{ width: 5, height: 5, borderRadius: "50%", background: d === 1 ? (catInfo.color || "#2b7a9a") : "#ddd5c8" }} />)}
+                    </div>
+                  </div>
+                  {/* Masonry grid */}
+                  <div style={{ display: "grid", gridTemplateColumns: facilityImgs.length >= 3 ? "1.4fr 1fr 1fr" : facilityImgs.length === 2 ? "1fr 1fr" : "1fr", gap: 10, gridAutoRows: facilityImgs.length >= 3 ? "200px" : "260px" }}>
+                    {facilityImgs.slice(0, 5).map((img, i) => (
+                      <div key={i}
+                        style={{ borderRadius: 10, overflow: "hidden", position: "relative", gridRow: i === 0 && facilityImgs.length >= 3 ? "span 2" : "auto", boxShadow: "0 4px 18px rgba(26,46,66,.1)", transition: "transform .25s, box-shadow .25s", cursor: "pointer" }}
+                        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.025)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(26,46,66,.2)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 18px rgba(26,46,66,.1)"; }}>
+                        <img src={img} alt={`Fasilitas ${i + 1}`}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                          onError={e => e.target.src = `https://picsum.photos/seed/fac${i + 10}/600/400`} />
+                        {/* Gradient overlay */}
+                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(26,46,66,.45) 0%, transparent 50%)", pointerEvents: "none" }} />
+                        {/* Number badge */}
+                        <div style={{ position: "absolute", top: 10, left: 10, background: "rgba(0,0,0,.48)", backdropFilter: "blur(6px)", borderRadius: 4, padding: "3px 9px", fontSize: "0.625rem", color: "#fff", fontWeight: 800, letterSpacing: ".1em" }}>
+                          {String(i + 1).padStart(2, "0")}
+                        </div>
+                        {/* Bottom label for first image */}
+                        {i === 0 && (
+                          <div style={{ position: "absolute", bottom: 14, left: 14, right: 14 }}>
+                            <div style={{ fontSize: "0.6875rem", color: "rgba(255,255,255,.6)", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 2 }}>Foto Utama</div>
+                            <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#fff", textShadow: "0 1px 6px rgba(0,0,0,.5)" }}>{svc.title}</div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* FEATURES — 2-col magazine checklist */}
+              <div className="mg-fade-3" style={{ marginBottom: 48 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 26 }}>
+                  <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || "#2b7a9a"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+                  <div>
+                    <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#a0b8c5", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Sudah Termasuk</div>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#1a2e42", lineHeight: 1.1 }}>Yang Anda Dapatkan</div>
+                  </div>
+                  <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #ddd5c8, transparent)" }} />
+                </div>
+                <div className="mg-feat-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                  {(svc.features || []).map((feat, i) => (
+                    <div key={i} className="mg-feat-row" style={{ display: "flex", gap: 11, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px 13px 18px", border: "1px solid #e8e0d6", transition: "background .18s", position: "relative", overflow: "hidden" }}>
+                      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: catInfo.color || "#2b7a9a", borderRadius: "10px 0 0 10px" }} />
+                      <div style={{ width: 20, height: 20, borderRadius: "50%", background: catInfo.color ? `${catInfo.color}15` : "#e4f2f8", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+                        <span style={{ color: catInfo.color || "#2b7a9a", fontSize: "0.6875rem", fontWeight: 900 }}>✓</span>
+                      </div>
+                      <span style={{ fontSize: "0.85rem", color: "#2d4558", lineHeight: 1.5, fontWeight: 500 }}>{feat}</span>
                     </div>
                   ))}
                 </div>
-              )}
-              {/* Related */}
-              {services.filter(s => s.id !== svc.id && s.category === svc.category).length > 0 && (
-                <div style={{ marginTop: 28 }}>
-                  <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#7a9db0", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 12 }}>Paket Serupa</h4>
+              </div>
+
+              {/* RELATED PACKAGES */}
+              {relatedSvcs.length > 0 && (
+                <div className="mg-fade-3">
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
+                    <div style={{ width: 4, height: 30, background: "linear-gradient(to bottom, #9ab0bf, transparent)", borderRadius: 2, flexShrink: 0 }} />
+                    <div>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#a0b8c5", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Lihat Juga</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#1a2e42", lineHeight: 1.1 }}>Paket Serupa</div>
+                    </div>
+                  </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                    {services.filter(s => s.id !== svc.id && s.category === svc.category).map(s => (
-                      <div key={s.id} onClick={() => { openDetail(s); }} style={{ display: "flex", gap: 12, alignItems: "center", background: "#fff", borderRadius: 10, padding: "12px 14px", cursor: "pointer", boxShadow: "0 2px 8px rgba(26,46,66,.06)", transition: "box-shadow .2s" }}
-                        onMouseEnter={e => e.currentTarget.style.boxShadow = "0 6px 20px rgba(26,46,66,.12)"}
-                        onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 8px rgba(26,46,66,.06)"}>
-                        <img src={(s.images?.[0] || s.image)} alt={s.title} style={{ width: 56, height: 42, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => e.target.src = "https://picsum.photos/seed/fallback/56/42"} />
-                        <div>
-                          <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1a2e42" }}>{s.title}</div>
-                          <div style={{ fontSize: "0.8125rem", color: "#2b7a9a", fontWeight: 700 }}>{s.price}<span style={{ color: "#6b8999", fontWeight: 400 }}> {s.priceNote}</span></div>
+                    {relatedSvcs.map(s => (
+                      <div key={s.id} className="mg-related" onClick={() => openDetail(s)}
+                        style={{ display: "flex", gap: 0, alignItems: "stretch", background: "#fff", borderRadius: 12, overflow: "hidden", cursor: "pointer", boxShadow: "0 2px 10px rgba(26,46,66,.07)", border: "1px solid #e8e0d6" }}
+                        onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 28px rgba(26,46,66,.14)"}
+                        onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(26,46,66,.07)"}>
+                        <div style={{ width: 90, flexShrink: 0, overflow: "hidden", position: "relative" }}>
+                          <img src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
+                            onError={e => e.target.src = "https://picsum.photos/seed/rel/90/70"} />
                         </div>
+                        <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#2b7a9a"}, transparent)` }} />
+                        <div style={{ padding: "12px 14px", flex: 1 }}>
+                          {s.badge && <div style={{ fontSize: "0.5625rem", color: s.badgeColor || "#2b7a9a", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{s.badge}</div>}
+                          <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1a2e42", marginBottom: 4, lineHeight: 1.3 }}>{s.title}</div>
+                          <div style={{ fontSize: "0.8125rem", color: s.badgeColor || "#2b7a9a", fontWeight: 800 }}>{s.price} <span style={{ color: "#a0b8c5", fontWeight: 400, fontSize: "0.75rem" }}>{s.priceNote}</span></div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", paddingRight: 14, color: "#c8c0b5", fontSize: "1.125rem" }}>›</div>
                       </div>
                     ))}
                   </div>
@@ -1892,52 +2181,76 @@ function ServicesPage({ content, services, navigateTo }) {
               )}
             </div>
 
-            {/* RIGHT: Detail Info */}
-            <div>
-              <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 10 }}>Detail Paket</div>
-              <h1 className="display" style={{ fontSize: "clamp(1.75rem,3.5vw,2.5rem)", fontWeight: 900, color: "#1a2e42", lineHeight: 1.1, marginBottom: 16 }}>{svc.title}</h1>
-              <p style={{ fontSize: "1rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 28, whiteSpace: "pre-wrap" }}>{svc.description}</p>
+            {/* ── RIGHT SIDEBAR ── */}
+            <div style={{ position: "sticky", top: 128 }}>
 
-              {/* Price Box */}
-              <div style={{ background: svc.highlight ? "linear-gradient(135deg,#1a2e42,#2b7a9a)" : "#f4f9fb", borderRadius: 12, padding: "22px 26px", marginBottom: 28, border: svc.highlight ? "none" : "1px solid #ddeef5" }}>
-                <div style={{ fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: svc.highlight ? "rgba(255,255,255,.6)" : "#6b8999", marginBottom: 6 }}>Harga Mulai</div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", marginBottom: 6 }}>
-                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.25rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#1a2e42", lineHeight: 1 }}>{svc.price}</span>
-                  <span style={{ fontSize: "0.875rem", color: svc.highlight ? "rgba(255,255,255,.6)" : "#6b8999", fontWeight: 500 }}>{svc.priceNote}</span>
-                </div>
-                <div style={{ fontSize: "0.8125rem", color: svc.highlight ? "rgba(255,255,255,.7)" : "#2b7a9a", fontWeight: 600, fontStyle: "italic" }}>
-                  💬 Nego / Konsultasi dulu
-                </div>
-              </div>
-
-              {/* Features */}
-              <div style={{ marginBottom: 28 }}>
-                <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#6b8999", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Yang Termasuk</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {(svc.features || []).map((feat, i) => (
-                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                      <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "1rem", lineHeight: 1.4, flexShrink: 0 }}>✓</span>
-                      <span style={{ fontSize: "0.9375rem", color: "#1a2e42", lineHeight: 1.5 }}>{feat}</span>
+              {/* Price Card */}
+              <div className="mg-fade-2" style={{ background: svc.highlight ? "linear-gradient(145deg,#0c1a28 0%,#1a2e42 55%,#1e4060 100%)" : "#fff", borderRadius: 16, overflow: "hidden", boxShadow: svc.highlight ? "0 24px 64px rgba(12,26,40,.5)" : "0 8px 32px rgba(26,46,66,.11)", border: svc.highlight ? "none" : "1px solid #e8e0d6", marginBottom: 18 }}>
+                {/* Top gradient bar */}
+                <div style={{ height: 4, background: `linear-gradient(to right, ${catInfo.color || "#2b7a9a"}, ${svc.badgeColor || catInfo.color || "#1a2e42"})` }} />
+                {/* Deco border inner */}
+                <div style={{ margin: "16px 16px 0", border: `1px solid ${svc.highlight ? "rgba(255,255,255,.07)" : "#f0e8df"}`, borderRadius: 10, padding: "20px 18px 24px", position: "relative", overflow: "hidden" }}>
+                  {/* BG shape */}
+                  <div style={{ position: "absolute", bottom: -20, right: -20, width: 80, height: 80, borderRadius: "50%", background: svc.highlight ? "rgba(255,255,255,.04)" : `${catInfo.color || "#2b7a9a"}08`, pointerEvents: "none" }} />
+                  <div style={{ position: "relative" }}>
+                    <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: svc.highlight ? "rgba(255,255,255,.3)" : "#b8a898", textTransform: "uppercase", fontWeight: 700, marginBottom: 16, textAlign: "center" }}>— Penawaran Spesial —</div>
+                    {/* Harga */}
+                    <div style={{ textAlign: "center", marginBottom: 10 }}>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: svc.highlight ? "rgba(255,255,255,.38)" : "#a0b8c5", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Harga Mulai</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.6rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#1a2e42", lineHeight: 1, marginBottom: 4 }}>{svc.price}</div>
+                      <div style={{ fontSize: "0.875rem", color: svc.highlight ? "rgba(255,255,255,.45)" : "#a0b8c5", fontWeight: 500 }}>{svc.priceNote}</div>
                     </div>
-                  ))}
+                    <div style={{ height: 1, background: svc.highlight ? "rgba(255,255,255,.08)" : "#f0e8df", margin: "18px 0" }} />
+                    {/* Nego */}
+                    <div style={{ display: "flex", alignItems: "flex-start", gap: 8, background: svc.highlight ? "rgba(255,255,255,.05)" : "#faf7f4", borderRadius: 8, padding: "10px 12px", marginBottom: 20, border: `1px solid ${svc.highlight ? "rgba(255,255,255,.07)" : "#ede5da"}` }}>
+                      <span style={{ fontSize: "1rem", flexShrink: 0, marginTop: 1 }}>💬</span>
+                      <span style={{ fontSize: "0.8rem", color: svc.highlight ? "rgba(255,255,255,.6)" : "#7a8f99", fontStyle: "italic", lineHeight: 1.45 }}>Harga dapat disesuaikan dengan kebutuhan dan budget Anda</span>
+                    </div>
+                  </div>
+                </div>
+                {/* CTA Buttons */}
+                <div style={{ padding: "16px" }}>
+                  <button className="mg-cta-wa" onClick={() => handleBook(svc)}
+                    style={{ width: "100%", padding: "15px 20px", background: "#1a2e42", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 10, transition: "background .2s", letterSpacing: ".01em" }}>
+                    <span style={{ fontSize: "1.1rem" }}>💬</span> Pesan via WhatsApp
+                  </button>
+                  <a href={`tel:${content.phone}`} className="mg-cta-tel"
+                    style={{ width: "100%", padding: "13px 20px", background: "#f5f1ec", color: "#1a2e42", border: "1.5px solid #ddd5c8", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "background .2s" }}>
+                    <span style={{ fontSize: "1rem" }}>📞</span> Hubungi Langsung
+                  </a>
                 </div>
               </div>
 
-              {/* CTA Buttons */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                <button onClick={() => handleBook(svc)}
-                  style={{ padding: "15px 24px", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "opacity .2s" }}
-                  onMouseEnter={e => e.currentTarget.style.opacity = ".9"}
-                  onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-                  💬 Hubungi via WhatsApp
-                </button>
-                <a href={`tel:${content.phone}`}
-                  style={{ padding: "13px 24px", background: "#fff", color: "#1a2e42", border: "1.5px solid #1a2e42", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "background .2s" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "#f4f9fb"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "#fff"; }}>
-                  📞 Hubungi Kami Langsung
-                </a>
+              {/* Why Us — dark card with deco border */}
+              <div className="mg-fade-3" style={{ background: "#1a2e42", borderRadius: 14, padding: "2px", overflow: "hidden", position: "relative" }}>
+                {/* Gradient border effect */}
+                <div style={{ position: "absolute", inset: 0, background: `linear-gradient(145deg, ${catInfo.color || "#2b7a9a"}44, transparent, rgba(255,255,255,.06))`, borderRadius: 14, pointerEvents: "none" }} />
+                <div style={{ background: "#162639", borderRadius: 12, padding: "22px 20px", position: "relative" }}>
+                  {/* Inner deco frame */}
+                  <div style={{ position: "absolute", top: 10, left: 10, right: 10, bottom: 10, border: "1px solid rgba(255,255,255,.05)", borderRadius: 8, pointerEvents: "none" }} />
+                  {/* BG shapes */}
+                  <div style={{ position: "absolute", bottom: -25, right: -25, width: 90, height: 90, borderRadius: "50%", background: `${catInfo.color || "#2b7a9a"}18`, pointerEvents: "none" }} />
+                  <div style={{ position: "relative" }}>
+                    <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: catInfo.color || "#5bc4e0", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Keunggulan Kami</div>
+                    <div style={{ width: 28, height: 2, background: catInfo.color || "#5bc4e0", borderRadius: 1, marginBottom: 18 }} />
+                    {[
+                      { icon: "🏆", label: "Tim Profesional", desc: "Berpengalaman di bidangnya" },
+                      { icon: "🤝", label: "Konsultasi Gratis", desc: "Diskusi tanpa biaya apapun" },
+                      { icon: "⭐", label: "Kepuasan Terjamin", desc: "Rating tinggi dari klien kami" },
+                      { icon: "📋", label: "Paket Fleksibel", desc: "Disesuaikan kebutuhan Anda" },
+                    ].map((item, i, arr) => (
+                      <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: i < arr.length - 1 ? 14 : 0, paddingBottom: i < arr.length - 1 ? 14 : 0, borderBottom: i < arr.length - 1 ? "1px solid rgba(255,255,255,.06)" : "none" }}>
+                        <span style={{ fontSize: "1.1rem", flexShrink: 0, marginTop: 1 }}>{item.icon}</span>
+                        <div>
+                          <div style={{ fontSize: "0.825rem", fontWeight: 700, color: "rgba(255,255,255,.85)", marginBottom: 1 }}>{item.label}</div>
+                          <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,.45)", lineHeight: 1.4 }}>{item.desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -1956,7 +2269,7 @@ function ServicesPage({ content, services, navigateTo }) {
         <div style={{ position: "relative", zIndex: 1, maxWidth: 680, margin: "0 auto" }}>
           <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "rgba(255,255,255,.6)", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Apa yang Kami Tawarkan</div>
           <h1 className="display" style={{ fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 18 }}>{content.servicesPageTitle || "Paket Layanan Kami"}</h1>
-          <p style={{ fontSize: "1.0625rem", color: "rgba(255,255,255,.75)", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{content.servicesPageSub || "Pilih kategori layanan sesuai kebutuhan Anda."}</p>
+          <p style={{ fontSize: "1.0625rem", color: "rgba(255,255,255,.75)", lineHeight: 1.8 }}>{content.servicesPageSub || "Pilih kategori layanan sesuai kebutuhan Anda."}</p>
         </div>
       </div>
 
@@ -2064,7 +2377,7 @@ function ServicesPage({ content, services, navigateTo }) {
           <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.5rem)", fontWeight: 900, color: "#fff", marginBottom: 16, lineHeight: 1.15 }}>Tidak Menemukan Paket yang Cocok?</h2>
           <p style={{ color: "rgba(255,255,255,.75)", fontSize: "1rem", marginBottom: 36, lineHeight: 1.7 }}>Kami siap membuat paket khusus sesuai kebutuhan dan budget Anda.</p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <button onClick={() => window.open("https://wa.me/6285745571442", "_blank")}
+            <button onClick={() => window.open(content.waLink || "https://wa.me/6285745571442", "_blank")}
               style={{ padding: "14px 32px", background: "#fff", color: "#1a2e42", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "background .2s" }}
               onMouseEnter={e => e.currentTarget.style.background = "#c5dde9"}
               onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
@@ -2271,7 +2584,7 @@ function AboutPage({ content, images, teamMembers }) {
   const handleContactSubmit = () => {
     if (!contactForm.name || !contactForm.message) return;
     const text = `Halo Arutala Organizer! 👋%0A%0ANama: ${contactForm.name}%0AEmail: ${contactForm.email}%0ANo. HP: ${contactForm.phone}%0AKeperluan: ${contactForm.subject}%0A%0APesan:%0A${contactForm.message}`;
-    window.open(`https://wa.me/6285745571442?text=${text}`, "_blank");
+    window.open(`${content.waLink || "https://wa.me/6285745571442"}?text=${text}`, "_blank");
     setContactSent(true);
     setTimeout(() => { setContactSent(false); setContactForm({ name: "", email: "", phone: "", subject: "", message: "" }); }, 4000);
   };
@@ -2315,11 +2628,11 @@ function AboutPage({ content, images, teamMembers }) {
             <h1 className="display" style={{ fontSize: "clamp(2.25rem,5vw,3.75rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 24 }}>
               {content.aboutHeroTitle || "Arutala Travel & Organizer"}
             </h1>
-            <p style={{ fontSize: "1.0625rem", color: "#2d4f65", lineHeight: 1.9, maxWidth: 420, marginBottom: 32, whiteSpace: "pre-wrap" }}>
+            <p style={{ fontSize: "1.0625rem", color: "#2d4f65", lineHeight: 1.9, maxWidth: 420, marginBottom: 32 }}>
               {content.aboutHeroSub || content.aboutText || "Mitra terpercaya Anda untuk perjalanan wisata, pernikahan impian, dan event berkesan. Kami hadir untuk mewujudkan setiap momen menjadi kenangan tak terlupakan."}
             </p>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-              <a href="https://wa.me/6285745571442" target="_blank" rel="noopener noreferrer"
+              <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
                 style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "#1a2e42", color: "#fff", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s" }}
                 onMouseEnter={e => e.currentTarget.style.background = "#2b7a9a"}
                 onMouseLeave={e => e.currentTarget.style.background = "#1a2e42"}>
@@ -2416,12 +2729,20 @@ function AboutPage({ content, images, teamMembers }) {
               {teamMembers.map((member, i) => (
                 <div key={member.id || i} className="hover-lift" style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 4px 16px rgba(26,46,66,.08)", textAlign: "center", transition: "all .3s" }}>
                   {/* Photo */}
-                  <div style={{ height: 180, overflow: "hidden", background: "linear-gradient(135deg,#c5dde9,#a8cfe0)", position: "relative" }}>
+                  <div style={{ height: 220, overflow: "hidden", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", position: "relative" }}>
                     {member.photo ? (
-                      <img src={member.photo} alt={member.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.target.style.display = "none"; }} />
-                    ) : (
-                      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 64 }}>👤</div>
-                    )}
+                      <img src={member.photo} alt={member.name}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block", transition: "transform .4s ease" }}
+                        onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
+                        onMouseLeave={e => e.target.style.transform = "scale(1)"}
+                        onError={e => { e.target.style.display = "none"; e.target.parentNode.querySelector(".team-fallback").style.display = "flex"; }} />
+                    ) : null}
+                    <div className="team-fallback" style={{ position: "absolute", inset: 0, display: member.photo ? "none" : "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 8 }}>
+                      <div style={{ width: 72, height: 72, borderRadius: "50%", background: "rgba(255,255,255,.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36 }}>👤</div>
+                      <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,.5)", letterSpacing: "1px", textTransform: "uppercase" }}>No Photo</span>
+                    </div>
+                    {/* Name overlay at bottom */}
+                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 60, background: "linear-gradient(to top, rgba(26,46,66,.75), transparent)", pointerEvents: "none" }} />
                   </div>
                   <div style={{ padding: "20px 20px 24px" }}>
                     <h3 style={{ fontSize: "1rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#1a2e42", marginBottom: 4 }}>{member.name}</h3>
@@ -2482,10 +2803,10 @@ function AboutPage({ content, images, teamMembers }) {
             {/* Info kontak */}
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               {[
-                { icon: "📞", label: "Telepon / WhatsApp", value: content.phone || "085745571442", href: `https://wa.me/6285745571442`, type: "link" },
-                { icon: "✉️", label: "Email", value: content.email || "arutalaorganizer@gmail.com", href: `mailto:${content.email}`, type: "link" },
-                { icon: "📍", label: "Alamat", value: "Malang, Jawa Timur, Indonesia", type: "text" },
-                { icon: "🕐", label: "Jam Operasional", value: "Senin – Sabtu: 08.00 – 20.00 WIB", type: "text" },
+                { icon: "📞", label: "Telepon / WhatsApp", value: content.phone, href: content.waLink || `https://wa.me/6285745571442`, type: "link" },
+                { icon: "✉️", label: "Email", value: content.email, href: `mailto:${content.email}`, type: "link" },
+                { icon: "📍", label: "Alamat", value: content.address || "Malang, Jawa Timur, Indonesia", type: "text" },
+                { icon: "🕐", label: "Jam Operasional", value: content.hours || "Senin – Sabtu: 08.00 – 20.00 WIB", type: "text" },
               ].map(info => (
                 <div key={info.label} style={{ display: "flex", gap: 16, alignItems: "flex-start", background: "rgba(255,255,255,.7)", borderRadius: 10, padding: "18px 20px", backdropFilter: "blur(8px)" }}>
                   <div style={{ width: 44, height: 44, borderRadius: 10, background: "#1a2e42", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{info.icon}</div>
@@ -2504,9 +2825,9 @@ function AboutPage({ content, images, teamMembers }) {
                 <div style={{ fontSize: "0.75rem", color: "#7a9db0", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 14 }}>Media Sosial</div>
                 <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                   {[
-                    { label: "WhatsApp", icon: "💬", href: "https://wa.me/6285745571442", color: "#25d366" },
-                    { label: "Instagram", icon: "📷", href: "https://instagram.com", color: "#e1306c" },
-                    { label: "Facebook", icon: "📘", href: "https://facebook.com", color: "#1877f2" },
+                    { label: "WhatsApp", icon: "💬", href: content.waLink || "https://wa.me/6285745571442", color: "#25d366" },
+                    { label: "Instagram", icon: "📷", href: content.igLink || "https://instagram.com", color: "#e1306c" },
+                    { label: "Facebook", icon: "📘", href: content.fbLink || "https://facebook.com", color: "#1877f2" },
                   ].map(s => (
                     <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
                       style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: s.color, color: "#fff", borderRadius: 20, fontSize: "0.8125rem", fontWeight: 600, textDecoration: "none", transition: "opacity .2s" }}
@@ -2667,11 +2988,16 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Foto</label>
             {form.photo && <img src={form.photo} alt="preview" style={{ height: 80, width: 80, objectFit: "cover", borderRadius: "50%", marginBottom: 10, border: "2px solid #ddeef5" }} />}
-            <input type="file" accept="image/*" onChange={async e => {
-              const file = e.target.files?.[0]; if (!file) return;
-              try { notify("⏳ Mengupload foto..."); const url = await uploadToCloudinary(file); setForm(p => ({ ...p, photo: url })); notify("Foto berhasil diupload!"); }
-              catch { notify("Gagal upload foto.", "error"); }
-            }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #3d8fab", borderRadius: 6, background: "#f0f9fc", color: "#3d8fab", width: "100%" }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <input type="file" accept="image/*" onChange={async e => {
+                const file = e.target.files?.[0]; if (!file) return;
+                try { notify("⏳ Mengupload foto..."); const url = await uploadToCloudinary(file); setForm(p => ({ ...p, photo: url })); notify("Foto berhasil diupload!"); }
+                catch { notify("Gagal upload foto.", "error"); }
+              }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #3d8fab", borderRadius: 6, background: "#f0f9fc", color: "#3d8fab", width: "100%" }} />
+              <div style={{ fontSize: 11, color: "#9ab0bf", textAlign: "center" }}>— atau paste URL foto —</div>
+              <input type="url" value={form.photo || ""} onChange={e => setForm(p => ({ ...p, photo: e.target.value }))}
+                placeholder="https://..." style={{ width: "100%", padding: "8px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 12, outline: "none" }} />
+            </div>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={saveMember} style={{ padding: "10px 22px", background: "#1e3248", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan</button>
@@ -2832,7 +3158,7 @@ function HeroSlideshow({ data, navigateTo }) {
           </h1>
           {/* Excerpt */}
           {sl.excerpt && (
-            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, marginBottom: 32, maxWidth: 440, whiteSpace: "pre-wrap" }}>
+            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, marginBottom: 32, maxWidth: 440 }}>
               {sl.excerpt.length > 120 ? sl.excerpt.slice(0, 120) + "…" : sl.excerpt}
             </p>
           )}
@@ -3148,7 +3474,7 @@ export default function BricksyTravel() {
     save({ ...data, messages: [...data.messages, msg] });
     // Redirect to WhatsApp
     const text = `Halo Arutala Organizer! 👋\n\nNama: ${contact.name}\nEmail: ${contact.email}\n\nPesan:\n${contact.message}\n\nSalam,\n${contact.name}`;
-    window.open(`https://wa.me/6285745571442?text=${encodeURIComponent(text)}`, "_blank");
+    window.open(`${content.waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(text)}`, "_blank");
     setContact({ name: "", email: "", message: "" });
     notify("Mengarahkan ke WhatsApp...");
   };
@@ -3304,13 +3630,24 @@ export default function BricksyTravel() {
                         Control Panel →
                       </button>
                     </div>
-                  : <button onClick={() => setShowLogin(true)} style={{
-                      padding: "8px 22px", border: "1.5px solid #1a2e42", borderRadius: 3,
-                      fontSize: "0.75rem", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 700,
-                      background: "transparent", color: "#1a2e42", transition: "all .2s" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = "#1a2e42"; e.currentTarget.style.color = "#fff"; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#1a2e42"; }}>
-                    {data.content.loginBtnText}
+                  : <button onClick={() => setShowLogin(true)}
+                    className="login-collapse-btn"
+                    style={{
+                      display: "flex", alignItems: "center", gap: 0, overflow: "hidden",
+                      width: 36, border: "1.5px solid #1a2e42", borderRadius: 6,
+                      fontSize: "0.75rem", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 700,
+                      background: "transparent", color: "#1a2e42", padding: "7px 9px",
+                      cursor: "pointer", transition: "width .28s cubic-bezier(.4,0,.2,1), padding .28s, background .18s, color .18s", whiteSpace: "nowrap" }}
+                    onMouseEnter={e => { const b = e.currentTarget; b.style.width = "90px"; b.style.paddingRight = "14px"; b.style.gap = "7px"; b.style.background = "#1a2e42"; b.style.color = "#fff"; b.querySelector(".lcb-text").style.opacity = "1"; b.querySelector(".lcb-text").style.maxWidth = "80px"; }}
+                    onMouseLeave={e => { const b = e.currentTarget; b.style.width = "36px"; b.style.paddingRight = "9px"; b.style.gap = "0"; b.style.background = "transparent"; b.style.color = "#1a2e42"; b.querySelector(".lcb-text").style.opacity = "0"; b.querySelector(".lcb-text").style.maxWidth = "0"; }}>
+                    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" style={{ flexShrink: 0 }}>
+                      <rect y="0" width="16" height="2" rx="1" fill="currentColor"/>
+                      <rect y="5" width="16" height="2" rx="1" fill="currentColor"/>
+                      <rect y="10" width="16" height="2" rx="1" fill="currentColor"/>
+                    </svg>
+                    <span className="lcb-text" style={{ maxWidth: 0, opacity: 0, overflow: "hidden", transition: "max-width .28s cubic-bezier(.4,0,.2,1), opacity .2s", fontSize: "0.7rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
+                      {data.content.loginBtnText || "LOGIN"}
+                    </span>
                   </button>
                 }
               </div>
@@ -3320,9 +3657,9 @@ export default function BricksyTravel() {
             {mobileMenu && (
               <div style={{
                 position: "absolute", top: "100%", left: 0, right: 0,
-                background: "#1a2e42",
+                background: "#0f1e2e",
                 borderTop: "2px solid #2b7a9a", borderBottom: "1px solid #2b7a9a",
-                boxShadow: "0 16px 48px rgba(26,46,66,0.35)",
+                boxShadow: "0 16px 48px rgba(0,0,0,0.6)",
                 display: "flex", flexDirection: "column", gap: 4,
                 padding: "14px 5% 22px", zIndex: 1000
               }}>
@@ -3331,34 +3668,37 @@ export default function BricksyTravel() {
                     className="mobile-nav-item"
                     style={{
                       fontSize: "1rem",
-                      color: page === item.key ? "#5bc4e0" : "#cce3ef",
-                      fontWeight: page === item.key ? 700 : 400,
+                      color: page === item.key ? "#5bc4e0" : "#e8f4fb",
+                      fontWeight: page === item.key ? 700 : 500,
+                      textShadow: page === item.key
+                        ? "0 0 12px rgba(91,196,224,0.6), 0 1px 3px rgba(0,0,0,0.8)"
+                        : "0 1px 4px rgba(0,0,0,0.7)",
                       border: "none",
-                      background: page === item.key ? "rgba(43,122,154,0.35)" : "rgba(255,255,255,0.07)",
+                      background: page === item.key ? "#1a3a52" : "#162b3d",
                       textAlign: "left", padding: "13px 16px", borderRadius: 8, width: "100%",
-                      borderLeft: page === item.key ? "3px solid #5bc4e0" : "3px solid rgba(255,255,255,0.12)",
+                      borderLeft: page === item.key ? "3px solid #5bc4e0" : "3px solid #2b4a62",
                       transition: "all .15s", cursor: "pointer"
                     }}
-                    onMouseEnter={e => { if (page !== item.key) { e.currentTarget.style.background = "rgba(255,255,255,0.14)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderLeft = "3px solid #2b7a9a"; } }}
-                    onMouseLeave={e => { if (page !== item.key) { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; e.currentTarget.style.color = "#cce3ef"; e.currentTarget.style.borderLeft = "3px solid rgba(255,255,255,0.12)"; } }}>
+                    onMouseEnter={e => { if (page !== item.key) { e.currentTarget.style.background = "#1e3d57"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderLeft = "3px solid #2b7a9a"; e.currentTarget.style.textShadow = "0 1px 4px rgba(0,0,0,0.8)"; } }}
+                    onMouseLeave={e => { if (page !== item.key) { e.currentTarget.style.background = "#162b3d"; e.currentTarget.style.color = "#e8f4fb"; e.currentTarget.style.borderLeft = "3px solid #2b4a62"; e.currentTarget.style.textShadow = "0 1px 4px rgba(0,0,0,0.7)"; } }}>
                     {item.label}
                   </button>
                 ))}
                 {user && (
-                  <div style={{ padding: "12px 4px 4px", borderTop: "1px solid rgba(255,255,255,0.15)", marginTop: 8 }}>
-                    <div style={{ fontSize: ".8125rem", color: "#7aa8bf", marginBottom: 10, padding: "0 12px" }}>Login sebagai <strong style={{ color: "#cce3ef" }}>{user.name || user.username}</strong></div>
+                  <div style={{ padding: "12px 4px 4px", borderTop: "1px solid #1e3a52", marginTop: 8 }}>
+                    <div style={{ fontSize: ".8125rem", color: "#7aa8bf", marginBottom: 10, padding: "0 12px", textShadow: "0 1px 3px rgba(0,0,0,0.6)" }}>Login sebagai <strong style={{ color: "#e8f4fb", textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>{user.name || user.username}</strong></div>
                     <button onClick={() => { setShowAdmin(true); setMobileMenu(false); }}
-                      style={{ fontSize: ".875rem", color: "#fff", background: "#1a2e42", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, width: "100%", marginBottom: 8 }}>
+                      style={{ fontSize: ".875rem", color: "#fff", background: "#1a3a52", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, width: "100%", marginBottom: 8, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>
                       Admin Panel
                     </button>
                     <button onClick={() => { logout(); setMobileMenu(false); }}
-                      style={{ fontSize: ".875rem", color: "#e74c3c", background: "#fff5f5", border: "1px solid #e74c3c", borderRadius: 8, padding: "9px 16px", width: "100%" }}>
+                      style={{ fontSize: ".875rem", color: "#e74c3c", background: "#1e1010", border: "1px solid #e74c3c", borderRadius: 8, padding: "9px 16px", width: "100%", textShadow: "0 1px 3px rgba(0,0,0,0.7)" }}>
                       Logout
                     </button>
                   </div>
                 )}
                 {!user && <button onClick={() => { setShowLogin(true); setMobileMenu(false); }}
-                  style={{ padding: "13px 16px", border: "none", background: "#1a2e42", borderRadius: 8, fontSize: "1rem", color: "#fff", textAlign: "center", fontWeight: 600, marginTop: 8 }}>Login</button>}
+                  style={{ padding: "13px 16px", border: "none", background: "#1a3a52", borderRadius: 8, fontSize: "1rem", color: "#fff", textAlign: "center", fontWeight: 600, marginTop: 8, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>Login</button>}
               </div>
             )}
           </nav>
@@ -3367,7 +3707,7 @@ export default function BricksyTravel() {
           <div style={{ height: 72 }} />
 
           {/* ── WHATSAPP FLOATING BUTTON ── */}
-          <a href="https://wa.me/6285745571442" target="_blank" rel="noopener noreferrer"
+          <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
             title="Hubungi Kami via WhatsApp"
             style={{
               position: "fixed", bottom: 24, right: 20, zIndex: 9990,
@@ -3445,7 +3785,7 @@ export default function BricksyTravel() {
                           {data.content.advTitle}
                         </h2>
 
-                        <p className="adv-quote" style={{ whiteSpace: "pre-wrap" }}>{data.content.advQuote}</p>
+                        <p className="adv-quote">{data.content.advQuote}</p>
 
                         {/* Stats row */}
                         <div className="adv-stats-row">
@@ -3584,7 +3924,7 @@ export default function BricksyTravel() {
                           {data.content.bookTitle}
                         </h2>
                         <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 28, maxWidth: 340 }}>{data.content.bookSub}</p>
-                        <a href="https://wa.me/6285745571442" target="_blank" rel="noopener noreferrer"
+                        <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
                           style={{ display: "inline-block", padding: "12px 30px", border: "1.5px solid #1a2e42", background: "transparent",
                           fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700, color: "#1a2e42", transition: "all .2s", textDecoration: "none" }}
                           onMouseEnter={e => { e.currentTarget.style.background = "#1a2e42"; e.currentTarget.style.color = "#fff"; }}
@@ -3732,7 +4072,7 @@ export default function BricksyTravel() {
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="contact-grid">
                       <div>
                         <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#1a2e42", marginBottom: 18 }}>Contact Us</h2>
-                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 20, whiteSpace: "pre-wrap" }}>{data.content.aboutText}</p>
+                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 20 }}>{data.content.aboutText}</p>
                         <p style={{ fontSize: "0.9375rem", color: "#334f65", marginBottom: 8, fontWeight: 500 }}>✉ {data.content.email}</p>
                         <p style={{ fontSize: "0.9375rem", color: "#334f65", fontWeight: 500 }}>📞 {data.content.phone}</p>
                       </div>
@@ -3764,7 +4104,7 @@ export default function BricksyTravel() {
                       <div className="footer-grid" style={{ marginBottom: 40 }}>
                         <div>
                           <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#1a2e42", letterSpacing: ".06em", textTransform: "uppercase" }}>About Us</h3>
-                          <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.8, marginBottom: 14, whiteSpace: "pre-wrap" }}>{data.content.aboutText}</p>
+                          <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.8, marginBottom: 14 }}>{data.content.aboutText}</p>
                           <p style={{ fontSize: "0.875rem", color: "#4e6b80" }}>email: <a href={`mailto:${data.content.email}`} style={{ color: "#2b7a9a", fontWeight: 500 }}>{data.content.email}</a></p>
                           <p style={{ fontSize: "0.875rem", color: "#4e6b80", marginTop: 4 }}>phone: {data.content.phone}</p>
                         </div>
@@ -4099,7 +4439,7 @@ export default function BricksyTravel() {
                           <span>✉</span> Msgs: <strong style={{ color: "#1a2e42" }}>{data.messages.length}</strong>
                         </span>
                       </div>
-                      <p style={{ fontSize: "0.875rem", color: "#4e6b80", fontStyle: "italic", lineHeight: 1.7, maxWidth: 500, borderLeft: "3px solid #ddeef5", paddingLeft: 14, whiteSpace: "pre-wrap" }}>
+                      <p style={{ fontSize: "0.875rem", color: "#4e6b80", fontStyle: "italic", lineHeight: 1.7, maxWidth: 500, borderLeft: "3px solid #ddeef5", paddingLeft: 14 }}>
                         {user.desc ||
                           (user.role === "admin"
                             ? "Administrator Arutala Organizer. Kelola konten, pengguna, pesan, dan seluruh pengaturan website."
@@ -4563,8 +4903,13 @@ export default function BricksyTravel() {
                     { label: "Book Section Title", key: "bookTitle" },
                     { label: "Newsletter Title", key: "newsletterTitle" },
                     { label: "About Text", key: "aboutText", multiline: true },
-                    { label: "Email", key: "email" },
-                    { label: "Phone", key: "phone" },
+                    { label: "📧 Email", key: "email" },
+                    { label: "📞 Nomor HP / WhatsApp", key: "phone" },
+                    { label: "📍 Alamat", key: "address", multiline: true },
+                    { label: "🕐 Jam Operasional", key: "hours" },
+                    { label: "💬 Link WhatsApp (https://wa.me/628xxx)", key: "waLink" },
+                    { label: "📸 Link Instagram (https://instagram.com/xxx)", key: "igLink" },
+                    { label: "📘 Link Facebook (https://facebook.com/xxx)", key: "fbLink" },
                     { label: "Login Button Text", key: "loginBtnText" },
                     { label: "Nav: Home", key: "nav1" },
                     { label: "Nav: About", key: "nav2" },
