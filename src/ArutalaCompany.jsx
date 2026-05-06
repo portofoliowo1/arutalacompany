@@ -209,6 +209,52 @@ const HARDCODED_USERS = [
   { username: "cs1", password: "cs123", role: "customer_services", name: "CS 1", phone: "", email: "", desc: "", photo: "" },
 ];
 
+/* ─── Firebase Config ─── */
+// Install dulu: npm install firebase
+import { initializeApp } from "firebase/app";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyAKB8p0isdo-EZieDZYszx6BIoh2X9qvEU",
+  authDomain:        "arutala-company.firebaseapp.com",
+  projectId:         "arutala-company",
+  storageBucket:     "arutala-company.firebasestorage.app",
+  messagingSenderId: "924195742930",
+  appId:             "1:924195742930:web:156701ba8c3671b611790b",
+};
+
+const _fbApp = initializeApp(firebaseConfig);
+const _db    = getFirestore(_fbApp);
+
+/* ── Firestore helpers ── */
+async function fsGet(docId) {
+  try {
+    const snap = await getDoc(doc(_db, "arutala", docId));
+    return snap.exists() ? snap.data() : null;
+  } catch { return null; }
+}
+async function fsSet(docId, payload) {
+  try { await setDoc(doc(_db, "arutala", docId), payload); } catch {}
+}
+
+/* ─── Cloudinary Config ─── */
+const CLOUDINARY = {
+  cloudName:    "dti6dgjrh",
+  uploadPreset: "ml_default",
+};
+
+async function uploadToCloudinary(file) {
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("upload_preset", CLOUDINARY.uploadPreset);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY.cloudName}/image/upload`, {
+    method: "POST", body: fd,
+  });
+  if (!res.ok) throw new Error("Upload gagal");
+  const data = await res.json();
+  return data.secure_url;
+}
+
 /* ─── EmailJS Config ─── */
 const EJS = {
   publicKey:  "0BWUeevU4Il0DoL4E",
@@ -1057,12 +1103,17 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
     setBlocks(b);
   };
 
-  const handleImageFile = (e) => {
+  const handleImageFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setAddVal(reader.result);
-    reader.readAsDataURL(file);
+    try {
+      notify("⏳ Mengupload gambar...");
+      const url = await uploadToCloudinary(file);
+      setAddVal(url);
+      notify("Gambar berhasil diupload!");
+    } catch {
+      notify("Gagal upload gambar. Coba lagi.", "error");
+    }
   };
 
   const handleSave = async (status, targetSection = section) => {
@@ -1744,6 +1795,10 @@ export default function BricksyTravel() {
   useEffect(() => {
     (async () => {
       try {
+        // Coba load dari Firestore dulu
+        const fsData = await fsGet("main");
+        if (fsData?.payload) { setData(JSON.parse(fsData.payload)); return; }
+        // Fallback: window.storage (lokal)
         const r = await window.storage?.get("bricksy-v2");
         if (r?.value) setData(JSON.parse(r.value));
       } catch {}
@@ -1765,7 +1820,10 @@ export default function BricksyTravel() {
 
   const save = async (d) => {
     setData(d);
-    try { await window.storage?.set("bricksy-v2", JSON.stringify(d)); } catch {}
+    const payload = JSON.stringify(d);
+    // Simpan ke Firestore (cloud) + window.storage (lokal backup)
+    await fsSet("main", { payload, updatedAt: Date.now() });
+    try { await window.storage?.set("bricksy-v2", payload); } catch {}
   };
 
   const notify = (msg, type = "success") => {
@@ -1780,11 +1838,10 @@ export default function BricksyTravel() {
     let savedPass = u.password;
     let profile = { name: u.name, phone: u.phone, email: u.email, desc: u.desc, photo: u.photo };
     try {
-      const r = await window.storage?.get(`profile-${u.username}`);
-      if (r?.value) {
-        const p = JSON.parse(r.value);
-        if (p._password) savedPass = p._password;
-        profile = { name: p.name ?? profile.name, phone: p.phone ?? profile.phone, email: p.email ?? profile.email, desc: p.desc ?? profile.desc, photo: p.photo ?? profile.photo };
+      const r = await fsGet(`profile-${u.username}`);
+      if (r) {
+        if (r._password) savedPass = r._password;
+        profile = { name: r.name ?? profile.name, phone: r.phone ?? profile.phone, email: r.email ?? profile.email, desc: r.desc ?? profile.desc, photo: r.photo ?? profile.photo };
       }
     } catch {}
     if (loginForm.password !== savedPass) { setLoginErr("Invalid username or password."); return; }
@@ -1806,11 +1863,11 @@ export default function BricksyTravel() {
   const forgotStep2 = async () => {
     setForgotErr("");
     const u = HARDCODED_USERS.find(x => x.username === forgotUser.trim());
-    // Ambil email dari profile storage atau hardcoded
+    // Ambil email dari Firestore atau hardcoded
     let storedEmail = u?.email || "";
     try {
-      const r = await window.storage?.get(`profile-${u.username}`);
-      if (r?.value) { const p = JSON.parse(r.value); if (p.email) storedEmail = p.email; }
+      const r = await fsGet(`profile-${u.username}`);
+      if (r?.email) storedEmail = r.email;
     } catch {}
     if (!storedEmail) { setForgotErr("Akun ini belum memiliki email terdaftar. Hubungi administrator."); return; }
     if (forgotEmail.trim().toLowerCase() !== storedEmail.toLowerCase()) {
@@ -1841,9 +1898,8 @@ export default function BricksyTravel() {
     if (forgotNewPass.val.length < 6) { setForgotErr("Password minimal 6 karakter."); return; }
     if (forgotNewPass.val !== forgotNewPass.confirm) { setForgotErr("Konfirmasi password tidak cocok."); return; }
     try {
-      const r = await window.storage?.get(`profile-${forgotUser}`);
-      const prev = r?.value ? JSON.parse(r.value) : {};
-      await window.storage?.set(`profile-${forgotUser}`, JSON.stringify({ ...prev, _password: forgotNewPass.val }));
+      const prev = await fsGet(`profile-${forgotUser}`) || {};
+      await fsSet(`profile-${forgotUser}`, { ...prev, _password: forgotNewPass.val });
     } catch {}
     // Reset state
     setForgotStep(null); setForgotUser(""); setForgotEmail("");
@@ -2798,21 +2854,22 @@ export default function BricksyTravel() {
                         <input type="file" accept="image/*" onChange={async e => {
                           const file = e.target.files?.[0];
                           if (!file) return;
-                          const reader = new FileReader();
-                          reader.onload = async () => {
-                            const photo = reader.result;
+                          try {
+                            notify("⏳ Mengupload foto profil...");
+                            const photo = await uploadToCloudinary(file);
                             const updated = { ...user, photo };
                             setUser(updated);
-                            try { await window.storage?.set(`profile-${user.username}`, JSON.stringify({ name: updated.name, phone: updated.phone, email: updated.email, desc: updated.desc, photo })); } catch {}
+                            try { const prev = await fsGet(`profile-${user.username}`) || {}; await fsSet(`profile-${user.username}`, { ...prev, name: updated.name, phone: updated.phone, email: updated.email, desc: updated.desc, photo }); } catch {}
                             notify("Foto profil diperbarui!");
-                          };
-                          reader.readAsDataURL(file);
+                          } catch {
+                            notify("Gagal upload foto. Coba lagi.", "error");
+                          }
                         }} style={{ fontSize: 11, border: "1.5px dashed #3d8fab", borderRadius: 6, padding: "6px", background: "#f0f9fc", color: "#3d8fab", width: "100%", boxSizing: "border-box" }} />
                         {user.photo && (
                           <button onClick={async () => {
                             const updated = { ...user, photo: "" };
                             setUser(updated);
-                            try { await window.storage?.set(`profile-${user.username}`, JSON.stringify({ name: updated.name, phone: updated.phone, email: updated.email, desc: updated.desc, photo: "" })); } catch {}
+                            try { const prev = await fsGet(`profile-${user.username}`) || {}; await fsSet(`profile-${user.username}`, { ...prev, photo: "" }); } catch {}
                             notify("Foto profil dihapus.");
                           }} style={{ marginTop: 8, fontSize: 11, padding: "4px 12px", background: "#fee", color: "#e74c3c", borderRadius: 6, border: "none", cursor: "pointer" }}>Hapus Foto</button>
                         )}
@@ -2852,7 +2909,7 @@ export default function BricksyTravel() {
                             <button onClick={async () => {
                               const updated = { ...user, name: profileEdit.name, phone: profileEdit.phone, email: profileEdit.email, desc: profileEdit.desc };
                               setUser(updated);
-                              try { await window.storage?.set(`profile-${user.username}`, JSON.stringify({ name: profileEdit.name, phone: profileEdit.phone, email: profileEdit.email, desc: profileEdit.desc, photo: user.photo || "" })); } catch {}
+                              try { const prev = await fsGet(`profile-${user.username}`) || {}; await fsSet(`profile-${user.username}`, { ...prev, name: profileEdit.name, phone: profileEdit.phone, email: profileEdit.email, desc: profileEdit.desc, photo: user.photo || "" }); } catch {}
                               setProfileEditMode(false);
                               notify("Data diri berhasil disimpan!");
                             }} style={{ padding: "10px 24px", background: "#1a2e42", color: "#fff", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Simpan Perubahan</button>
@@ -2892,16 +2949,15 @@ export default function BricksyTravel() {
                           // Verify old password
                           let currentPass = HARDCODED_USERS.find(x => x.username === user.username)?.password || "";
                           try {
-                            const r = await window.storage?.get(`profile-${user.username}`);
-                            if (r?.value) { const p = JSON.parse(r.value); if (p._password) currentPass = p._password; }
+                            const r = await fsGet(`profile-${user.username}`);
+                            if (r?._password) currentPass = r._password;
                           } catch {}
                           if (profileEdit.oldPass !== currentPass) return notify("Password lama tidak sesuai.", "error");
                           if (profileEdit.newPass.length < 6) return notify("Password baru minimal 6 karakter.", "error");
                           if (profileEdit.newPass !== profileEdit.confirmPass) return notify("Konfirmasi password tidak cocok.", "error");
                           try {
-                            const existing = await window.storage?.get(`profile-${user.username}`);
-                            const prev = existing?.value ? JSON.parse(existing.value) : {};
-                            await window.storage?.set(`profile-${user.username}`, JSON.stringify({ ...prev, _password: profileEdit.newPass }));
+                            const prev = await fsGet(`profile-${user.username}`) || {};
+                            await fsSet(`profile-${user.username}`, { ...prev, _password: profileEdit.newPass });
                           } catch {}
                           setProfileEdit(p => ({ ...p, oldPass: "", newPass: "", confirmPass: "" }));
                           notify("Password berhasil diubah!");
@@ -3515,15 +3571,17 @@ export default function BricksyTravel() {
                       )}
                       <div style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1, minWidth: 240 }}>
                         <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase" }}>Upload File Logo</label>
-                        <input type="file" accept="image/*" onChange={e => {
+                        <input type="file" accept="image/*" onChange={async e => {
                           const file = e.target.files?.[0];
                           if (!file) return;
-                          const reader = new FileReader();
-                          reader.onload = () => {
-                            save({ ...data, content: { ...data.content, logoImage: reader.result } });
+                          try {
+                            notify("⏳ Mengupload logo...");
+                            const url = await uploadToCloudinary(file);
+                            save({ ...data, content: { ...data.content, logoImage: url } });
                             notify("Logo uploaded & applied to all sections!");
-                          };
-                          reader.readAsDataURL(file);
+                          } catch {
+                            notify("Gagal upload logo. Coba lagi.", "error");
+                          }
                         }} style={{ padding: "8px", border: "1.5px dashed #3d8fab", borderRadius: 8, fontSize: 12, background: "#f0f9fc", color: "#3d8fab" }} />
                         <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginTop: 4 }}>Atau URL Gambar</label>
                         <div style={{ display: "flex", gap: 8 }}>
