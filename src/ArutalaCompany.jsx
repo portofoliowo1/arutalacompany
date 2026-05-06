@@ -441,11 +441,63 @@ const DEFAULT_DATA = {
     logoText: "ARUTALA\nORGANIZER",
     logoImage: "",
     loginBtnText: "LOGIN",
-    nav1: "Home", nav2: "About", nav3: "Event Plan", nav4: "Traveling", nav5: "Wedding Organizer",
+    nav1: "Home", nav2: "About", nav3: "Event Plan", nav4: "Traveling", nav5: "Wedding Organizer", nav6: "Layanan Kami",
+    servicesPageTitle: "Paket Layanan Kami",
+    servicesPageSub: "Pilih paket yang sesuai dengan kebutuhan Anda. Setiap paket dirancang untuk memberikan pengalaman terbaik bersama Arutala Organizer.",
   },
   posts: DEFAULT_POSTS,
   cats: ["Experience Thailand", "Best Adventures", "Sea & Beach", "Hiking Tours", "Kayaking Tours", "Winter Destinations"],
   messages: [],
+  services: [
+    {
+      id: 1,
+      title: "Paket Event Plan Reguler",
+      badge: "Populer",
+      badgeColor: "#2b7a9a",
+      price: "Rp 5.000.000",
+      priceNote: "/ event",
+      image: "https://picsum.photos/seed/svc1/600/400",
+      description: "Paket perencanaan event lengkap untuk acara reguler seperti seminar, gathering, dan corporate event.",
+      features: ["Konsultasi event 2x pertemuan", "Dekorasi standar", "Dokumentasi foto", "Koordinasi vendor", "Rundown acara", "MC profesional"],
+      highlight: false,
+    },
+    {
+      id: 2,
+      title: "Paket Wedding Premium",
+      badge: "Best Seller",
+      badgeColor: "#e67e22",
+      price: "Rp 25.000.000",
+      priceNote: "/ wedding",
+      image: "https://picsum.photos/seed/svc2/600/400",
+      description: "Paket pernikahan lengkap dengan sentuhan premium. Wujudkan pernikahan impian Anda bersama tim profesional kami.",
+      features: ["Konsultasi tak terbatas", "Dekorasi premium", "Dokumentasi foto & video", "Koordinasi 10+ vendor", "Wedding planner dedicated", "Catering 300 pax", "Entertainment & MC", "Souvenir tamu"],
+      highlight: true,
+    },
+    {
+      id: 3,
+      title: "Paket Traveling Group",
+      badge: "Hemat",
+      badgeColor: "#27ae60",
+      price: "Rp 3.500.000",
+      priceNote: "/ orang",
+      image: "https://picsum.photos/seed/svc3/600/400",
+      description: "Paket wisata group terjangkau dengan destinasi pilihan dalam dan luar negeri. Minimum 10 peserta.",
+      features: ["Transportasi PP", "Akomodasi 3 malam", "Tour guide lokal", "Makan 3x sehari", "Asuransi perjalanan", "Dokumentasi trip"],
+      highlight: false,
+    },
+    {
+      id: 4,
+      title: "Paket Traveling Eksklusif",
+      badge: "Luxury",
+      badgeColor: "#8e44ad",
+      price: "Rp 15.000.000",
+      priceNote: "/ orang",
+      image: "https://picsum.photos/seed/svc4/600/400",
+      description: "Pengalaman perjalanan mewah ke destinasi premium dunia. Layanan VIP dari keberangkatan hingga kepulangan.",
+      features: ["Tiket business class", "Hotel bintang 5", "Private tour guide", "Makan fine dining", "Airport transfer VIP", "Asuransi premium", "Itinerary custom", "Concierge 24 jam"],
+      highlight: false,
+    },
+  ],
   users: HARDCODED_USERS.map((u, i) => ({ id: i + 1, ...u, email: `${u.username}@arutala.com`, active: true })),
 };
 
@@ -488,6 +540,28 @@ const GS = () => (
     .img-zoom:hover img{transform:scale(1.07)}
     .cms-toolbar button:hover{background:rgba(43,122,154,.12)!important}
     .post-card:hover .post-card-title{color:#2b7a9a}
+
+    /* DESKTOP-ONLY ANIMATIONS */
+    @media(pointer:fine){
+      .anim-fade-up{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+      .anim-fade-up.visible{opacity:1;transform:translateY(0)}
+      .anim-zoom{opacity:0;transform:scale(.94);transition:opacity .65s ease,transform .65s ease}
+      .anim-zoom.visible{opacity:1;transform:scale(1)}
+      .btn-magnetic{transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s}
+      .btn-magnetic:hover{transform:scale(1.045) translateY(-2px);box-shadow:0 12px 32px rgba(26,46,66,.18)}
+      .post-card{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s;transform-style:preserve-3d}
+      .post-card:hover{transform:translateY(-6px) rotate3d(1,1,0,.8deg);box-shadow:0 20px 48px rgba(26,46,66,.14)}
+      @keyframes heroReveal{from{opacity:0;letter-spacing:-.05em;filter:blur(6px)}to{opacity:1;letter-spacing:-.01em;filter:blur(0)}}
+      .hero-title-anim{animation:heroReveal .9s cubic-bezier(.22,1,.36,1) .15s both}
+      @keyframes floatA{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+      @keyframes floatB{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+      .hero-img-grid>div:nth-child(1){animation:floatA 5s ease-in-out infinite}
+      .hero-img-grid>div:nth-child(2){animation:floatB 6s ease-in-out infinite .5s}
+      .hero-img-grid>div:nth-child(3){animation:floatA 7s ease-in-out infinite 1s}
+      .hero-img-grid>div:nth-child(4){animation:floatB 5.5s ease-in-out infinite .8s}
+      #cursor-glow{pointer-events:none;position:fixed;width:24px;height:24px;border-radius:50%;background:rgba(43,122,154,.22);border:1.5px solid rgba(43,122,154,.45);transform:translate(-50%,-50%);transition:left .06s ease,top .06s ease,width .25s,height .25s,background .25s;z-index:99998;mix-blend-mode:multiply}
+      #cursor-glow.expanded{width:48px;height:48px;background:rgba(43,122,154,.1)}
+    }
 
     .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.05rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#1a2e42;text-shadow:0 1px 3px rgba(26,46,66,.18),0 2px 8px rgba(26,46,66,.10)}
     .logo-brand-footer{font-family:'Playfair Display',serif;font-weight:800;font-size:.95rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#1a2e42}
@@ -1691,29 +1765,299 @@ function SectionPage({ section, posts, onReadPost }) {
   );
 }
 
+/* ─────────────── SERVICES PAGE ─────────────── */
+function ServicesPage({ content, services, navigateTo }) {
+  const [selectedService, setSelectedService] = useState(null);
+  const [hoveredCard, setHoveredCard] = useState(null);
+
+  const openDetail = (svc) => { setSelectedService(svc); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const closeDetail = () => setSelectedService(null);
+
+  const handleBook = (svc) => {
+    const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price}${svc.priceNote}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
+    window.open(`https://wa.me/6285745571442?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
+  /* ── Service Detail Modal ── */
+  if (selectedService) {
+    const svc = selectedService;
+    return (
+      <div style={{ minHeight: "100vh", background: "#f4f9fb" }}>
+        {/* Back Bar */}
+        <div style={{ background: "#fff", borderBottom: "1px solid #ddeef5", padding: "14px 5%", display: "flex", alignItems: "center", gap: 14, position: "sticky", top: 0, zIndex: 30, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
+          <button onClick={closeDetail}
+            style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "0.8125rem", fontWeight: 700, color: "#2b7a9a", background: "none", border: "none", cursor: "pointer", padding: "6px 0" }}>
+            ← Kembali ke Layanan
+          </button>
+          <span style={{ color: "#ddeef5", fontSize: 18 }}>|</span>
+          <span style={{ fontSize: "0.8125rem", color: "#6b8999" }}>{svc.title}</span>
+        </div>
+
+        <div style={{ maxWidth: 900, margin: "0 auto", padding: "48px 5%" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "start" }}>
+            {/* Image */}
+            <div style={{ borderRadius: 12, overflow: "hidden", boxShadow: "0 8px 32px rgba(26,46,66,.12)", position: "sticky", top: 90 }}>
+              <img src={svc.image} alt={svc.title} style={{ width: "100%", aspectRatio: "3/2", objectFit: "cover", display: "block" }} onError={e => { e.target.src = "https://picsum.photos/seed/fallback/600/400"; }} />
+              {svc.badge && (
+                <div style={{ position: "absolute", top: 16, left: 16, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.75rem", fontWeight: 700, letterSpacing: ".06em" }}>
+                  {svc.badge}
+                </div>
+              )}
+            </div>
+
+            {/* Detail */}
+            <div>
+              <div className="label-xs" style={{ color: "#6b8999", marginBottom: 10 }}>DETAIL PAKET</div>
+              <h1 className="display" style={{ fontSize: "clamp(1.5rem,3vw,2.25rem)", fontWeight: 900, color: "#1a2e42", lineHeight: 1.1, marginBottom: 16 }}>{svc.title}</h1>
+              <p style={{ fontSize: "1rem", color: "#4e6b80", lineHeight: 1.8, marginBottom: 24 }}>{svc.description}</p>
+
+              {/* Price */}
+              <div style={{ background: svc.highlight ? "linear-gradient(135deg,#1a2e42,#2b7a9a)" : "#f4f9fb", borderRadius: 10, padding: "20px 24px", marginBottom: 24 }}>
+                <div style={{ fontSize: "0.75rem", fontWeight: 600, letterSpacing: ".1em", textTransform: "uppercase", color: svc.highlight ? "rgba(255,255,255,.6)" : "#6b8999", marginBottom: 6 }}>Harga Mulai</div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#1a2e42" }}>{svc.price}</span>
+                  <span style={{ fontSize: "0.875rem", color: svc.highlight ? "rgba(255,255,255,.6)" : "#6b8999", fontWeight: 500 }}>{svc.priceNote}</span>
+                </div>
+              </div>
+
+              {/* Features */}
+              <div style={{ marginBottom: 28 }}>
+                <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#1a2e42", letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 14 }}>Yang Termasuk</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {(svc.features || []).map((feat, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <span style={{ width: 22, height: 22, borderRadius: "50%", background: "#e8f8ef", color: "#27ae60", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 900, flexShrink: 0 }}>✓</span>
+                      <span style={{ fontSize: "0.9375rem", color: "#334f65" }}>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* CTA */}
+              <button onClick={() => handleBook(svc)}
+                style={{ width: "100%", padding: "15px 24px", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".05em", transition: "opacity .2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}
+                onMouseEnter={e => e.currentTarget.style.opacity = ".88"}
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                💬 Hubungi via WhatsApp
+              </button>
+              <button onClick={() => navigateTo("about")}
+                style={{ width: "100%", marginTop: 10, padding: "13px 24px", background: "transparent", color: "#1a2e42", border: "1.5px solid #ddeef5", borderRadius: 8, fontSize: "0.875rem", fontWeight: 600, cursor: "pointer", transition: "border-color .2s" }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = "#1a2e42"}
+                onMouseLeave={e => e.currentTarget.style.borderColor = "#ddeef5"}>
+                📞 Hubungi Kami Langsung
+              </button>
+            </div>
+          </div>
+
+          {/* Other packages */}
+          <div style={{ marginTop: 60 }}>
+            <h3 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#1a2e42", marginBottom: 24 }}>Paket Lainnya</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 16 }}>
+              {services.filter(s => s.id !== svc.id).map(s => (
+                <div key={s.id} onClick={() => openDetail(s)}
+                  style={{ background: "#fff", borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 10px rgba(26,46,66,.08)", cursor: "pointer", transition: "transform .2s,box-shadow .2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 12px 32px rgba(26,46,66,.14)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 2px 10px rgba(26,46,66,.08)"; }}>
+                  <div style={{ height: 120, overflow: "hidden" }}>
+                    <img src={s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .4s" }} onError={e => { e.target.src = "https://picsum.photos/seed/fallback/300/200"; }} />
+                  </div>
+                  <div style={{ padding: "14px 16px" }}>
+                    <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1a2e42", marginBottom: 4 }}>{s.title}</div>
+                    <div style={{ fontSize: "0.8125rem", color: "#2b7a9a", fontWeight: 700 }}>{s.price}<span style={{ color: "#6b8999", fontWeight: 400 }}>{s.priceNote}</span></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ── Services Grid ── */
+  return (
+    <div style={{ minHeight: "100vh", background: "#f4f9fb" }}>
+      {/* Hero Banner */}
+      <section style={{ background: "linear-gradient(135deg,#1a2e42 0%,#2b7a9a 100%)", padding: "70px 5% 80px", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 70% 50%,rgba(91,196,224,.15) 0%,transparent 60%)", pointerEvents: "none" }} />
+        <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <div className="label-xs" style={{ color: "#5bc4e0", marginBottom: 14 }}>✦ ARUTALA ORGANIZER</div>
+          <h1 className="display hero-title-anim" style={{ fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 16 }}>
+            {content.servicesPageTitle || "Paket Layanan Kami"}
+          </h1>
+          <p style={{ fontSize: "1rem", color: "rgba(255,255,255,.7)", lineHeight: 1.85, maxWidth: 540 }}>
+            {content.servicesPageSub || "Pilih paket yang sesuai dengan kebutuhan Anda."}
+          </p>
+        </div>
+      </section>
+
+      {/* Services Grid */}
+      <section style={{ padding: "60px 5%", maxWidth: 1200, margin: "0 auto" }}>
+        {services.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "80px 20px", color: "#6b8999" }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>📋</div>
+            <p style={{ fontSize: "1rem" }}>Belum ada paket layanan. Cek kembali nanti.</p>
+          </div>
+        ) : (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 28 }}>
+            {services.map(svc => (
+              <div key={svc.id}
+                onMouseEnter={() => setHoveredCard(svc.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+                style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: hoveredCard === svc.id ? "0 20px 48px rgba(26,46,66,.16)" : "0 4px 16px rgba(26,46,66,.08)", transform: hoveredCard === svc.id ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #2b7a9a" : "2px solid transparent", position: "relative" }}>
+
+                {/* Badge */}
+                {svc.badge && (
+                  <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
+                    {svc.badge}
+                  </div>
+                )}
+                {svc.highlight && (
+                  <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "#1a2e42", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em" }}>
+                    ⭐ Pilihan Utama
+                  </div>
+                )}
+
+                {/* Image */}
+                <div className="img-zoom" style={{ height: 200, overflow: "hidden" }}>
+                  <img src={svc.image} alt={svc.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }} onError={e => { e.target.src = "https://picsum.photos/seed/fallback/400/300"; }} />
+                </div>
+
+                {/* Content */}
+                <div style={{ padding: "22px 22px 20px" }}>
+                  <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#1a2e42", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
+                  <p style={{ fontSize: "0.875rem", color: "#6b8999", lineHeight: 1.7, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
+
+                  {/* Features preview */}
+                  <div style={{ marginBottom: 18 }}>
+                    {(svc.features || []).slice(0, 3).map((feat, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                        <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.75rem", flexShrink: 0 }}>✓</span>
+                        <span style={{ fontSize: "0.8125rem", color: "#4e6b80" }}>{feat}</span>
+                      </div>
+                    ))}
+                    {(svc.features || []).length > 3 && (
+                      <div style={{ fontSize: "0.75rem", color: "#2b7a9a", fontWeight: 600, marginTop: 4 }}>+{svc.features.length - 3} fitur lainnya</div>
+                    )}
+                  </div>
+
+                  {/* Price */}
+                  <div style={{ borderTop: "1px solid #f4f9fb", paddingTop: 16, display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ fontSize: "0.6875rem", color: "#6b8999", letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 2 }}>Mulai dari</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.375rem", fontWeight: 900, color: "#1a2e42" }}>{svc.price}</div>
+                      <div style={{ fontSize: "0.75rem", color: "#6b8999" }}>{svc.priceNote}</div>
+                    </div>
+                    <button onClick={() => openDetail(svc)}
+                      style={{ padding: "10px 18px", background: svc.highlight ? "linear-gradient(135deg,#1a2e42,#2b7a9a)" : "#1a2e42", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s", letterSpacing: ".03em" }}
+                      onMouseEnter={e => e.currentTarget.style.opacity = ".82"}
+                      onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                      Lihat Detail
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* CTA Section */}
+      <section style={{ background: "#1a2e42", padding: "60px 5%", textAlign: "center" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto" }}>
+          <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#fff", marginBottom: 14 }}>Tidak menemukan paket yang sesuai?</h2>
+          <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.9375rem", lineHeight: 1.8, marginBottom: 28 }}>Hubungi kami untuk paket yang disesuaikan dengan kebutuhan spesifik Anda.</p>
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+            <button onClick={() => window.open("https://wa.me/6285745571442", "_blank")}
+              style={{ padding: "13px 28px", background: "#2b7a9a", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "background .2s", letterSpacing: ".04em" }}
+              onMouseEnter={e => e.currentTarget.style.background = "#3d8fab"}
+              onMouseLeave={e => e.currentTarget.style.background = "#2b7a9a"}>
+              💬 WhatsApp Kami
+            </button>
+            <button onClick={() => navigateTo("about")}
+              style={{ padding: "13px 28px", background: "transparent", color: "#fff", border: "1.5px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "border-color .2s" }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(255,255,255,.8)"}
+              onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,.3)"}>
+              📞 Kontak Kami
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 /* ─────────────── ABOUT PAGE ─────────────── */
 function AboutPage({ content, images }) {
+  const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+  const [contactSent, setContactSent] = useState(false);
+
+  const handleContactSubmit = () => {
+    if (!contactForm.name || !contactForm.message) return;
+    const text = `Halo Arutala Organizer! 👋%0A%0ANama: ${contactForm.name}%0AEmail: ${contactForm.email}%0ANo. HP: ${contactForm.phone}%0AKeperluan: ${contactForm.subject}%0A%0APesan:%0A${contactForm.message}`;
+    window.open(`https://wa.me/6285745571442?text=${text}`, "_blank");
+    setContactSent(true);
+    setTimeout(() => { setContactSent(false); setContactForm({ name: "", email: "", phone: "", subject: "", message: "" }); }, 4000);
+  };
+
   const values = [
-    { icon: content.aboutV1Icon || "🌍", title: content.aboutV1Title || "Global Network",    desc: content.aboutV1Desc || "Partnerships with 200+ local guides in 60 countries." },
-    { icon: content.aboutV2Icon || "🛡",  title: content.aboutV2Title || "Safe & Trusted",   desc: content.aboutV2Desc || "Full insurance coverage and 24/7 emergency support." },
-    { icon: content.aboutV3Icon || "🌱", title: content.aboutV3Title || "Sustainable Travel",desc: content.aboutV3Desc || "We offset 100% of our trips' carbon footprint." },
-    { icon: content.aboutV4Icon || "⭐", title: content.aboutV4Title || "Award Winning",     desc: content.aboutV4Desc || "Best Travel Agency award 3 years running." },
+    { icon: "✈️", title: "Expert Travel Planning", desc: "Kami merencanakan setiap detail perjalanan Anda — dari tiket, akomodasi, hingga tur lokal — agar Anda bisa menikmati tanpa khawatir." },
+    { icon: "💍", title: "Wedding Organizer", desc: "Wujudkan pernikahan impian Anda bersama tim profesional kami yang berpengalaman menangani ratusan momen spesial." },
+    { icon: "🎉", title: "Event Organizer", desc: "Dari gathering kantor hingga pesta ulang tahun besar, kami siap menjadi mitra terpercaya untuk event tak terlupakan." },
+    { icon: "🛡️", title: "Terpercaya & Aman", desc: "Kepercayaan klien adalah prioritas kami. Setiap layanan dirancang dengan standar keamanan dan profesionalisme tinggi." },
+    { icon: "🌟", title: "Pengalaman Bertahun-tahun", desc: "Didukung tim berpengalaman yang telah melayani ratusan klien puas di seluruh Indonesia." },
+    { icon: "💬", title: "Layanan 24/7", desc: "Tim customer service kami siap membantu kapan saja, memastikan setiap pertanyaan dan kebutuhan Anda terpenuhi." },
   ];
+
+  const timeline = [
+    { year: "2018", title: "Arutala Berdiri", desc: "Didirikan dengan visi memberikan layanan travel & event berkualitas di Malang." },
+    { year: "2019", title: "Ekspansi Wedding", desc: "Membuka divisi Wedding Organizer dan langsung mendapat respons positif dari pasar." },
+    { year: "2021", title: "100+ Klien", desc: "Mencapai 100+ klien puas meskipun pandemi, dengan inovasi layanan virtual event." },
+    { year: "2023", title: "Platform Digital", desc: "Meluncurkan platform digital untuk memudahkan pemesanan dan komunikasi dengan klien." },
+    { year: "2025", title: "Berkembang Pesat", desc: "Hadir di berbagai kota besar Indonesia dengan jaringan mitra lokal yang kuat." },
+  ];
+
+  const team = [
+    { name: "Tim Kreatif", role: "Event & Dekorasi", icon: "🎨" },
+    { name: "Tim Traveling", role: "Perencana Wisata", icon: "🗺️" },
+    { name: "Tim Wedding", role: "Koordinator Pernikahan", icon: "💐" },
+    { name: "Tim CS", role: "Layanan Pelanggan", icon: "🤝" },
+  ];
+
   return (
     <div className="fade-in" style={{ minHeight: "100vh", background: "#fff" }}>
-      {/* Hero */}
-      <div style={{ background: "#c5dde9", padding: "80px 5%", overflow: "hidden" }}>
+
+      {/* ── HERO ── */}
+      <div style={{ background: "linear-gradient(135deg, #c5dde9 0%, #a8cfe0 50%, #8fbdd6 100%)", padding: "80px 5% 90px", overflow: "hidden", position: "relative" }}>
+        <div style={{ position: "absolute", top: -60, right: -60, width: 400, height: 400, borderRadius: "50%", background: "rgba(255,255,255,.12)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -80, left: "20%", width: 300, height: 300, borderRadius: "50%", background: "rgba(43,122,154,.1)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 1200, margin: "0 auto" }} className="about-hero-grid">
-          <div>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>{content.aboutHeroLabel || "About Us"}</div>
-            <h1 className="display" style={{ fontSize: "clamp(2.25rem, 5vw, 4rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 20 }}>
-              {content.aboutHeroTitle || "We Live for Adventure"}
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(43,122,154,.15)", border: "1px solid rgba(43,122,154,.3)", borderRadius: 20, padding: "5px 16px", marginBottom: 24 }}>
+              <span style={{ fontSize: 10, letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700 }}>Tentang Kami</span>
+            </div>
+            <h1 className="display" style={{ fontSize: "clamp(2.25rem,5vw,3.75rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 24 }}>
+              {content.aboutHeroTitle || "Arutala Travel & Organizer"}
             </h1>
-            <p style={{ fontSize: "1rem", color: "#4e6b80", lineHeight: 1.9, maxWidth: 400 }}>{content.aboutHeroSub || content.aboutText}</p>
+            <p style={{ fontSize: "1.0625rem", color: "#2d4f65", lineHeight: 1.9, maxWidth: 420, marginBottom: 32 }}>
+              {content.aboutHeroSub || content.aboutText || "Mitra terpercaya Anda untuk perjalanan wisata, pernikahan impian, dan event berkesan. Kami hadir untuk mewujudkan setiap momen menjadi kenangan tak terlupakan."}
+            </p>
+            <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+              <a href="https://wa.me/6285745571442" target="_blank" rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "#1a2e42", color: "#fff", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#2b7a9a"}
+                onMouseLeave={e => e.currentTarget.style.background = "#1a2e42"}>
+                💬 Hubungi Kami
+              </a>
+              <a href={`tel:${content.phone}`}
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "transparent", color: "#1a2e42", border: "1.5px solid #1a2e42", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none" }}>
+                📞 {content.phone || "Telepon"}
+              </a>
+            </div>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             {images.hero.slice(0, 4).map((src, i) => (
-              <div key={i} className="img-zoom" style={{ borderRadius: 6, overflow: "hidden", aspectRatio: "4/3" }}>
+              <div key={i} className="img-zoom" style={{ borderRadius: 8, overflow: "hidden", aspectRatio: "4/3", boxShadow: "0 8px 24px rgba(26,46,66,.15)" }}>
                 <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             ))}
@@ -1721,31 +2065,295 @@ function AboutPage({ content, images }) {
         </div>
       </div>
 
-      {/* Values */}
-      <div style={{ padding: "80px 5%", maxWidth: 1200, margin: "0 auto" }}>
-        <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#1a2e42", marginBottom: 48, textAlign: "center" }}>{content.aboutWhyTitle || "Why Choose Us"}</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 32 }}>
-          {values.map(v => (
-            <div key={v.title} style={{ textAlign: "center", padding: "32px 24px", background: "#f4f9fb", borderRadius: 10 }}>
-              <div style={{ fontSize: 40, marginBottom: 16 }}>{v.icon}</div>
-              <h3 style={{ fontSize: "1.125rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#1a2e42", marginBottom: 10 }}>{v.title}</h3>
-              <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.75 }}>{v.desc}</p>
+      {/* ── STATS STRIP ── */}
+      <div style={{ background: "#1a2e42", padding: "36px 5%" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 24, textAlign: "center" }}>
+          {[
+            { num: "500+", label: "Klien Puas" },
+            { num: "7+", label: "Tahun Pengalaman" },
+            { num: "100+", label: "Event Sukses" },
+            { num: "24/7", label: "Layanan Support" },
+          ].map(s => (
+            <div key={s.label}>
+              <div style={{ fontSize: "clamp(1.75rem,4vw,2.5rem)", fontWeight: 900, color: "#5bc4e0", fontFamily: "'Playfair Display',serif", lineHeight: 1 }}>{s.num}</div>
+              <div style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.65)", marginTop: 6, fontWeight: 500, letterSpacing: ".04em" }}>{s.label}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Contact */}
-      <div style={{ background: "#daeaf3", padding: "70px 5%" }}>
-        <div style={{ maxWidth: 600, margin: "0 auto", textAlign: "center" }}>
-          <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#1a2e42", marginBottom: 16 }}>{content.aboutContactTitle || "Get in Touch"}</h2>
-          <p style={{ fontSize: "0.9375rem", color: "#4e6b80", marginBottom: 24, lineHeight: 1.8 }}>{content.aboutContactSub || "We'd love to help plan your next event."}</p>
-          <div style={{ display: "flex", gap: 20, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href={`mailto:${content.email}`} style={{ fontSize: 14, color: "#3d8fab", display: "flex", alignItems: "center", gap: 6 }}>✉ {content.email}</a>
-            <a href={`tel:${content.phone}`} style={{ fontSize: 14, color: "#3d8fab", display: "flex", alignItems: "center", gap: 6 }}>📞 {content.phone}</a>
+      {/* ── VISI MISI ── */}
+      <div style={{ padding: "80px 5%", maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }} className="grid-2">
+          <div style={{ background: "linear-gradient(135deg, #1a2e42 0%, #2b5f80 100%)", borderRadius: 12, padding: "40px 36px", color: "#fff" }}>
+            <div style={{ fontSize: 36, marginBottom: 20 }}>🎯</div>
+            <h3 style={{ fontSize: "1.5rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, marginBottom: 16, color: "#fff" }}>Visi Kami</h3>
+            <p style={{ fontSize: "0.9375rem", lineHeight: 1.85, color: "rgba(255,255,255,.8)" }}>
+              Menjadi perusahaan travel dan organizer terkemuka di Indonesia yang dikenal atas pelayanan profesional, kreativitas, dan kemampuan mewujudkan momen-momen tak terlupakan bagi setiap klien.
+            </p>
+          </div>
+          <div style={{ background: "#f4f9fb", borderRadius: 12, padding: "40px 36px", borderLeft: "4px solid #2b7a9a" }}>
+            <div style={{ fontSize: 36, marginBottom: 20 }}>🚀</div>
+            <h3 style={{ fontSize: "1.5rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, marginBottom: 16, color: "#1a2e42" }}>Misi Kami</h3>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
+              {["Memberikan layanan terbaik dengan standar profesional tinggi", "Memastikan kepuasan klien di setiap momen yang kami tangani", "Berinovasi dalam layanan travel & event secara berkelanjutan", "Membangun kepercayaan jangka panjang bersama klien dan mitra"].map(m => (
+                <li key={m} style={{ display: "flex", gap: 10, fontSize: "0.9rem", color: "#4e6b80", lineHeight: 1.6 }}>
+                  <span style={{ color: "#2b7a9a", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                  {m}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
+
+      {/* ── WHY CHOOSE US ── */}
+      <div style={{ background: "#f4f9fb", padding: "80px 5%" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 52 }}>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Keunggulan Kami</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#1a2e42" }}>{content.aboutWhyTitle || "Mengapa Memilih Arutala?"}</h2>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
+            {values.map((v, i) => (
+              <div key={v.title} className="hover-lift" style={{ background: "#fff", borderRadius: 12, padding: "32px 28px", boxShadow: "0 2px 12px rgba(26,46,66,.06)", borderTop: "3px solid #2b7a9a", transition: "all .3s" }}>
+                <div style={{ fontSize: 36, marginBottom: 16 }}>{v.icon}</div>
+                <h3 style={{ fontSize: "1.05rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#1a2e42", marginBottom: 10 }}>{v.title}</h3>
+                <p style={{ fontSize: "0.9rem", color: "#4e6b80", lineHeight: 1.75 }}>{v.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── TIMELINE / SEJARAH ── */}
+      <div style={{ padding: "80px 5%" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 52 }}>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Perjalanan Kami</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#1a2e42" }}>Sejarah Arutala</h2>
+          </div>
+          <div style={{ position: "relative" }}>
+            <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 2, background: "linear-gradient(to bottom, #2b7a9a, #c5dde9)", transform: "translateX(-50%)" }} className="hide-sm" />
+            {timeline.map((item, i) => (
+              <div key={item.year} style={{ display: "flex", gap: 32, marginBottom: 40, alignItems: "flex-start", flexDirection: i % 2 === 0 ? "row" : "row-reverse" }} className="hide-sm">
+                <div style={{ flex: 1, textAlign: i % 2 === 0 ? "right" : "left" }}>
+                  <div style={{ background: "#fff", border: "1px solid #ddeef5", borderRadius: 10, padding: "20px 24px", boxShadow: "0 4px 16px rgba(26,46,66,.07)" }}>
+                    <div style={{ fontSize: "0.75rem", color: "#2b7a9a", fontWeight: 700, letterSpacing: ".06em", marginBottom: 6 }}>{item.year}</div>
+                    <h4 style={{ fontSize: "1rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#1a2e42", marginBottom: 8 }}>{item.title}</h4>
+                    <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.7 }}>{item.desc}</p>
+                  </div>
+                </div>
+                <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#2b7a9a", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "0.8125rem", flexShrink: 0, zIndex: 1, boxShadow: "0 0 0 4px #c5dde9" }}>
+                  {i + 1}
+                </div>
+                <div style={{ flex: 1 }} />
+              </div>
+            ))}
+            {/* Mobile timeline */}
+            <div className="show-sm" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {timeline.map((item) => (
+                <div key={item.year} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                  <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#1a2e42", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "0.875rem", flexShrink: 0 }}>{item.year.slice(-2)}</div>
+                  <div style={{ background: "#f4f9fb", borderRadius: 10, padding: "16px 18px", flex: 1 }}>
+                    <div style={{ fontSize: "0.75rem", color: "#2b7a9a", fontWeight: 700, marginBottom: 4 }}>{item.year}</div>
+                    <h4 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#1a2e42", marginBottom: 6 }}>{item.title}</h4>
+                    <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.6 }}>{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── TIM KAMI ── */}
+      <div style={{ background: "#1a2e42", padding: "72px 5%" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 48 }}>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#5bc4e0", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Profesional & Berdedikasi</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#fff" }}>Tim Kami</h2>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
+            {team.map(t => (
+              <div key={t.name} style={{ background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 12, padding: "32px 24px", textAlign: "center", transition: "background .3s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.12)"}
+                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.07)"}>
+                <div style={{ fontSize: 44, marginBottom: 16 }}>{t.icon}</div>
+                <h3 style={{ fontSize: "1rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#fff", marginBottom: 8 }}>{t.name}</h3>
+                <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.6)", fontWeight: 500 }}>{t.role}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── LAYANAN KAMI ── */}
+      <div style={{ padding: "80px 5%", background: "#fff" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 52 }}>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Apa yang Kami Tawarkan</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#1a2e42" }}>Layanan Lengkap Kami</h2>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 28 }}>
+            {[
+              { icon: "✈️", title: "Travel & Wisata", color: "#2b7a9a", items: ["Paket Wisata Lokal & Mancanegara", "Tiket Pesawat & Hotel", "Tour Guide Profesional", "Itinerary Kustom", "Transportasi Pribadi"] },
+              { icon: "💍", title: "Wedding Organizer", color: "#8e44ad", items: ["Konsultasi & Perencanaan", "Dekorasi & Venue", "Koordinasi Hari H", "Dokumentasi & Foto", "Catering & Entertainment"] },
+              { icon: "🎉", title: "Event Organizer", color: "#e67e22", items: ["Corporate Event", "Birthday & Anniversary", "Gathering & Outbound", "Seminar & Conference", "Pesta Perpisahan & Reunian"] },
+            ].map(s => (
+              <div key={s.title} style={{ border: "1px solid #ddeef5", borderRadius: 12, overflow: "hidden" }}>
+                <div style={{ background: s.color, padding: "24px 28px", display: "flex", alignItems: "center", gap: 14 }}>
+                  <span style={{ fontSize: 32 }}>{s.icon}</span>
+                  <h3 style={{ fontSize: "1.125rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#fff" }}>{s.title}</h3>
+                </div>
+                <div style={{ padding: "20px 28px" }}>
+                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+                    {s.items.map(item => (
+                      <li key={item} style={{ display: "flex", gap: 10, fontSize: "0.9rem", color: "#4e6b80" }}>
+                        <span style={{ color: s.color, fontWeight: 700 }}>→</span> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── CONTACT US ── */}
+      <div style={{ background: "linear-gradient(135deg, #c5dde9 0%, #a8cfe0 100%)", padding: "80px 5%" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 52 }}>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Hubungi Kami</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#1a2e42" }}>Contact Us</h2>
+            <p style={{ fontSize: "1rem", color: "#4e6b80", marginTop: 12, maxWidth: 480, margin: "12px auto 0" }}>Siap membantu Anda merencanakan momen terbaik. Hubungi kami sekarang!</p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 48 }} className="contact-grid">
+            {/* Info kontak */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+              {[
+                { icon: "📞", label: "Telepon / WhatsApp", value: content.phone || "085745571442", href: `https://wa.me/6285745571442`, type: "link" },
+                { icon: "✉️", label: "Email", value: content.email || "arutalaorganizer@gmail.com", href: `mailto:${content.email}`, type: "link" },
+                { icon: "📍", label: "Alamat", value: "Malang, Jawa Timur, Indonesia", type: "text" },
+                { icon: "🕐", label: "Jam Operasional", value: "Senin – Sabtu: 08.00 – 20.00 WIB", type: "text" },
+              ].map(info => (
+                <div key={info.label} style={{ display: "flex", gap: 16, alignItems: "flex-start", background: "rgba(255,255,255,.7)", borderRadius: 10, padding: "18px 20px", backdropFilter: "blur(8px)" }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 10, background: "#1a2e42", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{info.icon}</div>
+                  <div>
+                    <div style={{ fontSize: "0.75rem", color: "#7a9db0", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 4 }}>{info.label}</div>
+                    {info.type === "link"
+                      ? <a href={info.href} target={info.href.startsWith("https") ? "_blank" : "_self"} rel="noopener noreferrer" style={{ fontSize: "0.9375rem", color: "#2b7a9a", fontWeight: 600, textDecoration: "none" }}>{info.value}</a>
+                      : <div style={{ fontSize: "0.9375rem", color: "#1a2e42", fontWeight: 500 }}>{info.value}</div>
+                    }
+                  </div>
+                </div>
+              ))}
+
+              {/* Social Media */}
+              <div style={{ background: "rgba(255,255,255,.7)", borderRadius: 10, padding: "18px 20px", backdropFilter: "blur(8px)" }}>
+                <div style={{ fontSize: "0.75rem", color: "#7a9db0", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 14 }}>Media Sosial</div>
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                  {[
+                    { label: "WhatsApp", icon: "💬", href: "https://wa.me/6285745571442", color: "#25d366" },
+                    { label: "Instagram", icon: "📷", href: "https://instagram.com", color: "#e1306c" },
+                    { label: "Facebook", icon: "📘", href: "https://facebook.com", color: "#1877f2" },
+                  ].map(s => (
+                    <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+                      style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: s.color, color: "#fff", borderRadius: 20, fontSize: "0.8125rem", fontWeight: 600, textDecoration: "none", transition: "opacity .2s" }}
+                      onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                      onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                      {s.icon} {s.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Form */}
+            <div style={{ background: "#fff", borderRadius: 14, padding: "36px 32px", boxShadow: "0 8px 40px rgba(26,46,66,.12)" }}>
+              <h3 style={{ fontSize: "1.25rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#1a2e42", marginBottom: 24 }}>Kirim Pesan</h3>
+              {contactSent ? (
+                <div style={{ textAlign: "center", padding: "40px 20px" }}>
+                  <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
+                  <h4 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.25rem", color: "#27ae60", marginBottom: 8 }}>Pesan Terkirim!</h4>
+                  <p style={{ color: "#4e6b80", fontSize: "0.9rem" }}>Kami akan segera menghubungi Anda melalui WhatsApp.</p>
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                    <div>
+                      <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Nama *</label>
+                      <input value={contactForm.name} onChange={e => setContactForm(p => ({ ...p, name: e.target.value }))}
+                        placeholder="Nama lengkap"
+                        style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", transition: "border .2s" }}
+                        onFocus={e => e.target.style.borderColor = "#2b7a9a"}
+                        onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>No. HP</label>
+                      <input value={contactForm.phone} onChange={e => setContactForm(p => ({ ...p, phone: e.target.value }))}
+                        placeholder="08xx-xxxx-xxxx"
+                        style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", transition: "border .2s" }}
+                        onFocus={e => e.target.style.borderColor = "#2b7a9a"}
+                        onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Email</label>
+                    <input value={contactForm.email} onChange={e => setContactForm(p => ({ ...p, email: e.target.value }))}
+                      placeholder="email@domain.com"
+                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", transition: "border .2s" }}
+                      onFocus={e => e.target.style.borderColor = "#2b7a9a"}
+                      onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Keperluan</label>
+                    <select value={contactForm.subject} onChange={e => setContactForm(p => ({ ...p, subject: e.target.value }))}
+                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", background: "#fff", color: contactForm.subject ? "#1a2e42" : "#9bb5c7" }}>
+                      <option value="">-- Pilih keperluan --</option>
+                      <option value="Travel & Wisata">✈️ Travel & Wisata</option>
+                      <option value="Wedding Organizer">💍 Wedding Organizer</option>
+                      <option value="Event Organizer">🎉 Event Organizer</option>
+                      <option value="Konsultasi">💬 Konsultasi Umum</option>
+                      <option value="Lainnya">📋 Lainnya</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Pesan *</label>
+                    <textarea value={contactForm.message} onChange={e => setContactForm(p => ({ ...p, message: e.target.value }))}
+                      placeholder="Ceritakan kebutuhan Anda..."
+                      rows={4}
+                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", resize: "vertical", lineHeight: 1.65, transition: "border .2s" }}
+                      onFocus={e => e.target.style.borderColor = "#2b7a9a"}
+                      onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+                  </div>
+                  <button onClick={handleContactSubmit}
+                    style={{ padding: "13px 28px", background: "#1a2e42", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", cursor: "pointer", transition: "background .2s", display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "#2b7a9a"}
+                    onMouseLeave={e => e.currentTarget.style.background = "#1a2e42"}>
+                    💬 Kirim via WhatsApp
+                  </button>
+                  <p style={{ fontSize: "0.8rem", color: "#9bb5c7", textAlign: "center" }}>Pesan akan diteruskan ke WhatsApp kami untuk respons lebih cepat.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── MAP LOKASI ── */}
+      <div style={{ padding: "0" }}>
+        <iframe
+          title="Lokasi Arutala Organizer"
+          src="https://www.google.com/maps?q=Malang,Jawa+Timur,Indonesia&output=embed&z=12"
+          width="100%" height="300"
+          style={{ border: 0, display: "block" }}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
+
     </div>
   );
 }
@@ -1756,7 +2364,7 @@ function AboutPage({ content, images }) {
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
   const [user, setUser] = useState(null);
-  const [page, setPage] = useState("home");   // home | about | news | shop | destinations
+  const [page, setPage] = useState("home");   // home | about | news | shop | destinations | services
   const [readPost, setReadPost] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
@@ -1791,6 +2399,34 @@ export default function BricksyTravel() {
   const [editRoleId, setEditRoleId] = useState(null);
   const [profileEditMode, setProfileEditMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  /* ── Desktop cursor glow + scroll-reveal (pointer:fine only) ── */
+  useEffect(() => {
+    const isDesktop = window.matchMedia("(pointer:fine)").matches;
+    if (!isDesktop) return;
+
+    // Cursor glow
+    const dot = document.createElement("div");
+    dot.id = "cursor-glow";
+    document.body.appendChild(dot);
+    const moveDot = (e) => { dot.style.left = e.clientX + "px"; dot.style.top = e.clientY + "px"; };
+    const enterLink = () => dot.classList.add("expanded");
+    const leaveLink = () => dot.classList.remove("expanded");
+    document.addEventListener("mousemove", moveDot);
+    document.querySelectorAll("a,button").forEach(el => { el.addEventListener("mouseenter", enterLink); el.addEventListener("mouseleave", leaveLink); });
+
+    // Scroll-reveal IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".anim-fade-up, .anim-zoom").forEach(el => observer.observe(el));
+
+    return () => {
+      document.removeEventListener("mousemove", moveDot);
+      if (dot.parentNode) dot.parentNode.removeChild(dot);
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -2002,12 +2638,21 @@ export default function BricksyTravel() {
     { key: "news", label: data.content.nav3 },
     { key: "shop", label: data.content.nav4 },
     { key: "destinations", label: data.content.nav5 },
+    { key: "services", label: data.content.nav6 || "Layanan Kami" },
   ];
 
   /* ─── RENDER ─── */
   return (
     <div className="page-wrap" style={{ position: "relative", minHeight: "100vh" }}>
       <GS />
+
+      {/* DESKTOP CURSOR GLOW + SCROLL ANIMATIONS */}
+      {typeof window !== "undefined" && (() => {
+        // Only on pointer:fine (mouse/desktop)
+        const isDesktop = window.matchMedia && window.matchMedia("(pointer:fine)").matches;
+        if (!isDesktop) return null;
+        return null; // rendered via useEffect below
+      })()}
 
       {/* NOTIFICATION */}
       {notif && (
@@ -2077,7 +2722,8 @@ export default function BricksyTravel() {
         <>
           {/* NAVBAR */}
           <nav style={{ position: "sticky", top: 0, zIndex: 100, background: "rgba(250,252,253,.97)",
-            backdropFilter: "blur(12px)", borderBottom: "1px solid #ddeef5", padding: "0 5%" }}>
+            backdropFilter: "blur(12px)", borderBottom: "1px solid #ddeef5", padding: "0 5%",
+            isolation: "isolate" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 72, maxWidth: 1200, margin: "0 auto" }}>
               <button onClick={() => navigateTo("home")} style={{ border: "none", background: "none", padding: 0 }}>
                 <LogoDisplay content={data.content} size="nav" />
@@ -2120,29 +2766,45 @@ export default function BricksyTravel() {
                 style={{ fontSize: 22, color: "#1a2e42" }} aria-label="Menu">☰</button>
             </div>
             {mobileMenu && (
-              <div style={{ padding: "16px 0 20px", borderTop: "1px solid #ddeef5", display: "flex", flexDirection: "column", gap: 4 }}>
+              <div style={{
+                position: "absolute", top: "100%", left: 0, right: 0,
+                background: "rgba(250,252,253,0.99)", backdropFilter: "blur(16px)",
+                borderTop: "2px solid #2b7a9a", borderBottom: "1px solid #ddeef5",
+                boxShadow: "0 12px 40px rgba(26,46,66,0.18)",
+                display: "flex", flexDirection: "column", gap: 2,
+                padding: "12px 5% 20px", zIndex: 200
+              }}>
                 {navItems.map(item => (
                   <button key={item.key} onClick={() => navigateTo(item.key)}
                     className="mobile-nav-item"
-                    style={{ fontSize: "1rem", color: page === item.key ? "#2b7a9a" : "#334f65", fontWeight: page === item.key ? 600 : 400, border: "none", background: page === item.key ? "#f0f7fa" : "none", textAlign: "left", padding: "12px 8px", borderRadius: 6, width: "100%" }}>
+                    style={{
+                      fontSize: "1rem", color: page === item.key ? "#2b7a9a" : "#334f65",
+                      fontWeight: page === item.key ? 700 : 400, border: "none",
+                      background: page === item.key ? "#e8f4fd" : "transparent",
+                      textAlign: "left", padding: "13px 16px", borderRadius: 8, width: "100%",
+                      borderLeft: page === item.key ? "3px solid #2b7a9a" : "3px solid transparent",
+                      transition: "all .15s"
+                    }}
+                    onMouseEnter={e => { if (page !== item.key) { e.currentTarget.style.background = "#f4f9fb"; e.currentTarget.style.borderLeft = "3px solid #b8d4e3"; } }}
+                    onMouseLeave={e => { if (page !== item.key) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeft = "3px solid transparent"; } }}>
                     {item.label}
                   </button>
                 ))}
                 {user && (
-                  <div style={{ padding: "10px 8px", borderTop: "1px solid #ddeef5", marginTop: 8 }}>
-                    <div style={{ fontSize: ".8125rem", color: "#6b8999", marginBottom: 8 }}>Login sebagai <strong style={{ color: "#1a2e42" }}>{user.name || user.username}</strong></div>
+                  <div style={{ padding: "12px 4px 4px", borderTop: "1px solid #ddeef5", marginTop: 8 }}>
+                    <div style={{ fontSize: ".8125rem", color: "#6b8999", marginBottom: 10, padding: "0 12px" }}>Login sebagai <strong style={{ color: "#1a2e42" }}>{user.name || user.username}</strong></div>
                     <button onClick={() => { setShowAdmin(true); setMobileMenu(false); }}
-                      style={{ fontSize: ".875rem", color: "#fff", background: "#1a2e42", border: "none", borderRadius: 6, padding: "8px 16px", fontWeight: 600, width: "100%", marginBottom: 6 }}>
+                      style={{ fontSize: ".875rem", color: "#fff", background: "#1a2e42", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, width: "100%", marginBottom: 8 }}>
                       Admin Panel
                     </button>
                     <button onClick={() => { logout(); setMobileMenu(false); }}
-                      style={{ fontSize: ".875rem", color: "#e74c3c", background: "none", border: "1px solid #e74c3c", borderRadius: 6, padding: "7px 16px", width: "100%" }}>
+                      style={{ fontSize: ".875rem", color: "#e74c3c", background: "#fff5f5", border: "1px solid #e74c3c", borderRadius: 8, padding: "9px 16px", width: "100%" }}>
                       Logout
                     </button>
                   </div>
                 )}
                 {!user && <button onClick={() => { setShowLogin(true); setMobileMenu(false); }}
-                  style={{ padding: "12px 8px", border: "none", background: "none", fontSize: "1rem", color: "#2b7a9a", textAlign: "left", fontWeight: 600 }}>Login</button>}
+                  style={{ padding: "13px 16px", border: "none", background: "#1a2e42", borderRadius: 8, fontSize: "1rem", color: "#fff", textAlign: "center", fontWeight: 600, marginTop: 8 }}>Login</button>}
               </div>
             )}
           </nav>
@@ -2162,7 +2824,7 @@ export default function BricksyTravel() {
                   <section className="hero-section" style={{ background: "#c5dde9" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="grid-2">
                       <div className="fade-in">
-                        <h1 className="display" style={{ fontSize: "clamp(2.4rem,6vw,4rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 20 }}>
+                        <h1 className="display hero-title-anim" style={{ fontSize: "clamp(2.4rem,6vw,4rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 20 }}>
                           {data.content.heroTitle}
                         </h1>
                         <p style={{ fontSize: "1rem", color: "#334f65", lineHeight: 1.85, maxWidth: 360, marginBottom: 32 }}>
@@ -2197,7 +2859,27 @@ export default function BricksyTravel() {
                         <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.9, fontStyle: "italic", maxWidth: 340, marginBottom: 24 }}>
                           {data.content.advQuote}
                         </p>
-                        <p className="display" style={{ fontSize: "1.75rem", fontStyle: "italic", color: "#2b7a9a", fontWeight: 700 }}>freedom</p>
+                        {/* Menu tombol layanan */}
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 20 }}>
+                          {[
+                            { label: "🎉 Event Plan", key: "destinations" },
+                            { label: "✈️ Traveling", key: "shop" },
+                            { label: "💍 Wedding Organizer", key: "news" },
+                          ].map(item => (
+                            <button key={item.key} onClick={() => navigateTo(item.key)}
+                              style={{ padding: "9px 18px", background: "#f4f9fb", color: "#1a2e42", border: "1.5px solid #ddeef5", borderRadius: 6, fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer", transition: "all .2s" }}
+                              onMouseEnter={e => { e.currentTarget.style.background = "#1a2e42"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#1a2e42"; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = "#f4f9fb"; e.currentTarget.style.color = "#1a2e42"; e.currentTarget.style.borderColor = "#ddeef5"; }}>
+                              {item.label}
+                            </button>
+                          ))}
+                        </div>
+                        <button onClick={() => navigateTo("services")}
+                          style={{ padding: "13px 28px", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s", fontFamily: "'Playfair Display',serif", fontStyle: "italic" }}
+                          onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                          Layanan Kami →
+                        </button>
                       </div>
                       <div className="adv-img-row">
                         <div className="img-zoom" style={{ flex: 1, borderRadius: 6, overflow: "hidden" }}>
@@ -2505,6 +3187,9 @@ export default function BricksyTravel() {
               {/* ABOUT PAGE */}
               {page === "about" && <AboutPage content={data.content} images={data.images} />}
 
+              {/* SERVICES PAGE */}
+              {page === "services" && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} />}
+
               {/* NEWS / SHOP / DESTINATIONS */}
               {["news", "shop", "destinations"].includes(page) && (
                 <SectionPage
@@ -2708,6 +3393,7 @@ export default function BricksyTravel() {
                 { id: "cms", icon: "✎", label: "Posts / CMS", access: canEdit },
                 { id: "images", icon: "🖼", label: "Images", access: canEdit },
                 { id: "about", icon: "🏢", label: "About Us", access: isAdmin },
+                { id: "services", icon: "🛎", label: "Layanan / Paket", access: isAdmin },
                 { id: "content", icon: "🔤", label: "Site Content", access: isAdmin },
                 { id: "messages", icon: "✉", label: "Messages", access: canCS },
                 { id: "users", icon: "◎", label: "Users", access: isAdmin },
@@ -3259,6 +3945,9 @@ export default function BricksyTravel() {
                     { label: "Nav: News", key: "nav3" },
                     { label: "Nav: Shop", key: "nav4" },
                     { label: "Nav: Destinations", key: "nav5" },
+                    { label: "Nav: Layanan Kami", key: "nav6" },
+                    { label: "Layanan — Judul Halaman", key: "servicesPageTitle" },
+                    { label: "Layanan — Subjudul Halaman", key: "servicesPageSub", multiline: true },
                   ].map(f => (
                     <div key={f.key} style={{ background: "#fff", borderRadius: 8, padding: "18px 20px", marginBottom: 14, boxShadow: "0 1px 4px rgba(0,0,0,.05)" }}>
                       <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>{f.label}</label>
@@ -3273,6 +3962,171 @@ export default function BricksyTravel() {
                   ))}
                 </div>
               )}
+
+              )}
+
+              {/* SERVICES / PAKET LAYANAN */}
+              {adminTab === "services" && isAdmin && (() => {
+                const svcs = data.services || [];
+                const [editSvc, setEditSvc] = useState(null); // null | "new" | service obj
+                const [svcForm, setSvcForm] = useState({});
+
+                const openNew = () => {
+                  setSvcForm({ id: Date.now(), title: "", badge: "", badgeColor: "#2b7a9a", price: "", priceNote: "/ event", image: "", description: "", features: [], highlight: false });
+                  setEditSvc("new");
+                };
+                const openEdit = (s) => { setSvcForm({ ...s, features: [...(s.features||[])] }); setEditSvc(s.id); };
+                const cancelEdit = () => { setEditSvc(null); setSvcForm({}); };
+
+                const saveSvc = () => {
+                  if (!svcForm.title?.trim()) return notify("Judul paket wajib diisi.", "error");
+                  const existing = svcs;
+                  const idx = existing.findIndex(x => x.id === svcForm.id);
+                  const updated = idx >= 0 ? existing.map((x,i) => i === idx ? svcForm : x) : [...existing, svcForm];
+                  save({ ...data, services: updated });
+                  setEditSvc(null); setSvcForm({});
+                  notify("Paket layanan disimpan!");
+                };
+                const deleteSvc = (id) => {
+                  if (!window.confirm("Hapus paket ini?")) return;
+                  save({ ...data, services: svcs.filter(x => x.id !== id) });
+                  notify("Paket dihapus.");
+                };
+                const updateFeature = (i, val) => {
+                  const f = [...(svcForm.features||[])];
+                  f[i] = val;
+                  setSvcForm(p => ({ ...p, features: f }));
+                };
+                const addFeature = () => setSvcForm(p => ({ ...p, features: [...(p.features||[]), ""] }));
+                const removeFeature = (i) => {
+                  const f = [...(svcForm.features||[])];
+                  f.splice(i, 1);
+                  setSvcForm(p => ({ ...p, features: f }));
+                };
+
+                return (
+                  <div className="fade-in">
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+                      <div>
+                        <h1 style={{ fontSize: 24, fontWeight: 500, color: "#1e3248", marginBottom: 4 }}>Layanan / Paket</h1>
+                        <p style={{ fontSize: 12, color: "#7a9db0" }}>Kelola paket layanan yang tampil di halaman Layanan Kami.</p>
+                      </div>
+                      <button onClick={openNew}
+                        style={{ padding: "9px 20px", background: "#1e3248", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
+                        + Tambah Paket
+                      </button>
+                    </div>
+
+                    {/* Form Edit/New */}
+                    {editSvc !== null && (
+                      <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 28, boxShadow: "0 4px 16px rgba(0,0,0,.08)", borderTop: "4px solid #3d8fab" }}>
+                        <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1e3248", marginBottom: 20 }}>
+                          {editSvc === "new" ? "➕ Tambah Paket Baru" : "✏ Edit Paket"}
+                        </h2>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+                          {[
+                            { label: "Judul Paket *", key: "title", placeholder: "Paket Wedding Premium" },
+                            { label: "Harga (teks)", key: "price", placeholder: "Rp 25.000.000" },
+                            { label: "Keterangan Harga", key: "priceNote", placeholder: "/ wedding" },
+                            { label: "Badge (opsional)", key: "badge", placeholder: "Best Seller" },
+                            { label: "Warna Badge (hex)", key: "badgeColor", placeholder: "#e67e22" },
+                            { label: "URL Gambar", key: "image", placeholder: "https://..." },
+                          ].map(f => (
+                            <div key={f.key}>
+                              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
+                              <input value={svcForm[f.key] || ""} onChange={e => setSvcForm(p => ({ ...p, [f.key]: e.target.value }))}
+                                placeholder={f.placeholder}
+                                style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                            </div>
+                          ))}
+                        </div>
+                        <div style={{ marginBottom: 16 }}>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Deskripsi</label>
+                          <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
+                            rows={3} placeholder="Deskripsi singkat paket layanan..."
+                            style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.6 }} />
+                        </div>
+
+                        {/* Preview gambar */}
+                        {svcForm.image && (
+                          <div style={{ marginBottom: 16 }}>
+                            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Preview Gambar</label>
+                            <img src={svcForm.image} alt="preview" style={{ height: 100, maxWidth: 200, objectFit: "cover", borderRadius: 6, border: "1px solid #ddeef5" }} onError={e => e.target.style.display="none"} />
+                          </div>
+                        )}
+
+                        {/* Upload gambar Cloudinary */}
+                        <div style={{ marginBottom: 16 }}>
+                          <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Upload Gambar</label>
+                          <input type="file" accept="image/*" onChange={async e => {
+                            const file = e.target.files?.[0]; if (!file) return;
+                            try { notify("⏳ Mengupload..."); const url = await uploadToCloudinary(file); setSvcForm(p => ({ ...p, image: url })); notify("Gambar berhasil diupload!"); }
+                            catch { notify("Gagal upload gambar.", "error"); }
+                          }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #3d8fab", borderRadius: 6, background: "#f0f9fc", color: "#3d8fab", width: "100%" }} />
+                        </div>
+
+                        {/* Features */}
+                        <div style={{ marginBottom: 16 }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                            <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase" }}>Fitur / Yang Termasuk</label>
+                            <button onClick={addFeature} style={{ fontSize: 12, padding: "4px 12px", background: "#e8f8ef", color: "#27ae60", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 700 }}>+ Tambah</button>
+                          </div>
+                          {(svcForm.features || []).map((feat, i) => (
+                            <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+                              <input value={feat} onChange={e => updateFeature(i, e.target.value)}
+                                placeholder={`Fitur ${i+1}...`}
+                                style={{ flex: 1, padding: "8px 10px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                              <button onClick={() => removeFeature(i)} style={{ padding: "8px 12px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: 700 }}>✕</button>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Highlight toggle */}
+                        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                          <input type="checkbox" id="highlight-toggle" checked={!!svcForm.highlight} onChange={e => setSvcForm(p => ({ ...p, highlight: e.target.checked }))} style={{ width: 16, height: 16, cursor: "pointer" }} />
+                          <label htmlFor="highlight-toggle" style={{ fontSize: 13, color: "#1e3248", fontWeight: 600, cursor: "pointer" }}>Tandai sebagai Pilihan Utama (highlight)</label>
+                        </div>
+
+                        <div style={{ display: "flex", gap: 10 }}>
+                          <button onClick={saveSvc} style={{ padding: "10px 22px", background: "#1e3248", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan Paket</button>
+                          <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#f4f9fb", color: "#6b8999", border: "1px solid #d0e4ee", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* List existing packages */}
+                    {svcs.length === 0 && editSvc === null ? (
+                      <div style={{ background: "#fff", borderRadius: 10, padding: "60px 20px", textAlign: "center", color: "#7a9db0", boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
+                        <div style={{ fontSize: 40, marginBottom: 12 }}>🛎</div>
+                        <p style={{ fontSize: 14 }}>Belum ada paket layanan. Klik "+ Tambah Paket" untuk memulai.</p>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                        {svcs.map(svc => (
+                          <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "18px 20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", gap: 16, alignItems: "flex-start", borderLeft: svc.highlight ? "4px solid #3d8fab" : "4px solid #ddeef5" }}>
+                            {svc.image && (
+                              <img src={svc.image} alt={svc.title} style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => e.target.style.display="none"} />
+                            )}
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 4 }}>
+                                <span style={{ fontSize: 14, fontWeight: 700, color: "#1e3248" }}>{svc.title}</span>
+                                {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor||"#2b7a9a", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
+                                {svc.highlight && <span style={{ fontSize: 10, background: "#1e3248", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
+                              </div>
+                              <div style={{ fontSize: 13, fontWeight: 700, color: "#3d8fab" }}>{svc.price}<span style={{ color: "#7a9db0", fontWeight: 400 }}> {svc.priceNote}</span></div>
+                              <div style={{ fontSize: 12, color: "#7a9db0", marginTop: 4 }}>{(svc.features||[]).length} fitur termasuk</div>
+                            </div>
+                            <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                              <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: "#f4f9fb", color: "#1e3248", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
+                              <button onClick={() => deleteSvc(svc.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
 
               {/* MESSAGES */}
               {adminTab === "messages" && canCS && (
