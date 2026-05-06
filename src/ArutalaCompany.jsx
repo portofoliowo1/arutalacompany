@@ -1612,7 +1612,7 @@ function ArticleDetail({ post, onBack }) {
     <div className="fade-in" style={{ minHeight: "100vh", background: "#fff" }}>
       {/* Back Bar */}
       <div className="article-back-bar" style={{ background: "rgba(250,252,253,.96)", backdropFilter: "blur(10px)", borderBottom: "1px solid #ddeef5",
-        padding: "12px 5%", position: "sticky", top: 64, zIndex: 90 }}>
+        padding: "12px 5%", position: "sticky", top: 72, zIndex: 90 }}>
         <button onClick={onBack} style={{ fontSize: 13, color: "#3d8fab", display: "flex", alignItems: "center", gap: 6, fontWeight: 500 }}>
           ← Back
         </button>
@@ -1807,7 +1807,7 @@ function ServicesPage({ content, services, navigateTo }) {
     return (
       <div style={{ minHeight: "100vh", background: "#f4f9fb" }}>
         {/* Back Bar */}
-        <div className="article-back-bar" style={{ background: "rgba(250,252,253,.96)", backdropFilter: "blur(10px)", borderBottom: "1px solid #ddeef5", padding: "12px 5%", position: "sticky", top: 64, zIndex: 90 }}>
+        <div className="article-back-bar" style={{ background: "rgba(250,252,253,.96)", backdropFilter: "blur(10px)", borderBottom: "1px solid #ddeef5", padding: "12px 5%", position: "sticky", top: 72, zIndex: 90 }}>
           <button onClick={closeDetail} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#2b7a9a", fontWeight: 600, fontSize: "0.875rem", cursor: "pointer" }}>
             ← Kembali ke Layanan
           </button>
@@ -3241,8 +3241,8 @@ export default function BricksyTravel() {
       {/* ══════ PUBLIC WEBSITE ══════ */}
       {!showAdmin && (
         <>
-          {/* NAVBAR */}
-          <nav style={{ position: "sticky", top: 0, zIndex: 100, background: "rgba(250,252,253,.97)",
+          {/* NAVBAR — Fixed floating always */}
+          <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(250,252,253,.97)",
             backdropFilter: "blur(12px)", borderBottom: "1px solid #ddeef5", padding: "0 5%",
             isolation: "isolate" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 72, maxWidth: 1200, margin: "0 auto" }}>
@@ -3331,6 +3331,44 @@ export default function BricksyTravel() {
               </div>
             )}
           </nav>
+
+          {/* Spacer to push content below fixed navbar */}
+          <div style={{ height: 72 }} />
+
+          {/* ── WHATSAPP FLOATING BUTTON ── */}
+          <a href="https://wa.me/6285745571442" target="_blank" rel="noopener noreferrer"
+            title="Hubungi Kami via WhatsApp"
+            style={{
+              position: "fixed", bottom: 24, right: 20, zIndex: 9990,
+              width: 58, height: 58, borderRadius: "50%",
+              background: "#25d366",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 4px 20px rgba(37,211,102,.5), 0 2px 8px rgba(0,0,0,.2)",
+              textDecoration: "none", transition: "transform .2s, box-shadow .2s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.12)"; e.currentTarget.style.boxShadow = "0 6px 28px rgba(37,211,102,.65), 0 4px 12px rgba(0,0,0,.25)"; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(37,211,102,.5), 0 2px 8px rgba(0,0,0,.2)"; }}>
+            {/* WhatsApp SVG Icon */}
+            <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 3C8.82 3 3 8.82 3 16c0 2.38.65 4.61 1.78 6.53L3 29l6.64-1.74A12.93 12.93 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3z" fill="#fff"/>
+              <path d="M16 5.5c-5.79 0-10.5 4.71-10.5 10.5 0 2.03.58 3.93 1.59 5.54l.28.45-.97 3.54 3.65-.95.43.25A10.44 10.44 0 0 0 16 26.5c5.79 0 10.5-4.71 10.5-10.5S21.79 5.5 16 5.5zm5.32 14.57c-.22.62-1.28 1.18-1.76 1.23-.45.05-.87.22-2.93-.61-2.49-1-4.07-3.54-4.2-3.7-.12-.17-.99-1.32-.99-2.52 0-1.2.63-1.79.85-2.03.22-.25.49-.31.65-.31l.47.01c.15.01.36-.06.56.43.21.5.72 1.76.78 1.89.07.13.11.28.02.45-.08.17-.13.28-.25.43l-.38.44c-.12.13-.25.26-.11.51.14.25.63 1.04 1.35 1.68.93.83 1.71 1.09 1.96 1.21.25.12.39.1.54-.06.15-.16.62-.72.78-.97.16-.25.33-.21.55-.13.22.08 1.41.67 1.65.79.24.12.4.18.46.28.06.1.06.58-.16 1.2z" fill="#25d366"/>
+            </svg>
+            {/* Pulse ring animation */}
+            <style>{`
+              @keyframes waPulse {
+                0% { transform: scale(1); opacity: .6; }
+                100% { transform: scale(1.7); opacity: 0; }
+              }
+              .wa-float-ring {
+                position: absolute; inset: 0; border-radius: 50%;
+                border: 2px solid #25d366;
+                animation: waPulse 2s ease-out infinite;
+                pointer-events: none;
+              }
+              @media(max-width:768px){ .hero-arrow{ display:none !important; } }
+            `}</style>
+            <div className="wa-float-ring" />
+          </a>
 
           {/* ── ARTICLE DETAIL ── */}
           {readPost && (
