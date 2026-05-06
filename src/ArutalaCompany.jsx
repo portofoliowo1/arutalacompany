@@ -867,17 +867,17 @@ const GS = () => (
 );
 
 /* ─────────────── CEF: Content Edit Field (outside main to prevent remount) ─────────────── */
-function CEF({ val, multiline, onChange, onSave }) {
+function CEF({ val, multiline, rows, onChange, onSave }) {
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "flex-start", width: "100%" }}>
       {multiline
-        ? <textarea value={val} onChange={onChange}
-            style={{ flex: 1, padding: "8px 10px", border: "1px solid #b8d4e3", borderRadius: 6, fontSize: 14, resize: "vertical", minHeight: 80 }} />
-        : <input value={val} onChange={onChange}
+        ? <textarea value={val ?? ""} onChange={onChange} rows={rows || 4}
+            style={{ flex: 1, padding: "8px 10px", border: "1px solid #b8d4e3", borderRadius: 6, fontSize: 14, resize: "vertical", minHeight: 80, lineHeight: 1.6, whiteSpace: "pre-wrap", fontFamily: "inherit" }} />
+        : <input value={val ?? ""} onChange={onChange}
             style={{ flex: 1, padding: "8px 10px", border: "1px solid #b8d4e3", borderRadius: 6, fontSize: 14 }} />
       }
       <button onClick={onSave}
-        style={{ padding: "8px 14px", background: "#3d8fab", color: "#fff", borderRadius: 6, fontSize: 12, border: "none" }}>Save</button>
+        style={{ padding: "8px 14px", background: "#3d8fab", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", flexShrink: 0 }}>Save</button>
     </div>
   );
 }
@@ -1671,7 +1671,7 @@ function ArticleDetail({ post, onBack }) {
           {post.price && <span style={{ fontSize: "1.375rem", fontWeight: 700, color: "#1a2e42", fontFamily: "'Playfair Display',serif", marginLeft: "auto" }}>{post.price}</span>}
         </div>
         {post.excerpt && (
-          <p style={{ fontSize: "1.125rem", color: "#334f65", lineHeight: 1.85, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400 }}>
+          <p style={{ fontSize: "1.125rem", color: "#334f65", lineHeight: 1.85, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400, whiteSpace: "pre-wrap" }}>
             {post.excerpt}
           </p>
         )}
@@ -1896,7 +1896,7 @@ function ServicesPage({ content, services, navigateTo }) {
             <div>
               <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 10 }}>Detail Paket</div>
               <h1 className="display" style={{ fontSize: "clamp(1.75rem,3.5vw,2.5rem)", fontWeight: 900, color: "#1a2e42", lineHeight: 1.1, marginBottom: 16 }}>{svc.title}</h1>
-              <p style={{ fontSize: "1rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 28 }}>{svc.description}</p>
+              <p style={{ fontSize: "1rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 28, whiteSpace: "pre-wrap" }}>{svc.description}</p>
 
               {/* Price Box */}
               <div style={{ background: svc.highlight ? "linear-gradient(135deg,#1a2e42,#2b7a9a)" : "#f4f9fb", borderRadius: 12, padding: "22px 26px", marginBottom: 28, border: svc.highlight ? "none" : "1px solid #ddeef5" }}>
@@ -1956,7 +1956,7 @@ function ServicesPage({ content, services, navigateTo }) {
         <div style={{ position: "relative", zIndex: 1, maxWidth: 680, margin: "0 auto" }}>
           <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "rgba(255,255,255,.6)", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Apa yang Kami Tawarkan</div>
           <h1 className="display" style={{ fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 18 }}>{content.servicesPageTitle || "Paket Layanan Kami"}</h1>
-          <p style={{ fontSize: "1.0625rem", color: "rgba(255,255,255,.75)", lineHeight: 1.8 }}>{content.servicesPageSub || "Pilih kategori layanan sesuai kebutuhan Anda."}</p>
+          <p style={{ fontSize: "1.0625rem", color: "rgba(255,255,255,.75)", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{content.servicesPageSub || "Pilih kategori layanan sesuai kebutuhan Anda."}</p>
         </div>
       </div>
 
@@ -2315,7 +2315,7 @@ function AboutPage({ content, images, teamMembers }) {
             <h1 className="display" style={{ fontSize: "clamp(2.25rem,5vw,3.75rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 24 }}>
               {content.aboutHeroTitle || "Arutala Travel & Organizer"}
             </h1>
-            <p style={{ fontSize: "1.0625rem", color: "#2d4f65", lineHeight: 1.9, maxWidth: 420, marginBottom: 32 }}>
+            <p style={{ fontSize: "1.0625rem", color: "#2d4f65", lineHeight: 1.9, maxWidth: 420, marginBottom: 32, whiteSpace: "pre-wrap" }}>
               {content.aboutHeroSub || content.aboutText || "Mitra terpercaya Anda untuk perjalanan wisata, pernikahan impian, dan event berkesan. Kami hadir untuk mewujudkan setiap momen menjadi kenangan tak terlupakan."}
             </p>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
@@ -2832,7 +2832,7 @@ function HeroSlideshow({ data, navigateTo }) {
           </h1>
           {/* Excerpt */}
           {sl.excerpt && (
-            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, marginBottom: 32, maxWidth: 440 }}>
+            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, marginBottom: 32, maxWidth: 440, whiteSpace: "pre-wrap" }}>
               {sl.excerpt.length > 120 ? sl.excerpt.slice(0, 120) + "…" : sl.excerpt}
             </p>
           )}
@@ -3445,7 +3445,7 @@ export default function BricksyTravel() {
                           {data.content.advTitle}
                         </h2>
 
-                        <p className="adv-quote">{data.content.advQuote}</p>
+                        <p className="adv-quote" style={{ whiteSpace: "pre-wrap" }}>{data.content.advQuote}</p>
 
                         {/* Stats row */}
                         <div className="adv-stats-row">
@@ -3732,7 +3732,7 @@ export default function BricksyTravel() {
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="contact-grid">
                       <div>
                         <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#1a2e42", marginBottom: 18 }}>Contact Us</h2>
-                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 20 }}>{data.content.aboutText}</p>
+                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 20, whiteSpace: "pre-wrap" }}>{data.content.aboutText}</p>
                         <p style={{ fontSize: "0.9375rem", color: "#334f65", marginBottom: 8, fontWeight: 500 }}>✉ {data.content.email}</p>
                         <p style={{ fontSize: "0.9375rem", color: "#334f65", fontWeight: 500 }}>📞 {data.content.phone}</p>
                       </div>
@@ -3764,7 +3764,7 @@ export default function BricksyTravel() {
                       <div className="footer-grid" style={{ marginBottom: 40 }}>
                         <div>
                           <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#1a2e42", letterSpacing: ".06em", textTransform: "uppercase" }}>About Us</h3>
-                          <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.8, marginBottom: 14 }}>{data.content.aboutText}</p>
+                          <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.8, marginBottom: 14, whiteSpace: "pre-wrap" }}>{data.content.aboutText}</p>
                           <p style={{ fontSize: "0.875rem", color: "#4e6b80" }}>email: <a href={`mailto:${data.content.email}`} style={{ color: "#2b7a9a", fontWeight: 500 }}>{data.content.email}</a></p>
                           <p style={{ fontSize: "0.875rem", color: "#4e6b80", marginTop: 4 }}>phone: {data.content.phone}</p>
                         </div>
@@ -4099,7 +4099,7 @@ export default function BricksyTravel() {
                           <span>✉</span> Msgs: <strong style={{ color: "#1a2e42" }}>{data.messages.length}</strong>
                         </span>
                       </div>
-                      <p style={{ fontSize: "0.875rem", color: "#4e6b80", fontStyle: "italic", lineHeight: 1.7, maxWidth: 500, borderLeft: "3px solid #ddeef5", paddingLeft: 14 }}>
+                      <p style={{ fontSize: "0.875rem", color: "#4e6b80", fontStyle: "italic", lineHeight: 1.7, maxWidth: 500, borderLeft: "3px solid #ddeef5", paddingLeft: 14, whiteSpace: "pre-wrap" }}>
                         {user.desc ||
                           (user.role === "admin"
                             ? "Administrator Arutala Organizer. Kelola konten, pengguna, pesan, dan seluruh pengaturan website."
