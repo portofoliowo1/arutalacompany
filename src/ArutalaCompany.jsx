@@ -3122,11 +3122,11 @@ export default function BricksyTravel() {
             {mobileMenu && (
               <div style={{
                 position: "absolute", top: "100%", left: 0, right: 0,
-                background: "rgba(250,252,253,0.99)", backdropFilter: "blur(16px)",
+                background: "#fafcfd",
                 borderTop: "2px solid #2b7a9a", borderBottom: "1px solid #ddeef5",
                 boxShadow: "0 12px 40px rgba(26,46,66,0.18)",
                 display: "flex", flexDirection: "column", gap: 2,
-                padding: "12px 5% 20px", zIndex: 200
+                padding: "12px 5% 20px", zIndex: 1000
               }}>
                 {navItems.map(item => (
                   <button key={item.key} onClick={() => navigateTo(item.key)}
