@@ -593,7 +593,7 @@ const GS = () => (
     ══════════════════════════════════════ */
 
     /* Two-column grid → single column on mobile */
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+    .grid-2{display:grid;grid-template-columns:1.618fr 1fr;gap:64px;align-items:center}
     @media(max-width:768px){.grid-2{grid-template-columns:1fr!important;gap:32px!important}}
 
     /* Hero section */
@@ -601,9 +601,10 @@ const GS = () => (
     @media(max-width:768px){.hero-section{padding:48px 5% 52px}}
 
     /* Section padding */
-    .section-lg{padding:90px 5%}
+    .section-lg{padding:90px 0;position:relative;overflow:hidden}
+    .section-lg .section-inner{max-width:1340px;margin:0 auto;padding:0 72px}
     .section-md{padding:80px 5%}
-    @media(max-width:768px){.section-lg{padding:52px 5%}.section-md{padding:44px 5%}}
+    @media(max-width:768px){.section-lg{padding:52px 0}.section-lg .section-inner{padding:0 20px}.section-md{padding:44px 5%}}
 
     /* Hero images grid: hide on mobile to prioritize text */
     .hero-img-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -612,6 +613,36 @@ const GS = () => (
     /* Adventure images: stack on mobile */
     .adv-img-row{display:flex;gap:14px;align-items:flex-end}
     @media(max-width:768px){.adv-img-row{display:none}}
+
+    /* Magazine grid kanan */
+    .mag-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:10px;position:relative}
+    .mag-img-main{grid-column:1;grid-row:1/3;border-radius:6px;overflow:hidden;position:relative}
+    .mag-img-main img{width:100%;height:100%;min-height:320px;object-fit:cover;display:block;transition:transform .6s ease}
+    .mag-img-main:hover img{transform:scale(1.04)}
+    .mag-img-main .foto-label{position:absolute;bottom:12px;left:12px;background:rgba(26,46,66,.82);color:#fff;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:3px;font-weight:600}
+    .mag-img-sm1{grid-column:2;grid-row:1;border-radius:6px;overflow:hidden}
+    .mag-img-sm1 img{width:100%;height:155px;object-fit:cover;display:block;transition:transform .6s ease}
+    .mag-img-sm1:hover img{transform:scale(1.04)}
+    .mag-card-text{grid-column:2;grid-row:2;background:#1a2e42;border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;min-height:155px}
+    .adv-stats-row{display:flex;gap:32px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #eef3f7}
+    .adv-stat .num{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:#1a2e42;line-height:1;margin-bottom:3px}
+    .adv-stat .lbl{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:#8aabbd;font-weight:600}
+    .adv-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+    .adv-eyebrow .ey-line{width:36px;height:1.5px;background:#c9aa71;flex-shrink:0}
+    .adv-quote{font-size:.9375rem;color:#4e6b80;line-height:1.9;font-style:italic;max-width:400px;margin-bottom:28px;padding-left:18px;border-left:2px solid #c9aa71}
+
+    /* Margin dekorasi kiri-kanan */
+    .adv-margin-deco{position:absolute;top:0;bottom:0;width:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:20px 0}
+    .adv-margin-deco.left{left:0;border-right:1px solid #e8eef2}
+    .adv-margin-deco.right{right:0;border-left:1px solid #e8eef2}
+    .adv-margin-deco .issue-text{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#c0cdd6;writing-mode:vertical-rl;transform:rotate(180deg);font-weight:600}
+    .adv-margin-deco .dot-col{display:flex;flex-direction:column;gap:6px;align-items:center}
+    .adv-margin-deco .dot{width:4px;height:4px;border-radius:50%;background:#ddeef5}
+    .adv-margin-deco .dot.on{background:#1a2e42}
+    .deco-corner-tr{position:absolute;top:20px;right:60px;width:70px;height:70px;border-top:1.5px solid #e8eef2;border-right:1.5px solid #e8eef2;pointer-events:none}
+    .deco-corner-bl{position:absolute;bottom:20px;left:60px;width:50px;height:50px;border-bottom:1.5px solid #e8eef2;border-left:1.5px solid #e8eef2;pointer-events:none}
+    @media(max-width:900px){.adv-margin-deco{display:none}.deco-corner-tr,.deco-corner-bl{display:none}.section-inner{padding:0 24px!important}}
+    @media(max-width:768px){.mag-grid{display:none}.adv-stats-row{gap:20px}}
 
     /* Book section images: hide on small screens */
     .book-img-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -3384,18 +3415,53 @@ export default function BricksyTravel() {
                   {/* Hero Slideshow */}
                   <HeroSlideshow data={data} navigateTo={navigateTo} />
 
-                  {/* Adventure */}
+                  {/* Adventure — Magazine Layout */}
                   <section className="section-lg" style={{ background: "#fff" }}>
-                    <div style={{ maxWidth: 1200, margin: "0 auto" }} className="grid-2">
+                    {/* Dekorasi margin kiri */}
+                    <div className="adv-margin-deco left">
+                      <span className="issue-text">Arutala Organizer 2025</span>
+                      <div className="dot-col">
+                        {[false,true,true,false,false].map((on,i) => <div key={i} className={`dot${on?" on":""}`} />)}
+                      </div>
+                    </div>
+                    {/* Dekorasi margin kanan */}
+                    <div className="adv-margin-deco right">
+                      <span className="issue-text">Vol. 14 — No. 2</span>
+                    </div>
+                    {/* Ornamen sudut */}
+                    <div className="deco-corner-tr" />
+                    <div className="deco-corner-bl" />
+
+                    {/* Konten utama */}
+                    <div className="section-inner grid-2">
+                      {/* KIRI: Teks */}
                       <div>
-                        <div className="label-xs" style={{ color: "#6b8999", marginBottom: 16 }}>{data.content.advSub}</div>
-                        <h2 className="display" style={{ fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 900, lineHeight: 1.08, color: "#1a2e42", marginBottom: 28 }}>
+                        <div className="adv-eyebrow">
+                          <div className="ey-line" />
+                          <span className="label-xs" style={{ color: "#6b8999" }}>{data.content.advSub}</span>
+                        </div>
+
+                        <h2 className="display" style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 24 }}>
                           {data.content.advTitle}
                         </h2>
-                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.9, fontStyle: "italic", maxWidth: 340, marginBottom: 24 }}>
-                          {data.content.advQuote}
-                        </p>
-                        {/* Menu tombol layanan */}
+
+                        <p className="adv-quote">{data.content.advQuote}</p>
+
+                        {/* Stats row */}
+                        <div className="adv-stats-row">
+                          {[
+                            { num: "500+", lbl: "Event Sukses" },
+                            { num: "1200+", lbl: "Klien Puas" },
+                            { num: "14", lbl: "Tahun Pengalaman" },
+                          ].map(s => (
+                            <div key={s.lbl} className="adv-stat">
+                              <div className="num">{s.num}</div>
+                              <div className="lbl">{s.lbl}</div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Tombol layanan */}
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 20 }}>
                           {[
                             { label: "🎉 Event Plan", key: "destinations" },
@@ -3410,6 +3476,7 @@ export default function BricksyTravel() {
                             </button>
                           ))}
                         </div>
+
                         <button onClick={() => navigateTo("services")}
                           style={{ padding: "13px 28px", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s", fontFamily: "'Playfair Display',serif", fontStyle: "italic" }}
                           onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
@@ -3417,12 +3484,34 @@ export default function BricksyTravel() {
                           Layanan Kami →
                         </button>
                       </div>
-                      <div className="adv-img-row">
-                        <div className="img-zoom" style={{ flex: 1, borderRadius: 6, overflow: "hidden" }}>
-                          <img src={data.images.adv[0]} alt="" style={{ width: "100%", height: 280, objectFit: "cover" }} />
+
+                      {/* KANAN: Magazine Image Grid */}
+                      <div className="mag-grid">
+                        <span style={{ position: "absolute", top: -14, right: 0, fontSize: ".65rem", letterSpacing: ".12em", textTransform: "uppercase", color: "#c0cdd6", fontWeight: 600 }}>Gallery 2025</span>
+
+                        {/* Foto besar kiri (2 baris) */}
+                        <div className="mag-img-main">
+                          <img src={data.images.adv[0]} alt="Destinasi unggulan" />
+                          <span className="foto-label">Destinasi Unggulan</span>
                         </div>
-                        <div className="img-zoom" style={{ flex: 1.2, borderRadius: 6, overflow: "hidden" }}>
-                          <img src={data.images.adv[1]} alt="" style={{ width: "100%", height: 340, objectFit: "cover" }} />
+
+                        {/* Foto kanan atas */}
+                        <div className="mag-img-sm1">
+                          <img src={data.images.adv[1]} alt="Event kami" />
+                        </div>
+
+                        {/* Kartu teks editorial kanan bawah */}
+                        <div className="mag-card-text">
+                          <div>
+                            <div style={{ fontSize: ".6rem", letterSpacing: ".14em", textTransform: "uppercase", color: "#c9aa71", fontWeight: 700, marginBottom: 8 }}>Testimoni</div>
+                            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1rem", color: "#fff", lineHeight: 1.35, fontWeight: 700 }}>
+                              "Pernikahan kami jadi momen paling sempurna yang pernah kami bayangkan."
+                            </div>
+                          </div>
+                          <button onClick={() => navigateTo("news")}
+                            style={{ fontSize: ".75rem", color: "#7ab3c8", marginTop: 12, fontWeight: 600, letterSpacing: ".06em", cursor: "pointer", background: "none", border: "none", padding: 0, textAlign: "left" }}>
+                            — Baca Kisah Mereka →
+                          </button>
                         </div>
                       </div>
                     </div>
