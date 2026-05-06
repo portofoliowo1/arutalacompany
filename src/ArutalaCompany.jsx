@@ -3430,6 +3430,7 @@ export default function BricksyTravel() {
 
   const logout = () => { setUser(null); setShowAdmin(false); notify("Logged out."); };
 
+  const content = data.content; // shorthand alias
   const isAdmin = user?.role === "admin";
   const canEdit = user?.role === "admin" || user?.role === "content_writer";
   const canCS = user?.role === "admin" || user?.role === "customer_services";
