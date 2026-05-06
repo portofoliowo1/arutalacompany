@@ -2678,6 +2678,173 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
   );
 }
 
+/* ─────────────── HERO SLIDESHOW ─────────────── */
+function HeroSlideshow({ data, navigateTo }) {
+  // Kumpulkan semua coverImage dari semua posts yang published
+  const allSections = ["news", "shop", "destinations"];
+  const slides = [];
+  allSections.forEach(sec => {
+    (data.posts?.[sec] || []).filter(p => p.status === "published" && p.coverImage).forEach(p => {
+      slides.push({ src: p.coverImage, title: p.title, section: sec, excerpt: p.excerpt || "" });
+    });
+  });
+  // Fallback: gunakan hero images jika belum ada post
+  if (slides.length === 0) {
+    (data.images?.hero || []).forEach((src, i) => {
+      slides.push({ src, title: data.content.heroTitle, section: "home", excerpt: data.content.heroSub });
+    });
+  }
+
+  const TRANSITIONS = ["fade", "slideLeft", "slideUp", "zoomIn", "zoomOut", "flipX"];
+  const [current, setCurrent] = useState(0);
+  const [prev, setPrev] = useState(null);
+  const [anim, setAnim] = useState("fade");
+  const [animating, setAnimating] = useState(false);
+  const timerRef = useRef(null);
+
+  const goTo = useCallback((idx) => {
+    if (animating || slides.length < 2) return;
+    const randomAnim = TRANSITIONS[Math.floor(Math.random() * TRANSITIONS.length)];
+    setAnim(randomAnim);
+    setPrev(current);
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrent(idx);
+      setPrev(null);
+      setAnimating(false);
+    }, 700);
+  }, [animating, current, slides.length]);
+
+  const next = useCallback(() => {
+    goTo((current + 1) % slides.length);
+  }, [current, slides.length, goTo]);
+
+  useEffect(() => {
+    if (slides.length < 2) return;
+    timerRef.current = setInterval(next, 4500);
+    return () => clearInterval(timerRef.current);
+  }, [next, slides.length]);
+
+  if (slides.length === 0) return null;
+
+  const SECTION_LABEL = { news: "Event Plan", shop: "Traveling", destinations: "Wedding Organizer", home: "Travel & Organizer" };
+
+  const getEnterStyle = (a) => {
+    const base = { position: "absolute", inset: 0, transition: "all 0.7s cubic-bezier(.77,0,.18,1)", zIndex: 2 };
+    if (!animating) return { ...base, opacity: 1, transform: "none" };
+    const map = {
+      fade:      { opacity: 0, transform: "none" },
+      slideLeft: { opacity: 0, transform: "translateX(80px)" },
+      slideUp:   { opacity: 0, transform: "translateY(60px)" },
+      zoomIn:    { opacity: 0, transform: "scale(1.12)" },
+      zoomOut:   { opacity: 0, transform: "scale(0.88)" },
+      flipX:     { opacity: 0, transform: "perspective(900px) rotateY(25deg)" },
+    };
+    return { ...base, ...(map[a] || map.fade) };
+  };
+
+  const getExitStyle = (a) => {
+    const base = { position: "absolute", inset: 0, transition: "all 0.7s cubic-bezier(.77,0,.18,1)", zIndex: 1 };
+    const map = {
+      fade:      { opacity: 0 },
+      slideLeft: { opacity: 0, transform: "translateX(-80px)" },
+      slideUp:   { opacity: 0, transform: "translateY(-60px)" },
+      zoomIn:    { opacity: 0, transform: "scale(0.88)" },
+      zoomOut:   { opacity: 0, transform: "scale(1.12)" },
+      flipX:     { opacity: 0, transform: "perspective(900px) rotateY(-25deg)" },
+    };
+    return { ...base, ...(map[a] || { opacity: 0 }) };
+  };
+
+  const sl = slides[current];
+  const prevSl = prev !== null ? slides[prev] : null;
+
+  return (
+    <section style={{ position: "relative", width: "100%", height: "clamp(480px,80vh,700px)", overflow: "hidden", background: "#04080f" }}>
+      <style>{`
+        @keyframes heroTxtIn { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
+        @keyframes heroDotPulse { 0%,100%{transform:scale(1);opacity:.8;} 50%{transform:scale(1.3);opacity:1;} }
+        .hero-cta-btn { transition: all .22s !important; }
+        .hero-cta-btn:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 24px rgba(0,0,0,.35) !important; }
+        .hero-dot { transition: all .3s; cursor: pointer; }
+        .hero-dot:hover { transform: scale(1.3); }
+        .hero-arrow { transition: all .2s; cursor: pointer; background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.25); color: #fff; border-radius: 50%; width: 44px; height: 44px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+        .hero-arrow:hover { background: rgba(255,255,255,.28); }
+      `}</style>
+
+      {/* SLIDES */}
+      <div style={{ position: "absolute", inset: 0 }}>
+        {/* Prev slide (exit) */}
+        {animating && prevSl && (
+          <div style={getExitStyle(anim)}>
+            <img src={prevSl.src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(10,20,35,.85) 0%, rgba(10,20,35,.5) 50%, rgba(10,20,35,.25) 100%)" }} />
+          </div>
+        )}
+        {/* Current slide (enter) */}
+        <div style={getEnterStyle(anim)}>
+          <img src={sl.src} alt={sl.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(10,20,35,.88) 0%, rgba(10,20,35,.55) 55%, rgba(10,20,35,.2) 100%)" }} />
+        </div>
+      </div>
+
+      {/* CONTENT OVERLAY */}
+      <div style={{ position: "relative", zIndex: 10, height: "100%", display: "flex", alignItems: "center", padding: "0 6%" }}>
+        <div style={{ maxWidth: 580, animation: animating ? "none" : "heroTxtIn .6s ease both" }} key={current}>
+          {/* Label */}
+          <div style={{ display: "inline-block", background: "#e8a020", color: "#fff", fontSize: "0.6875rem", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: 2, marginBottom: 18 }}>
+            {SECTION_LABEL[sl.section] || "Arutala Organizer"}
+          </div>
+          {/* Title */}
+          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.9rem,5.5vw,3.5rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 18, textShadow: "0 2px 16px rgba(0,0,0,.4)" }}>
+            {sl.title}
+          </h1>
+          {/* Excerpt */}
+          {sl.excerpt && (
+            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, marginBottom: 32, maxWidth: 440 }}>
+              {sl.excerpt.length > 120 ? sl.excerpt.slice(0, 120) + "…" : sl.excerpt}
+            </p>
+          )}
+          {/* CTA Buttons */}
+          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+            <button className="hero-cta-btn" onClick={() => navigateTo(sl.section === "home" ? "about" : sl.section)}
+              style={{ padding: "13px 30px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
+              Read More →
+            </button>
+            <button className="hero-cta-btn" onClick={() => navigateTo("about")}
+              style={{ padding: "13px 30px", background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,.6)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
+              About Us →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ARROWS */}
+      <button className="hero-arrow" onClick={() => goTo((current - 1 + slides.length) % slides.length)}
+        style={{ position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)", zIndex: 20, background: "rgba(255,255,255,.12)", border: "1.5px solid rgba(255,255,255,.25)", color: "#fff", borderRadius: "50%", width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, cursor: "pointer", transition: "all .2s" }}
+        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.28)"}
+        onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.12)"}>‹</button>
+      <button className="hero-arrow" onClick={() => goTo((current + 1) % slides.length)}
+        style={{ position: "absolute", right: 20, top: "50%", transform: "translateY(-50%)", zIndex: 20, background: "rgba(255,255,255,.12)", border: "1.5px solid rgba(255,255,255,.25)", color: "#fff", borderRadius: "50%", width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, cursor: "pointer", transition: "all .2s" }}
+        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.28)"}
+        onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.12)"}>›</button>
+
+      {/* DOTS */}
+      <div style={{ position: "absolute", bottom: 22, left: "50%", transform: "translateX(-50%)", zIndex: 20, display: "flex", gap: 8, alignItems: "center" }}>
+        {slides.map((_, i) => (
+          <div key={i} className="hero-dot" onClick={() => goTo(i)}
+            style={{ width: i === current ? 28 : 10, height: 10, borderRadius: 5, background: i === current ? "#e8a020" : "rgba(255,255,255,.45)", transition: "all .3s" }} />
+        ))}
+      </div>
+
+      {/* Slide counter */}
+      <div style={{ position: "absolute", bottom: 22, right: "5%", zIndex: 20, fontSize: "0.75rem", color: "rgba(255,255,255,.5)", fontWeight: 600, letterSpacing: ".06em" }}>
+        {String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+      </div>
+    </section>
+  );
+}
+
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
   const [user, setUser] = useState(null);
@@ -3122,31 +3289,33 @@ export default function BricksyTravel() {
             {mobileMenu && (
               <div style={{
                 position: "absolute", top: "100%", left: 0, right: 0,
-                background: "#fafcfd",
-                borderTop: "2px solid #2b7a9a", borderBottom: "1px solid #ddeef5",
-                boxShadow: "0 12px 40px rgba(26,46,66,0.18)",
-                display: "flex", flexDirection: "column", gap: 2,
-                padding: "12px 5% 20px", zIndex: 1000
+                background: "#1a2e42",
+                borderTop: "2px solid #2b7a9a", borderBottom: "1px solid #2b7a9a",
+                boxShadow: "0 16px 48px rgba(26,46,66,0.35)",
+                display: "flex", flexDirection: "column", gap: 4,
+                padding: "14px 5% 22px", zIndex: 1000
               }}>
                 {navItems.map(item => (
                   <button key={item.key} onClick={() => navigateTo(item.key)}
                     className="mobile-nav-item"
                     style={{
-                      fontSize: "1rem", color: page === item.key ? "#2b7a9a" : "#334f65",
-                      fontWeight: page === item.key ? 700 : 400, border: "none",
-                      background: page === item.key ? "#e8f4fd" : "transparent",
+                      fontSize: "1rem",
+                      color: page === item.key ? "#5bc4e0" : "#cce3ef",
+                      fontWeight: page === item.key ? 700 : 400,
+                      border: "none",
+                      background: page === item.key ? "rgba(43,122,154,0.35)" : "rgba(255,255,255,0.07)",
                       textAlign: "left", padding: "13px 16px", borderRadius: 8, width: "100%",
-                      borderLeft: page === item.key ? "3px solid #2b7a9a" : "3px solid transparent",
-                      transition: "all .15s"
+                      borderLeft: page === item.key ? "3px solid #5bc4e0" : "3px solid rgba(255,255,255,0.12)",
+                      transition: "all .15s", cursor: "pointer"
                     }}
-                    onMouseEnter={e => { if (page !== item.key) { e.currentTarget.style.background = "#f4f9fb"; e.currentTarget.style.borderLeft = "3px solid #b8d4e3"; } }}
-                    onMouseLeave={e => { if (page !== item.key) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeft = "3px solid transparent"; } }}>
+                    onMouseEnter={e => { if (page !== item.key) { e.currentTarget.style.background = "rgba(255,255,255,0.14)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderLeft = "3px solid #2b7a9a"; } }}
+                    onMouseLeave={e => { if (page !== item.key) { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; e.currentTarget.style.color = "#cce3ef"; e.currentTarget.style.borderLeft = "3px solid rgba(255,255,255,0.12)"; } }}>
                     {item.label}
                   </button>
                 ))}
                 {user && (
-                  <div style={{ padding: "12px 4px 4px", borderTop: "1px solid #ddeef5", marginTop: 8 }}>
-                    <div style={{ fontSize: ".8125rem", color: "#6b8999", marginBottom: 10, padding: "0 12px" }}>Login sebagai <strong style={{ color: "#1a2e42" }}>{user.name || user.username}</strong></div>
+                  <div style={{ padding: "12px 4px 4px", borderTop: "1px solid rgba(255,255,255,0.15)", marginTop: 8 }}>
+                    <div style={{ fontSize: ".8125rem", color: "#7aa8bf", marginBottom: 10, padding: "0 12px" }}>Login sebagai <strong style={{ color: "#cce3ef" }}>{user.name || user.username}</strong></div>
                     <button onClick={() => { setShowAdmin(true); setMobileMenu(false); }}
                       style={{ fontSize: ".875rem", color: "#fff", background: "#1a2e42", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, width: "100%", marginBottom: 8 }}>
                       Admin Panel
@@ -3174,33 +3343,8 @@ export default function BricksyTravel() {
               {/* HOME */}
               {page === "home" && (
                 <>
-                  {/* Hero */}
-                  <section className="hero-section" style={{ background: "#c5dde9" }}>
-                    <div style={{ maxWidth: 1200, margin: "0 auto" }} className="grid-2">
-                      <div className="fade-in">
-                        <h1 className="display hero-title-anim" style={{ fontSize: "clamp(2.4rem,6vw,4rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 20 }}>
-                          {data.content.heroTitle}
-                        </h1>
-                        <p style={{ fontSize: "1rem", color: "#334f65", lineHeight: 1.85, maxWidth: 360, marginBottom: 32 }}>
-                          {data.content.heroSub}
-                        </p>
-                        <button onClick={() => navigateTo("about")}
-                          style={{ padding: "12px 30px", border: "1.5px solid #1a2e42", background: "transparent",
-                          fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700, color: "#1a2e42", transition: "all .2s" }}
-                          onMouseEnter={e => { e.currentTarget.style.background = "#1a2e42"; e.currentTarget.style.color = "#fff"; }}
-                          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#1a2e42"; }}>
-                          Get Started
-                        </button>
-                      </div>
-                      <div className="hero-img-grid">
-                        {data.images.hero.map((src, i) => (
-                          <div key={i} className="img-zoom hover-lift" style={{ borderRadius: 6, overflow: "hidden", aspectRatio: "4/3" }}>
-                            <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </section>
+                  {/* Hero Slideshow */}
+                  <HeroSlideshow data={data} navigateTo={navigateTo} />
 
                   {/* Adventure */}
                   <section className="section-lg" style={{ background: "#fff" }}>
