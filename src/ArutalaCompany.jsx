@@ -451,11 +451,13 @@ const DEFAULT_DATA = {
   services: [
     {
       id: 1,
+      category: "event",
       title: "Paket Event Plan Reguler",
       badge: "Populer",
       badgeColor: "#2b7a9a",
       price: "Rp 5.000.000",
       priceNote: "/ event",
+      images: ["https://picsum.photos/seed/svc1/600/400"],
       image: "https://picsum.photos/seed/svc1/600/400",
       description: "Paket perencanaan event lengkap untuk acara reguler seperti seminar, gathering, dan corporate event.",
       features: ["Konsultasi event 2x pertemuan", "Dekorasi standar", "Dokumentasi foto", "Koordinasi vendor", "Rundown acara", "MC profesional"],
@@ -463,11 +465,13 @@ const DEFAULT_DATA = {
     },
     {
       id: 2,
+      category: "wedding",
       title: "Paket Wedding Premium",
       badge: "Best Seller",
       badgeColor: "#e67e22",
       price: "Rp 25.000.000",
       priceNote: "/ wedding",
+      images: ["https://picsum.photos/seed/svc2/600/400"],
       image: "https://picsum.photos/seed/svc2/600/400",
       description: "Paket pernikahan lengkap dengan sentuhan premium. Wujudkan pernikahan impian Anda bersama tim profesional kami.",
       features: ["Konsultasi tak terbatas", "Dekorasi premium", "Dokumentasi foto & video", "Koordinasi 10+ vendor", "Wedding planner dedicated", "Catering 300 pax", "Entertainment & MC", "Souvenir tamu"],
@@ -475,11 +479,13 @@ const DEFAULT_DATA = {
     },
     {
       id: 3,
+      category: "traveling",
       title: "Paket Traveling Group",
       badge: "Hemat",
       badgeColor: "#27ae60",
       price: "Rp 3.500.000",
       priceNote: "/ orang",
+      images: ["https://picsum.photos/seed/svc3/600/400"],
       image: "https://picsum.photos/seed/svc3/600/400",
       description: "Paket wisata group terjangkau dengan destinasi pilihan dalam dan luar negeri. Minimum 10 peserta.",
       features: ["Transportasi PP", "Akomodasi 3 malam", "Tour guide lokal", "Makan 3x sehari", "Asuransi perjalanan", "Dokumentasi trip"],
@@ -487,16 +493,24 @@ const DEFAULT_DATA = {
     },
     {
       id: 4,
+      category: "traveling",
       title: "Paket Traveling Eksklusif",
       badge: "Luxury",
       badgeColor: "#8e44ad",
       price: "Rp 15.000.000",
       priceNote: "/ orang",
+      images: ["https://picsum.photos/seed/svc4/600/400"],
       image: "https://picsum.photos/seed/svc4/600/400",
       description: "Pengalaman perjalanan mewah ke destinasi premium dunia. Layanan VIP dari keberangkatan hingga kepulangan.",
       features: ["Tiket business class", "Hotel bintang 5", "Private tour guide", "Makan fine dining", "Airport transfer VIP", "Asuransi premium", "Itinerary custom", "Concierge 24 jam"],
       highlight: false,
     },
+  ],
+  teamMembers: [
+    { id: 1, name: "Budi Santoso", role: "CEO & Founder", quotes: "Setiap momen spesial layak dirayakan dengan sempurna.", photo: "" },
+    { id: 2, name: "Sari Dewi", role: "Wedding Coordinator", quotes: "Kami hadir untuk mewujudkan impian pernikahan Anda.", photo: "" },
+    { id: 3, name: "Raka Pratama", role: "Travel Manager", quotes: "Perjalanan terbaik dimulai dari perencanaan yang matang.", photo: "" },
+    { id: 4, name: "Dini Rahayu", role: "Event Organizer", quotes: "Kreativitas adalah kunci event yang tak terlupakan.", photo: "" },
   ],
   users: HARDCODED_USERS.map((u, i) => ({ id: i + 1, ...u, email: `${u.username}@arutala.com`, active: true })),
 };
@@ -1769,104 +1783,130 @@ function SectionPage({ section, posts, onReadPost }) {
 function ServicesPage({ content, services, navigateTo }) {
   const [selectedService, setSelectedService] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeImg, setActiveImg] = useState(0);
 
-  const openDetail = (svc) => { setSelectedService(svc); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const CATEGORIES = [
+    { key: "traveling", label: "✈️ Traveling", color: "#27ae60" },
+    { key: "event",     label: "🎉 Event Plan", color: "#2b7a9a" },
+    { key: "wedding",   label: "💍 Wedding Organizer", color: "#8e44ad" },
+  ];
+
+  const openDetail = (svc) => { setSelectedService(svc); setActiveImg(0); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const closeDetail = () => setSelectedService(null);
 
   const handleBook = (svc) => {
-    const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price}${svc.priceNote}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
+    const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
     window.open(`https://wa.me/6285745571442?text=${encodeURIComponent(text)}`, "_blank");
   };
 
-  /* ── Service Detail Modal ── */
+  /* ── Service Detail Page ── */
   if (selectedService) {
     const svc = selectedService;
+    const imgs = (svc.images?.length ? svc.images : [svc.image]).filter(Boolean);
     return (
       <div style={{ minHeight: "100vh", background: "#f4f9fb" }}>
         {/* Back Bar */}
-        <div style={{ background: "#fff", borderBottom: "1px solid #ddeef5", padding: "14px 5%", display: "flex", alignItems: "center", gap: 14, position: "sticky", top: 0, zIndex: 30, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
-          <button onClick={closeDetail}
-            style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "0.8125rem", fontWeight: 700, color: "#2b7a9a", background: "none", border: "none", cursor: "pointer", padding: "6px 0" }}>
+        <div className="article-back-bar" style={{ background: "rgba(250,252,253,.96)", backdropFilter: "blur(10px)", borderBottom: "1px solid #ddeef5", padding: "12px 5%", position: "sticky", top: 64, zIndex: 90 }}>
+          <button onClick={closeDetail} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#2b7a9a", fontWeight: 600, fontSize: "0.875rem", cursor: "pointer" }}>
             ← Kembali ke Layanan
           </button>
-          <span style={{ color: "#ddeef5", fontSize: 18 }}>|</span>
-          <span style={{ fontSize: "0.8125rem", color: "#6b8999" }}>{svc.title}</span>
         </div>
 
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "48px 5%" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "start" }}>
-            {/* Image */}
-            <div style={{ borderRadius: 12, overflow: "hidden", boxShadow: "0 8px 32px rgba(26,46,66,.12)", position: "sticky", top: 90 }}>
-              <img src={svc.image} alt={svc.title} style={{ width: "100%", aspectRatio: "3/2", objectFit: "cover", display: "block" }} onError={e => { e.target.src = "https://picsum.photos/seed/fallback/600/400"; }} />
-              {svc.badge && (
-                <div style={{ position: "absolute", top: 16, left: 16, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.75rem", fontWeight: 700, letterSpacing: ".06em" }}>
-                  {svc.badge}
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 5% 80px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }} className="grid-2">
+            
+            {/* LEFT: Image Gallery */}
+            <div>
+              {/* Main Image */}
+              <div style={{ borderRadius: 14, overflow: "hidden", aspectRatio: "4/3", boxShadow: "0 12px 40px rgba(26,46,66,.16)", position: "relative", marginBottom: 12 }}>
+                {svc.badge && (
+                  <div style={{ position: "absolute", top: 16, left: 16, zIndex: 2, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 20, padding: "5px 16px", fontSize: "0.75rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
+                    {svc.badge}
+                  </div>
+                )}
+                <img src={imgs[activeImg] || "https://picsum.photos/seed/fallback/600/400"} alt={svc.title}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", transition: "opacity .3s" }}
+                  onError={e => { e.target.src = "https://picsum.photos/seed/fallback/600/400"; }} />
+              </div>
+              {/* Thumbnail Strip */}
+              {imgs.length > 1 && (
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  {imgs.map((img, i) => (
+                    <div key={i} onClick={() => setActiveImg(i)}
+                      style={{ width: 72, height: 54, borderRadius: 8, overflow: "hidden", cursor: "pointer", border: activeImg === i ? "2.5px solid #2b7a9a" : "2.5px solid transparent", opacity: activeImg === i ? 1 : 0.65, transition: "all .2s", flexShrink: 0 }}>
+                      <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.target.src = "https://picsum.photos/seed/fallback/80/60"; }} />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Related */}
+              {services.filter(s => s.id !== svc.id && s.category === svc.category).length > 0 && (
+                <div style={{ marginTop: 28 }}>
+                  <h4 style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#7a9db0", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 12 }}>Paket Serupa</h4>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {services.filter(s => s.id !== svc.id && s.category === svc.category).map(s => (
+                      <div key={s.id} onClick={() => { openDetail(s); }} style={{ display: "flex", gap: 12, alignItems: "center", background: "#fff", borderRadius: 10, padding: "12px 14px", cursor: "pointer", boxShadow: "0 2px 8px rgba(26,46,66,.06)", transition: "box-shadow .2s" }}
+                        onMouseEnter={e => e.currentTarget.style.boxShadow = "0 6px 20px rgba(26,46,66,.12)"}
+                        onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 8px rgba(26,46,66,.06)"}>
+                        <img src={(s.images?.[0] || s.image)} alt={s.title} style={{ width: 56, height: 42, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => e.target.src = "https://picsum.photos/seed/fallback/56/42"} />
+                        <div>
+                          <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1a2e42" }}>{s.title}</div>
+                          <div style={{ fontSize: "0.8125rem", color: "#2b7a9a", fontWeight: 700 }}>{s.price}<span style={{ color: "#6b8999", fontWeight: 400 }}> {s.priceNote}</span></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Detail */}
+            {/* RIGHT: Detail Info */}
             <div>
-              <div className="label-xs" style={{ color: "#6b8999", marginBottom: 10 }}>DETAIL PAKET</div>
-              <h1 className="display" style={{ fontSize: "clamp(1.5rem,3vw,2.25rem)", fontWeight: 900, color: "#1a2e42", lineHeight: 1.1, marginBottom: 16 }}>{svc.title}</h1>
-              <p style={{ fontSize: "1rem", color: "#4e6b80", lineHeight: 1.8, marginBottom: 24 }}>{svc.description}</p>
+              <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 10 }}>Detail Paket</div>
+              <h1 className="display" style={{ fontSize: "clamp(1.75rem,3.5vw,2.5rem)", fontWeight: 900, color: "#1a2e42", lineHeight: 1.1, marginBottom: 16 }}>{svc.title}</h1>
+              <p style={{ fontSize: "1rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 28 }}>{svc.description}</p>
 
-              {/* Price */}
-              <div style={{ background: svc.highlight ? "linear-gradient(135deg,#1a2e42,#2b7a9a)" : "#f4f9fb", borderRadius: 10, padding: "20px 24px", marginBottom: 24 }}>
-                <div style={{ fontSize: "0.75rem", fontWeight: 600, letterSpacing: ".1em", textTransform: "uppercase", color: svc.highlight ? "rgba(255,255,255,.6)" : "#6b8999", marginBottom: 6 }}>Harga Mulai</div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#1a2e42" }}>{svc.price}</span>
+              {/* Price Box */}
+              <div style={{ background: svc.highlight ? "linear-gradient(135deg,#1a2e42,#2b7a9a)" : "#f4f9fb", borderRadius: 12, padding: "22px 26px", marginBottom: 28, border: svc.highlight ? "none" : "1px solid #ddeef5" }}>
+                <div style={{ fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: svc.highlight ? "rgba(255,255,255,.6)" : "#6b8999", marginBottom: 6 }}>Harga Mulai</div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap", marginBottom: 6 }}>
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.25rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#1a2e42", lineHeight: 1 }}>{svc.price}</span>
                   <span style={{ fontSize: "0.875rem", color: svc.highlight ? "rgba(255,255,255,.6)" : "#6b8999", fontWeight: 500 }}>{svc.priceNote}</span>
+                </div>
+                <div style={{ fontSize: "0.8125rem", color: svc.highlight ? "rgba(255,255,255,.7)" : "#2b7a9a", fontWeight: 600, fontStyle: "italic" }}>
+                  💬 Nego / Konsultasi dulu
                 </div>
               </div>
 
               {/* Features */}
               <div style={{ marginBottom: 28 }}>
-                <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#1a2e42", letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 14 }}>Yang Termasuk</div>
+                <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#6b8999", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Yang Termasuk</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {(svc.features || []).map((feat, i) => (
-                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                      <span style={{ width: 22, height: 22, borderRadius: "50%", background: "#e8f8ef", color: "#27ae60", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 900, flexShrink: 0 }}>✓</span>
-                      <span style={{ fontSize: "0.9375rem", color: "#334f65" }}>{feat}</span>
+                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                      <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "1rem", lineHeight: 1.4, flexShrink: 0 }}>✓</span>
+                      <span style={{ fontSize: "0.9375rem", color: "#1a2e42", lineHeight: 1.5 }}>{feat}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* CTA */}
-              <button onClick={() => handleBook(svc)}
-                style={{ width: "100%", padding: "15px 24px", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".05em", transition: "opacity .2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}
-                onMouseEnter={e => e.currentTarget.style.opacity = ".88"}
-                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-                💬 Hubungi via WhatsApp
-              </button>
-              <button onClick={() => navigateTo("about")}
-                style={{ width: "100%", marginTop: 10, padding: "13px 24px", background: "transparent", color: "#1a2e42", border: "1.5px solid #ddeef5", borderRadius: 8, fontSize: "0.875rem", fontWeight: 600, cursor: "pointer", transition: "border-color .2s" }}
-                onMouseEnter={e => e.currentTarget.style.borderColor = "#1a2e42"}
-                onMouseLeave={e => e.currentTarget.style.borderColor = "#ddeef5"}>
-                📞 Hubungi Kami Langsung
-              </button>
-            </div>
-          </div>
-
-          {/* Other packages */}
-          <div style={{ marginTop: 60 }}>
-            <h3 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#1a2e42", marginBottom: 24 }}>Paket Lainnya</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 16 }}>
-              {services.filter(s => s.id !== svc.id).map(s => (
-                <div key={s.id} onClick={() => openDetail(s)}
-                  style={{ background: "#fff", borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 10px rgba(26,46,66,.08)", cursor: "pointer", transition: "transform .2s,box-shadow .2s" }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 12px 32px rgba(26,46,66,.14)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "0 2px 10px rgba(26,46,66,.08)"; }}>
-                  <div style={{ height: 120, overflow: "hidden" }}>
-                    <img src={s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .4s" }} onError={e => { e.target.src = "https://picsum.photos/seed/fallback/300/200"; }} />
-                  </div>
-                  <div style={{ padding: "14px 16px" }}>
-                    <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1a2e42", marginBottom: 4 }}>{s.title}</div>
-                    <div style={{ fontSize: "0.8125rem", color: "#2b7a9a", fontWeight: 700 }}>{s.price}<span style={{ color: "#6b8999", fontWeight: 400 }}>{s.priceNote}</span></div>
-                  </div>
-                </div>
-              ))}
+              {/* CTA Buttons */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <button onClick={() => handleBook(svc)}
+                  style={{ padding: "15px 24px", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "opacity .2s" }}
+                  onMouseEnter={e => e.currentTarget.style.opacity = ".9"}
+                  onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                  💬 Hubungi via WhatsApp
+                </button>
+                <a href={`tel:${content.phone}`}
+                  style={{ padding: "13px 24px", background: "#fff", color: "#1a2e42", border: "1.5px solid #1a2e42", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "background .2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "#f4f9fb"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "#fff"; }}>
+                  📞 Hubungi Kami Langsung
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -1874,108 +1914,133 @@ function ServicesPage({ content, services, navigateTo }) {
     );
   }
 
-  /* ── Services Grid ── */
+  /* ── Services List with Category Tabs ── */
+  const filteredServices = activeCategory ? services.filter(s => s.category === activeCategory) : [];
+
   return (
-    <div style={{ minHeight: "100vh", background: "#f4f9fb" }}>
-      {/* Hero Banner */}
-      <section style={{ background: "linear-gradient(135deg,#1a2e42 0%,#2b7a9a 100%)", padding: "70px 5% 80px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 70% 50%,rgba(91,196,224,.15) 0%,transparent 60%)", pointerEvents: "none" }} />
-        <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
-          <div className="label-xs" style={{ color: "#5bc4e0", marginBottom: 14 }}>✦ ARUTALA ORGANIZER</div>
-          <h1 className="display hero-title-anim" style={{ fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 16 }}>
-            {content.servicesPageTitle || "Paket Layanan Kami"}
-          </h1>
-          <p style={{ fontSize: "1rem", color: "rgba(255,255,255,.7)", lineHeight: 1.85, maxWidth: 540 }}>
-            {content.servicesPageSub || "Pilih paket yang sesuai dengan kebutuhan Anda."}
-          </p>
+    <div className="fade-in" style={{ minHeight: "100vh", background: "#f4f9fb" }}>
+      {/* Header */}
+      <div style={{ background: "linear-gradient(135deg,#1a2e42 0%,#2b7a9a 100%)", padding: "72px 5% 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: -80, right: -80, width: 350, height: 350, borderRadius: "50%", background: "rgba(255,255,255,.04)", pointerEvents: "none" }} />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 680, margin: "0 auto" }}>
+          <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "rgba(255,255,255,.6)", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Apa yang Kami Tawarkan</div>
+          <h1 className="display" style={{ fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 18 }}>{content.servicesPageTitle || "Paket Layanan Kami"}</h1>
+          <p style={{ fontSize: "1.0625rem", color: "rgba(255,255,255,.75)", lineHeight: 1.8 }}>{content.servicesPageSub || "Pilih kategori layanan sesuai kebutuhan Anda."}</p>
         </div>
-      </section>
+      </div>
 
-      {/* Services Grid */}
-      <section style={{ padding: "60px 5%", maxWidth: 1200, margin: "0 auto" }}>
-        {services.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "80px 20px", color: "#6b8999" }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>📋</div>
-            <p style={{ fontSize: "1rem" }}>Belum ada paket layanan. Cek kembali nanti.</p>
-          </div>
-        ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 28 }}>
-            {services.map(svc => (
-              <div key={svc.id}
-                onMouseEnter={() => setHoveredCard(svc.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: hoveredCard === svc.id ? "0 20px 48px rgba(26,46,66,.16)" : "0 4px 16px rgba(26,46,66,.08)", transform: hoveredCard === svc.id ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #2b7a9a" : "2px solid transparent", position: "relative" }}>
+      {/* Category Buttons */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #ddeef5", padding: "0 5%" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", gap: 0, overflowX: "auto" }}>
+          {CATEGORIES.map(cat => {
+            const isActive = activeCategory === cat.key;
+            const count = services.filter(s => s.category === cat.key).length;
+            return (
+              <button key={cat.key} onClick={() => setActiveCategory(isActive ? null : cat.key)}
+                style={{ padding: "20px 28px", border: "none", background: "none", fontSize: "0.9375rem", fontWeight: isActive ? 700 : 500,
+                  color: isActive ? cat.color : "#4e6b80", borderBottom: isActive ? `3px solid ${cat.color}` : "3px solid transparent",
+                  cursor: "pointer", whiteSpace: "nowrap", transition: "all .25s", display: "flex", alignItems: "center", gap: 8 }}>
+                {cat.label}
+                <span style={{ fontSize: "0.75rem", background: isActive ? cat.color : "#f4f9fb", color: isActive ? "#fff" : "#6b8999", borderRadius: 12, padding: "2px 8px", fontWeight: 700, transition: "all .25s" }}>{count}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-                {/* Badge */}
-                {svc.badge && (
-                  <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
-                    {svc.badge}
-                  </div>
-                )}
-                {svc.highlight && (
-                  <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "#1a2e42", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em" }}>
-                    ⭐ Pilihan Utama
-                  </div>
-                )}
-
-                {/* Image */}
-                <div className="img-zoom" style={{ height: 200, overflow: "hidden" }}>
-                  <img src={svc.image} alt={svc.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }} onError={e => { e.target.src = "https://picsum.photos/seed/fallback/400/300"; }} />
-                </div>
-
-                {/* Content */}
-                <div style={{ padding: "22px 22px 20px" }}>
-                  <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#1a2e42", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
-                  <p style={{ fontSize: "0.875rem", color: "#6b8999", lineHeight: 1.7, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
-
-                  {/* Features preview */}
-                  <div style={{ marginBottom: 18 }}>
-                    {(svc.features || []).slice(0, 3).map((feat, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
-                        <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.75rem", flexShrink: 0 }}>✓</span>
-                        <span style={{ fontSize: "0.8125rem", color: "#4e6b80" }}>{feat}</span>
-                      </div>
-                    ))}
-                    {(svc.features || []).length > 3 && (
-                      <div style={{ fontSize: "0.75rem", color: "#2b7a9a", fontWeight: 600, marginTop: 4 }}>+{svc.features.length - 3} fitur lainnya</div>
-                    )}
-                  </div>
-
-                  {/* Price */}
-                  <div style={{ borderTop: "1px solid #f4f9fb", paddingTop: 16, display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-                    <div>
-                      <div style={{ fontSize: "0.6875rem", color: "#6b8999", letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 2 }}>Mulai dari</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.375rem", fontWeight: 900, color: "#1a2e42" }}>{svc.price}</div>
-                      <div style={{ fontSize: "0.75rem", color: "#6b8999" }}>{svc.priceNote}</div>
-                    </div>
-                    <button onClick={() => openDetail(svc)}
-                      style={{ padding: "10px 18px", background: svc.highlight ? "linear-gradient(135deg,#1a2e42,#2b7a9a)" : "#1a2e42", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s", letterSpacing: ".03em" }}
-                      onMouseEnter={e => e.currentTarget.style.opacity = ".82"}
-                      onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-                      Lihat Detail
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "60px 5% 80px" }}>
+        {/* Empty state */}
+        {!activeCategory && (
+          <div style={{ textAlign: "center", padding: "60px 20px" }}>
+            <div style={{ fontSize: 56, marginBottom: 20 }}>👆</div>
+            <h2 className="display" style={{ fontSize: "1.75rem", fontWeight: 900, color: "#1a2e42", marginBottom: 12 }}>Pilih Kategori Layanan</h2>
+            <p style={{ fontSize: "1rem", color: "#6b8999" }}>Klik salah satu tab di atas untuk melihat paket layanan yang tersedia.</p>
           </div>
         )}
-      </section>
 
-      {/* CTA Section */}
-      <section style={{ background: "#1a2e42", padding: "60px 5%", textAlign: "center" }}>
+        {/* Cards Grid */}
+        {activeCategory && (
+          <div style={{ animation: "fadeIn .35s ease" }}>
+            <div style={{ marginBottom: 32 }}>
+              <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#1a2e42", marginBottom: 6 }}>
+                {CATEGORIES.find(c => c.key === activeCategory)?.label}
+              </h2>
+              <p style={{ fontSize: "0.9375rem", color: "#6b8999" }}>{filteredServices.length} paket tersedia</p>
+            </div>
+            {filteredServices.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "60px 0", color: "#7a9db0" }}>Belum ada paket untuk kategori ini.</div>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 28 }}>
+                {filteredServices.map(svc => (
+                  <div key={svc.id}
+                    onMouseEnter={() => setHoveredCard(svc.id)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                    style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: hoveredCard === svc.id ? "0 20px 48px rgba(26,46,66,.16)" : "0 4px 16px rgba(26,46,66,.08)", transform: hoveredCard === svc.id ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #2b7a9a" : "2px solid transparent", position: "relative" }}>
+                    {svc.badge && (
+                      <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
+                        {svc.badge}
+                      </div>
+                    )}
+                    {svc.highlight && (
+                      <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "#1a2e42", color: "#fff", borderRadius: 20, padding: "4px 12px", fontSize: "0.6875rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
+                    )}
+                    <div style={{ height: 200, overflow: "hidden" }}>
+                      <img src={(svc.images?.[0] || svc.image)} alt={svc.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
+                        onMouseEnter={e => e.target.style.transform = "scale(1.06)"}
+                        onMouseLeave={e => e.target.style.transform = "scale(1)"}
+                        onError={e => { e.target.src = "https://picsum.photos/seed/fallback/400/300"; }} />
+                    </div>
+                    <div style={{ padding: "22px 22px 20px" }}>
+                      <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#1a2e42", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
+                      <p style={{ fontSize: "0.875rem", color: "#6b8999", lineHeight: 1.7, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
+                      <div style={{ marginBottom: 16 }}>
+                        {(svc.features || []).slice(0, 3).map((feat, i) => (
+                          <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
+                            <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem" }}>✓</span>
+                            <span style={{ fontSize: "0.8125rem", color: "#4e6b80" }}>{feat}</span>
+                          </div>
+                        ))}
+                        {(svc.features || []).length > 3 && (
+                          <div style={{ fontSize: "0.75rem", color: "#2b7a9a", fontWeight: 600, marginTop: 4 }}>+{svc.features.length - 3} fitur lainnya</div>
+                        )}
+                      </div>
+                      <div style={{ borderTop: "1px solid #f0f7fb", paddingTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+                        <div>
+                          <div style={{ fontSize: "0.65rem", color: "#7a9db0", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 2 }}>Mulai Dari</div>
+                          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.375rem", fontWeight: 900, color: "#1a2e42", lineHeight: 1 }}>{svc.price}</div>
+                          <div style={{ fontSize: "0.6875rem", color: "#6b8999" }}>{svc.priceNote}</div>
+                          <div style={{ fontSize: "0.6875rem", color: "#2b7a9a", fontWeight: 600, fontStyle: "italic", marginTop: 2 }}>Nego / Konsultasi dulu</div>
+                        </div>
+                        <button onClick={() => openDetail(svc)}
+                          style={{ padding: "10px 18px", background: svc.highlight ? "linear-gradient(135deg,#1a2e42,#2b7a9a)" : "#1a2e42", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s", letterSpacing: ".03em", whiteSpace: "nowrap" }}
+                          onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                          Lihat Detail
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* CTA Banner */}
+      <section style={{ background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", padding: "72px 5%", textAlign: "center" }}>
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#fff", marginBottom: 14 }}>Tidak menemukan paket yang sesuai?</h2>
-          <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.9375rem", lineHeight: 1.8, marginBottom: 28 }}>Hubungi kami untuk paket yang disesuaikan dengan kebutuhan spesifik Anda.</p>
-          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+          <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.5rem)", fontWeight: 900, color: "#fff", marginBottom: 16, lineHeight: 1.15 }}>Tidak Menemukan Paket yang Cocok?</h2>
+          <p style={{ color: "rgba(255,255,255,.75)", fontSize: "1rem", marginBottom: 36, lineHeight: 1.7 }}>Kami siap membuat paket khusus sesuai kebutuhan dan budget Anda.</p>
+          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={() => window.open("https://wa.me/6285745571442", "_blank")}
-              style={{ padding: "13px 28px", background: "#2b7a9a", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "background .2s", letterSpacing: ".04em" }}
-              onMouseEnter={e => e.currentTarget.style.background = "#3d8fab"}
-              onMouseLeave={e => e.currentTarget.style.background = "#2b7a9a"}>
+              style={{ padding: "14px 32px", background: "#fff", color: "#1a2e42", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "background .2s" }}
+              onMouseEnter={e => e.currentTarget.style.background = "#c5dde9"}
+              onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
               💬 WhatsApp Kami
             </button>
             <button onClick={() => navigateTo("about")}
-              style={{ padding: "13px 28px", background: "transparent", color: "#fff", border: "1.5px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "border-color .2s" }}
+              style={{ padding: "14px 32px", background: "transparent", color: "#fff", border: "1.5px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "border-color .2s" }}
               onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(255,255,255,.8)"}
               onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,.3)"}>
               📞 Kontak Kami
@@ -1994,10 +2059,10 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
   const svcs = data.services || [];
 
   const openNew = () => {
-    setSvcForm({ id: Date.now(), title: "", badge: "", badgeColor: "#2b7a9a", price: "", priceNote: "/ event", image: "", description: "", features: [], highlight: false });
+    setSvcForm({ id: Date.now(), category: "traveling", title: "", badge: "", badgeColor: "#2b7a9a", price: "", priceNote: "/ orang", images: [], image: "", description: "", features: [], highlight: false });
     setEditSvc("new");
   };
-  const openEdit = (s) => { setSvcForm({ ...s, features: [...(s.features || [])] }); setEditSvc(s.id); };
+  const openEdit = (s) => { setSvcForm({ ...s, features: [...(s.features || [])], images: [...(s.images || (s.image ? [s.image] : []))] }); setEditSvc(s.id); };
   const cancelEdit = () => { setEditSvc(null); setSvcForm({}); };
 
   const saveSvc = () => {
@@ -2042,6 +2107,18 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1e3248", marginBottom: 20 }}>
             {editSvc === "new" ? "➕ Tambah Paket Baru" : "✏ Edit Paket"}
           </h2>
+
+          {/* Kategori */}
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Kategori *</label>
+            <select value={svcForm.category || "traveling"} onChange={e => setSvcForm(p => ({ ...p, category: e.target.value }))}
+              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }}>
+              <option value="traveling">✈️ Traveling</option>
+              <option value="event">🎉 Event Plan</option>
+              <option value="wedding">💍 Wedding Organizer</option>
+            </select>
+          </div>
+
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             {[
               { label: "Judul Paket *", key: "title", placeholder: "Paket Wedding Premium" },
@@ -2049,7 +2126,6 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
               { label: "Keterangan Harga", key: "priceNote", placeholder: "/ wedding" },
               { label: "Badge (opsional)", key: "badge", placeholder: "Best Seller" },
               { label: "Warna Badge (hex)", key: "badgeColor", placeholder: "#e67e22" },
-              { label: "URL Gambar", key: "image", placeholder: "https://..." },
             ].map(f => (
               <div key={f.key}>
                 <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
@@ -2065,20 +2141,38 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
               rows={3} placeholder="Deskripsi singkat paket layanan..."
               style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.6 }} />
           </div>
-          {svcForm.image && (
-            <div style={{ marginBottom: 16 }}>
-              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Preview Gambar</label>
-              <img src={svcForm.image} alt="preview" style={{ height: 100, maxWidth: 200, objectFit: "cover", borderRadius: 6, border: "1px solid #ddeef5" }} onError={e => { e.target.style.display = "none"; }} />
-            </div>
-          )}
+
+          {/* Multi-Image Upload */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Upload Gambar</label>
-            <input type="file" accept="image/*" onChange={async e => {
-              const file = e.target.files?.[0]; if (!file) return;
-              try { notify("⏳ Mengupload..."); const url = await uploadToCloudinary(file); setSvcForm(p => ({ ...p, image: url })); notify("Gambar berhasil diupload!"); }
-              catch { notify("Gagal upload gambar.", "error"); }
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Galeri Gambar ({(svcForm.images || []).length} foto)</label>
+            {/* Preview thumbnails */}
+            {(svcForm.images || []).length > 0 && (
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
+                {(svcForm.images || []).map((img, i) => (
+                  <div key={i} style={{ position: "relative" }}>
+                    <img src={img} alt="" style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, border: i === 0 ? "2px solid #2b7a9a" : "2px solid #ddeef5" }} />
+                    {i === 0 && <div style={{ position: "absolute", bottom: 2, left: 2, fontSize: 8, background: "#2b7a9a", color: "#fff", borderRadius: 3, padding: "1px 4px", fontWeight: 700 }}>COVER</div>}
+                    <button onClick={() => setSvcForm(p => ({ ...p, images: p.images.filter((_, j) => j !== i), image: i === 0 ? (p.images[1] || "") : p.image }))}
+                      style={{ position: "absolute", top: -4, right: -4, width: 18, height: 18, borderRadius: "50%", background: "#e74c3c", color: "#fff", border: "none", cursor: "pointer", fontSize: 10, lineHeight: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+                  </div>
+                ))}
+              </div>
+            )}
+            <input type="file" accept="image/*" multiple onChange={async e => {
+              const files = Array.from(e.target.files || []); if (!files.length) return;
+              try {
+                notify(`⏳ Mengupload ${files.length} gambar...`);
+                const urls = await Promise.all(files.map(f => uploadToCloudinary(f)));
+                setSvcForm(p => {
+                  const newImgs = [...(p.images || []), ...urls];
+                  return { ...p, images: newImgs, image: newImgs[0] || p.image };
+                });
+                notify(`${files.length} gambar berhasil diupload!`);
+              } catch { notify("Gagal upload gambar.", "error"); }
             }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #3d8fab", borderRadius: 6, background: "#f0f9fc", color: "#3d8fab", width: "100%" }} />
+            <div style={{ fontSize: 11, color: "#7a9db0", marginTop: 4 }}>Bisa pilih beberapa foto sekaligus. Foto pertama = cover.</div>
           </div>
+
           <div style={{ marginBottom: 16 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
               <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase" }}>Fitur / Yang Termasuk</label>
@@ -2139,7 +2233,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
 }
 
 /* ─────────────── ABOUT PAGE ─────────────── */
-function AboutPage({ content, images }) {
+function AboutPage({ content, images, teamMembers }) {
   const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [contactSent, setContactSent] = useState(false);
 
@@ -2277,65 +2371,38 @@ function AboutPage({ content, images }) {
         </div>
       </div>
 
-      {/* ── TIMELINE / SEJARAH ── */}
+      {/* ── SUSUNAN TIM ── */}
       <div style={{ padding: "80px 5%" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Perjalanan Kami</div>
-            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#1a2e42" }}>Sejarah Arutala</h2>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Orang-Orang di Balik Layanan</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#1a2e42" }}>Susunan Tim Kami</h2>
           </div>
-          <div style={{ position: "relative" }}>
-            <div style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: 2, background: "linear-gradient(to bottom, #2b7a9a, #c5dde9)", transform: "translateX(-50%)" }} className="hide-sm" />
-            {timeline.map((item, i) => (
-              <div key={item.year} style={{ display: "flex", gap: 32, marginBottom: 40, alignItems: "flex-start", flexDirection: i % 2 === 0 ? "row" : "row-reverse" }} className="hide-sm">
-                <div style={{ flex: 1, textAlign: i % 2 === 0 ? "right" : "left" }}>
-                  <div style={{ background: "#fff", border: "1px solid #ddeef5", borderRadius: 10, padding: "20px 24px", boxShadow: "0 4px 16px rgba(26,46,66,.07)" }}>
-                    <div style={{ fontSize: "0.75rem", color: "#2b7a9a", fontWeight: 700, letterSpacing: ".06em", marginBottom: 6 }}>{item.year}</div>
-                    <h4 style={{ fontSize: "1rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#1a2e42", marginBottom: 8 }}>{item.title}</h4>
-                    <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.7 }}>{item.desc}</p>
+          {(!teamMembers || teamMembers.length === 0) ? (
+            <div style={{ textAlign: "center", padding: "40px 0", color: "#7a9db0" }}>Susunan tim belum diisi. Hubungi administrator.</div>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 28 }}>
+              {teamMembers.map((member, i) => (
+                <div key={member.id || i} className="hover-lift" style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 4px 16px rgba(26,46,66,.08)", textAlign: "center", transition: "all .3s" }}>
+                  {/* Photo */}
+                  <div style={{ height: 180, overflow: "hidden", background: "linear-gradient(135deg,#c5dde9,#a8cfe0)", position: "relative" }}>
+                    {member.photo ? (
+                      <img src={member.photo} alt={member.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.target.style.display = "none"; }} />
+                    ) : (
+                      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 64 }}>👤</div>
+                    )}
                   </div>
-                </div>
-                <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#2b7a9a", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "0.8125rem", flexShrink: 0, zIndex: 1, boxShadow: "0 0 0 4px #c5dde9" }}>
-                  {i + 1}
-                </div>
-                <div style={{ flex: 1 }} />
-              </div>
-            ))}
-            {/* Mobile timeline */}
-            <div className="show-sm" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              {timeline.map((item) => (
-                <div key={item.year} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: "50%", background: "#1a2e42", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: "0.875rem", flexShrink: 0 }}>{item.year.slice(-2)}</div>
-                  <div style={{ background: "#f4f9fb", borderRadius: 10, padding: "16px 18px", flex: 1 }}>
-                    <div style={{ fontSize: "0.75rem", color: "#2b7a9a", fontWeight: 700, marginBottom: 4 }}>{item.year}</div>
-                    <h4 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#1a2e42", marginBottom: 6 }}>{item.title}</h4>
-                    <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.6 }}>{item.desc}</p>
+                  <div style={{ padding: "20px 20px 24px" }}>
+                    <h3 style={{ fontSize: "1rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#1a2e42", marginBottom: 4 }}>{member.name}</h3>
+                    <div style={{ fontSize: "0.8125rem", color: "#2b7a9a", fontWeight: 600, marginBottom: 12 }}>{member.role}</div>
+                    {member.quotes && (
+                      <p style={{ fontSize: "0.8125rem", color: "#6b8999", fontStyle: "italic", lineHeight: 1.65 }}>"{member.quotes}"</p>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── TIM KAMI ── */}
-      <div style={{ background: "#1a2e42", padding: "72px 5%" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#5bc4e0", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Profesional & Berdedikasi</div>
-            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#fff" }}>Tim Kami</h2>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 24 }}>
-            {team.map(t => (
-              <div key={t.name} style={{ background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 12, padding: "32px 24px", textAlign: "center", transition: "background .3s" }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.12)"}
-                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.07)"}>
-                <div style={{ fontSize: 44, marginBottom: 16 }}>{t.icon}</div>
-                <h3 style={{ fontSize: "1rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#fff", marginBottom: 8 }}>{t.name}</h3>
-                <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.6)", fontWeight: 500 }}>{t.role}</p>
-              </div>
-            ))}
-          </div>
+          )}
         </div>
       </div>
 
@@ -2512,6 +2579,105 @@ function AboutPage({ content, images }) {
 /* ═══════════════════════════════════════════════
    MAIN COMPONENT
 ═══════════════════════════════════════════════ */
+/* ─────────────── TEAM ADMIN ─────────────── */
+function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
+  const [editId, setEditId] = useState(null);
+  const [form, setForm] = useState({});
+  const members = data.teamMembers || [];
+
+  const openNew = () => { setForm({ id: Date.now(), name: "", role: "", quotes: "", photo: "" }); setEditId("new"); };
+  const openEdit = (m) => { setForm({ ...m }); setEditId(m.id); };
+  const cancelEdit = () => { setEditId(null); setForm({}); };
+
+  const saveMember = () => {
+    if (!form.name?.trim()) return notify("Nama anggota tim wajib diisi.", "error");
+    const idx = members.findIndex(x => x.id === form.id);
+    const updated = idx >= 0 ? members.map((x, i) => i === idx ? form : x) : [...members, form];
+    save({ ...data, teamMembers: updated });
+    cancelEdit();
+    notify("Data tim berhasil disimpan!");
+  };
+
+  const deleteMember = (id) => {
+    if (!window.confirm("Hapus anggota tim ini?")) return;
+    save({ ...data, teamMembers: members.filter(x => x.id !== id) });
+    notify("Anggota tim dihapus.");
+  };
+
+  return (
+    <div className="fade-in">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+        <h1 style={{ fontSize: 24, fontWeight: 500, color: "#1e3248" }}>👥 Susunan Tim</h1>
+        {!editId && <button onClick={openNew} style={{ padding: "10px 20px", background: "#1e3248", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>+ Tambah Anggota</button>}
+      </div>
+
+      {/* Form Edit */}
+      {editId && (
+        <div style={{ background: "#fff", borderRadius: 12, padding: "28px", boxShadow: "0 4px 20px rgba(0,0,0,.08)", marginBottom: 28, borderTop: "4px solid #3d8fab" }}>
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1e3248", marginBottom: 20 }}>{editId === "new" ? "➕ Tambah Anggota Tim" : "✏ Edit Anggota Tim"}</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+            {[
+              { label: "Nama *", key: "name", placeholder: "Budi Santoso" },
+              { label: "Jabatan", key: "role", placeholder: "Wedding Coordinator" },
+            ].map(f => (
+              <div key={f.key}>
+                <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
+                <input value={form[f.key] || ""} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
+                  placeholder={f.placeholder} style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+              </div>
+            ))}
+          </div>
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Quotes / Motto</label>
+            <input value={form.quotes || ""} onChange={e => setForm(p => ({ ...p, quotes: e.target.value }))}
+              placeholder="Setiap momen spesial layak dirayakan dengan sempurna."
+              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+          </div>
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Foto</label>
+            {form.photo && <img src={form.photo} alt="preview" style={{ height: 80, width: 80, objectFit: "cover", borderRadius: "50%", marginBottom: 10, border: "2px solid #ddeef5" }} />}
+            <input type="file" accept="image/*" onChange={async e => {
+              const file = e.target.files?.[0]; if (!file) return;
+              try { notify("⏳ Mengupload foto..."); const url = await uploadToCloudinary(file); setForm(p => ({ ...p, photo: url })); notify("Foto berhasil diupload!"); }
+              catch { notify("Gagal upload foto.", "error"); }
+            }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #3d8fab", borderRadius: 6, background: "#f0f9fc", color: "#3d8fab", width: "100%" }} />
+          </div>
+          <div style={{ display: "flex", gap: 10 }}>
+            <button onClick={saveMember} style={{ padding: "10px 22px", background: "#1e3248", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan</button>
+            <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#f4f9fb", color: "#6b8999", border: "1px solid #d0e4ee", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
+          </div>
+        </div>
+      )}
+
+      {/* List */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 16 }}>
+        {members.map(m => (
+          <div key={m.id} style={{ background: "#fff", borderRadius: 12, padding: "20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center" }}>
+            <div style={{ width: 72, height: 72, borderRadius: "50%", overflow: "hidden", background: "#f4f9fb", border: "2px solid #ddeef5", flexShrink: 0 }}>
+              {m.photo ? <img src={m.photo} alt={m.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>👤</div>}
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, color: "#1e3248", fontSize: 14 }}>{m.name}</div>
+              <div style={{ fontSize: 12, color: "#2b7a9a", fontWeight: 600 }}>{m.role}</div>
+              {m.quotes && <div style={{ fontSize: 11, color: "#7a9db0", fontStyle: "italic", marginTop: 6, lineHeight: 1.5 }}>"{m.quotes}"</div>}
+            </div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <button onClick={() => openEdit(m)} style={{ padding: "6px 14px", background: "#f0f9fc", color: "#3d8fab", border: "1px solid #c5dde9", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
+              <button onClick={() => deleteMember(m.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
+            </div>
+          </div>
+        ))}
+        {members.length === 0 && !editId && (
+          <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "60px 0", color: "#7a9db0" }}>
+            <div style={{ fontSize: 40, marginBottom: 12 }}>👥</div>
+            <p>Belum ada anggota tim. Klik "+ Tambah Anggota" untuk mulai.</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
   const [user, setUser] = useState(null);
@@ -3373,7 +3539,7 @@ export default function BricksyTravel() {
               )}
 
               {/* ABOUT PAGE */}
-              {page === "about" && <AboutPage content={data.content} images={data.images} />}
+              {page === "about" && <AboutPage content={data.content} images={data.images} teamMembers={data.teamMembers || []} />}
 
               {/* SERVICES PAGE */}
               {page === "services" && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} />}
@@ -3581,6 +3747,7 @@ export default function BricksyTravel() {
                 { id: "cms", icon: "✎", label: "Posts / CMS", access: canEdit },
                 { id: "images", icon: "🖼", label: "Images", access: canEdit },
                 { id: "about", icon: "🏢", label: "About Us", access: isAdmin },
+                { id: "team", icon: "👥", label: "Susunan Tim", access: isAdmin },
                 { id: "services", icon: "🛎", label: "Layanan / Paket", access: isAdmin },
                 { id: "content", icon: "🔤", label: "Site Content", access: isAdmin },
                 { id: "messages", icon: "✉", label: "Messages", access: canCS },
@@ -4159,6 +4326,11 @@ export default function BricksyTravel() {
                   notify={notify}
                   uploadToCloudinary={uploadToCloudinary}
                 />
+              )}
+
+              {/* SUSUNAN TIM */}
+              {adminTab === "team" && isAdmin && (
+                <TeamAdmin data={data} save={save} notify={notify} uploadToCloudinary={uploadToCloudinary} />
               )}
 
               {/* MESSAGES */}
