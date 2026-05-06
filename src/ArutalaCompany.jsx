@@ -1987,6 +1987,157 @@ function ServicesPage({ content, services, navigateTo }) {
   );
 }
 
+/* ─────────────── SERVICES ADMIN PANEL ─────────────── */
+function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
+  const [editSvc, setEditSvc] = useState(null);
+  const [svcForm, setSvcForm] = useState({});
+  const svcs = data.services || [];
+
+  const openNew = () => {
+    setSvcForm({ id: Date.now(), title: "", badge: "", badgeColor: "#2b7a9a", price: "", priceNote: "/ event", image: "", description: "", features: [], highlight: false });
+    setEditSvc("new");
+  };
+  const openEdit = (s) => { setSvcForm({ ...s, features: [...(s.features || [])] }); setEditSvc(s.id); };
+  const cancelEdit = () => { setEditSvc(null); setSvcForm({}); };
+
+  const saveSvc = () => {
+    if (!svcForm.title?.trim()) return notify("Judul paket wajib diisi.", "error");
+    const idx = svcs.findIndex(x => x.id === svcForm.id);
+    const updated = idx >= 0 ? svcs.map((x, i) => i === idx ? svcForm : x) : [...svcs, svcForm];
+    save({ ...data, services: updated });
+    setEditSvc(null); setSvcForm({});
+    notify("Paket layanan disimpan!");
+  };
+  const deleteSvc = (id) => {
+    if (!window.confirm("Hapus paket ini?")) return;
+    save({ ...data, services: svcs.filter(x => x.id !== id) });
+    notify("Paket dihapus.");
+  };
+  const updateFeature = (i, val) => {
+    const f = [...(svcForm.features || [])]; f[i] = val;
+    setSvcForm(p => ({ ...p, features: f }));
+  };
+  const addFeature = () => setSvcForm(p => ({ ...p, features: [...(p.features || []), ""] }));
+  const removeFeature = (i) => {
+    const f = [...(svcForm.features || [])]; f.splice(i, 1);
+    setSvcForm(p => ({ ...p, features: f }));
+  };
+
+  return (
+    <div className="fade-in">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
+        <div>
+          <h1 style={{ fontSize: 24, fontWeight: 500, color: "#1e3248", marginBottom: 4 }}>Layanan / Paket</h1>
+          <p style={{ fontSize: 12, color: "#7a9db0" }}>Kelola paket layanan yang tampil di halaman Layanan Kami.</p>
+        </div>
+        <button onClick={openNew}
+          style={{ padding: "9px 20px", background: "#1e3248", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+          + Tambah Paket
+        </button>
+      </div>
+
+      {/* Form Tambah / Edit */}
+      {editSvc !== null && (
+        <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 28, boxShadow: "0 4px 16px rgba(0,0,0,.08)", borderTop: "4px solid #3d8fab" }}>
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1e3248", marginBottom: 20 }}>
+            {editSvc === "new" ? "➕ Tambah Paket Baru" : "✏ Edit Paket"}
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+            {[
+              { label: "Judul Paket *", key: "title", placeholder: "Paket Wedding Premium" },
+              { label: "Harga (teks)", key: "price", placeholder: "Rp 25.000.000" },
+              { label: "Keterangan Harga", key: "priceNote", placeholder: "/ wedding" },
+              { label: "Badge (opsional)", key: "badge", placeholder: "Best Seller" },
+              { label: "Warna Badge (hex)", key: "badgeColor", placeholder: "#e67e22" },
+              { label: "URL Gambar", key: "image", placeholder: "https://..." },
+            ].map(f => (
+              <div key={f.key}>
+                <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
+                <input value={svcForm[f.key] || ""} onChange={e => setSvcForm(p => ({ ...p, [f.key]: e.target.value }))}
+                  placeholder={f.placeholder}
+                  style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+              </div>
+            ))}
+          </div>
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Deskripsi</label>
+            <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
+              rows={3} placeholder="Deskripsi singkat paket layanan..."
+              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.6 }} />
+          </div>
+          {svcForm.image && (
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Preview Gambar</label>
+              <img src={svcForm.image} alt="preview" style={{ height: 100, maxWidth: 200, objectFit: "cover", borderRadius: 6, border: "1px solid #ddeef5" }} onError={e => { e.target.style.display = "none"; }} />
+            </div>
+          )}
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Upload Gambar</label>
+            <input type="file" accept="image/*" onChange={async e => {
+              const file = e.target.files?.[0]; if (!file) return;
+              try { notify("⏳ Mengupload..."); const url = await uploadToCloudinary(file); setSvcForm(p => ({ ...p, image: url })); notify("Gambar berhasil diupload!"); }
+              catch { notify("Gagal upload gambar.", "error"); }
+            }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #3d8fab", borderRadius: 6, background: "#f0f9fc", color: "#3d8fab", width: "100%" }} />
+          </div>
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+              <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase" }}>Fitur / Yang Termasuk</label>
+              <button onClick={addFeature} style={{ fontSize: 12, padding: "4px 12px", background: "#e8f8ef", color: "#27ae60", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 700 }}>+ Tambah</button>
+            </div>
+            {(svcForm.features || []).map((feat, i) => (
+              <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+                <input value={feat} onChange={e => updateFeature(i, e.target.value)}
+                  placeholder={`Fitur ${i + 1}...`}
+                  style={{ flex: 1, padding: "8px 10px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                <button onClick={() => removeFeature(i)} style={{ padding: "8px 12px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: 700 }}>✕</button>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+            <input type="checkbox" id="svc-highlight" checked={!!svcForm.highlight} onChange={e => setSvcForm(p => ({ ...p, highlight: e.target.checked }))} style={{ width: 16, height: 16, cursor: "pointer" }} />
+            <label htmlFor="svc-highlight" style={{ fontSize: 13, color: "#1e3248", fontWeight: 600, cursor: "pointer" }}>Tandai sebagai Pilihan Utama (highlight)</label>
+          </div>
+          <div style={{ display: "flex", gap: 10 }}>
+            <button onClick={saveSvc} style={{ padding: "10px 22px", background: "#1e3248", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan Paket</button>
+            <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#f4f9fb", color: "#6b8999", border: "1px solid #d0e4ee", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
+          </div>
+        </div>
+      )}
+
+      {/* Daftar Paket */}
+      {svcs.length === 0 && editSvc === null ? (
+        <div style={{ background: "#fff", borderRadius: 10, padding: "60px 20px", textAlign: "center", color: "#7a9db0", boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
+          <div style={{ fontSize: 40, marginBottom: 12 }}>🛎</div>
+          <p style={{ fontSize: 14 }}>Belum ada paket layanan. Klik "+ Tambah Paket" untuk memulai.</p>
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {svcs.map(svc => (
+            <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "18px 20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", gap: 16, alignItems: "flex-start", borderLeft: svc.highlight ? "4px solid #3d8fab" : "4px solid #ddeef5" }}>
+              {svc.image && (
+                <img src={svc.image} alt={svc.title} style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
+              )}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 4 }}>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: "#1e3248" }}>{svc.title}</span>
+                  {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
+                  {svc.highlight && <span style={{ fontSize: 10, background: "#1e3248", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
+                </div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#3d8fab" }}>{svc.price}<span style={{ color: "#7a9db0", fontWeight: 400 }}> {svc.priceNote}</span></div>
+                <div style={{ fontSize: 12, color: "#7a9db0", marginTop: 4 }}>{(svc.features || []).length} fitur termasuk</div>
+              </div>
+              <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: "#f4f9fb", color: "#1e3248", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
+                <button onClick={() => deleteSvc(svc.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─────────────── ABOUT PAGE ─────────────── */
 function AboutPage({ content, images }) {
   const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
@@ -4000,170 +4151,15 @@ export default function BricksyTravel() {
                 </div>
               )}
 
-              )}
-
               {/* SERVICES / PAKET LAYANAN */}
-              {adminTab === "services" && isAdmin && (() => {
-                const svcs = data.services || [];
-                const [editSvc, setEditSvc] = useState(null); // null | "new" | service obj
-                const [svcForm, setSvcForm] = useState({});
-
-                const openNew = () => {
-                  setSvcForm({ id: Date.now(), title: "", badge: "", badgeColor: "#2b7a9a", price: "", priceNote: "/ event", image: "", description: "", features: [], highlight: false });
-                  setEditSvc("new");
-                };
-                const openEdit = (s) => { setSvcForm({ ...s, features: [...(s.features||[])] }); setEditSvc(s.id); };
-                const cancelEdit = () => { setEditSvc(null); setSvcForm({}); };
-
-                const saveSvc = () => {
-                  if (!svcForm.title?.trim()) return notify("Judul paket wajib diisi.", "error");
-                  const existing = svcs;
-                  const idx = existing.findIndex(x => x.id === svcForm.id);
-                  const updated = idx >= 0 ? existing.map((x,i) => i === idx ? svcForm : x) : [...existing, svcForm];
-                  save({ ...data, services: updated });
-                  setEditSvc(null); setSvcForm({});
-                  notify("Paket layanan disimpan!");
-                };
-                const deleteSvc = (id) => {
-                  if (!window.confirm("Hapus paket ini?")) return;
-                  save({ ...data, services: svcs.filter(x => x.id !== id) });
-                  notify("Paket dihapus.");
-                };
-                const updateFeature = (i, val) => {
-                  const f = [...(svcForm.features||[])];
-                  f[i] = val;
-                  setSvcForm(p => ({ ...p, features: f }));
-                };
-                const addFeature = () => setSvcForm(p => ({ ...p, features: [...(p.features||[]), ""] }));
-                const removeFeature = (i) => {
-                  const f = [...(svcForm.features||[])];
-                  f.splice(i, 1);
-                  setSvcForm(p => ({ ...p, features: f }));
-                };
-
-                return (
-                  <div className="fade-in">
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-                      <div>
-                        <h1 style={{ fontSize: 24, fontWeight: 500, color: "#1e3248", marginBottom: 4 }}>Layanan / Paket</h1>
-                        <p style={{ fontSize: 12, color: "#7a9db0" }}>Kelola paket layanan yang tampil di halaman Layanan Kami.</p>
-                      </div>
-                      <button onClick={openNew}
-                        style={{ padding: "9px 20px", background: "#1e3248", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
-                        + Tambah Paket
-                      </button>
-                    </div>
-
-                    {/* Form Edit/New */}
-                    {editSvc !== null && (
-                      <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 28, boxShadow: "0 4px 16px rgba(0,0,0,.08)", borderTop: "4px solid #3d8fab" }}>
-                        <h2 style={{ fontSize: 16, fontWeight: 700, color: "#1e3248", marginBottom: 20 }}>
-                          {editSvc === "new" ? "➕ Tambah Paket Baru" : "✏ Edit Paket"}
-                        </h2>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
-                          {[
-                            { label: "Judul Paket *", key: "title", placeholder: "Paket Wedding Premium" },
-                            { label: "Harga (teks)", key: "price", placeholder: "Rp 25.000.000" },
-                            { label: "Keterangan Harga", key: "priceNote", placeholder: "/ wedding" },
-                            { label: "Badge (opsional)", key: "badge", placeholder: "Best Seller" },
-                            { label: "Warna Badge (hex)", key: "badgeColor", placeholder: "#e67e22" },
-                            { label: "URL Gambar", key: "image", placeholder: "https://..." },
-                          ].map(f => (
-                            <div key={f.key}>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
-                              <input value={svcForm[f.key] || ""} onChange={e => setSvcForm(p => ({ ...p, [f.key]: e.target.value }))}
-                                placeholder={f.placeholder}
-                                style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
-                            </div>
-                          ))}
-                        </div>
-                        <div style={{ marginBottom: 16 }}>
-                          <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Deskripsi</label>
-                          <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
-                            rows={3} placeholder="Deskripsi singkat paket layanan..."
-                            style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.6 }} />
-                        </div>
-
-                        {/* Preview gambar */}
-                        {svcForm.image && (
-                          <div style={{ marginBottom: 16 }}>
-                            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Preview Gambar</label>
-                            <img src={svcForm.image} alt="preview" style={{ height: 100, maxWidth: 200, objectFit: "cover", borderRadius: 6, border: "1px solid #ddeef5" }} onError={e => e.target.style.display="none"} />
-                          </div>
-                        )}
-
-                        {/* Upload gambar Cloudinary */}
-                        <div style={{ marginBottom: 16 }}>
-                          <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Upload Gambar</label>
-                          <input type="file" accept="image/*" onChange={async e => {
-                            const file = e.target.files?.[0]; if (!file) return;
-                            try { notify("⏳ Mengupload..."); const url = await uploadToCloudinary(file); setSvcForm(p => ({ ...p, image: url })); notify("Gambar berhasil diupload!"); }
-                            catch { notify("Gagal upload gambar.", "error"); }
-                          }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #3d8fab", borderRadius: 6, background: "#f0f9fc", color: "#3d8fab", width: "100%" }} />
-                        </div>
-
-                        {/* Features */}
-                        <div style={{ marginBottom: 16 }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                            <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase" }}>Fitur / Yang Termasuk</label>
-                            <button onClick={addFeature} style={{ fontSize: 12, padding: "4px 12px", background: "#e8f8ef", color: "#27ae60", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 700 }}>+ Tambah</button>
-                          </div>
-                          {(svcForm.features || []).map((feat, i) => (
-                            <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
-                              <input value={feat} onChange={e => updateFeature(i, e.target.value)}
-                                placeholder={`Fitur ${i+1}...`}
-                                style={{ flex: 1, padding: "8px 10px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
-                              <button onClick={() => removeFeature(i)} style={{ padding: "8px 12px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: 700 }}>✕</button>
-                            </div>
-                          ))}
-                        </div>
-
-                        {/* Highlight toggle */}
-                        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-                          <input type="checkbox" id="highlight-toggle" checked={!!svcForm.highlight} onChange={e => setSvcForm(p => ({ ...p, highlight: e.target.checked }))} style={{ width: 16, height: 16, cursor: "pointer" }} />
-                          <label htmlFor="highlight-toggle" style={{ fontSize: 13, color: "#1e3248", fontWeight: 600, cursor: "pointer" }}>Tandai sebagai Pilihan Utama (highlight)</label>
-                        </div>
-
-                        <div style={{ display: "flex", gap: 10 }}>
-                          <button onClick={saveSvc} style={{ padding: "10px 22px", background: "#1e3248", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan Paket</button>
-                          <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#f4f9fb", color: "#6b8999", border: "1px solid #d0e4ee", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* List existing packages */}
-                    {svcs.length === 0 && editSvc === null ? (
-                      <div style={{ background: "#fff", borderRadius: 10, padding: "60px 20px", textAlign: "center", color: "#7a9db0", boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
-                        <div style={{ fontSize: 40, marginBottom: 12 }}>🛎</div>
-                        <p style={{ fontSize: 14 }}>Belum ada paket layanan. Klik "+ Tambah Paket" untuk memulai.</p>
-                      </div>
-                    ) : (
-                      <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                        {svcs.map(svc => (
-                          <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "18px 20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", gap: 16, alignItems: "flex-start", borderLeft: svc.highlight ? "4px solid #3d8fab" : "4px solid #ddeef5" }}>
-                            {svc.image && (
-                              <img src={svc.image} alt={svc.title} style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => e.target.style.display="none"} />
-                            )}
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                              <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 4 }}>
-                                <span style={{ fontSize: 14, fontWeight: 700, color: "#1e3248" }}>{svc.title}</span>
-                                {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor||"#2b7a9a", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
-                                {svc.highlight && <span style={{ fontSize: 10, background: "#1e3248", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
-                              </div>
-                              <div style={{ fontSize: 13, fontWeight: 700, color: "#3d8fab" }}>{svc.price}<span style={{ color: "#7a9db0", fontWeight: 400 }}> {svc.priceNote}</span></div>
-                              <div style={{ fontSize: 12, color: "#7a9db0", marginTop: 4 }}>{(svc.features||[]).length} fitur termasuk</div>
-                            </div>
-                            <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
-                              <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: "#f4f9fb", color: "#1e3248", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
-                              <button onClick={() => deleteSvc(svc.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })()}
+              {adminTab === "services" && isAdmin && (
+                <ServicesAdmin
+                  data={data}
+                  save={save}
+                  notify={notify}
+                  uploadToCloudinary={uploadToCloudinary}
+                />
+              )}
 
               {/* MESSAGES */}
               {adminTab === "messages" && canCS && (
