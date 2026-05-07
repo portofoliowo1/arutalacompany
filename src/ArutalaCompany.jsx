@@ -810,53 +810,43 @@ const GS = () => (
       .hero-intro-img img{height:190px}
     }
 
-    /* ── Magazine Adventure — improved layout: IMG KIRI, TEKS KANAN ── */
-    .mag2-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(26,46,66,.13)}
-    .mag2-img{position:relative;overflow:hidden;min-height:460px}
-    .mag2-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.25,.46,.45,.94)}
-    .mag2-img:hover img{transform:scale(1.04)}
-    .mag2-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,46,66,.45) 0%,rgba(26,46,66,.1) 60%,rgba(26,46,66,0) 100%);pointer-events:none}
-    .mag2-img-badge{position:absolute;bottom:24px;left:24px;display:flex;flex-direction:column;gap:6px}
-    .mag2-img-tag{background:#c9aa71;color:#fff;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border-radius:2px;font-weight:800;width:fit-content}
-    .mag2-img-caption{font-family:"Playfair Display",serif;font-size:1.15rem;color:#fff;font-weight:700;line-height:1.3;text-shadow:0 2px 12px rgba(0,0,0,.5);max-width:180px}
-    .mag2-txt{background:#1a2e42;padding:48px 44px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
-    /* Ornamen di panel teks */
-    .mag2-txt::before{content:"";position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(43,122,154,.12);pointer-events:none}
-    .mag2-txt::after{content:"";position:absolute;bottom:-30px;left:-30px;width:120px;height:120px;border-radius:50%;background:rgba(201,170,113,.08);pointer-events:none}
-    .mag2-deco-lines{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9aa71,#2b7a9a,#c9aa71);background-size:200% 100%;animation:gradShift 4s linear infinite}
-    @keyframes gradShift{0%{background-position:0% 0%}100%{background-position:200% 0%}}
-    .mag2-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-    .mag2-eyebrow .line{width:28px;height:1.5px;background:#c9aa71;flex-shrink:0}
-    .mag2-eyebrow span{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#7ab3c8;font-weight:700}
-    .mag2-title{font-family:"Playfair Display",serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:18px}
-    .mag2-quote{font-size:.875rem;color:rgba(255,255,255,.7);line-height:1.85;font-style:italic;padding-left:14px;border-left:2px solid #c9aa71;margin-bottom:28px}
-    .mag2-stats{display:flex;gap:28px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.1)}
-    .mag2-stat .num{font-family:"Playfair Display",serif;font-size:1.75rem;font-weight:900;color:#c9aa71;line-height:1;margin-bottom:3px}
-    .mag2-stat .lbl{font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
-    .mag2-btns{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
-    .mag2-btn-pill{padding:8px 16px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
-    .mag2-btn-pill:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);color:#fff}
-    .mag2-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;background:linear-gradient(135deg,#c9aa71,#e8c97e);color:#1a2e42;border:none;border-radius:6px;font-size:.8125rem;font-weight:800;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:opacity .2s,transform .2s;font-family:"Playfair Display",serif}
-    .mag2-cta:hover{opacity:.9;transform:translateY(-1px)}
-    /* Ornamen shape animasi floating di sudut */
-    .mag2-shape1{position:absolute;top:20px;right:20px;width:40px;height:40px;border:2px solid rgba(201,170,113,.3);border-radius:6px;transform:rotate(15deg);animation:shapeFloat 5s ease-in-out infinite;pointer-events:none}
-    .mag2-shape2{position:absolute;bottom:40px;right:30px;width:24px;height:24px;background:rgba(43,122,154,.25);border-radius:50%;animation:shapeFloat 7s ease-in-out infinite 1.5s;pointer-events:none}
-    /* Mobile: stack vertikal */
-    @media(max-width:768px){
-      .mag2-grid{grid-template-columns:1fr;border-radius:12px}
-      .mag2-img{min-height:220px;order:1}
-      .mag2-txt{padding:28px 24px;order:2}
-      .mag2-title{font-size:clamp(1.4rem,6vw,2rem)}
-      .mag2-stats{gap:18px;flex-wrap:wrap}
-      .mag2-quote{font-size:.8125rem;margin-bottom:20px}
-      .mag2-btns{gap:8px}
-      .mag2-txt::before,.mag2-txt::after,.mag2-shape1,.mag2-shape2{display:none}
+    /* ── Adventure Section — TEKS KIRI clean + PUZZLE IMG KANAN ── */
+    .adv2-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1100px;margin:0 auto}
+    /* Teks kiri */
+    .adv2-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    .adv2-eyebrow .line{width:36px;height:1.5px;background:#c9aa71;flex-shrink:0}
+    .adv2-eyebrow span{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#c9aa71;font-weight:700}
+    .adv2-title{font-family:"Playfair Display",serif;font-size:clamp(1.8rem,3.8vw,2.8rem);font-weight:900;color:#fff;line-height:1.08;margin-bottom:14px}
+    /* Quote slideshow */
+    .adv2-quote-wrap{position:relative;min-height:56px;margin-bottom:28px;padding-left:16px;border-left:2px solid #c9aa71}
+    .adv2-quote-item{position:absolute;top:0;left:16px;right:0;font-size:.9375rem;color:rgba(255,255,255,.75);line-height:1.85;font-style:italic;opacity:0;transition:opacity .6s ease;pointer-events:none}
+    .adv2-quote-item.active{opacity:1;position:relative;left:0}
+    .adv2-quote-dots{display:flex;gap:6px;margin-bottom:28px}
+    .adv2-qdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);border:none;cursor:pointer;transition:background .3s,width .3s}
+    .adv2-qdot.on{width:18px;border-radius:3px;background:#c9aa71}
+    .adv2-stats{display:flex;gap:28px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.12)}
+    .adv2-stat .num{font-family:"Playfair Display",serif;font-size:1.75rem;font-weight:900;color:#c9aa71;line-height:1;margin-bottom:3px}
+    .adv2-stat .lbl{font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:600}
+    .adv2-btns{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+    .adv2-btn-pill{padding:8px 16px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+    .adv2-btn-pill:hover{background:rgba(255,255,255,.16);color:#fff}
+    .adv2-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;background:linear-gradient(135deg,#c9aa71,#e8c97e);color:#1a2e42;border:none;border-radius:6px;font-size:.8125rem;font-weight:800;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:opacity .2s,transform .2s;font-family:"Playfair Display",serif}
+    .adv2-cta:hover{opacity:.9;transform:translateY(-1px)}
+    /* Puzzle grid kanan */
+    .adv2-puzzle{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;height:480px}
+    .adv2-puzzle-a{grid-column:1;grid-row:1/3;border-radius:12px;overflow:hidden}
+    .adv2-puzzle-b{grid-column:2;grid-row:1;border-radius:12px;overflow:hidden}
+    .adv2-puzzle-c{grid-column:2;grid-row:2;border-radius:12px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .adv2-puzzle-c-sm{border-radius:8px;overflow:hidden}
+    .adv2-puzzle a,.adv2-puzzle-a,.adv2-puzzle-b,.adv2-puzzle-c-sm{transition:transform .35s;cursor:default}
+    .adv2-puzzle-a:hover,.adv2-puzzle-b:hover,.adv2-puzzle-c-sm:hover{transform:scale(1.02)}
+    .adv2-puzzle img{width:100%;height:100%;object-fit:cover;display:block}
+    @media(max-width:900px){
+      .adv2-grid{grid-template-columns:1fr;gap:36px}
+      .adv2-puzzle{height:320px;order:-1}
+      .adv2-puzzle-c{display:grid}
     }
-    @media(max-width:480px){
-      .mag2-txt{padding:22px 18px}
-      .mag2-stats{gap:12px}
-      .mag2-stat .num{font-size:1.4rem}
-    }
+    @media(max-width:480px){.adv2-puzzle{height:220px;gap:5px}}
 
     /* Book section images: hide on small screens */
     /* Book section images: hide on small screens */
@@ -868,7 +858,7 @@ const GS = () => (
     @media(max-width:768px){.contact-grid{grid-template-columns:1fr!important;gap:32px!important}}
 
     /* Globe section */
-    .globe-inner{display:flex;align-items:center;gap:60px;flex-wrap:wrap}
+    .globe-inner{display:flex;align-items:center;gap:60px;flex-wrap:nowrap}
     .globe-visual{flex:0 0 auto;display:flex;align-items:center;justify-content:center}
     @media(max-width:768px){.globe-visual{display:none}}
 
@@ -4271,7 +4261,7 @@ export default function BricksyTravel() {
               </button>
 
               {/* ── 2-ROW NAV (desktop) ── */}
-              <div className="hide-sm" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 4, paddingLeft: 8 }}>
+              <div className="hide-sm" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-end", gap: 4, paddingLeft: 8 }}>
                 {/* Row 1 */}
                 <div style={{ display: "flex", gap: 26, alignItems: "center" }}>
                   {navItems.slice(0, 3).map(item => (
@@ -4506,91 +4496,97 @@ export default function BricksyTravel() {
                     </div>
                   </section>
 
-                  {/* ── ADVENTURE MAGAZINE — IMG Kiri, TEKS Kanan ── */}
-                  <section className="section-md" style={{ background: "#f4f9fb" }}>
-                    {/* Margin deco tetap ada di desktop */}
-                    <div className="adv-margin-deco left" style={{ background: "#f4f9fb" }}>
-                      <span className="issue-text">Arutala Organizer</span>
-                      <div className="dot-col">
-                        {[false,true,true,false,false].map((on,i) => <div key={i} className={`dot${on?" on":""}`} />)}
-                      </div>
-                    </div>
-                    <div className="adv-margin-deco right" style={{ background: "#f4f9fb" }}>
-                      <span className="issue-text">Vol. 14 — No. 2</span>
-                    </div>
-                    <div className="deco-corner-tr" />
-                    <div className="deco-corner-bl" />
+                  {/* ── ADVENTURE — TEKS KIRI + PUZZLE IMG KANAN ── */}
+                  {(() => {
+                    const [advQ, setAdvQ] = useState(0);
+                    const quotes = (data.content.advQuote || "").split(/\n+/).filter(Boolean);
+                    const safeQuotes = quotes.length ? quotes : [data.content.advQuote || ""];
+                    useEffect(() => {
+                      if (safeQuotes.length < 2) return;
+                      const t = setInterval(() => setAdvQ(q => (q + 1) % safeQuotes.length), 4000);
+                      return () => clearInterval(t);
+                    }, [safeQuotes.length]);
+                    const puzzleImgs = [
+                      data.images.gal[0] || data.images.hero[0],
+                      data.images.gal[1] || data.images.hero[1],
+                      data.images.gal[2] || data.images.hero[2],
+                      data.images.gal[3] || data.images.hero[3],
+                    ];
+                    return (
+                      <section className="section-md" style={{ background: "#1a2e42" }}>
+                        <div className="adv2-grid">
+                          {/* KIRI: Teks clean */}
+                          <div>
+                            <div className="adv2-eyebrow">
+                              <div className="line" />
+                              <span>{data.content.advSub || "TRAVEL & OUTDOOR RECREATION"}</span>
+                            </div>
+                            <h2 className="adv2-title">{data.content.advTitle}</h2>
 
-                    <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-                      <div className="mag2-grid">
-
-                        {/* KIRI: Gambar besar */}
-                        <div className="mag2-img">
-                          <img src={data.images.adv[1] || data.images.adv[0]} alt={data.content.advTitle} />
-                          <div className="mag2-img-overlay" />
-                          <div className="mag2-img-badge">
-                            <span className="mag2-img-tag">{data.content.advSub || "TRAVEL & EVENT"}</span>
-                            <span className="mag2-img-caption">{data.content.advTitle}</span>
-                          </div>
-                        </div>
-
-                        {/* KANAN: Teks magazine */}
-                        <div className="mag2-txt">
-                          {/* Top gradient bar animasi */}
-                          <div className="mag2-deco-lines" />
-                          {/* Ornamen shapes */}
-                          <div className="mag2-shape1" />
-                          <div className="mag2-shape2" />
-
-                          <div className="mag2-eyebrow">
-                            <div className="line" />
-                            <span>Arutala Story</span>
-                          </div>
-
-                          <h2 className="mag2-title">{data.content.advTitle}</h2>
-
-                          <p className="mag2-quote">
-                            {data.content.advQuote?.length > 180
-                              ? data.content.advQuote.slice(0, 180) + "…"
-                              : data.content.advQuote}
-                          </p>
-
-                          {/* Stats */}
-                          <div className="mag2-stats">
-                            {[
-                              { num: "500+", lbl: "Event Sukses" },
-                              { num: "1200+", lbl: "Klien Puas" },
-                              { num: `${new Date().getFullYear() - parseInt(data.content.foundingYear || "2026") || 0}+`, lbl: "Tahun" },
-                            ].map(s => (
-                              <div key={s.lbl} className="mag2-stat">
-                                <div className="num">{s.num}</div>
-                                <div className="lbl">{s.lbl}</div>
+                            {/* Quote slideshow */}
+                            <div className="adv2-quote-wrap">
+                              <span className="adv2-quote-item active">{safeQuotes[advQ]}</span>
+                            </div>
+                            {safeQuotes.length > 1 && (
+                              <div className="adv2-quote-dots">
+                                {safeQuotes.map((_, i) => (
+                                  <button key={i} className={`adv2-qdot${advQ === i ? " on" : ""}`} onClick={() => setAdvQ(i)} />
+                                ))}
                               </div>
-                            ))}
+                            )}
+
+                            <div className="adv2-stats">
+                              {[
+                                { num: "500+", lbl: "Event Sukses" },
+                                { num: "1200+", lbl: "Klien Puas" },
+                                { num: `${new Date().getFullYear() - parseInt(data.content.foundingYear || "2026") || 0}+`, lbl: "Tahun" },
+                              ].map(s => (
+                                <div key={s.lbl} className="adv2-stat">
+                                  <div className="num">{s.num}</div>
+                                  <div className="lbl">{s.lbl}</div>
+                                </div>
+                              ))}
+                            </div>
+
+                            <div className="adv2-btns">
+                              {[
+                                { label: "🎉 Event Plan", key: "destinations" },
+                                { label: "✈️ Traveling", key: "shop" },
+                                { label: "💍 Wedding", key: "news" },
+                              ].map(item => (
+                                <button key={item.key} className="adv2-btn-pill" onClick={() => navigateTo(item.key)}>
+                                  {item.label}
+                                </button>
+                              ))}
+                            </div>
+
+                            <button className="adv2-cta" onClick={() => navigateTo("services")}>
+                              Layanan Kami
+                              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                            </button>
                           </div>
 
-                          {/* Layanan pills */}
-                          <div className="mag2-btns">
-                            {[
-                              { label: "🎉 Event Plan", key: "destinations" },
-                              { label: "✈️ Traveling", key: "shop" },
-                              { label: "💍 Wedding", key: "news" },
-                            ].map(item => (
-                              <button key={item.key} className="mag2-btn-pill"
-                                onClick={() => navigateTo(item.key)}>
-                                {item.label}
-                              </button>
-                            ))}
+                          {/* KANAN: Puzzle grid gambar */}
+                          <div className="adv2-puzzle">
+                            <div className="adv2-puzzle-a">
+                              <img src={puzzleImgs[0]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+                            </div>
+                            <div className="adv2-puzzle-b">
+                              <img src={puzzleImgs[1]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+                            </div>
+                            <div className="adv2-puzzle-c">
+                              <div className="adv2-puzzle-c-sm">
+                                <img src={puzzleImgs[2]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+                              </div>
+                              <div className="adv2-puzzle-c-sm">
+                                <img src={puzzleImgs[3]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+                              </div>
+                            </div>
                           </div>
-
-                          <button className="mag2-cta" onClick={() => navigateTo("services")}>
-                            Layanan Kami
-                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                          </button>
                         </div>
-                      </div>
-                    </div>
-                  </section>
+                      </section>
+                    );
+                  })()}
 
                   {/* Gallery */}
                   <section className="section-md" style={{ background: "#f4f9fb" }}>
@@ -4700,7 +4696,7 @@ export default function BricksyTravel() {
                     <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 60% 50%, #0d1f3c 0%, #04080f 70%)", zIndex: 0 }} />
                     <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,.7) 0%, transparent 100%), radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,.5) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 45% 10%, rgba(255,255,255,.8) 0%, transparent 100%), radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,.4) 0%, transparent 100%), radial-gradient(1px 1px at 75% 60%, rgba(255,255,255,.6) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 85% 20%, rgba(255,255,255,.9) 0%, transparent 100%), radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,.5) 0%, transparent 100%), radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,.4) 0%, transparent 100%), radial-gradient(2px 2px at 50% 85%, rgba(255,255,255,.3) 0%, transparent 100%), radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,.6) 0%, transparent 100%), radial-gradient(1px 1px at 70% 5%, rgba(255,255,255,.7) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,.5) 0%, transparent 100%)", zIndex: 1 }} />
 
-                    <div style={{ position: "relative", zIndex: 2, maxWidth: 1200, margin: "0 auto", padding: "52px 5%" }} className="globe-inner">
+                    <div style={{ position: "relative", zIndex: 2, maxWidth: 1200, margin: "0 auto", padding: "52px 5%", display: "flex", alignItems: "center", gap: 60, flexWrap: "nowrap" }} className="globe-inner">
                       {/* Left: text + search */}
                       <div style={{ flex: "1 1 340px" }}>
                         <div className="label-xs" style={{ color: "#5bc4e0", marginBottom: 14 }}>✦ Jelajahi Dunia</div>
@@ -4775,11 +4771,23 @@ export default function BricksyTravel() {
                           .map-embed-frame { animation: mapGlow 4s ease-in-out infinite; }
                         `}</style>
 
-                        {/* Gradient fade — sisi KIRI melebur ke background */}
+                        {/* Gradient fade — sisi KIRI melebur ke background (transparan) */}
                         <div style={{
-                          position: "absolute", top: 0, left: -2, width: 48, height: "100%",
-                          background: "linear-gradient(to right, #04080f 0%, transparent 100%)",
+                          position: "absolute", top: 0, left: -2, width: 60, height: "100%",
+                          background: "linear-gradient(to right, rgba(13,31,60,1) 0%, rgba(13,31,60,0) 100%)",
                           zIndex: 4, pointerEvents: "none", borderRadius: "16px 0 0 16px"
+                        }} />
+                        {/* Gradient fade — sisi ATAS */}
+                        <div style={{
+                          position: "absolute", top: 0, left: 0, right: 0, height: 32,
+                          background: "linear-gradient(to bottom, rgba(13,31,60,.7) 0%, transparent 100%)",
+                          zIndex: 4, pointerEvents: "none"
+                        }} />
+                        {/* Gradient fade — sisi BAWAH */}
+                        <div style={{
+                          position: "absolute", bottom: 0, left: 0, right: 0, height: 32,
+                          background: "linear-gradient(to top, rgba(13,31,60,.7) 0%, transparent 100%)",
+                          zIndex: 4, pointerEvents: "none"
                         }} />
 
                         <div className="map-embed-frame" style={{
