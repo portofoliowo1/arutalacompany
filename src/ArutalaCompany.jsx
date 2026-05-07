@@ -4691,22 +4691,35 @@ export default function BricksyTravel() {
                   </section>
 
                   {/* Globe / Maps Search Section */}
-                  <section style={{ padding: "0", background: "#04080f", overflow: "hidden", position: "relative", minHeight: 360 }}>
-                    {/* Galaxy background stars */}
-                    <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 60% 50%, #0d1f3c 0%, #04080f 70%)", zIndex: 0 }} />
-                    <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,.7) 0%, transparent 100%), radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,.5) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 45% 10%, rgba(255,255,255,.8) 0%, transparent 100%), radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,.4) 0%, transparent 100%), radial-gradient(1px 1px at 75% 60%, rgba(255,255,255,.6) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 85% 20%, rgba(255,255,255,.9) 0%, transparent 100%), radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,.5) 0%, transparent 100%), radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,.4) 0%, transparent 100%), radial-gradient(2px 2px at 50% 85%, rgba(255,255,255,.3) 0%, transparent 100%), radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,.6) 0%, transparent 100%), radial-gradient(1px 1px at 70% 5%, rgba(255,255,255,.7) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,.5) 0%, transparent 100%)", zIndex: 1 }} />
+                  <section style={{ padding: "0", background: "#04080f", overflow: "hidden", position: "relative", minHeight: 420 }}>
+                    {/* MAP — absolute full kiri */}
+                    <div style={{ position: "absolute", top: 0, left: 0, width: "55%", height: "100%", zIndex: 1 }}>
+                      <iframe
+                        key={mapLocation}
+                        title="Google Maps Preview"
+                        style={{ border: 0, display: "block", width: "100%", height: "100%", minHeight: 420 }}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        src={`https://www.google.com/maps?q=${encodeURIComponent(mapLocation)}&output=embed&z=12`}
+                      />
+                    </div>
+                    {/* Gradasi dari kiri (map) ke kanan (bg) */}
+                    <div style={{ position: "absolute", top: 0, left: "30%", width: "28%", height: "100%", zIndex: 2, pointerEvents: "none",
+                      background: "linear-gradient(to right, transparent 0%, #04080f 100%)" }} />
+                    {/* Stars overlay di kanan */}
+                    <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(1px 1px at 65% 15%, rgba(255,255,255,.7) 0%, transparent 100%), radial-gradient(1px 1px at 72% 40%, rgba(255,255,255,.5) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 80% 10%, rgba(255,255,255,.8) 0%, transparent 100%), radial-gradient(1px 1px at 88% 30%, rgba(255,255,255,.4) 0%, transparent 100%), radial-gradient(1px 1px at 92% 60%, rgba(255,255,255,.6) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 96% 20%, rgba(255,255,255,.9) 0%, transparent 100%), radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,.3) 0%, transparent 100%), radial-gradient(1px 1px at 75% 85%, rgba(255,255,255,.4) 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
 
-                    <div style={{ position: "relative", zIndex: 2, maxWidth: 1200, margin: "0 auto", padding: "52px 5%", display: "flex", alignItems: "center", gap: 60, flexWrap: "nowrap" }} className="globe-inner">
-                      {/* Left: text + search */}
-                      <div style={{ flex: "1 1 340px" }}>
+                    {/* Teks & search — kanan */}
+                    <div style={{ position: "relative", zIndex: 4, display: "flex", justifyContent: "flex-end" }}>
+                      <div style={{ width: "50%", padding: "56px 6% 56px 0" }}>
                         <div className="label-xs" style={{ color: "#5bc4e0", marginBottom: 14 }}>✦ Jelajahi Dunia</div>
-                        <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#fff", marginBottom: 10, lineHeight: 1.1 }}>
+                        <h2 className="display" style={{ fontSize: "clamp(1.75rem,3.5vw,2.75rem)", fontWeight: 900, color: "#fff", marginBottom: 10, lineHeight: 1.1 }}>
                           {data.content.newsletterTitle}
                         </h2>
                         <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.55)", marginBottom: 28, lineHeight: 1.75 }}>
                           Ketik nama kota atau destinasi untuk menjelajahinya di peta interaktif — langsung di sini.
                         </p>
-                        <div style={{ display: "flex", gap: 0, maxWidth: 420 }}>
+                        <div style={{ display: "flex", gap: 0, maxWidth: 400 }}>
                           <input
                             value={mapQuery}
                             onChange={e => {
@@ -4754,70 +4767,6 @@ export default function BricksyTravel() {
                             📍 Menampilkan: <strong style={{ color: "#5bc4e0" }}>{mapLocation}</strong>
                           </p>
                         )}
-                        {!mapQuery && (
-                          <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.3)", marginTop: 10 }}>
-                            📍 Saat ini: <em>{mapLocation}</em>
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Right: Google Maps Embed — always visible */}
-                      <div className="globe-visual" style={{ position: "relative" }}>
-                        <style>{`
-                          @keyframes mapGlow {
-                            0%,100%{ box-shadow: 8px 0 40px rgba(43,122,154,.5), 12px 0 80px rgba(43,122,154,.2), -2px 0 12px rgba(43,122,154,.08); }
-                            50%{ box-shadow: 10px 0 56px rgba(91,196,224,.55), 16px 0 100px rgba(43,122,154,.28), -2px 0 14px rgba(43,122,154,.1); }
-                          }
-                          .map-embed-frame { animation: mapGlow 4s ease-in-out infinite; }
-                        `}</style>
-
-                        {/* Gradient fade — sisi KIRI melebur ke background (transparan) */}
-                        <div style={{
-                          position: "absolute", top: 0, left: -2, width: 60, height: "100%",
-                          background: "linear-gradient(to right, rgba(13,31,60,1) 0%, rgba(13,31,60,0) 100%)",
-                          zIndex: 4, pointerEvents: "none", borderRadius: "16px 0 0 16px"
-                        }} />
-                        {/* Gradient fade — sisi ATAS */}
-                        <div style={{
-                          position: "absolute", top: 0, left: 0, right: 0, height: 32,
-                          background: "linear-gradient(to bottom, rgba(13,31,60,.7) 0%, transparent 100%)",
-                          zIndex: 4, pointerEvents: "none"
-                        }} />
-                        {/* Gradient fade — sisi BAWAH */}
-                        <div style={{
-                          position: "absolute", bottom: 0, left: 0, right: 0, height: 32,
-                          background: "linear-gradient(to top, rgba(13,31,60,.7) 0%, transparent 100%)",
-                          zIndex: 4, pointerEvents: "none"
-                        }} />
-
-                        <div className="map-embed-frame" style={{
-                          position: "relative", zIndex: 1,
-                          width: 360, height: 300,
-                          borderRadius: 16, overflow: "hidden",
-                          border: "2px solid rgba(91,196,224,.35)",
-                          borderLeft: "2px solid rgba(91,196,224,.08)",
-                        }}>
-                          {/* Corner accents — kanan saja yang mencolok */}
-                          <div style={{ position: "absolute", top: 0, left: 0, width: 20, height: 20, borderTop: "2px solid rgba(91,196,224,.2)", borderLeft: "2px solid rgba(91,196,224,.1)", borderRadius: "16px 0 0 0", zIndex: 3, pointerEvents: "none" }} />
-                          <div style={{ position: "absolute", top: 0, right: 0, width: 20, height: 20, borderTop: "2.5px solid #5bc4e0", borderRight: "2.5px solid #5bc4e0", borderRadius: "0 16px 0 0", zIndex: 3, pointerEvents: "none" }} />
-                          <div style={{ position: "absolute", bottom: 0, left: 0, width: 20, height: 20, borderBottom: "2px solid rgba(91,196,224,.2)", borderLeft: "2px solid rgba(91,196,224,.1)", borderRadius: "0 0 0 16px", zIndex: 3, pointerEvents: "none" }} />
-                          <div style={{ position: "absolute", bottom: 0, right: 0, width: 20, height: 20, borderBottom: "2.5px solid #5bc4e0", borderRight: "2.5px solid #5bc4e0", borderRadius: "0 0 16px 0", zIndex: 3, pointerEvents: "none" }} />
-
-                          <iframe
-                            key={mapLocation}
-                            title="Google Maps Preview"
-                            width="360" height="300"
-                            style={{ border: 0, display: "block", width: "100%", height: "100%" }}
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            src={`https://www.google.com/maps?q=${encodeURIComponent(mapLocation)}&output=embed&z=12`}
-                          />
-                        </div>
-
-                        {/* Label below map */}
-                        <div style={{ marginTop: 10, textAlign: "center", fontSize: "0.6875rem", color: "rgba(91,196,224,.6)", letterSpacing: ".06em", textTransform: "uppercase", fontWeight: 600 }}>
-                          📍 {mapLocation}
-                        </div>
                       </div>
                     </div>
                   </section>
