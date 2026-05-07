@@ -4100,7 +4100,6 @@ function AdminReviews({ data, save, notify }) {
     </div>
   </div>
 );
-})()}
 }
 
 export default function BricksyTravel() {
