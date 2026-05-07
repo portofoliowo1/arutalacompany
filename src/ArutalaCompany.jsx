@@ -300,12 +300,12 @@ const DEFAULT_POSTS = {
       id: 1, section: "news", status: "published",
       title: "Spa Time at Bali's Hidden Resorts",
       date: "2026-04-03", author: "writer1", category: "Lifestyle",
-      coverImage: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=800&h=500&fit=crop",
+      coverImage: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=900&fit=crop",
       excerpt: "Relax and rejuvenate at world-class spas along pristine coastlines.",
       content: [
         { type: "paragraph", value: "Bali has long been a haven for those seeking peace and wellness. The island's lush landscape, spiritual ambiance, and world-class hospitality make it one of the top spa destinations in the world." },
         { type: "paragraph", value: "From volcanic stone massages to traditional Balinese healing rituals, each treatment is carefully crafted to restore body and soul." },
-        { type: "image", value: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=800&h=450&fit=crop", caption: "Serene poolside at a Bali resort" },
+        { type: "image", value: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600&h=800&fit=crop", caption: "Serene poolside at a Bali resort" },
         { type: "paragraph", value: "Whether you choose a clifftop retreat in Uluwatu or a rainforest sanctuary in Ubud, Bali delivers a spa experience unlike anywhere else on earth." },
       ],
       tags: ["spa", "bali", "wellness"],
@@ -314,12 +314,12 @@ const DEFAULT_POSTS = {
       id: 2, section: "news", status: "published",
       title: "Beach Time: Discovering Hidden Coves",
       date: "2026-04-10", author: "writer1", category: "Beach",
-      coverImage: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&h=500&fit=crop",
+      coverImage: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=900&fit=crop",
       excerpt: "Discover breathtaking beaches and hidden coves across the globe.",
       content: [
         { type: "paragraph", value: "The world's most stunning beaches are often the ones hardest to reach. Hidden behind jungle trails or accessible only by boat, these secret coves reward the adventurous traveler." },
         { type: "paragraph", value: "From the pink sand beaches of the Bahamas to the glittering black shores of Iceland, every coastline tells a story millions of years in the making." },
-        { type: "image", value: "https://images.unsplash.com/photo-1573790387438-4da905039392?w=800&h=450&fit=crop", caption: "Crystal clear waters of a hidden cove" },
+        { type: "image", value: "https://images.unsplash.com/photo-1573790387438-4da905039392?w=1600&h=800&fit=crop", caption: "Crystal clear waters of a hidden cove" },
       ],
       tags: ["beach", "travel", "adventure"],
     },
@@ -327,7 +327,7 @@ const DEFAULT_POSTS = {
       id: 3, section: "news", status: "published",
       title: "Happy Times: Creating Unforgettable Memories",
       date: "2026-04-15", author: "writer1", category: "Experience",
-      coverImage: "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=800&h=500&fit=crop",
+      coverImage: "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=900&fit=crop",
       excerpt: "Create unforgettable memories on your next great adventure.",
       content: [
         { type: "paragraph", value: "Travel is not just about the destination — it's about the moments that take your breath away. The surprise sunrise, the unexpected friendship, the meal that tastes like home even in a foreign land." },
@@ -341,7 +341,7 @@ const DEFAULT_POSTS = {
       id: 10, section: "shop", status: "published",
       title: "Premium Travel Backpack — Explorer Series",
       date: "2026-03-20", author: "writer1", category: "Gear",
-      coverImage: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=800&h=500&fit=crop",
+      coverImage: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=900&fit=crop",
       excerpt: "The ultimate companion for every adventure — waterproof, lightweight, and stylish.",
       price: "$149", badge: "Best Seller",
       content: [
@@ -354,7 +354,7 @@ const DEFAULT_POSTS = {
       id: 11, section: "shop", status: "published",
       title: "Adventure Camera Strap Pro",
       date: "2026-03-25", author: "writer1", category: "Photography",
-      coverImage: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&h=500&fit=crop",
+      coverImage: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=900&fit=crop",
       excerpt: "Never miss a shot. Ergonomic, adjustable, built for every terrain.",
       price: "$49",
       content: [
@@ -368,12 +368,12 @@ const DEFAULT_POSTS = {
       id: 20, section: "destinations", status: "published",
       title: "Komodo Island, Indonesia",
       date: "2026-02-10", author: "writer1", category: "Asia",
-      coverImage: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&h=500&fit=crop",
+      coverImage: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=900&fit=crop",
       excerpt: "Home to the legendary Komodo dragons and some of the world's best diving.",
       content: [
         { type: "paragraph", value: "Komodo National Park is one of Indonesia's most dramatic and diverse destinations. The rugged, volcanic landscape is home to the world's largest lizard — the Komodo dragon." },
         { type: "paragraph", value: "Beneath the surface, the waters around Komodo are equally spectacular. Divers encounter manta rays, sharks, and vibrant coral gardens." },
-        { type: "image", value: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&h=450&fit=crop", caption: "Pink Beach, Komodo" },
+        { type: "image", value: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=800&fit=crop", caption: "Pink Beach, Komodo" },
         { type: "paragraph", value: "Best time to visit: April to December for calm seas. Liveaboard diving trips are highly recommended for the full experience." },
       ],
       tags: ["indonesia", "diving", "wildlife"],
@@ -382,7 +382,7 @@ const DEFAULT_POSTS = {
       id: 21, section: "destinations", status: "published",
       title: "Swiss Alps: Winter Wonderland",
       date: "2026-02-20", author: "writer1", category: "Europe",
-      coverImage: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&h=500&fit=crop",
+      coverImage: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=900&fit=crop",
       excerpt: "Pristine slopes, charming villages, and world-class ski resorts await you.",
       content: [
         { type: "paragraph", value: "Few landscapes in the world rival the Swiss Alps in winter. Snow-dusted peaks, frozen lakes, and cozy mountain chalets create a fairy-tale setting for skiers, snowboarders, and mountain lovers." },
@@ -396,22 +396,22 @@ const DEFAULT_POSTS = {
 const DEFAULT_DATA = {
   images: {
     hero: [
-      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=500&h=320&fit=crop",
-      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=500&h=320&fit=crop",
-      "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=500&h=320&fit=crop",
-      "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=500&h=320&fit=crop",
+      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=600&fit=crop",
     ],
     adv: [
-      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=340&h=300&fit=crop",
-      "https://images.unsplash.com/photo-1573790387438-4da905039392?w=420&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1573790387438-4da905039392?w=1600&h=700&fit=crop",
     ],
     gal: [
-      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=280&h=200&fit=crop",
-      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=280&h=200&fit=crop",
-      "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=280&h=200&fit=crop",
-      "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=280&h=200&fit=crop",
-      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=280&h=200&fit=crop",
-      "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=280&h=200&fit=crop",
+      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=400&fit=crop",
     ],
   },
   content: {
@@ -465,8 +465,8 @@ const DEFAULT_DATA = {
       badgeColor: "#2b7a9a",
       price: "Rp 5.000.000",
       priceNote: "/ event",
-      images: ["https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
       description: "Paket perencanaan event lengkap untuk acara reguler seperti seminar, gathering, dan corporate event.",
       features: ["Konsultasi event 2x pertemuan", "Dekorasi standar", "Dokumentasi foto", "Koordinasi vendor", "Rundown acara", "MC profesional"],
       highlight: false,
@@ -479,8 +479,8 @@ const DEFAULT_DATA = {
       badgeColor: "#e67e22",
       price: "Rp 25.000.000",
       priceNote: "/ wedding",
-      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
       description: "Paket pernikahan lengkap dengan sentuhan premium. Wujudkan pernikahan impian Anda bersama tim profesional kami.",
       features: ["Konsultasi tak terbatas", "Dekorasi premium", "Dokumentasi foto & video", "Koordinasi 10+ vendor", "Wedding planner dedicated", "Catering 300 pax", "Entertainment & MC", "Souvenir tamu"],
       highlight: true,
@@ -493,8 +493,8 @@ const DEFAULT_DATA = {
       badgeColor: "#27ae60",
       price: "Rp 3.500.000",
       priceNote: "/ orang",
-      images: ["https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=700&fit=crop",
       description: "Paket wisata group terjangkau dengan destinasi pilihan dalam dan luar negeri. Minimum 10 peserta.",
       features: ["Transportasi PP", "Akomodasi 3 malam", "Tour guide lokal", "Makan 3x sehari", "Asuransi perjalanan", "Dokumentasi trip"],
       highlight: false,
@@ -507,8 +507,8 @@ const DEFAULT_DATA = {
       badgeColor: "#8e44ad",
       price: "Rp 15.000.000",
       priceNote: "/ orang",
-      images: ["https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=700&fit=crop",
       description: "Pengalaman perjalanan mewah ke destinasi premium dunia. Layanan VIP dari keberangkatan hingga kepulangan.",
       features: ["Tiket business class", "Hotel bintang 5", "Private tour guide", "Makan fine dining", "Airport transfer VIP", "Asuransi premium", "Itinerary custom", "Concierge 24 jam"],
       highlight: false,
@@ -521,8 +521,8 @@ const DEFAULT_DATA = {
       badgeColor: "#e84393",
       price: "Rp 8.500.000",
       priceNote: "/ pasangan",
-      images: ["https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1573790387438-4da905039392?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1573790387438-4da905039392?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=700&fit=crop",
       description: "Rayakan awal kehidupan baru Anda dengan paket honeymoon eksklusif di Pulau Dewata. Vila private, spa couple, dan sunset dinner menjadi kenangan tak terlupakan.",
       features: ["Vila private dengan kolam renang", "Sarapan romantis setiap hari", "Spa couple 2 jam", "Sunset dinner di tepi pantai", "Dekorasi kamar mewah", "Airport transfer private", "Asuransi perjalanan", "Tour Ubud & Seminyak"],
       highlight: true,
@@ -535,8 +535,8 @@ const DEFAULT_DATA = {
       badgeColor: "#16a085",
       price: "Rp 1.800.000",
       priceNote: "/ orang",
-      images: ["https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1584810359583-96fc3448beaa?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1584810359583-96fc3448beaa?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=700&fit=crop",
       description: "Paket wisata keluarga yang menggabungkan petualangan dan edukasi di Kota Budaya Yogyakarta. Cocok untuk liburan sekolah dan family gathering.",
       features: ["Bus pariwisata ber-AC", "Hotel bintang 3 (2 malam)", "Makan 3x sehari", "Kunjungan Prambanan & Borobudur", "Tour guide berpengalaman", "Asuransi perjalanan", "Souvenir khas Jogja"],
       highlight: false,
@@ -549,8 +549,8 @@ const DEFAULT_DATA = {
       badgeColor: "#c0392b",
       price: "Rp 35.000.000",
       priceNote: "/ event",
-      images: ["https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
       description: "Selenggarakan malam penghargaan perusahaan Anda dengan nuansa mewah dan berkesan. Kami tangani dari dekorasi megah hingga entertainment eksklusif untuk 200–500 tamu.",
       features: ["Dekorasi ballroom premium", "Sound & lighting profesional", "MC bilingual", "Catering fine dining 300 pax", "Live music & entertainment", "Dokumentasi foto & video sinematik", "Red carpet & photo booth", "Koordinasi penuh hari H"],
       highlight: true,
@@ -563,8 +563,8 @@ const DEFAULT_DATA = {
       badgeColor: "#2980b9",
       price: "Rp 750.000",
       priceNote: "/ orang",
-      images: ["https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1600&h=700&fit=crop",
       description: "Perkuat solidaritas tim Anda dengan program team building outdoor yang seru dan berenergi. Dirancang oleh fasilitator bersertifikat dengan aktivitas yang menantang dan menyenangkan.",
       features: ["Fasilitator bersertifikat", "Games & outbound activities", "Makan siang & snack", "Dokumentasi kegiatan", "Sertifikat peserta", "Shuttle dari titik kumpul", "Evaluasi & debrief sesi", "Min. 30 peserta"],
       highlight: false,
@@ -577,8 +577,8 @@ const DEFAULT_DATA = {
       badgeColor: "#27ae60",
       price: "Rp 3.200.000",
       priceNote: "/ event",
-      images: ["https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&h=700&fit=crop",
       description: "Paket penyelenggaraan seminar dan workshop profesional dengan fasilitas lengkap. Ideal untuk training karyawan, seminar publik, dan workshop kreatif hingga 150 peserta.",
       features: ["Venue kapasitas 150 orang", "Proyektor & sound system", "Backdrop & signage branding", "Coffee break 2x & makan siang", "Registrasi & perlengkapan peserta", "Dokumentasi foto", "Koordinator acara", "Sertifikat digital peserta"],
       highlight: false,
@@ -591,8 +591,8 @@ const DEFAULT_DATA = {
       badgeColor: "#e67e22",
       price: "Rp 18.000.000",
       priceNote: "/ wedding",
-      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
       description: "Pernikahan intim nan hangat di taman dengan dekorasi bohemian elegan. Cocok untuk pernikahan kecil 50–100 tamu dengan nuansa natural yang tetap mewah dan berkesan.",
       features: ["Dekorasi garden bohemian", "Wedding planner dedicated", "Dokumentasi foto & video", "Catering 100 pax", "Pelaminan custom", "Bunga segar premium", "MC profesional", "Koordinasi vendor"],
       highlight: false,
@@ -605,8 +605,8 @@ const DEFAULT_DATA = {
       badgeColor: "#1abc9c",
       price: "Rp 22.000.000",
       priceNote: "/ wedding",
-      images: ["https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop",
       description: "Wujudkan pernikahan Islami yang penuh berkah dengan konsep syar'i modern. Kami memastikan setiap detail prosesi sesuai nilai Islam dengan tampilan yang tetap elegan dan menawan.",
       features: ["Dekorasi Islami modern", "Pembatas tamu putra & putri", "Qori & sambutan religi", "Catering halal 200 pax", "Pelaminan syar'i", "Dokumentasi foto & video", "Wedding planner", "Buku tamu & souvenir"],
       highlight: false,
@@ -619,8 +619,8 @@ const DEFAULT_DATA = {
       badgeColor: "#8e44ad",
       price: "Rp 55.000.000",
       priceNote: "/ wedding",
-      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=400&fit=crop"],
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
+      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop"],
+      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
       description: "Pernikahan megah berkelas di ballroom bintang 5 dengan dekorasi mewah penuh chandelier dan bunga segar premium. Untuk 300–600 tamu dengan layanan all-inclusive terbaik.",
       features: ["Ballroom hotel bintang 5", "Dekorasi full flowers premium", "Bridal suite 2 malam", "Catering fine dining 400 pax", "Entertainment & live band", "Foto & video sinematik", "Wedding planner senior", "Makeup artist profesional", "Souvenir premium", "Pagar ayu & pager bagus"],
       highlight: true,
@@ -661,11 +661,11 @@ const GS = () => (
     p{font-size:1rem;line-height:1.75;color:#334f65}
     small{font-size:.875rem;line-height:1.5}
 
-    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:600;color:#334f65;transition:color .2s;text-shadow:0 1px 4px rgba(26,46,66,.18),0 0 12px rgba(43,122,154,.10)}
-    .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:#2b7a9a;transition:width .3s;border-radius:2px}
-    .nav-link:hover{color:#2b7a9a;text-shadow:0 1px 6px rgba(43,122,154,.28),0 0 18px rgba(43,122,154,.18)}
+    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:600;color:rgba(255,255,255,.85);transition:color .2s}
+    .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:#5bc4e0;transition:width .3s;border-radius:2px}
+    .nav-link:hover{color:#fff}
     .nav-link:hover::after,.nav-link.active::after{width:100%}
-    .nav-link.active{color:#2b7a9a!important;text-shadow:0 1px 8px rgba(43,122,154,.35),0 0 20px rgba(43,122,154,.20)}
+    .nav-link.active{color:#5bc4e0!important}
 
     .hover-lift{transition:transform .3s,box-shadow .3s}
     .hover-lift:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(26,46,66,.12)}
@@ -705,8 +705,8 @@ const GS = () => (
 
     /* ── Visibility helpers ── */
     @media(max-width:900px){.hide-md{display:none!important}}
-    @media(max-width:640px){.hide-sm{display:none!important}.show-sm{display:flex!important}}
-    @media(min-width:641px){.show-sm{display:none!important}}
+    @media(max-width:900px){.hide-sm{display:none!important}.show-sm{display:flex!important}}
+    @media(min-width:901px){.show-sm{display:none!important}}
 
     /* ══════════════════════════════════════
        RESPONSIVE LAYOUT UTILITIES
@@ -1992,7 +1992,7 @@ function PostCard({ post, onClick, view = "grid" }) {
         cursor: "pointer", boxShadow: "0 2px 10px rgba(0,0,0,.06)", marginBottom: 16 }}>
       <div className="post-thumb" style={{ flexShrink: 0, width: 180, height: 130, overflow: "hidden" }}>
         <img src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=400&h=200&fit=crop"; }} />
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=400&fit=crop"; }} />
       </div>
       <div style={{ padding: "14px 16px 14px 0", flex: 1 }}>
         {post.category && <span className="label-xs" style={{ color: "#2b7a9a" }}>{post.category}</span>}
@@ -2012,7 +2012,7 @@ function PostCard({ post, onClick, view = "grid" }) {
         boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
       <div className="img-zoom" style={{ height: 200, overflow: "hidden" }}>
         <img src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=400&h=200&fit=crop"; }} />
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=400&fit=crop"; }} />
       </div>
       <div style={{ padding: "18px 20px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
@@ -2328,9 +2328,9 @@ function ServicesPage({ content, services, navigateTo }) {
                 <div className="mg-deco-shape" style={{ position: "absolute", top: 30, right: 30, width: 70, height: 70, border: "1.5px solid rgba(255,255,255,.12)", borderRadius: 6, zIndex: 3, pointerEvents: "none" }} />
                 <div className="mg-deco-shape" style={{ position: "absolute", bottom: 20, left: -8, width: 50, height: 50, border: "1.5px solid rgba(255,255,255,.15)", borderRadius: 4, zIndex: 3, pointerEvents: "none" }} />
                 <div style={{ flex: 1, position: "relative", minHeight: 400 }}>
-                  <img src={imgs[activeImg] || "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=600&h=500&fit=crop"} alt={svc.title}
+                  <img src={imgs[activeImg] || "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=900&fit=crop"} alt={svc.title}
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity .4s" }}
-                    onError={e => { e.target.src = "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=600&h=500&fit=crop"; }} />
+                    onError={e => { e.target.src = "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=900&fit=crop"; }} />
                   {/* Bottom fade */}
                   <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 90, background: "linear-gradient(to top, rgba(26,46,66,.65), transparent)", pointerEvents: "none" }} />
                   {imgs.length > 1 && (
@@ -2351,7 +2351,7 @@ function ServicesPage({ content, services, navigateTo }) {
               {imgs.map((img, i) => (
                 <div key={i} className="mg-thumb" onClick={() => setActiveImg(i)}
                   style={{ width: 80, height: 56, borderRadius: 6, overflow: "hidden", cursor: "pointer", flexShrink: 0, border: activeImg === i ? `2.5px solid ${catInfo.color || "#5bc4e0"}` : "2.5px solid rgba(255,255,255,.12)", opacity: activeImg === i ? 1 : 0.5 }}>
-                  <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=80&h=56&fit=crop"} />
+                  <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=56&fit=crop"} />
                 </div>
               ))}
             </div>
@@ -2390,7 +2390,7 @@ function ServicesPage({ content, services, navigateTo }) {
                         onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 18px rgba(26,46,66,.1)"; }}>
                         <img src={img} alt={`Fasilitas ${i + 1}`}
                           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                          onError={e => e.target.src = `https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=600&h=400&fit=crop`} />
+                          onError={e => e.target.src = `https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=700&fit=crop`} />
                         {/* Gradient overlay */}
                         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(26,46,66,.45) 0%, transparent 50%)", pointerEvents: "none" }} />
                         {/* Number badge */}
@@ -2451,7 +2451,7 @@ function ServicesPage({ content, services, navigateTo }) {
                         onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(26,46,66,.07)"}>
                         <div style={{ width: 90, flexShrink: 0, overflow: "hidden", position: "relative" }}>
                           <img src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
-                            onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=90&h=70&fit=crop"} />
+                            onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=70&fit=crop"} />
                         </div>
                         <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#2b7a9a"}, transparent)` }} />
                         <div style={{ padding: "12px 14px", flex: 1 }}>
@@ -2618,7 +2618,7 @@ function ServicesPage({ content, services, navigateTo }) {
                       <img src={(svc.images?.[0] || svc.image)} alt={svc.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
                         onMouseEnter={e => e.target.style.transform = "scale(1.06)"}
                         onMouseLeave={e => e.target.style.transform = "scale(1)"}
-                        onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&h=300&fit=crop"; }} />
+                        onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=600&fit=crop"; }} />
                     </div>
                     <div style={{ padding: "22px 22px 20px" }}>
                       <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#1a2e42", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
@@ -4250,8 +4250,8 @@ export default function BricksyTravel() {
       {!showAdmin && !reviewTokenParam && (
         <>
           {/* NAVBAR — Fixed floating always */}
-          <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(250,252,253,.97)",
-            backdropFilter: "blur(12px)", borderBottom: "1px solid #ddeef5", padding: "0 5%",
+          <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "#1a2e42",
+            backdropFilter: "blur(12px)", borderBottom: "1px solid #0f1e2e", padding: "0 5%",
             isolation: "isolate" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 96, maxWidth: 1200, margin: "0 auto", gap: 20 }}>
 
@@ -4261,7 +4261,7 @@ export default function BricksyTravel() {
               </button>
 
               {/* ── 2-ROW NAV (desktop) ── */}
-              <div className="hide-sm" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-end", gap: 4, paddingLeft: 8 }}>
+              <div className="hide-sm" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-end", gap: 14, paddingLeft: 8 }}>
                 {/* Row 1 */}
                 <div style={{ display: "flex", gap: 26, alignItems: "center" }}>
                   {navItems.slice(0, 3).map(item => (
@@ -4293,10 +4293,10 @@ export default function BricksyTravel() {
                       </span>
                       <button onClick={() => setShowAdmin(true)}
                         style={{ fontSize: "0.6875rem", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 700,
-                          color: "#2b7a9a", background: "none", border: "none", cursor: "pointer", padding: 0, lineHeight: 1.2,
+                          color: "#5bc4e0", background: "none", border: "none", cursor: "pointer", padding: 0, lineHeight: 1.2,
                           transition: "color .15s" }}
-                        onMouseEnter={e => e.currentTarget.style.color = "#1a2e42"}
-                        onMouseLeave={e => e.currentTarget.style.color = "#2b7a9a"}>
+                        onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+                        onMouseLeave={e => e.currentTarget.style.color = "#5bc4e0"}>
                         Control Panel →
                       </button>
                     </div>
@@ -4304,12 +4304,12 @@ export default function BricksyTravel() {
                     className="login-collapse-btn"
                     style={{
                       display: "flex", alignItems: "center", gap: 0, overflow: "hidden",
-                      width: 36, border: "1.5px solid #1a2e42", borderRadius: 6,
+                      width: 36, border: "1.5px solid rgba(255,255,255,.6)", borderRadius: 6,
                       fontSize: "0.75rem", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 700,
-                      background: "transparent", color: "#1a2e42", padding: "7px 9px",
+                      background: "transparent", color: "#fff", padding: "7px 9px",
                       cursor: "pointer", transition: "width .28s cubic-bezier(.4,0,.2,1), padding .28s, background .18s, color .18s", whiteSpace: "nowrap" }}
-                    onMouseEnter={e => { const b = e.currentTarget; b.style.width = "90px"; b.style.paddingRight = "14px"; b.style.gap = "7px"; b.style.background = "#1a2e42"; b.style.color = "#fff"; b.querySelector(".lcb-text").style.opacity = "1"; b.querySelector(".lcb-text").style.maxWidth = "80px"; }}
-                    onMouseLeave={e => { const b = e.currentTarget; b.style.width = "36px"; b.style.paddingRight = "9px"; b.style.gap = "0"; b.style.background = "transparent"; b.style.color = "#1a2e42"; b.querySelector(".lcb-text").style.opacity = "0"; b.querySelector(".lcb-text").style.maxWidth = "0"; }}>
+                    onMouseEnter={e => { const b = e.currentTarget; b.style.width = "90px"; b.style.paddingRight = "14px"; b.style.gap = "7px"; b.style.background = "rgba(255,255,255,.2)"; b.style.color = "#fff"; b.querySelector(".lcb-text").style.opacity = "1"; b.querySelector(".lcb-text").style.maxWidth = "80px"; }}
+                    onMouseLeave={e => { const b = e.currentTarget; b.style.width = "36px"; b.style.paddingRight = "9px"; b.style.gap = "0"; b.style.background = "transparent"; b.style.color = "#fff"; b.querySelector(".lcb-text").style.opacity = "0"; b.querySelector(".lcb-text").style.maxWidth = "0"; }}>
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" style={{ flexShrink: 0 }}>
                       <rect y="0" width="16" height="2" rx="1" fill="currentColor"/>
                       <rect y="5" width="16" height="2" rx="1" fill="currentColor"/>
@@ -4322,7 +4322,7 @@ export default function BricksyTravel() {
                 }
               </div>
               <button className="show-sm" onClick={() => setMobileMenu(!mobileMenu)}
-                style={{ fontSize: 22, color: "#1a2e42" }} aria-label="Menu">☰</button>
+                style={{ fontSize: 22, color: "#fff" }} aria-label="Menu">☰</button>
             </div>
             {mobileMenu && (
               <div style={{
