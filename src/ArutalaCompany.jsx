@@ -4597,51 +4597,81 @@ export default function BricksyTravel() {
                 }
               </div>
               <button className="show-sm" onClick={() => setMobileMenu(!mobileMenu)}
-                style={{ fontSize: 22, color: "#0d3b66" }} aria-label="Menu">☰</button>
+                style={{ 
+                  fontSize: 22, 
+                  color: "#fff", 
+                  background: "rgba(255,255,255,.12)",
+                  border: "1.5px solid rgba(255,255,255,.25)",
+                  borderRadius: 8,
+                  width: 40, height: 40,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer",
+                  transition: "background .2s"
+                }} 
+                aria-label="Menu">
+                {mobileMenu ? "✕" : "☰"}
+              </button>
             </div>
             {mobileMenu && (
               <div style={{
                 position: "absolute", top: "100%", left: 0, right: 0,
-                background: "#ffffff",
-                borderTop: "2px solid #0891b2", borderBottom: "1px solid #0891b2",
-                boxShadow: "0 16px 48px rgba(0,0,0,0.15)",
-                display: "flex", flexDirection: "column", gap: 4,
-                padding: "14px 5% 22px", zIndex: 1000
+                background: "linear-gradient(160deg, #063d5c 0%, #0875a8 70%, #0aa8bf 100%)",
+                borderTop: "1px solid rgba(56,197,216,.3)",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+                backdropFilter: "blur(12px)",
+                display: "flex", flexDirection: "column", gap: 6,
+                padding: "16px 5% 24px", zIndex: 1000,
+                animation: "fadeIn .25s ease"
               }}>
+                {/* Dot grid overlay */}
+                <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px)", backgroundSize: "22px 22px", pointerEvents: "none", borderRadius: "0 0 8px 8px" }} />
                 {navItems.map(item => (
                   <button key={item.key} onClick={() => navigateTo(item.key)}
                     className="mobile-nav-item"
                     style={{
                       fontSize: "1rem",
-                      color: page === item.key ? "#0891b2" : "#1a4a72",
+                      color: page === item.key ? "#fff" : "rgba(255,255,255,.82)",
                       fontWeight: page === item.key ? 700 : 500,
-                      textShadow: "none",
                       border: "none",
-                      background: page === item.key ? "#0891b2" : "#f8fafc",
-                      textAlign: "left", padding: "13px 16px", borderRadius: 8, width: "100%",
-                      borderLeft: page === item.key ? "3px solid #22d3ee" : "3px solid #c0e8f0",
-                      transition: "all .15s", cursor: "pointer"
+                      background: page === item.key 
+                        ? "rgba(56,197,216,.25)" 
+                        : "rgba(255,255,255,.06)",
+                      backdropFilter: "blur(4px)",
+                      textAlign: "left", padding: "13px 18px", borderRadius: 10, width: "100%",
+                      borderLeft: page === item.key ? "3px solid #38c5d8" : "3px solid rgba(255,255,255,.12)",
+                      transition: "all .15s", cursor: "pointer",
+                      position: "relative", zIndex: 1
                     }}
-                    onMouseEnter={e => { if (page !== item.key) { e.currentTarget.style.background = "#e0f0f6"; e.currentTarget.style.color = "#1a5a6b"; e.currentTarget.style.borderLeft = "3px solid #0891b2"; e.currentTarget.style.textShadow = "none"; } }}
-                    onMouseLeave={e => { if (page !== item.key) { e.currentTarget.style.background = "#f8fafc"; e.currentTarget.style.color = "#1a4a72"; e.currentTarget.style.borderLeft = "3px solid #c0e8f0"; e.currentTarget.style.textShadow = "none"; } }}>
+                    onMouseEnter={e => { e.currentTarget.style.background = "rgba(56,197,216,.18)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderLeft = "3px solid #38c5d8"; }}
+                    onMouseLeave={e => { 
+                      e.currentTarget.style.background = page === item.key ? "rgba(56,197,216,.25)" : "rgba(255,255,255,.06)"; 
+                      e.currentTarget.style.color = page === item.key ? "#fff" : "rgba(255,255,255,.82)"; 
+                      e.currentTarget.style.borderLeft = page === item.key ? "3px solid #38c5d8" : "3px solid rgba(255,255,255,.12)";
+                    }}>
                     {item.label}
                   </button>
                 ))}
                 {user && (
-                  <div style={{ padding: "12px 4px 4px", borderTop: "1px solid #c0e8f0", marginTop: 8 }}>
-                    <div style={{ fontSize: ".8125rem", color: "#5090aa", marginBottom: 10, padding: "0 12px" }}>Login sebagai <strong style={{ color: "#0d3b66" }}>{user.name || user.username}</strong></div>
+                  <div style={{ padding: "12px 4px 4px", borderTop: "1px solid rgba(56,197,216,.2)", marginTop: 8, position: "relative", zIndex: 1 }}>
+                    <div style={{ fontSize: ".8125rem", color: "rgba(255,255,255,.6)", marginBottom: 10, padding: "0 12px" }}>
+                      Login sebagai <strong style={{ color: "#38c5d8" }}>{user.name || user.username}</strong>
+                    </div>
                     <button onClick={() => { setShowAdmin(true); setMobileMenu(false); }}
-                      style={{ fontSize: ".875rem", color: "#fff", background: "#0891b2", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, width: "100%", marginBottom: 8, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>
-                      Admin Panel
+                      style={{ fontSize: ".875rem", color: "#fff", background: "linear-gradient(135deg,#0891b2,#22d3ee)", border: "none", borderRadius: 10, padding: "11px 16px", fontWeight: 700, width: "100%", marginBottom: 8 }}>
+                      🛠 Admin Panel
                     </button>
                     <button onClick={() => { logout(); setMobileMenu(false); }}
-                      style={{ fontSize: ".875rem", color: "#e74c3c", background: "#1e1010", border: "1px solid #e74c3c", borderRadius: 8, padding: "9px 16px", width: "100%",  }}>
+                      style={{ fontSize: ".875rem", color: "rgba(255,100,100,.9)", background: "rgba(231,76,60,.12)", border: "1px solid rgba(231,76,60,.3)", borderRadius: 10, padding: "10px 16px", width: "100%" }}>
                       Logout
                     </button>
                   </div>
                 )}
-                {!user && <button onClick={() => { setShowLogin(true); setMobileMenu(false); }}
-                  style={{ padding: "13px 16px", border: "none", background: "#0891b2", borderRadius: 8, fontSize: "1rem", color: "#fff", textAlign: "center", fontWeight: 600, marginTop: 8, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>Login</button>}
+                {!user && (
+                  <button onClick={() => { setShowLogin(true); setMobileMenu(false); }}
+                    style={{ padding: "13px 16px", border: "none", background: "linear-gradient(135deg,#0891b2,#22d3ee)", borderRadius: 10, fontSize: "1rem", color: "#fff", textAlign: "center", fontWeight: 700, marginTop: 4, position: "relative", zIndex: 1 }}>
+                    🔑 Login
+                  </button>
+                )}
               </div>
             )}
           </nav>
