@@ -300,12 +300,12 @@ const DEFAULT_POSTS = {
       id: 1, section: "news", status: "published",
       title: "Spa Time at Bali's Hidden Resorts",
       date: "2026-04-03", author: "writer1", category: "Lifestyle",
-      coverImage: "https://picsum.photos/seed/news1/800/500",
+      coverImage: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=800&h=500&fit=crop",
       excerpt: "Relax and rejuvenate at world-class spas along pristine coastlines.",
       content: [
         { type: "paragraph", value: "Bali has long been a haven for those seeking peace and wellness. The island's lush landscape, spiritual ambiance, and world-class hospitality make it one of the top spa destinations in the world." },
         { type: "paragraph", value: "From volcanic stone massages to traditional Balinese healing rituals, each treatment is carefully crafted to restore body and soul." },
-        { type: "image", value: "https://picsum.photos/seed/news1b/800/450", caption: "Serene poolside at a Bali resort" },
+        { type: "image", value: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=800&h=450&fit=crop", caption: "Serene poolside at a Bali resort" },
         { type: "paragraph", value: "Whether you choose a clifftop retreat in Uluwatu or a rainforest sanctuary in Ubud, Bali delivers a spa experience unlike anywhere else on earth." },
       ],
       tags: ["spa", "bali", "wellness"],
@@ -314,12 +314,12 @@ const DEFAULT_POSTS = {
       id: 2, section: "news", status: "published",
       title: "Beach Time: Discovering Hidden Coves",
       date: "2026-04-10", author: "writer1", category: "Beach",
-      coverImage: "https://picsum.photos/seed/news2/800/500",
+      coverImage: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&h=500&fit=crop",
       excerpt: "Discover breathtaking beaches and hidden coves across the globe.",
       content: [
         { type: "paragraph", value: "The world's most stunning beaches are often the ones hardest to reach. Hidden behind jungle trails or accessible only by boat, these secret coves reward the adventurous traveler." },
         { type: "paragraph", value: "From the pink sand beaches of the Bahamas to the glittering black shores of Iceland, every coastline tells a story millions of years in the making." },
-        { type: "image", value: "https://picsum.photos/seed/news2b/800/450", caption: "Crystal clear waters of a hidden cove" },
+        { type: "image", value: "https://images.unsplash.com/photo-1573790387438-4da905039392?w=800&h=450&fit=crop", caption: "Crystal clear waters of a hidden cove" },
       ],
       tags: ["beach", "travel", "adventure"],
     },
@@ -327,7 +327,7 @@ const DEFAULT_POSTS = {
       id: 3, section: "news", status: "published",
       title: "Happy Times: Creating Unforgettable Memories",
       date: "2026-04-15", author: "writer1", category: "Experience",
-      coverImage: "https://picsum.photos/seed/news3/800/500",
+      coverImage: "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=800&h=500&fit=crop",
       excerpt: "Create unforgettable memories on your next great adventure.",
       content: [
         { type: "paragraph", value: "Travel is not just about the destination — it's about the moments that take your breath away. The surprise sunrise, the unexpected friendship, the meal that tastes like home even in a foreign land." },
@@ -341,7 +341,7 @@ const DEFAULT_POSTS = {
       id: 10, section: "shop", status: "published",
       title: "Premium Travel Backpack — Explorer Series",
       date: "2026-03-20", author: "writer1", category: "Gear",
-      coverImage: "https://picsum.photos/seed/shop1/800/500",
+      coverImage: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=800&h=500&fit=crop",
       excerpt: "The ultimate companion for every adventure — waterproof, lightweight, and stylish.",
       price: "$149", badge: "Best Seller",
       content: [
@@ -354,7 +354,7 @@ const DEFAULT_POSTS = {
       id: 11, section: "shop", status: "published",
       title: "Adventure Camera Strap Pro",
       date: "2026-03-25", author: "writer1", category: "Photography",
-      coverImage: "https://picsum.photos/seed/shop2/800/500",
+      coverImage: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&h=500&fit=crop",
       excerpt: "Never miss a shot. Ergonomic, adjustable, built for every terrain.",
       price: "$49",
       content: [
@@ -368,12 +368,12 @@ const DEFAULT_POSTS = {
       id: 20, section: "destinations", status: "published",
       title: "Komodo Island, Indonesia",
       date: "2026-02-10", author: "writer1", category: "Asia",
-      coverImage: "https://picsum.photos/seed/dest1/800/500",
+      coverImage: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&h=500&fit=crop",
       excerpt: "Home to the legendary Komodo dragons and some of the world's best diving.",
       content: [
         { type: "paragraph", value: "Komodo National Park is one of Indonesia's most dramatic and diverse destinations. The rugged, volcanic landscape is home to the world's largest lizard — the Komodo dragon." },
         { type: "paragraph", value: "Beneath the surface, the waters around Komodo are equally spectacular. Divers encounter manta rays, sharks, and vibrant coral gardens." },
-        { type: "image", value: "https://picsum.photos/seed/dest1b/800/450", caption: "Pink Beach, Komodo" },
+        { type: "image", value: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&h=450&fit=crop", caption: "Pink Beach, Komodo" },
         { type: "paragraph", value: "Best time to visit: April to December for calm seas. Liveaboard diving trips are highly recommended for the full experience." },
       ],
       tags: ["indonesia", "diving", "wildlife"],
@@ -382,7 +382,7 @@ const DEFAULT_POSTS = {
       id: 21, section: "destinations", status: "published",
       title: "Swiss Alps: Winter Wonderland",
       date: "2026-02-20", author: "writer1", category: "Europe",
-      coverImage: "https://picsum.photos/seed/dest2/800/500",
+      coverImage: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&h=500&fit=crop",
       excerpt: "Pristine slopes, charming villages, and world-class ski resorts await you.",
       content: [
         { type: "paragraph", value: "Few landscapes in the world rival the Swiss Alps in winter. Snow-dusted peaks, frozen lakes, and cozy mountain chalets create a fairy-tale setting for skiers, snowboarders, and mountain lovers." },
@@ -396,22 +396,22 @@ const DEFAULT_POSTS = {
 const DEFAULT_DATA = {
   images: {
     hero: [
-      "https://picsum.photos/seed/hero1/500/320",
-      "https://picsum.photos/seed/hero2/500/320",
-      "https://picsum.photos/seed/hero3/500/320",
-      "https://picsum.photos/seed/hero4/500/320",
+      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=500&h=320&fit=crop",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=500&h=320&fit=crop",
+      "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=500&h=320&fit=crop",
+      "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=500&h=320&fit=crop",
     ],
     adv: [
-      "https://picsum.photos/seed/adv1/340/300",
-      "https://picsum.photos/seed/adv2/420/400",
+      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=340&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1573790387438-4da905039392?w=420&h=400&fit=crop",
     ],
     gal: [
-      "https://picsum.photos/seed/gal1/280/200",
-      "https://picsum.photos/seed/gal2/280/200",
-      "https://picsum.photos/seed/gal3/280/200",
-      "https://picsum.photos/seed/gal4/280/200",
-      "https://picsum.photos/seed/gal5/280/200",
-      "https://picsum.photos/seed/gal6/280/200",
+      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=280&h=200&fit=crop",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=280&h=200&fit=crop",
+      "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=280&h=200&fit=crop",
+      "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=280&h=200&fit=crop",
+      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=280&h=200&fit=crop",
+      "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=280&h=200&fit=crop",
     ],
   },
   content: {
@@ -425,10 +425,11 @@ const DEFAULT_DATA = {
     bookTitle: "Book your next Adventure",
     bookSub: "Let us take care of every detail so you can focus on what matters — experiencing the world.",
     newsletterTitle: "Go on an adventure from your inbox",
-    aboutText: "Arutala Organizer telah menghubungkan impian dengan kenyataan sejak 2010. Kami percaya bahwa setiap momen spesial layak dirayakan dengan sempurna.",
+    foundingYear: "2026",
+    aboutText: "Arutala Organizer telah menghubungkan impian dengan kenyataan sejak 2026. Kami percaya bahwa setiap momen spesial layak dirayakan dengan sempurna.",
     aboutHeroLabel: "About Us",
     aboutHeroTitle: "We Live for Adventure",
-    aboutHeroSub: "Arutala Organizer telah menghubungkan impian dengan kenyataan sejak 2010. Kami percaya bahwa setiap momen spesial layak dirayakan dengan sempurna.",
+    aboutHeroSub: "Arutala Organizer telah menghubungkan impian dengan kenyataan sejak 2026. Kami percaya bahwa setiap momen spesial layak dirayakan dengan sempurna.",
     aboutWhyTitle: "Why Choose Us",
     aboutV1Icon: "🌍", aboutV1Title: "Global Network",    aboutV1Desc: "Partnerships with 200+ local guides in 60 countries.",
     aboutV2Icon: "🛡",  aboutV2Title: "Safe & Trusted",   aboutV2Desc: "Full insurance coverage and 24/7 emergency support.",
@@ -453,6 +454,8 @@ const DEFAULT_DATA = {
   posts: DEFAULT_POSTS,
   cats: ["Experience Thailand", "Best Adventures", "Sea & Beach", "Hiking Tours", "Kayaking Tours", "Winter Destinations"],
   messages: [],
+  reviews: [],
+  reviewTokens: [],
   services: [
     {
       id: 1,
@@ -462,8 +465,8 @@ const DEFAULT_DATA = {
       badgeColor: "#2b7a9a",
       price: "Rp 5.000.000",
       priceNote: "/ event",
-      images: ["https://picsum.photos/seed/svc1/600/400"],
-      image: "https://picsum.photos/seed/svc1/600/400",
+      images: ["https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop",
       description: "Paket perencanaan event lengkap untuk acara reguler seperti seminar, gathering, dan corporate event.",
       features: ["Konsultasi event 2x pertemuan", "Dekorasi standar", "Dokumentasi foto", "Koordinasi vendor", "Rundown acara", "MC profesional"],
       highlight: false,
@@ -476,8 +479,8 @@ const DEFAULT_DATA = {
       badgeColor: "#e67e22",
       price: "Rp 25.000.000",
       priceNote: "/ wedding",
-      images: ["https://picsum.photos/seed/svc2/600/400"],
-      image: "https://picsum.photos/seed/svc2/600/400",
+      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
       description: "Paket pernikahan lengkap dengan sentuhan premium. Wujudkan pernikahan impian Anda bersama tim profesional kami.",
       features: ["Konsultasi tak terbatas", "Dekorasi premium", "Dokumentasi foto & video", "Koordinasi 10+ vendor", "Wedding planner dedicated", "Catering 300 pax", "Entertainment & MC", "Souvenir tamu"],
       highlight: true,
@@ -490,8 +493,8 @@ const DEFAULT_DATA = {
       badgeColor: "#27ae60",
       price: "Rp 3.500.000",
       priceNote: "/ orang",
-      images: ["https://picsum.photos/seed/svc3/600/400"],
-      image: "https://picsum.photos/seed/svc3/600/400",
+      images: ["https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=600&h=400&fit=crop",
       description: "Paket wisata group terjangkau dengan destinasi pilihan dalam dan luar negeri. Minimum 10 peserta.",
       features: ["Transportasi PP", "Akomodasi 3 malam", "Tour guide lokal", "Makan 3x sehari", "Asuransi perjalanan", "Dokumentasi trip"],
       highlight: false,
@@ -504,8 +507,8 @@ const DEFAULT_DATA = {
       badgeColor: "#8e44ad",
       price: "Rp 15.000.000",
       priceNote: "/ orang",
-      images: ["https://picsum.photos/seed/svc4/600/400"],
-      image: "https://picsum.photos/seed/svc4/600/400",
+      images: ["https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=600&h=400&fit=crop",
       description: "Pengalaman perjalanan mewah ke destinasi premium dunia. Layanan VIP dari keberangkatan hingga kepulangan.",
       features: ["Tiket business class", "Hotel bintang 5", "Private tour guide", "Makan fine dining", "Airport transfer VIP", "Asuransi premium", "Itinerary custom", "Concierge 24 jam"],
       highlight: false,
@@ -518,8 +521,8 @@ const DEFAULT_DATA = {
       badgeColor: "#e84393",
       price: "Rp 8.500.000",
       priceNote: "/ pasangan",
-      images: ["https://picsum.photos/seed/svc5a/600/400", "https://picsum.photos/seed/svc5b/600/400", "https://picsum.photos/seed/svc5c/600/400"],
-      image: "https://picsum.photos/seed/svc5a/600/400",
+      images: ["https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1573790387438-4da905039392?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=600&h=400&fit=crop",
       description: "Rayakan awal kehidupan baru Anda dengan paket honeymoon eksklusif di Pulau Dewata. Vila private, spa couple, dan sunset dinner menjadi kenangan tak terlupakan.",
       features: ["Vila private dengan kolam renang", "Sarapan romantis setiap hari", "Spa couple 2 jam", "Sunset dinner di tepi pantai", "Dekorasi kamar mewah", "Airport transfer private", "Asuransi perjalanan", "Tour Ubud & Seminyak"],
       highlight: true,
@@ -532,8 +535,8 @@ const DEFAULT_DATA = {
       badgeColor: "#16a085",
       price: "Rp 1.800.000",
       priceNote: "/ orang",
-      images: ["https://picsum.photos/seed/svc6a/600/400", "https://picsum.photos/seed/svc6b/600/400"],
-      image: "https://picsum.photos/seed/svc6a/600/400",
+      images: ["https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1584810359583-96fc3448beaa?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=600&h=400&fit=crop",
       description: "Paket wisata keluarga yang menggabungkan petualangan dan edukasi di Kota Budaya Yogyakarta. Cocok untuk liburan sekolah dan family gathering.",
       features: ["Bus pariwisata ber-AC", "Hotel bintang 3 (2 malam)", "Makan 3x sehari", "Kunjungan Prambanan & Borobudur", "Tour guide berpengalaman", "Asuransi perjalanan", "Souvenir khas Jogja"],
       highlight: false,
@@ -546,8 +549,8 @@ const DEFAULT_DATA = {
       badgeColor: "#c0392b",
       price: "Rp 35.000.000",
       priceNote: "/ event",
-      images: ["https://picsum.photos/seed/svc7a/600/400", "https://picsum.photos/seed/svc7b/600/400", "https://picsum.photos/seed/svc7c/600/400"],
-      image: "https://picsum.photos/seed/svc7a/600/400",
+      images: ["https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop",
       description: "Selenggarakan malam penghargaan perusahaan Anda dengan nuansa mewah dan berkesan. Kami tangani dari dekorasi megah hingga entertainment eksklusif untuk 200–500 tamu.",
       features: ["Dekorasi ballroom premium", "Sound & lighting profesional", "MC bilingual", "Catering fine dining 300 pax", "Live music & entertainment", "Dokumentasi foto & video sinematik", "Red carpet & photo booth", "Koordinasi penuh hari H"],
       highlight: true,
@@ -560,8 +563,8 @@ const DEFAULT_DATA = {
       badgeColor: "#2980b9",
       price: "Rp 750.000",
       priceNote: "/ orang",
-      images: ["https://picsum.photos/seed/svc8a/600/400", "https://picsum.photos/seed/svc8b/600/400"],
-      image: "https://picsum.photos/seed/svc8a/600/400",
+      images: ["https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=600&h=400&fit=crop",
       description: "Perkuat solidaritas tim Anda dengan program team building outdoor yang seru dan berenergi. Dirancang oleh fasilitator bersertifikat dengan aktivitas yang menantang dan menyenangkan.",
       features: ["Fasilitator bersertifikat", "Games & outbound activities", "Makan siang & snack", "Dokumentasi kegiatan", "Sertifikat peserta", "Shuttle dari titik kumpul", "Evaluasi & debrief sesi", "Min. 30 peserta"],
       highlight: false,
@@ -574,8 +577,8 @@ const DEFAULT_DATA = {
       badgeColor: "#27ae60",
       price: "Rp 3.200.000",
       priceNote: "/ event",
-      images: ["https://picsum.photos/seed/svc9a/600/400", "https://picsum.photos/seed/svc9b/600/400"],
-      image: "https://picsum.photos/seed/svc9a/600/400",
+      images: ["https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=400&fit=crop",
       description: "Paket penyelenggaraan seminar dan workshop profesional dengan fasilitas lengkap. Ideal untuk training karyawan, seminar publik, dan workshop kreatif hingga 150 peserta.",
       features: ["Venue kapasitas 150 orang", "Proyektor & sound system", "Backdrop & signage branding", "Coffee break 2x & makan siang", "Registrasi & perlengkapan peserta", "Dokumentasi foto", "Koordinator acara", "Sertifikat digital peserta"],
       highlight: false,
@@ -588,8 +591,8 @@ const DEFAULT_DATA = {
       badgeColor: "#e67e22",
       price: "Rp 18.000.000",
       priceNote: "/ wedding",
-      images: ["https://picsum.photos/seed/svc10a/600/400", "https://picsum.photos/seed/svc10b/600/400", "https://picsum.photos/seed/svc10c/600/400"],
-      image: "https://picsum.photos/seed/svc10a/600/400",
+      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
       description: "Pernikahan intim nan hangat di taman dengan dekorasi bohemian elegan. Cocok untuk pernikahan kecil 50–100 tamu dengan nuansa natural yang tetap mewah dan berkesan.",
       features: ["Dekorasi garden bohemian", "Wedding planner dedicated", "Dokumentasi foto & video", "Catering 100 pax", "Pelaminan custom", "Bunga segar premium", "MC profesional", "Koordinasi vendor"],
       highlight: false,
@@ -602,8 +605,8 @@ const DEFAULT_DATA = {
       badgeColor: "#1abc9c",
       price: "Rp 22.000.000",
       priceNote: "/ wedding",
-      images: ["https://picsum.photos/seed/svc11a/600/400", "https://picsum.photos/seed/svc11b/600/400"],
-      image: "https://picsum.photos/seed/svc11a/600/400",
+      images: ["https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=600&h=400&fit=crop",
       description: "Wujudkan pernikahan Islami yang penuh berkah dengan konsep syar'i modern. Kami memastikan setiap detail prosesi sesuai nilai Islam dengan tampilan yang tetap elegan dan menawan.",
       features: ["Dekorasi Islami modern", "Pembatas tamu putra & putri", "Qori & sambutan religi", "Catering halal 200 pax", "Pelaminan syar'i", "Dokumentasi foto & video", "Wedding planner", "Buku tamu & souvenir"],
       highlight: false,
@@ -616,18 +619,18 @@ const DEFAULT_DATA = {
       badgeColor: "#8e44ad",
       price: "Rp 55.000.000",
       priceNote: "/ wedding",
-      images: ["https://picsum.photos/seed/svc12a/600/400", "https://picsum.photos/seed/svc12b/600/400", "https://picsum.photos/seed/svc12c/600/400"],
-      image: "https://picsum.photos/seed/svc12a/600/400",
+      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=400&fit=crop", "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=400&fit=crop"],
+      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=400&fit=crop",
       description: "Pernikahan megah berkelas di ballroom bintang 5 dengan dekorasi mewah penuh chandelier dan bunga segar premium. Untuk 300–600 tamu dengan layanan all-inclusive terbaik.",
       features: ["Ballroom hotel bintang 5", "Dekorasi full flowers premium", "Bridal suite 2 malam", "Catering fine dining 400 pax", "Entertainment & live band", "Foto & video sinematik", "Wedding planner senior", "Makeup artist profesional", "Souvenir premium", "Pagar ayu & pager bagus"],
       highlight: true,
     },
   ],
   teamMembers: [
-    { id: 1, name: "Budi Santoso", role: "CEO & Founder", quotes: "Setiap momen spesial layak dirayakan dengan sempurna.", photo: "https://picsum.photos/seed/team1/300/300" },
-    { id: 2, name: "Sari Dewi", role: "Wedding Coordinator", quotes: "Kami hadir untuk mewujudkan impian pernikahan Anda.", photo: "https://picsum.photos/seed/team2/300/300" },
-    { id: 3, name: "Raka Pratama", role: "Travel Manager", quotes: "Perjalanan terbaik dimulai dari perencanaan yang matang.", photo: "https://picsum.photos/seed/team3/300/300" },
-    { id: 4, name: "Dini Rahayu", role: "Event Organizer", quotes: "Kreativitas adalah kunci event yang tak terlupakan.", photo: "https://picsum.photos/seed/team4/300/300" },
+    { id: 1, name: "Budi Santoso", role: "CEO & Founder", quotes: "Setiap momen spesial layak dirayakan dengan sempurna.", photo: "https://ui-avatars.com/api/?name=Budi+Santoso&size=300&background=1a2e42&color=fff&bold=true" },
+    { id: 2, name: "Sari Dewi", role: "Wedding Coordinator", quotes: "Kami hadir untuk mewujudkan impian pernikahan Anda.", photo: "https://ui-avatars.com/api/?name=Sari+Dewi&size=300&background=2b7a9a&color=fff&bold=true" },
+    { id: 3, name: "Raka Pratama", role: "Travel Manager", quotes: "Perjalanan terbaik dimulai dari perencanaan yang matang.", photo: "https://ui-avatars.com/api/?name=Raka+Pratama&size=300&background=c9aa71&color=fff&bold=true" },
+    { id: 4, name: "Dini Rahayu", role: "Event Organizer", quotes: "Kreativitas adalah kunci event yang tak terlupakan.", photo: "https://ui-avatars.com/api/?name=Dini+Rahayu&size=300&background=27ae60&color=fff&bold=true" },
   ],
   users: HARDCODED_USERS.map((u, i) => ({ id: i + 1, ...u, email: `${u.username}@arutala.com`, active: true })),
 };
@@ -658,11 +661,11 @@ const GS = () => (
     p{font-size:1rem;line-height:1.75;color:#334f65}
     small{font-size:.875rem;line-height:1.5}
 
-    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:500;color:#334f65;transition:color .2s}
+    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:600;color:#334f65;transition:color .2s;text-shadow:0 1px 4px rgba(26,46,66,.18),0 0 12px rgba(43,122,154,.10)}
     .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:#2b7a9a;transition:width .3s;border-radius:2px}
-    .nav-link:hover{color:#2b7a9a}
+    .nav-link:hover{color:#2b7a9a;text-shadow:0 1px 6px rgba(43,122,154,.28),0 0 18px rgba(43,122,154,.18)}
     .nav-link:hover::after,.nav-link.active::after{width:100%}
-    .nav-link.active{color:#2b7a9a!important}
+    .nav-link.active{color:#2b7a9a!important;text-shadow:0 1px 8px rgba(43,122,154,.35),0 0 20px rgba(43,122,154,.20)}
 
     .hover-lift{transition:transform .3s,box-shadow .3s}
     .hover-lift:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(26,46,66,.12)}
@@ -694,7 +697,7 @@ const GS = () => (
       #cursor-glow.expanded{width:48px;height:48px;background:rgba(43,122,154,.1)}
     }
 
-    .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.05rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#1a2e42;text-shadow:0 1px 3px rgba(26,46,66,.18),0 2px 8px rgba(26,46,66,.10)}
+    .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#1a2e42;text-shadow:0 1px 4px rgba(26,46,66,.22),0 2px 10px rgba(26,46,66,.13)}
     .logo-brand-footer{font-family:'Playfair Display',serif;font-weight:800;font-size:.95rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#1a2e42}
     .logo-brand-admin{font-family:'Playfair Display',serif;font-weight:800;font-size:.9rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
     .label-xs{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
@@ -746,7 +749,7 @@ const GS = () => (
     .adv-stat .lbl{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:#8aabbd;font-weight:600}
     .adv-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:22px}
     .adv-eyebrow .ey-line{width:36px;height:1.5px;background:#c9aa71;flex-shrink:0}
-    .adv-quote{font-size:.9375rem;color:#4e6b80;line-height:1.9;font-style:italic;max-width:400px;margin-bottom:28px;padding-left:18px;border-left:2px solid #c9aa71}
+    .adv-quote{font-size:.9375rem;color:#4e6b80;line-height:1.9;font-style:italic;max-width:400px;margin-bottom:28px;padding-left:18px;border-left:2px solid #c9aa71;white-space:pre-line}
 
     /* Margin dekorasi kiri-kanan */
     .adv-margin-deco{position:absolute;top:0;bottom:0;width:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:20px 0}
@@ -761,6 +764,101 @@ const GS = () => (
     @media(max-width:900px){.adv-margin-deco{display:none}.deco-corner-tr,.deco-corner-bl{display:none}.section-inner{padding:0 24px!important}}
     @media(max-width:768px){.mag-grid{display:none}.adv-stats-row{gap:20px}}
 
+    /* ── Hero Intro Section (Title + Subtitle after slideshow) ── */
+    .hero-intro{background:#fff;padding:56px 5% 48px;overflow:hidden;position:relative}
+    .hero-intro-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+    .hero-intro-img{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(26,46,66,.14)}
+    .hero-intro-img img{width:100%;height:380px;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.25,.46,.45,.94)}
+    .hero-intro-img:hover img{transform:scale(1.04)}
+    /* Ornamen shape */
+    .hero-intro-img::before{content:"";position:absolute;top:-18px;left:-18px;width:90px;height:90px;border-radius:50%;background:rgba(201,170,113,.18);z-index:0;pointer-events:none}
+    .hero-intro-img::after{content:"";position:absolute;bottom:-14px;right:-14px;width:60px;height:60px;border:3px solid rgba(43,122,154,.25);border-radius:50%;z-index:0;pointer-events:none}
+    .hero-intro-txt{position:relative;z-index:1}
+    .hero-intro-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    .hero-intro-eyebrow .line{width:36px;height:2px;background:linear-gradient(90deg,#c9aa71,rgba(201,170,113,0));border-radius:1px}
+    .hero-intro-h1{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;color:#1a2e42;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
+    .hero-intro-p{font-size:1rem;color:#4e6b80;line-height:1.85;margin-bottom:32px;max-width:400px}
+    /* Deco blobs background */
+    .hero-intro-blob1{position:absolute;top:-60px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(43,122,154,.07) 0%,rgba(43,122,154,0) 70%);pointer-events:none}
+    .hero-intro-blob2{position:absolute;bottom:-40px;left:40%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(201,170,113,.09) 0%,rgba(201,170,113,0) 70%);pointer-events:none}
+    /* Ornamen dekoratif teks */
+    .hero-intro-deco-line{position:absolute;top:0;right:0;width:1px;height:100%;background:linear-gradient(to bottom,rgba(26,46,66,0),rgba(26,46,66,.08),rgba(26,46,66,0));pointer-events:none}
+    /* Animasi reveal */
+    @keyframes introImgReveal{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+    @keyframes introTxtReveal{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+    @keyframes shapeFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(4deg)}}
+    @keyframes blobPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.08);opacity:1}}
+    .hero-intro-img{animation:introImgReveal .8s cubic-bezier(.22,1,.36,1) .1s both}
+    .hero-intro-txt{animation:introTxtReveal .8s cubic-bezier(.22,1,.36,1) .25s both}
+    .hero-intro-blob1{animation:blobPulse 6s ease-in-out infinite}
+    .hero-intro-blob2{animation:blobPulse 8s ease-in-out infinite 2s}
+    /* Mobile */
+    @media(max-width:768px){
+      .hero-intro{padding:36px 4% 32px}
+      .hero-intro-inner{grid-template-columns:1fr;gap:28px}
+      .hero-intro-img{order:1}
+      .hero-intro-txt{order:2}
+      .hero-intro-img img{height:220px;border-radius:12px}
+      .hero-intro-h1{font-size:clamp(1.6rem,7vw,2.4rem)}
+      .hero-intro-p{max-width:100%;font-size:.9375rem;margin-bottom:22px}
+      .hero-intro-img::before,.hero-intro-img::after{display:none}
+      .hero-intro-blob1,.hero-intro-blob2{display:none}
+    }
+    @media(max-width:480px){
+      .hero-intro{padding:28px 4% 24px}
+      .hero-intro-inner{gap:20px}
+      .hero-intro-img img{height:190px}
+    }
+
+    /* ── Magazine Adventure — improved layout: IMG KIRI, TEKS KANAN ── */
+    .mag2-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(26,46,66,.13)}
+    .mag2-img{position:relative;overflow:hidden;min-height:460px}
+    .mag2-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.25,.46,.45,.94)}
+    .mag2-img:hover img{transform:scale(1.04)}
+    .mag2-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,46,66,.45) 0%,rgba(26,46,66,.1) 60%,rgba(26,46,66,0) 100%);pointer-events:none}
+    .mag2-img-badge{position:absolute;bottom:24px;left:24px;display:flex;flex-direction:column;gap:6px}
+    .mag2-img-tag{background:#c9aa71;color:#fff;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border-radius:2px;font-weight:800;width:fit-content}
+    .mag2-img-caption{font-family:"Playfair Display",serif;font-size:1.15rem;color:#fff;font-weight:700;line-height:1.3;text-shadow:0 2px 12px rgba(0,0,0,.5);max-width:180px}
+    .mag2-txt{background:#1a2e42;padding:48px 44px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+    /* Ornamen di panel teks */
+    .mag2-txt::before{content:"";position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(43,122,154,.12);pointer-events:none}
+    .mag2-txt::after{content:"";position:absolute;bottom:-30px;left:-30px;width:120px;height:120px;border-radius:50%;background:rgba(201,170,113,.08);pointer-events:none}
+    .mag2-deco-lines{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9aa71,#2b7a9a,#c9aa71);background-size:200% 100%;animation:gradShift 4s linear infinite}
+    @keyframes gradShift{0%{background-position:0% 0%}100%{background-position:200% 0%}}
+    .mag2-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+    .mag2-eyebrow .line{width:28px;height:1.5px;background:#c9aa71;flex-shrink:0}
+    .mag2-eyebrow span{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#7ab3c8;font-weight:700}
+    .mag2-title{font-family:"Playfair Display",serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:18px}
+    .mag2-quote{font-size:.875rem;color:rgba(255,255,255,.7);line-height:1.85;font-style:italic;padding-left:14px;border-left:2px solid #c9aa71;margin-bottom:28px}
+    .mag2-stats{display:flex;gap:28px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.1)}
+    .mag2-stat .num{font-family:"Playfair Display",serif;font-size:1.75rem;font-weight:900;color:#c9aa71;line-height:1;margin-bottom:3px}
+    .mag2-stat .lbl{font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:600}
+    .mag2-btns{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+    .mag2-btn-pill{padding:8px 16px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+    .mag2-btn-pill:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3);color:#fff}
+    .mag2-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;background:linear-gradient(135deg,#c9aa71,#e8c97e);color:#1a2e42;border:none;border-radius:6px;font-size:.8125rem;font-weight:800;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:opacity .2s,transform .2s;font-family:"Playfair Display",serif}
+    .mag2-cta:hover{opacity:.9;transform:translateY(-1px)}
+    /* Ornamen shape animasi floating di sudut */
+    .mag2-shape1{position:absolute;top:20px;right:20px;width:40px;height:40px;border:2px solid rgba(201,170,113,.3);border-radius:6px;transform:rotate(15deg);animation:shapeFloat 5s ease-in-out infinite;pointer-events:none}
+    .mag2-shape2{position:absolute;bottom:40px;right:30px;width:24px;height:24px;background:rgba(43,122,154,.25);border-radius:50%;animation:shapeFloat 7s ease-in-out infinite 1.5s;pointer-events:none}
+    /* Mobile: stack vertikal */
+    @media(max-width:768px){
+      .mag2-grid{grid-template-columns:1fr;border-radius:12px}
+      .mag2-img{min-height:220px;order:1}
+      .mag2-txt{padding:28px 24px;order:2}
+      .mag2-title{font-size:clamp(1.4rem,6vw,2rem)}
+      .mag2-stats{gap:18px;flex-wrap:wrap}
+      .mag2-quote{font-size:.8125rem;margin-bottom:20px}
+      .mag2-btns{gap:8px}
+      .mag2-txt::before,.mag2-txt::after,.mag2-shape1,.mag2-shape2{display:none}
+    }
+    @media(max-width:480px){
+      .mag2-txt{padding:22px 18px}
+      .mag2-stats{gap:12px}
+      .mag2-stat .num{font-size:1.4rem}
+    }
+
+    /* Book section images: hide on small screens */
     /* Book section images: hide on small screens */
     .book-img-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media(max-width:768px){.book-img-grid{display:none}}
@@ -858,6 +956,201 @@ const GS = () => (
     /* Reduced motion */
     @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
+    /* ══════════════════════════════════════════════
+       MOBILE OPTIMISATION — COMPREHENSIVE OVERHAUL
+    ══════════════════════════════════════════════ */
+
+    /* 0. Base: box-sizing, no horizontal overflow */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{overflow-x:hidden;width:100%;-webkit-text-size-adjust:100%}
+    img,video,iframe{max-width:100%;height:auto;display:block}
+
+    /* 1. Navbar — compact on mobile, fully opaque */
+    @media(max-width:640px){
+      nav{background:#fafcfd!important;backdrop-filter:none!important;padding:0 4%!important}
+      nav>div{height:60px!important;gap:10px!important}
+    }
+
+    /* 2. Hero Slideshow — readable height, no side gradients overflow */
+    @media(max-width:640px){
+      /* Side gradients: lebih tipis di mobile */
+      .hero-side-grad{width:8%!important}
+    }
+    @media(max-width:380px){
+      .hero-side-grad{display:none!important}
+    }
+
+    /* 3. Adventure section — teks + stats selalu tampil, image grid tersembunyi */
+    @media(max-width:768px){
+      .mag-grid{display:none!important}
+      .adv-quote{max-width:100%!important;white-space:normal!important}
+      .adv-stats-row{flex-wrap:wrap!important;gap:16px!important}
+      .adv-stat{min-width:80px}
+      /* Tombol layanan wrap */
+      div[style*="flexWrap: wrap"][style*="gap: 10"]{gap:8px!important}
+    }
+    @media(max-width:480px){
+      .adv-stats-row{gap:12px!important}
+      .adv-stat .num{font-size:1.4rem!important}
+    }
+
+    /* 4. Gallery grid — 2 kolom di mobile */
+    @media(max-width:640px){
+      .gal-grid{grid-template-columns:repeat(2,1fr)!important;gap:6px!important}
+    }
+
+    /* 5. Book section — full width satu kolom */
+    @media(max-width:768px){
+      .book-img-grid{display:none!important}
+      /* Book section: single column */
+      section[style*="#c5dde9"] > div.grid-2{display:block!important}
+      section[style*="#c5dde9"] > div > div:last-child{padding-top:0!important}
+    }
+
+    /* 6. Contact / Globe section */
+    @media(max-width:768px){
+      .globe-visual{display:none!important}
+      .globe-inner{flex-direction:column!important;gap:28px!important}
+      /* Map search bar: wrap pada mobile */
+      div[style*="rgba(255,255,255,.06)"]{font-size:14px!important}
+    }
+    @media(max-width:480px){
+      /* Contact: stack input full width */
+      .contact-grid input,.contact-grid textarea{font-size:16px!important}
+    }
+
+    /* 7. Section page (news/shop/destinations) */
+    @media(max-width:768px){
+      .section-page-grid{grid-template-columns:1fr!important;gap:24px!important}
+      .section-page-grid aside{display:none!important}
+    }
+
+    /* 8. PostCard */
+    @media(max-width:480px){
+      .post-card-list{flex-direction:column!important}
+      .post-card-list .post-thumb{width:100%!important;height:160px!important;border-radius:8px 8px 0 0!important}
+    }
+
+    /* 9. Services page */
+    @media(max-width:640px){
+      /* Category tabs: scrollable horizontal */
+      div[style*="border-radius: 999px"][style*="overflow"]{overflow-x:auto!important;flex-wrap:nowrap!important;-webkit-overflow-scrolling:touch!important;padding-bottom:4px!important}
+      /* Service cards: single column */
+      div[style*="minmax(280px"]{grid-template-columns:1fr!important}
+    }
+
+    /* 10. About page */
+    @media(max-width:768px){
+      .about-hero-grid{grid-template-columns:1fr!important;gap:24px!important}
+      .about-why-grid{grid-template-columns:1fr!important;gap:14px!important}
+    }
+    @media(max-width:640px){
+      .about-hero-section{padding:36px 4%!important}
+    }
+
+    /* 11. Footer */
+    @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr!important;gap:28px!important}}
+    @media(max-width:640px){.footer-grid{grid-template-columns:1fr!important;gap:22px!important}}
+    @media(max-width:480px){
+      .footer-grid{gap:18px!important}
+      /* Footer bottom bar: stack */
+      div[style*="borderTop: \"1px solid #ddeef5\""] > div{flex-direction:column!important;gap:10px!important;align-items:flex-start!important}
+    }
+
+    /* 12. Navbar mobile menu — tidak tumpang tindih konten */
+    @media(max-width:640px){
+      /* Mobile menu dropdown: max-height + scroll kalau banyak item */
+      nav > div + div{max-height:calc(100vh - 60px)!important;overflow-y:auto!important}
+    }
+
+    /* 13. WhatsApp button — jangan tutupi konten penting */
+    @media(max-width:480px){
+      a[title*="WhatsApp"]{bottom:16px!important;right:14px!important;width:50px!important;height:50px!important}
+    }
+
+    /* 14. Article detail */
+    @media(max-width:640px){
+      .article-body,.article-body *{max-width:100%!important;overflow-x:hidden!important}
+      .article-body h1{font-size:clamp(1.4rem,7vw,2rem)!important}
+      .article-back-bar{top:60px!important}
+    }
+
+    /* 15. Buttons: solid color, NO transparent background on mobile */
+    @media(max-width:640px){
+      /* About Us ghost button di hero → solid gelap */
+      button.hero-cta-btn[style*="transparent"]{background:#1a2e42!important;border-color:#1a2e42!important;color:#fff!important}
+      /* Explore All & Book Now ghost buttons → solid */
+      button[style*='"transparent"']{background:#1a2e42!important;color:#fff!important}
+    }
+
+    /* 16. Input: prevent iOS zoom, full width */
+    @media(max-width:768px){
+      input,textarea,select{font-size:16px!important;max-width:100%!important}
+    }
+
+    /* 17. Images: fluid & no overflow */
+    img{max-width:100%;height:auto;object-fit:cover}
+
+    /* 18. Pre-line text: wrap normal pada mobile (cegah overflow) */
+    @media(max-width:640px){
+      [style*="whiteSpace: \"pre-line\""]{white-space:normal!important;word-break:break-word!important}
+    }
+
+    /* 19. Grid-2 (golden ratio) → single col on mobile */
+    @media(max-width:768px){
+      .grid-2{grid-template-columns:1fr!important;gap:28px!important}
+    }
+
+    /* 20. Section spacing: tighter on mobile */
+    @media(max-width:640px){
+      .section-lg{padding:40px 0!important}
+      .section-lg .section-inner{padding:0 16px!important}
+      .section-md{padding:36px 4%!important}
+      .hero-section{padding:32px 4% 36px!important}
+    }
+
+    /* 21. Dash-tab-row: scrollable horizontal */
+    @media(max-width:480px){
+      .dash-tab-row{overflow-x:auto!important;flex-wrap:nowrap!important;-webkit-overflow-scrolling:touch!important}
+      .dash-tab-row button{flex-shrink:0!important;min-width:75px!important;font-size:.75rem!important;padding:11px 8px!important}
+    }
+
+    /* 22. Admin panel */
+    @media(max-width:768px){
+      .admin-main{padding:16px 14px!important}
+    }
+    @media(max-width:480px){
+      .admin-main{padding:12px 10px!important}
+    }
+
+    /* 23. Table horizontal scroll */
+    .table-wrap{overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}
+    .table-wrap table{min-width:520px!important}
+
+    /* 24. Login modal */
+    @media(max-width:480px){.login-modal{padding:28px 18px!important;width:94%!important}}
+    @media(max-width:360px){.login-modal{padding:22px 14px!important}}
+
+    /* 25. Reduced-motion already set above */
+
+    /* 26. Tap target minimum */
+    @media(max-width:768px){
+      button,a[href],[role=button]{min-height:42px;min-width:42px}
+    }
+
+    /* 27. Stats page/dash grid: single col on tablet */
+    @media(max-width:1024px){.dash-grid{grid-template-columns:1fr!important;gap:16px!important}}
+
+    /* 28. Hero slideshow CTA buttons — flex wrap, tidak tumpang tindih */
+    @media(max-width:480px){
+      .hero-cta-btn{flex:1!important;min-width:120px!important;text-align:center!important;padding:11px 16px!important;font-size:.75rem!important}
+    }
+
+    /* 29. Prevent any element from exceeding viewport */
+    @media(max-width:640px){
+      .page-wrap,main,[class*="section"]{max-width:100vw!important;overflow-x:hidden!important}
+    }
+
     /* ══════════════════════════════════════
        MOBILE FIRST — GLOBAL FIXES
     ══════════════════════════════════════ */
@@ -876,7 +1169,7 @@ const GS = () => (
     /* ── Navbar mobile ── */
     @media(max-width:640px){
       nav{padding:0 4%!important}
-      nav>div{height:58px!important}
+      nav>div{height:64px!important}
       /* Mobile menu items: bigger tap targets */
       nav .mobile-nav-item{padding:12px 0;font-size:.9375rem}
     }
@@ -1002,11 +1295,12 @@ function CEF({ val, multiline, onChange, onSave }) {
 /* ─────────────── LOGO DISPLAY ─────────────── */
 function LogoDisplay({ content, size = "nav" }) {
   const lines = (content.logoText || "").split("\n");
+  const iconSz = size === "nav" ? 72 : 34;
   if (content.logoImage) {
     return (
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <img src={content.logoImage} alt={content.logoText}
-          style={{ height: size === "nav" ? 40 : 34, objectFit: "contain", display: "block" }} />
+          style={{ height: iconSz, maxWidth: size === "nav" ? 72 : 120, objectFit: "contain", display: "block" }} />
         <span className={size === "admin" ? "logo-brand-admin" : size === "footer" ? "logo-brand-footer" : "logo-brand"}>
           {lines.map((line, i) => <span key={i} style={{ display: "block" }}>{line}</span>)}
         </span>
@@ -1015,15 +1309,17 @@ function LogoDisplay({ content, size = "nav" }) {
   }
   /* Text-only: slot on left reserved for future logo image */
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
       {/* Logo placeholder slot — keeps layout stable when image is uploaded */}
       <div style={{
-        width: size === "nav" ? 40 : 34, height: size === "nav" ? 40 : 34,
-        borderRadius: 8, border: `1.5px dashed ${size === "admin" ? "rgba(255,255,255,.3)" : "#b8d4e3"}`,
+        width: iconSz, height: iconSz,
+        borderRadius: size === "nav" ? 12 : 8,
+        border: `1.5px dashed ${size === "admin" ? "rgba(255,255,255,.3)" : "#b8d4e3"}`,
         display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
         background: size === "admin" ? "rgba(255,255,255,.06)" : "rgba(61,143,171,.06)"
       }}>
-        <svg viewBox="0 0 24 24" fill="none" stroke={size === "admin" ? "rgba(255,255,255,.4)" : "#9bbfd0"} strokeWidth="1.5" width="18" height="18">
+        <svg viewBox="0 0 24 24" fill="none" stroke={size === "admin" ? "rgba(255,255,255,.4)" : "#9bbfd0"} strokeWidth="1.5"
+          width={size === "nav" ? 32 : 18} height={size === "nav" ? 32 : 18}>
           <rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/>
           <polyline points="21 15 16 10 5 21"/>
         </svg>
@@ -1706,7 +2002,7 @@ function PostCard({ post, onClick, view = "grid" }) {
         cursor: "pointer", boxShadow: "0 2px 10px rgba(0,0,0,.06)", marginBottom: 16 }}>
       <div className="post-thumb" style={{ flexShrink: 0, width: 180, height: 130, overflow: "hidden" }}>
         <img src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
-          onError={e => { e.target.src = "https://picsum.photos/seed/fallback/400/200"; }} />
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=400&h=200&fit=crop"; }} />
       </div>
       <div style={{ padding: "14px 16px 14px 0", flex: 1 }}>
         {post.category && <span className="label-xs" style={{ color: "#2b7a9a" }}>{post.category}</span>}
@@ -1726,7 +2022,7 @@ function PostCard({ post, onClick, view = "grid" }) {
         boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
       <div className="img-zoom" style={{ height: 200, overflow: "hidden" }}>
         <img src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          onError={e => { e.target.src = "https://picsum.photos/seed/fallback2/400/200"; }} />
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=400&h=200&fit=crop"; }} />
       </div>
       <div style={{ padding: "18px 20px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
@@ -1760,7 +2056,7 @@ function ArticleDetail({ post, onBack }) {
     <div className="fade-in" style={{ minHeight: "100vh", background: "#fff" }}>
       {/* Back Bar */}
       <div className="article-back-bar" style={{ background: "rgba(250,252,253,.96)", backdropFilter: "blur(10px)", borderBottom: "1px solid #ddeef5",
-        padding: "12px 5%", position: "sticky", top: 72, zIndex: 90 }}>
+        padding: "12px 5%", position: "sticky", top: 96, zIndex: 90 }}>
         <button onClick={onBack} style={{ fontSize: 13, color: "#3d8fab", display: "flex", alignItems: "center", gap: 6, fontWeight: 500 }}>
           ← Back
         </button>
@@ -1788,7 +2084,7 @@ function ArticleDetail({ post, onBack }) {
           {post.price && <span style={{ fontSize: "1.375rem", fontWeight: 700, color: "#1a2e42", fontFamily: "'Playfair Display',serif", marginLeft: "auto" }}>{post.price}</span>}
         </div>
         {post.excerpt && (
-          <p style={{ fontSize: "1.125rem", color: "#334f65", lineHeight: 1.85, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400 }}>
+          <p style={{ fontSize: "1.125rem", color: "#334f65", lineHeight: 1.85, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400, whiteSpace: "pre-line" }}>
             {post.excerpt}
           </p>
         )}
@@ -1979,7 +2275,7 @@ function ServicesPage({ content, services, navigateTo }) {
         `}</style>
 
         {/* ── Back Bar ── */}
-        <div style={{ background: "#1a2e42", padding: "0 5%", position: "sticky", top: 72, zIndex: 90, borderBottom: "1px solid #2b4a62" }}>
+        <div style={{ background: "#1a2e42", padding: "0 5%", position: "sticky", top: 96, zIndex: 90, borderBottom: "1px solid #2b4a62" }}>
           <button onClick={closeDetail} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#7ab8d0", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer", padding: "13px 0", letterSpacing: ".04em", textTransform: "uppercase" }}>
             <span style={{ fontSize: 18, lineHeight: 1 }}>←</span> Kembali ke Layanan
           </button>
@@ -2042,9 +2338,9 @@ function ServicesPage({ content, services, navigateTo }) {
                 <div className="mg-deco-shape" style={{ position: "absolute", top: 30, right: 30, width: 70, height: 70, border: "1.5px solid rgba(255,255,255,.12)", borderRadius: 6, zIndex: 3, pointerEvents: "none" }} />
                 <div className="mg-deco-shape" style={{ position: "absolute", bottom: 20, left: -8, width: 50, height: 50, border: "1.5px solid rgba(255,255,255,.15)", borderRadius: 4, zIndex: 3, pointerEvents: "none" }} />
                 <div style={{ flex: 1, position: "relative", minHeight: 400 }}>
-                  <img src={imgs[activeImg] || "https://picsum.photos/seed/fallback/600/500"} alt={svc.title}
+                  <img src={imgs[activeImg] || "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=600&h=500&fit=crop"} alt={svc.title}
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity .4s" }}
-                    onError={e => { e.target.src = "https://picsum.photos/seed/fallback/600/500"; }} />
+                    onError={e => { e.target.src = "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=600&h=500&fit=crop"; }} />
                   {/* Bottom fade */}
                   <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 90, background: "linear-gradient(to top, rgba(26,46,66,.65), transparent)", pointerEvents: "none" }} />
                   {imgs.length > 1 && (
@@ -2065,7 +2361,7 @@ function ServicesPage({ content, services, navigateTo }) {
               {imgs.map((img, i) => (
                 <div key={i} className="mg-thumb" onClick={() => setActiveImg(i)}
                   style={{ width: 80, height: 56, borderRadius: 6, overflow: "hidden", cursor: "pointer", flexShrink: 0, border: activeImg === i ? `2.5px solid ${catInfo.color || "#5bc4e0"}` : "2.5px solid rgba(255,255,255,.12)", opacity: activeImg === i ? 1 : 0.5 }}>
-                  <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.src = "https://picsum.photos/seed/fallback/80/56"} />
+                  <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=80&h=56&fit=crop"} />
                 </div>
               ))}
             </div>
@@ -2104,7 +2400,7 @@ function ServicesPage({ content, services, navigateTo }) {
                         onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 18px rgba(26,46,66,.1)"; }}>
                         <img src={img} alt={`Fasilitas ${i + 1}`}
                           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                          onError={e => e.target.src = `https://picsum.photos/seed/fac${i + 10}/600/400`} />
+                          onError={e => e.target.src = `https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=600&h=400&fit=crop`} />
                         {/* Gradient overlay */}
                         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(26,46,66,.45) 0%, transparent 50%)", pointerEvents: "none" }} />
                         {/* Number badge */}
@@ -2165,7 +2461,7 @@ function ServicesPage({ content, services, navigateTo }) {
                         onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(26,46,66,.07)"}>
                         <div style={{ width: 90, flexShrink: 0, overflow: "hidden", position: "relative" }}>
                           <img src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
-                            onError={e => e.target.src = "https://picsum.photos/seed/rel/90/70"} />
+                            onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=90&h=70&fit=crop"} />
                         </div>
                         <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#2b7a9a"}, transparent)` }} />
                         <div style={{ padding: "12px 14px", flex: 1 }}>
@@ -2332,7 +2628,7 @@ function ServicesPage({ content, services, navigateTo }) {
                       <img src={(svc.images?.[0] || svc.image)} alt={svc.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
                         onMouseEnter={e => e.target.style.transform = "scale(1.06)"}
                         onMouseLeave={e => e.target.style.transform = "scale(1)"}
-                        onError={e => { e.target.src = "https://picsum.photos/seed/fallback/400/300"; }} />
+                        onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400&h=300&fit=crop"; }} />
                     </div>
                     <div style={{ padding: "22px 22px 20px" }}>
                       <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#1a2e42", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
@@ -2628,7 +2924,7 @@ function AboutPage({ content, images, teamMembers }) {
             <h1 className="display" style={{ fontSize: "clamp(2.25rem,5vw,3.75rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 24 }}>
               {content.aboutHeroTitle || "Arutala Travel & Organizer"}
             </h1>
-            <p style={{ fontSize: "1.0625rem", color: "#2d4f65", lineHeight: 1.9, maxWidth: 420, marginBottom: 32 }}>
+            <p style={{ fontSize: "1.0625rem", color: "#2d4f65", lineHeight: 1.9, maxWidth: 420, marginBottom: 32, whiteSpace: "pre-line" }}>
               {content.aboutHeroSub || content.aboutText || "Mitra terpercaya Anda untuk perjalanan wisata, pernikahan impian, dan event berkesan. Kami hadir untuk mewujudkan setiap momen menjadi kenangan tak terlupakan."}
             </p>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
@@ -2708,7 +3004,7 @@ function AboutPage({ content, images, teamMembers }) {
               <div key={v.title} className="hover-lift" style={{ background: "#fff", borderRadius: 12, padding: "32px 28px", boxShadow: "0 2px 12px rgba(26,46,66,.06)", borderTop: "3px solid #2b7a9a", transition: "all .3s" }}>
                 <div style={{ fontSize: 36, marginBottom: 16 }}>{v.icon}</div>
                 <h3 style={{ fontSize: "1.05rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#1a2e42", marginBottom: 10 }}>{v.title}</h3>
-                <p style={{ fontSize: "0.9rem", color: "#4e6b80", lineHeight: 1.75 }}>{v.desc}</p>
+                <p style={{ fontSize: "0.9rem", color: "#4e6b80", lineHeight: 1.75, whiteSpace: "pre-line" }}>{v.desc}</p>
               </div>
             ))}
           </div>
@@ -2748,7 +3044,7 @@ function AboutPage({ content, images, teamMembers }) {
                     <h3 style={{ fontSize: "1rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#1a2e42", marginBottom: 4 }}>{member.name}</h3>
                     <div style={{ fontSize: "0.8125rem", color: "#2b7a9a", fontWeight: 600, marginBottom: 12 }}>{member.role}</div>
                     {member.quotes && (
-                      <p style={{ fontSize: "0.8125rem", color: "#6b8999", fontStyle: "italic", lineHeight: 1.65 }}>"{member.quotes}"</p>
+                      <p style={{ fontSize: "0.8125rem", color: "#6b8999", fontStyle: "italic", lineHeight: 1.65, whiteSpace: "pre-line" }}>"{member.quotes}"</p>
                     )}
                   </div>
                 </div>
@@ -3016,7 +3312,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
             <div>
               <div style={{ fontWeight: 700, color: "#1e3248", fontSize: 14 }}>{m.name}</div>
               <div style={{ fontSize: 12, color: "#2b7a9a", fontWeight: 600 }}>{m.role}</div>
-              {m.quotes && <div style={{ fontSize: 11, color: "#7a9db0", fontStyle: "italic", marginTop: 6, lineHeight: 1.5 }}>"{m.quotes}"</div>}
+              {m.quotes && <div style={{ fontSize: 11, color: "#7a9db0", fontStyle: "italic", marginTop: 6, lineHeight: 1.5, whiteSpace: "pre-line" }}>"{m.quotes}"</div>}
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={() => openEdit(m)} style={{ padding: "6px 14px", background: "#f0f9fc", color: "#3d8fab", border: "1px solid #c5dde9", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
@@ -3158,23 +3454,27 @@ function HeroSlideshow({ data, navigateTo }) {
           </h1>
           {/* Excerpt */}
           {sl.excerpt && (
-            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, marginBottom: 32, maxWidth: 440 }}>
+            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, marginBottom: 32, maxWidth: 440, whiteSpace: "pre-line" }}>
               {sl.excerpt.length > 120 ? sl.excerpt.slice(0, 120) + "…" : sl.excerpt}
             </p>
           )}
           {/* CTA Buttons */}
-          <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            <button className="hero-cta-btn" onClick={() => navigateTo(sl.section === "home" ? "about" : sl.section)}
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", width: "100%", maxWidth: 380 }}>
+            <button className="hero-cta-btn" onClick={() => navigateTo("services")}
               style={{ padding: "13px 30px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
               Read More →
             </button>
             <button className="hero-cta-btn" onClick={() => navigateTo("about")}
-              style={{ padding: "13px 30px", background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,.6)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
+              style={{ padding: "13px 30px", background: "#1a2e42", color: "#fff", border: "2px solid rgba(255,255,255,.55)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
               About Us →
             </button>
           </div>
         </div>
       </div>
+
+      {/* Side gradient overlays — solid edge, fade to center */}
+      <div className="hero-side-grad" style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "18%", background: "linear-gradient(to right, rgba(4,8,15,.82) 0%, rgba(4,8,15,.45) 50%, rgba(4,8,15,0) 100%)", zIndex: 15, pointerEvents: "none" }} />
+      <div className="hero-side-grad" style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "18%", background: "linear-gradient(to left, rgba(4,8,15,.82) 0%, rgba(4,8,15,.45) 50%, rgba(4,8,15,0) 100%)", zIndex: 15, pointerEvents: "none" }} />
 
       {/* ARROWS */}
       <button className="hero-arrow" onClick={() => goTo((current - 1 + slides.length) % slides.length)}
@@ -3202,12 +3502,362 @@ function HeroSlideshow({ data, navigateTo }) {
   );
 }
 
+/* ─────────────── REVIEW FORM (Public, One-Time Token) ─────────────── */
+function ReviewForm({ token, onSubmitDone, data, save, notify }) {
+  const [step, setStep] = useState("form"); // form | done | invalid
+  const [form, setForm] = useState({ name: "", email: "", stars: 5, content: "", photo: "" });
+  const [photoUploading, setPhotoUploading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [err, setErr] = useState("");
+
+  const tokenObj = (data.reviewTokens || []).find(t => t.token === token);
+
+  if (!tokenObj) return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f4f9fb" }}>
+      <div style={{ textAlign: "center", background: "#fff", borderRadius: 16, padding: "48px 40px", maxWidth: 400, boxShadow: "0 8px 40px rgba(0,0,0,.1)" }}>
+        <div style={{ fontSize: 56, marginBottom: 16 }}>❌</div>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", color: "#1a2e42", marginBottom: 12 }}>Link Tidak Valid</h2>
+        <p style={{ color: "#6b8999", fontSize: "0.9375rem", lineHeight: 1.7 }}>Link form ulasan ini tidak ditemukan atau sudah tidak berlaku.</p>
+      </div>
+    </div>
+  );
+
+  if (tokenObj.used) return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f4f9fb" }}>
+      <div style={{ textAlign: "center", background: "#fff", borderRadius: 16, padding: "48px 40px", maxWidth: 400, boxShadow: "0 8px 40px rgba(0,0,0,.1)" }}>
+        <div style={{ fontSize: 56, marginBottom: 16 }}>⏰</div>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", color: "#1a2e42", marginBottom: 12 }}>Link Sudah Digunakan</h2>
+        <p style={{ color: "#6b8999", fontSize: "0.9375rem", lineHeight: 1.7 }}>Form ulasan ini sudah pernah diisi. Setiap link hanya bisa digunakan satu kali.</p>
+      </div>
+    </div>
+  );
+
+  if (step === "done") return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#f4f9fb,#e8f4fd)" }}>
+      <div style={{ textAlign: "center", background: "#fff", borderRadius: 20, padding: "56px 48px", maxWidth: 440, boxShadow: "0 16px 56px rgba(26,46,66,.12)" }}>
+        <div style={{ fontSize: 64, marginBottom: 20 }}>🎉</div>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.875rem", fontWeight: 900, color: "#1a2e42", marginBottom: 14 }}>Terima Kasih!</h2>
+        <p style={{ color: "#4e6b80", fontSize: "1rem", lineHeight: 1.8 }}>Ulasan Anda telah berhasil dikirim. Kami sangat menghargai kepercayaan Anda kepada Arutala Organizer.</p>
+        <div style={{ width: 48, height: 3, background: "#2b7a9a", borderRadius: 2, margin: "28px auto 0" }} />
+      </div>
+    </div>
+  );
+
+  const handlePhotoUpload = async (file) => {
+    if (!file) return;
+    setPhotoUploading(true);
+    try {
+      const url = await uploadToCloudinary(file);
+      setForm(p => ({ ...p, photo: url }));
+    } catch { setErr("Gagal upload foto. Coba lagi."); }
+    finally { setPhotoUploading(false); }
+  };
+
+  const handleSubmit = async () => {
+    if (!form.name.trim()) return setErr("Nama wajib diisi.");
+    if (!form.email.trim() || !form.email.includes("@")) return setErr("Email tidak valid.");
+    if (!form.content.trim()) return setErr("Isi ulasan wajib diisi.");
+    setSubmitting(true);
+    setErr("");
+    try {
+      const newReview = {
+        id: Date.now().toString(),
+        name: form.name.trim(),
+        email: form.email.trim(),
+        photo: form.photo,
+        stars: form.stars,
+        content: form.content.trim(),
+        date: new Date().toISOString().slice(0, 10),
+        tokenLabel: tokenObj.label || "",
+      };
+      const updatedTokens = (data.reviewTokens || []).map(t =>
+        t.token === token ? { ...t, used: true } : t
+      );
+      await save({ ...data, reviews: [...(data.reviews || []), newReview], reviewTokens: updatedTokens });
+      setStep("done");
+    } catch { setErr("Gagal menyimpan ulasan. Coba lagi."); }
+    finally { setSubmitting(false); }
+  };
+
+  const content_data = data.content;
+
+  return (
+    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#f4f9fb 0%,#e8f0f8 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 5%" }}>
+      <div style={{ background: "#fff", borderRadius: 20, padding: "48px 44px", maxWidth: 520, width: "100%", boxShadow: "0 16px 56px rgba(26,46,66,.12)" }}>
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: 36 }}>
+          <div style={{ width: 64, height: 64, borderRadius: "50%", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: 28 }}>⭐</div>
+          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#1a2e42", marginBottom: 8 }}>Berikan Ulasan Anda</h1>
+          <p style={{ color: "#6b8999", fontSize: "0.9375rem", lineHeight: 1.6 }}>Bagikan pengalaman Anda bersama {content_data.logoText?.replace("\n"," ") || "Arutala Organizer"}</p>
+          {tokenObj.label && <div style={{ marginTop: 10, display: "inline-block", background: "#f0f9fc", border: "1px solid #b8d4e3", color: "#2b7a9a", fontSize: "0.75rem", fontWeight: 600, padding: "4px 14px", borderRadius: 20 }}>{tokenObj.label}</div>}
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+          {/* Photo Upload */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase" }}>Foto Profil (Opsional)</label>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <div style={{ width: 60, height: 60, borderRadius: "50%", background: form.photo ? "transparent" : "linear-gradient(135deg,#ddeef5,#c5dde9)", border: "2px solid #ddeef5", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {form.photo ? <img src={form.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ fontSize: 24 }}>👤</span>}
+              </div>
+              <div style={{ flex: 1 }}>
+                <input type="file" accept="image/*" onChange={e => handlePhotoUpload(e.target.files?.[0])}
+                  style={{ fontSize: "0.8125rem", color: "#4e6b80", width: "100%" }} />
+                {photoUploading && <span style={{ fontSize: "0.75rem", color: "#2b7a9a" }}>⏳ Mengupload...</span>}
+              </div>
+            </div>
+          </div>
+
+          {/* Name */}
+          <div>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Nama Lengkap *</label>
+            <input value={form.name} onChange={e => { setForm(p => ({ ...p, name: e.target.value })); setErr(""); }}
+              placeholder="Masukkan nama Anda"
+              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9375rem", outline: "none", transition: "border-color .2s" }}
+              onFocus={e => e.target.style.borderColor = "#2b7a9a"} onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Email *</label>
+            <input type="email" value={form.email} onChange={e => { setForm(p => ({ ...p, email: e.target.value })); setErr(""); }}
+              placeholder="email@contoh.com"
+              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9375rem", outline: "none", transition: "border-color .2s" }}
+              onFocus={e => e.target.style.borderColor = "#2b7a9a"} onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+          </div>
+
+          {/* Stars */}
+          <div>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Rating *</label>
+            <div style={{ display: "flex", gap: 8 }}>
+              {[1,2,3,4,5].map(s => (
+                <button key={s} onClick={() => setForm(p => ({ ...p, stars: s }))}
+                  style={{ fontSize: 32, background: "none", border: "none", cursor: "pointer", transition: "transform .15s", filter: s <= form.stars ? "none" : "grayscale(1) opacity(.3)" }}
+                  onMouseEnter={e => e.currentTarget.style.transform = "scale(1.2)"}
+                  onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>⭐</button>
+              ))}
+              <span style={{ fontSize: "0.875rem", color: "#6b8999", alignSelf: "center", marginLeft: 6 }}>
+                {["","Sangat Buruk","Buruk","Cukup","Bagus","Sangat Bagus"][form.stars]}
+              </span>
+            </div>
+          </div>
+
+          {/* Review Content */}
+          <div>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Isi Ulasan *</label>
+            <textarea value={form.content} onChange={e => { setForm(p => ({ ...p, content: e.target.value })); setErr(""); }}
+              placeholder="Ceritakan pengalaman Anda bersama kami..."
+              rows={5}
+              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9375rem", outline: "none", resize: "vertical", lineHeight: 1.7, transition: "border-color .2s" }}
+              onFocus={e => e.target.style.borderColor = "#2b7a9a"} onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+          </div>
+
+          {err && <div style={{ background: "#fef0f0", border: "1px solid #f5c6c6", borderRadius: 8, padding: "10px 14px", color: "#c0392b", fontSize: "0.875rem" }}>{err}</div>}
+
+          <button onClick={handleSubmit} disabled={submitting || photoUploading}
+            style={{ padding: "14px", background: submitting ? "#7a9db0" : "linear-gradient(135deg,#1a2e42,#2b7a9a)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, letterSpacing: ".05em", cursor: submitting ? "not-allowed" : "pointer", transition: "opacity .2s" }}>
+            {submitting ? "⏳ Mengirim..." : "✨ Kirim Ulasan"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── REVIEW SLIDESHOW (Home Page) ─────────────── */
+function ReviewSlideshow({ reviews }) {
+  const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef(null);
+
+  const total = reviews.length;
+
+  useEffect(() => {
+    if (total < 2 || isPaused) return;
+    intervalRef.current = setInterval(() => {
+      setCurrent(p => (p + 1) % total);
+    }, 4000);
+    return () => clearInterval(intervalRef.current);
+  }, [total, isPaused]);
+
+  if (total === 0) return null;
+
+  // Build visible indices: 6 cards centered around current
+  // [-2, -1, 0, 1, 2, 3] offsets from current — we show 6 cards
+  // Cards at positions -2 and 3 are faded (gradient edges)
+  const getOffset = (offset) => ((current + offset % total + total * 4) % total);
+
+  const cardData = total === 1
+    ? [{ review: reviews[0], pos: 0, opacity: 1, scale: 1, blur: 0, fade: false }]
+    : total <= 3
+    ? reviews.map((r, i) => {
+        const dist = Math.min(Math.abs(i - current), total - Math.abs(i - current));
+        return { review: r, pos: i - current, opacity: dist === 0 ? 1 : 0.6, scale: dist === 0 ? 1 : 0.93, blur: 0, fade: dist > 1 };
+      }).filter(x => !x.fade)
+    : (() => {
+        // 6 positions: offsets -2,-1,0,1,2,3 but visual slots 0..5
+        const slots = [-2, -1, 0, 1, 2, 3];
+        return slots.map((offset, slotIdx) => {
+          const ridx = getOffset(offset);
+          const isFade = slotIdx === 0 || slotIdx === 5;
+          const isEdge = slotIdx === 1 || slotIdx === 4;
+          return {
+            review: reviews[ridx],
+            slotIdx,
+            opacity: isFade ? 0.15 : isEdge ? 0.65 : 1,
+            scale: isFade ? 0.88 : isEdge ? 0.94 : 1,
+            fade: isFade,
+          };
+        });
+      })();
+
+  return (
+    <section style={{ padding: "80px 0 72px", background: "linear-gradient(180deg,#f4f9fb 0%,#fff 100%)", overflow: "hidden" }}>
+      <style>{`
+        @keyframes reviewIn { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+        .rev-card { transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .5s ease, box-shadow .3s; }
+        .rev-card:hover { transform: translateY(-6px) !important; box-shadow: 0 20px 48px rgba(26,46,66,.14) !important; }
+      `}</style>
+
+      {/* Section Header */}
+      <div style={{ textAlign: "center", marginBottom: 52, padding: "0 5%" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+          <div style={{ width: 32, height: 1.5, background: "#c9aa71" }} />
+          <span style={{ fontSize: "0.6875rem", letterSpacing: "3px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700 }}>Testimoni Klien</span>
+          <div style={{ width: 32, height: 1.5, background: "#c9aa71" }} />
+        </div>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#1a2e42", lineHeight: 1.1 }}>
+          Apa Kata Mereka?
+        </h2>
+        <p style={{ fontSize: "1rem", color: "#6b8999", marginTop: 12, maxWidth: 440, margin: "12px auto 0", lineHeight: 1.7 }}>
+          Kepuasan klien adalah prioritas utama kami di setiap layanan.
+        </p>
+      </div>
+
+      {/* Stars rating summary */}
+      <div style={{ textAlign: "center", marginBottom: 36 }}>
+        {(() => {
+          const avg = reviews.reduce((s, r) => s + (r.stars || 5), 0) / reviews.length;
+          return (
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1px solid #ddeef5", borderRadius: 40, padding: "10px 24px", boxShadow: "0 4px 16px rgba(26,46,66,.06)" }}>
+              <span style={{ fontSize: "1.5rem", fontWeight: 900, fontFamily: "'Playfair Display',serif", color: "#1a2e42" }}>{avg.toFixed(1)}</span>
+              <div style={{ display: "flex", gap: 2 }}>
+                {[1,2,3,4,5].map(s => <span key={s} style={{ fontSize: 16, filter: s <= Math.round(avg) ? "none" : "grayscale(1) opacity(.3)" }}>⭐</span>)}
+              </div>
+              <span style={{ fontSize: "0.8125rem", color: "#6b8999", fontWeight: 500 }}>{reviews.length} ulasan</span>
+            </div>
+          );
+        })()}
+      </div>
+
+      {/* Cards Container */}
+      <div style={{ position: "relative", width: "100%", overflow: "visible" }}
+        onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
+
+        {/* 6-card row */}
+        {total >= 4 ? (
+          <div style={{ display: "flex", justifyContent: "center", gap: 16, padding: "20px 0", position: "relative" }}>
+            {cardData.map(({ review, slotIdx, opacity, scale, fade }) => (
+              <div key={`${slotIdx}-${review.id}`} className="rev-card"
+                style={{
+                  width: "calc(14% + 20px)", minWidth: 180, maxWidth: 240,
+                  flexShrink: 0, opacity, transform: `scale(${scale})`,
+                  pointerEvents: fade ? "none" : "auto",
+                  position: "relative",
+                }}>
+                {/* Gradient mask for edge cards */}
+                {fade && (
+                  <div style={{ position: "absolute", inset: 0, zIndex: 2, borderRadius: 16,
+                    background: slotIdx === 0
+                      ? "linear-gradient(to right, rgba(244,249,251,1) 0%, rgba(244,249,251,0) 100%)"
+                      : "linear-gradient(to left, rgba(244,249,251,1) 0%, rgba(244,249,251,0) 100%)",
+                    pointerEvents: "none" }} />
+                )}
+                <ReviewCard review={review} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* Fewer cards: centered layout */
+          <div style={{ display: "flex", justifyContent: "center", gap: 20, padding: "20px 5%", flexWrap: "wrap" }}>
+            {reviews.map((review, i) => (
+              <div key={review.id} className="rev-card"
+                style={{ width: 280, flexShrink: 0, opacity: i === current ? 1 : 0.6, transform: i === current ? "scale(1)" : "scale(0.95)" }}>
+                <ReviewCard review={review} />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Navigation Arrows */}
+        {total > 1 && (
+          <>
+            <button onClick={() => { setCurrent(p => (p - 1 + total) % total); }}
+              style={{ position: "absolute", left: "2%", top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "#fff", border: "1.5px solid #ddeef5", boxShadow: "0 4px 16px rgba(26,46,66,.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: "#1a2e42", cursor: "pointer", transition: "all .2s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#1a2e42"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#1a2e42"; }}>‹</button>
+            <button onClick={() => { setCurrent(p => (p + 1) % total); }}
+              style={{ position: "absolute", right: "2%", top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "#fff", border: "1.5px solid #ddeef5", boxShadow: "0 4px 16px rgba(26,46,66,.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: "#1a2e42", cursor: "pointer", transition: "all .2s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#1a2e42"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#1a2e42"; }}>›</button>
+          </>
+        )}
+      </div>
+
+      {/* Dots */}
+      {total > 1 && (
+        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 28 }}>
+          {reviews.map((_, i) => (
+            <button key={i} onClick={() => setCurrent(i)}
+              style={{ width: i === current ? 24 : 8, height: 8, borderRadius: 4, background: i === current ? "#1a2e42" : "#c9d9e3", border: "none", cursor: "pointer", transition: "all .3s", padding: 0 }} />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ReviewCard({ review }) {
+  const stars = review.stars || 5;
+  return (
+    <div style={{ background: "#fff", borderRadius: 16, padding: "28px 24px", boxShadow: "0 4px 24px rgba(26,46,66,.08)", border: "1px solid #eef4f8", height: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
+      {/* Stars */}
+      <div style={{ display: "flex", gap: 3 }}>
+        {[1,2,3,4,5].map(s => (
+          <span key={s} style={{ fontSize: 14, filter: s <= stars ? "none" : "grayscale(1) opacity(.25)" }}>⭐</span>
+        ))}
+      </div>
+      {/* Quote */}
+      <p style={{ fontSize: "0.9rem", color: "#334f65", lineHeight: 1.75, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", flex: 1, whiteSpace: "pre-line" }}>
+        "{review.content?.length > 180 ? review.content.slice(0, 180) + "…" : review.content}"
+      </p>
+      {/* Author */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 12, borderTop: "1px solid #f0f4f8" }}>
+        <div style={{ width: 44, height: 44, borderRadius: "50%", overflow: "hidden", flexShrink: 0, background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+          {review.photo
+            ? <img src={review.photo} alt={review.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            : <span style={{ color: "#fff", fontWeight: 700, fontSize: "1rem" }}>{review.name?.charAt(0)?.toUpperCase() || "?"}</span>
+          }
+        </div>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#1a2e42", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{review.name}</div>
+          <div style={{ fontSize: "0.75rem", color: "#6b8999" }}>{review.date}</div>
+        </div>
+        {review.tokenLabel && (
+          <div style={{ marginLeft: "auto", fontSize: "0.625rem", background: "#f0f9fc", color: "#2b7a9a", padding: "2px 8px", borderRadius: 10, fontWeight: 600, flexShrink: 0, maxWidth: 80, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{review.tokenLabel}</div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
   const [user, setUser] = useState(null);
   const [page, setPage] = useState("home");   // home | about | news | shop | destinations | services
   const [readPost, setReadPost] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
+  const [comingSoon, setComingSoon] = useState(null); // null | "google" | "apple"
   const [showAdmin, setShowAdmin] = useState(false);
   const [adminTab, setAdminTab] = useState("dashboard");
   const [adminSection, setAdminSection] = useState("news");
@@ -3233,6 +3883,8 @@ export default function BricksyTravel() {
   const [showDevProfile, setShowDevProfile] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
   const [mapQuery, setMapQuery] = useState("");
+  const [mapLocation, setMapLocation] = useState("Malang, Jawa Timur, Indonesia");
+  const mapDebounceRef = useRef(null);
   // Profile editing state
   const [profileEdit, setProfileEdit] = useState({ name: "", phone: "", email: "", desc: "", photo: "", oldPass: "", newPass: "", confirmPass: "" });
   const [userMgmtForm, setUserMgmtForm] = useState({ username: "", password: "", role: "content_writer", email: "", name: "" });
@@ -3240,6 +3892,9 @@ export default function BricksyTravel() {
   const [editRoleId, setEditRoleId] = useState(null);
   const [profileEditMode, setProfileEditMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [reviewTokenParam, setReviewTokenParam] = useState(() => {
+    try { return new URLSearchParams(window.location.search).get("review") || ""; } catch { return ""; }
+  });
 
   /* ── Desktop cursor glow + scroll-reveal (pointer:fine only) ── */
   useEffect(() => {
@@ -3596,27 +4251,51 @@ export default function BricksyTravel() {
         </div>
       )}
 
+      {/* ══════ REVIEW FORM (token-based, public) ══════ */}
+      {reviewTokenParam && (
+        <ReviewForm token={reviewTokenParam} data={data} save={save} notify={notify} />
+      )}
+
       {/* ══════ PUBLIC WEBSITE ══════ */}
-      {!showAdmin && (
+      {!showAdmin && !reviewTokenParam && (
         <>
           {/* NAVBAR — Fixed floating always */}
           <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(250,252,253,.97)",
             backdropFilter: "blur(12px)", borderBottom: "1px solid #ddeef5", padding: "0 5%",
             isolation: "isolate" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 72, maxWidth: 1200, margin: "0 auto" }}>
-              <button onClick={() => navigateTo("home")} style={{ border: "none", background: "none", padding: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 96, maxWidth: 1200, margin: "0 auto", gap: 20 }}>
+
+              {/* ── LOGO — full multi-line height ── */}
+              <button onClick={() => navigateTo("home")} style={{ border: "none", background: "none", padding: 0, flexShrink: 0, height: "100%", display: "flex", alignItems: "center" }}>
                 <LogoDisplay content={data.content} size="nav" />
               </button>
-              <div className="hide-sm" style={{ display: "flex", gap: 28, alignItems: "center" }}>
-                {navItems.map(item => (
-                  <button key={item.key} onClick={() => navigateTo(item.key)}
-                    className={`nav-link${page === item.key ? " active" : ""}`}
-                    style={{ border: "none", background: "none", cursor: "pointer" }}>
-                    {item.label}
-                  </button>
-                ))}
+
+              {/* ── 2-ROW NAV (desktop) ── */}
+              <div className="hide-sm" style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 4, paddingLeft: 8 }}>
+                {/* Row 1 */}
+                <div style={{ display: "flex", gap: 26, alignItems: "center" }}>
+                  {navItems.slice(0, 3).map(item => (
+                    <button key={item.key} onClick={() => navigateTo(item.key)}
+                      className={`nav-link${page === item.key ? " active" : ""}`}
+                      style={{ border: "none", background: "none", cursor: "pointer" }}>
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+                {/* Row 2 */}
+                <div style={{ display: "flex", gap: 26, alignItems: "center" }}>
+                  {navItems.slice(3).map(item => (
+                    <button key={item.key} onClick={() => navigateTo(item.key)}
+                      className={`nav-link${page === item.key ? " active" : ""}`}
+                      style={{ border: "none", background: "none", cursor: "pointer" }}>
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="hide-sm" style={{ display: "flex", gap: 10, alignItems: "center" }}>
+
+              {/* ── LOGIN / USER (desktop) ── */}
+              <div className="hide-sm" style={{ display: "flex", gap: 10, alignItems: "center", flexShrink: 0 }}>
                 {user
                   ? <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2 }}>
                       <span style={{ fontSize: "0.8125rem", color: "#1a2e42", fontWeight: 700, lineHeight: 1.2 }}>
@@ -3705,7 +4384,7 @@ export default function BricksyTravel() {
           </nav>
 
           {/* Spacer to push content below fixed navbar */}
-          <div style={{ height: 72 }} />
+          <div style={{ height: "clamp(60px,10vw,96px)" }} />
 
           {/* ── WHATSAPP FLOATING BUTTON ── */}
           <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
@@ -3756,102 +4435,157 @@ export default function BricksyTravel() {
                   {/* Hero Slideshow */}
                   <HeroSlideshow data={data} navigateTo={navigateTo} />
 
-                  {/* Adventure — Magazine Layout */}
-                  <section className="section-lg" style={{ background: "#fff" }}>
-                    {/* Dekorasi margin kiri */}
-                    <div className="adv-margin-deco left">
-                      <span className="issue-text">Arutala Organizer 2025</span>
+                  {/* ── HERO INTRO: Title + Subtitle + Gambar ── */}
+                  <section className="hero-intro">
+                    {/* Blob background decorations */}
+                    <div className="hero-intro-blob1" />
+                    <div className="hero-intro-blob2" />
+                    <div className="hero-intro-inner">
+                      {/* KIRI: Gambar */}
+                      <div className="hero-intro-img">
+                        <img
+                          src={data.images.adv[0] || data.images.hero?.[0]}
+                          alt={data.content.heroTitle}
+                        />
+                        {/* Ornamen badge di atas gambar */}
+                        <div style={{ position: "absolute", top: 18, left: 18, background: "#1a2e42", color: "#c9aa71", fontSize: ".6rem", letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 800, padding: "5px 12px", borderRadius: 2, zIndex: 2 }}>
+                          Arutala Organizer
+                        </div>
+                        {/* Shadow overlay bawah */}
+                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(26,46,66,.5), rgba(26,46,66,0))", pointerEvents: "none", zIndex: 1 }} />
+                      </div>
+
+                      {/* KANAN: Teks */}
+                      <div className="hero-intro-txt">
+                        {/* Deco line */}
+                        <div className="hero-intro-deco-line" />
+                        <div className="hero-intro-eyebrow">
+                          <div className="line" />
+                          <span style={{ fontSize: ".65rem", letterSpacing: ".2em", textTransform: "uppercase", color: "#c9aa71", fontWeight: 700 }}>
+                            {data.content.advSub || "TRAVEL & OUTDOOR RECREATION"}
+                          </span>
+                        </div>
+
+                        <h1 className="hero-intro-h1">
+                          {data.content.heroTitle || "Arutala Organizer"}
+                        </h1>
+
+                        <p className="hero-intro-p">
+                          {data.content.heroSub}
+                        </p>
+
+                        {/* Badge stats ringkas */}
+                        <div style={{ display: "flex", gap: 20, marginBottom: 28, flexWrap: "wrap" }}>
+                          {[
+                            { num: "500+", lbl: "Event" },
+                            { num: "1200+", lbl: "Klien" },
+                            { num: "10+", lbl: "Kota" },
+                          ].map(s => (
+                            <div key={s.lbl} style={{ textAlign: "center" }}>
+                              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#1a2e42", lineHeight: 1 }}>{s.num}</div>
+                              <div style={{ fontSize: ".6875rem", letterSpacing: ".1em", textTransform: "uppercase", color: "#8aabbd", fontWeight: 600, marginTop: 3 }}>{s.lbl}</div>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                          <button onClick={() => navigateTo("services")}
+                            style={{ padding: "12px 26px", background: "#1a2e42", color: "#fff", border: "none", borderRadius: 6, fontSize: ".8125rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s" }}
+                            onMouseEnter={e => e.currentTarget.style.opacity = ".82"}
+                            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                            Layanan Kami →
+                          </button>
+                          <button onClick={() => navigateTo("about")}
+                            style={{ padding: "12px 24px", background: "#f4f9fb", color: "#1a2e42", border: "1.5px solid #ddeef5", borderRadius: 6, fontSize: ".8125rem", fontWeight: 600, cursor: "pointer", transition: "all .2s" }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "#ddeef5"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "#f4f9fb"; }}>
+                            Tentang Kami
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* ── ADVENTURE MAGAZINE — IMG Kiri, TEKS Kanan ── */}
+                  <section className="section-md" style={{ background: "#f4f9fb" }}>
+                    {/* Margin deco tetap ada di desktop */}
+                    <div className="adv-margin-deco left" style={{ background: "#f4f9fb" }}>
+                      <span className="issue-text">Arutala Organizer</span>
                       <div className="dot-col">
                         {[false,true,true,false,false].map((on,i) => <div key={i} className={`dot${on?" on":""}`} />)}
                       </div>
                     </div>
-                    {/* Dekorasi margin kanan */}
-                    <div className="adv-margin-deco right">
+                    <div className="adv-margin-deco right" style={{ background: "#f4f9fb" }}>
                       <span className="issue-text">Vol. 14 — No. 2</span>
                     </div>
-                    {/* Ornamen sudut */}
                     <div className="deco-corner-tr" />
                     <div className="deco-corner-bl" />
 
-                    {/* Konten utama */}
-                    <div className="section-inner grid-2">
-                      {/* KIRI: Teks */}
-                      <div>
-                        <div className="adv-eyebrow">
-                          <div className="ey-line" />
-                          <span className="label-xs" style={{ color: "#6b8999" }}>{data.content.advSub}</span>
-                        </div>
+                    <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+                      <div className="mag2-grid">
 
-                        <h2 className="display" style={{ fontSize: "clamp(2rem,5vw,3.5rem)", fontWeight: 900, lineHeight: 1.06, color: "#1a2e42", marginBottom: 24 }}>
-                          {data.content.advTitle}
-                        </h2>
-
-                        <p className="adv-quote">{data.content.advQuote}</p>
-
-                        {/* Stats row */}
-                        <div className="adv-stats-row">
-                          {[
-                            { num: "500+", lbl: "Event Sukses" },
-                            { num: "1200+", lbl: "Klien Puas" },
-                            { num: "14", lbl: "Tahun Pengalaman" },
-                          ].map(s => (
-                            <div key={s.lbl} className="adv-stat">
-                              <div className="num">{s.num}</div>
-                              <div className="lbl">{s.lbl}</div>
-                            </div>
-                          ))}
-                        </div>
-
-                        {/* Tombol layanan */}
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 20 }}>
-                          {[
-                            { label: "🎉 Event Plan", key: "destinations" },
-                            { label: "✈️ Traveling", key: "shop" },
-                            { label: "💍 Wedding Organizer", key: "news" },
-                          ].map(item => (
-                            <button key={item.key} onClick={() => navigateTo(item.key)}
-                              style={{ padding: "9px 18px", background: "#f4f9fb", color: "#1a2e42", border: "1.5px solid #ddeef5", borderRadius: 6, fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer", transition: "all .2s" }}
-                              onMouseEnter={e => { e.currentTarget.style.background = "#1a2e42"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "#1a2e42"; }}
-                              onMouseLeave={e => { e.currentTarget.style.background = "#f4f9fb"; e.currentTarget.style.color = "#1a2e42"; e.currentTarget.style.borderColor = "#ddeef5"; }}>
-                              {item.label}
-                            </button>
-                          ))}
-                        </div>
-
-                        <button onClick={() => navigateTo("services")}
-                          style={{ padding: "13px 28px", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s", fontFamily: "'Playfair Display',serif", fontStyle: "italic" }}
-                          onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
-                          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-                          Layanan Kami →
-                        </button>
-                      </div>
-
-                      {/* KANAN: Magazine Image Grid */}
-                      <div className="mag-grid">
-                        <span style={{ position: "absolute", top: -14, right: 0, fontSize: ".65rem", letterSpacing: ".12em", textTransform: "uppercase", color: "#c0cdd6", fontWeight: 600 }}>Gallery 2025</span>
-
-                        {/* Foto besar kiri (2 baris) */}
-                        <div className="mag-img-main">
-                          <img src={data.images.adv[0]} alt="Destinasi unggulan" />
-                          <span className="foto-label">Destinasi Unggulan</span>
-                        </div>
-
-                        {/* Foto kanan atas */}
-                        <div className="mag-img-sm1">
-                          <img src={data.images.adv[1]} alt="Event kami" />
-                        </div>
-
-                        {/* Kartu teks editorial kanan bawah */}
-                        <div className="mag-card-text">
-                          <div>
-                            <div style={{ fontSize: ".6rem", letterSpacing: ".14em", textTransform: "uppercase", color: "#c9aa71", fontWeight: 700, marginBottom: 8 }}>Testimoni</div>
-                            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1rem", color: "#fff", lineHeight: 1.35, fontWeight: 700 }}>
-                              "Pernikahan kami jadi momen paling sempurna yang pernah kami bayangkan."
-                            </div>
+                        {/* KIRI: Gambar besar */}
+                        <div className="mag2-img">
+                          <img src={data.images.adv[1] || data.images.adv[0]} alt={data.content.advTitle} />
+                          <div className="mag2-img-overlay" />
+                          <div className="mag2-img-badge">
+                            <span className="mag2-img-tag">{data.content.advSub || "TRAVEL & EVENT"}</span>
+                            <span className="mag2-img-caption">{data.content.advTitle}</span>
                           </div>
-                          <button onClick={() => navigateTo("news")}
-                            style={{ fontSize: ".75rem", color: "#7ab3c8", marginTop: 12, fontWeight: 600, letterSpacing: ".06em", cursor: "pointer", background: "none", border: "none", padding: 0, textAlign: "left" }}>
-                            — Baca Kisah Mereka →
+                        </div>
+
+                        {/* KANAN: Teks magazine */}
+                        <div className="mag2-txt">
+                          {/* Top gradient bar animasi */}
+                          <div className="mag2-deco-lines" />
+                          {/* Ornamen shapes */}
+                          <div className="mag2-shape1" />
+                          <div className="mag2-shape2" />
+
+                          <div className="mag2-eyebrow">
+                            <div className="line" />
+                            <span>Arutala Story</span>
+                          </div>
+
+                          <h2 className="mag2-title">{data.content.advTitle}</h2>
+
+                          <p className="mag2-quote">
+                            {data.content.advQuote?.length > 180
+                              ? data.content.advQuote.slice(0, 180) + "…"
+                              : data.content.advQuote}
+                          </p>
+
+                          {/* Stats */}
+                          <div className="mag2-stats">
+                            {[
+                              { num: "500+", lbl: "Event Sukses" },
+                              { num: "1200+", lbl: "Klien Puas" },
+                              { num: `${new Date().getFullYear() - parseInt(data.content.foundingYear || "2026") || 0}+`, lbl: "Tahun" },
+                            ].map(s => (
+                              <div key={s.lbl} className="mag2-stat">
+                                <div className="num">{s.num}</div>
+                                <div className="lbl">{s.lbl}</div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Layanan pills */}
+                          <div className="mag2-btns">
+                            {[
+                              { label: "🎉 Event Plan", key: "destinations" },
+                              { label: "✈️ Traveling", key: "shop" },
+                              { label: "💍 Wedding", key: "news" },
+                            ].map(item => (
+                              <button key={item.key} className="mag2-btn-pill"
+                                onClick={() => navigateTo(item.key)}>
+                                {item.label}
+                              </button>
+                            ))}
+                          </div>
+
+                          <button className="mag2-cta" onClick={() => navigateTo("services")}>
+                            Layanan Kami
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                           </button>
                         </div>
                       </div>
@@ -3865,17 +4599,24 @@ export default function BricksyTravel() {
                       <h2 className="display" style={{ fontSize: "clamp(1.75rem,4.5vw,3rem)", fontWeight: 900, color: "#1a2e42", marginBottom: 16 }}>
                         {data.content.newAdvTitle}
                       </h2>
-                      <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px" }}>{data.content.newAdvSub}</p>
+                      <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px", whiteSpace: "pre-line" }}>{data.content.newAdvSub}</p>
                       <div className="gal-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, marginBottom: 40 }}>
-                        {data.images.gal.map((src, i) => (
-                          <div key={i} className="img-zoom hover-lift" style={{ borderRadius: 4, overflow: "hidden", aspectRatio: "3/2" }}>
-                            <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                          </div>
-                        ))}
+                        {(() => {
+                          const allSecs = ["news","shop","destinations"];
+                          const publishedPosts = allSecs.flatMap(sec => (data.posts?.[sec] || []).filter(p => p.status === "published" && p.coverImage));
+                          const galItems = publishedPosts.length > 0 ? publishedPosts.slice(0, 6) : data.images.gal.map(src => ({ coverImage: src, _static: true }));
+                          return galItems.map((item, i) => (
+                            <div key={i} className="img-zoom hover-lift"
+                              onClick={() => { if (!item._static) { setReadPost(item); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
+                              style={{ borderRadius: 4, overflow: "hidden", aspectRatio: "3/2", cursor: item._static ? "default" : "pointer" }}>
+                              <img src={item.coverImage || item} alt={item.title || ""} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                            </div>
+                          ));
+                        })()}
                       </div>
                       <div style={{ position: "relative", display: "inline-block" }}>
-                        <button onClick={() => setExploreOpen(v => !v)}
-                          style={{ padding: "12px 30px", border: "1.5px solid #1a2e42", background: exploreOpen ? "#1a2e42" : "transparent",
+                        <button onClick={() => setExploreOpen(v => !v)} className="btn-outline-solid"
+                          style={{ padding: "12px 30px", border: "1.5px solid #1a2e42", background: exploreOpen ? "#1a2e42" : "#fff",
                           fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700,
                           color: exploreOpen ? "#fff" : "#1a2e42", transition: "all .2s", display: "flex", alignItems: "center", gap: 8 }}
                           onMouseEnter={e => { if (!exploreOpen) { e.currentTarget.style.background = "#1a2e42"; e.currentTarget.style.color = "#fff"; } }}
@@ -3924,9 +4665,9 @@ export default function BricksyTravel() {
                         <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, lineHeight: 1.1, color: "#1a2e42", marginBottom: 18 }}>
                           {data.content.bookTitle}
                         </h2>
-                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 28, maxWidth: 340 }}>{data.content.bookSub}</p>
+                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 28, maxWidth: 340, whiteSpace: "pre-line" }}>{data.content.bookSub}</p>
                         <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
-                          style={{ display: "inline-block", padding: "12px 30px", border: "1.5px solid #1a2e42", background: "transparent",
+                          style={{ display: "inline-block", padding: "12px 30px", border: "1.5px solid #1a2e42", background: "#fff",
                           fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700, color: "#1a2e42", transition: "all .2s", textDecoration: "none" }}
                           onMouseEnter={e => { e.currentTarget.style.background = "#1a2e42"; e.currentTarget.style.color = "#fff"; }}
                           onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#1a2e42"; }}>
@@ -3954,12 +4695,12 @@ export default function BricksyTravel() {
                   </section>
 
                   {/* Globe / Maps Search Section */}
-                  <section style={{ padding: "0", background: "#04080f", overflow: "hidden", position: "relative", minHeight: 340 }}>
+                  <section style={{ padding: "0", background: "#04080f", overflow: "hidden", position: "relative", minHeight: 360 }}>
                     {/* Galaxy background stars */}
                     <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 60% 50%, #0d1f3c 0%, #04080f 70%)", zIndex: 0 }} />
                     <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,.7) 0%, transparent 100%), radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,.5) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 45% 10%, rgba(255,255,255,.8) 0%, transparent 100%), radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,.4) 0%, transparent 100%), radial-gradient(1px 1px at 75% 60%, rgba(255,255,255,.6) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 85% 20%, rgba(255,255,255,.9) 0%, transparent 100%), radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,.5) 0%, transparent 100%), radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,.4) 0%, transparent 100%), radial-gradient(2px 2px at 50% 85%, rgba(255,255,255,.3) 0%, transparent 100%), radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,.6) 0%, transparent 100%), radial-gradient(1px 1px at 70% 5%, rgba(255,255,255,.7) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 5% 50%, rgba(255,255,255,.5) 0%, transparent 100%)", zIndex: 1 }} />
 
-                    <div style={{ position: "relative", zIndex: 2, maxWidth: 1200, margin: "0 auto", padding: "60px 5%" }} className="globe-inner">
+                    <div style={{ position: "relative", zIndex: 2, maxWidth: 1200, margin: "0 auto", padding: "52px 5%" }} className="globe-inner">
                       {/* Left: text + search */}
                       <div style={{ flex: "1 1 340px" }}>
                         <div className="label-xs" style={{ color: "#5bc4e0", marginBottom: 14 }}>✦ Jelajahi Dunia</div>
@@ -3967,20 +4708,38 @@ export default function BricksyTravel() {
                           {data.content.newsletterTitle}
                         </h2>
                         <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.55)", marginBottom: 28, lineHeight: 1.75 }}>
-                          Ketik nama kota atau destinasi untuk menjelajahinya di peta interaktif.
+                          Ketik nama kota atau destinasi untuk menjelajahinya di peta interaktif — langsung di sini.
                         </p>
                         <div style={{ display: "flex", gap: 0, maxWidth: 420 }}>
                           <input
                             value={mapQuery}
-                            onChange={e => setMapQuery(e.target.value)}
-                            onKeyDown={e => { if (e.key === "Enter" && mapQuery.trim()) { window.open(`https://maps.google.com/?q=${encodeURIComponent(mapQuery)}`, "_blank"); } }}
+                            onChange={e => {
+                              setMapQuery(e.target.value);
+                              clearTimeout(mapDebounceRef.current);
+                              if (e.target.value.trim()) {
+                                mapDebounceRef.current = setTimeout(() => {
+                                  setMapLocation(e.target.value.trim());
+                                }, 700);
+                              }
+                            }}
+                            onKeyDown={e => {
+                              if (e.key === "Enter" && mapQuery.trim()) {
+                                clearTimeout(mapDebounceRef.current);
+                                setMapLocation(mapQuery.trim());
+                              }
+                            }}
                             placeholder="Cari lokasi... (e.g. Bali, Raja Ampat)"
                             aria-label="Cari lokasi di Google Maps"
                             style={{ flex: 1, padding: "12px 18px", border: "1.5px solid rgba(91,196,224,.4)", borderRight: "none",
-                              fontSize: "0.9375rem", background: "rgba(255,255,255,.06)", color: "#fff", outline: "none",
-                              borderRadius: "4px 0 0 4px", backdropFilter: "blur(8px)" }} />
+                              fontSize: "0.9375rem", background: "rgba(255,255,255,.12)", color: "#fff", outline: "none",
+                              borderRadius: "4px 0 0 4px" }} />
                           <button
-                            onClick={() => { if (mapQuery.trim()) window.open(`https://maps.google.com/?q=${encodeURIComponent(mapQuery)}`, "_blank"); }}
+                            onClick={() => {
+                              if (mapQuery.trim()) {
+                                clearTimeout(mapDebounceRef.current);
+                                setMapLocation(mapQuery.trim());
+                              }
+                            }}
                             style={{ padding: "12px 20px", background: "#2b7a9a", color: "#fff", border: "none",
                               fontSize: "0.75rem", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 700,
                               borderRadius: "0 4px 4px 0", cursor: "pointer", transition: "background .2s", whiteSpace: "nowrap" }}
@@ -3989,91 +4748,83 @@ export default function BricksyTravel() {
                             🔍 Jelajahi
                           </button>
                         </div>
-                        {mapQuery && (
+                        {mapQuery && mapQuery.trim() !== mapLocation && (
                           <p style={{ fontSize: "0.8125rem", color: "rgba(91,196,224,.8)", marginTop: 10 }}>
-                            Tekan Enter atau klik Jelajahi untuk membuka di Google Maps ↗
+                            ⌛ Memuat peta untuk <strong style={{ color: "#5bc4e0" }}>{mapQuery}</strong>…
+                          </p>
+                        )}
+                        {mapQuery.trim() && mapQuery.trim() === mapLocation && (
+                          <p style={{ fontSize: "0.8125rem", color: "rgba(91,196,224,.8)", marginTop: 10 }}>
+                            📍 Menampilkan: <strong style={{ color: "#5bc4e0" }}>{mapLocation}</strong>
+                          </p>
+                        )}
+                        {!mapQuery && (
+                          <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.3)", marginTop: 10 }}>
+                            📍 Saat ini: <em>{mapLocation}</em>
                           </p>
                         )}
                       </div>
 
-                      {/* Right: Globe visual */}
-                      <div className="globe-visual">
-                        {mapQuery.trim() ? (
-                          /* When searching: show embedded map iframe */
-                          <div style={{ width: 280, height: 280, borderRadius: "50%", overflow: "hidden",
-                            border: "3px solid rgba(91,196,224,.3)", boxShadow: "0 0 40px rgba(43,122,154,.4), 0 0 80px rgba(43,122,154,.15)" }}>
-                            <iframe
-                              title="Google Maps Preview"
-                              width="280" height="280"
-                              style={{ border: 0, pointerEvents: "none", transform: "scale(1.1)", transformOrigin: "center" }}
-                              loading="lazy"
-                              referrerPolicy="no-referrer-when-downgrade"
-                              src={`https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed&z=10`}
-                            />
-                          </div>
-                        ) : (
-                          /* Default: animated galaxy globe */
-                          <div style={{ position: "relative", width: 260, height: 260 }}>
-                            <style>{`
-                              @keyframes globeSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-                              @keyframes globePulse { 0%,100% { box-shadow: 0 0 40px rgba(91,196,224,.35), 0 0 80px rgba(43,122,154,.2), inset 0 0 60px rgba(0,0,0,.4); } 50% { box-shadow: 0 0 60px rgba(91,196,224,.55), 0 0 120px rgba(43,122,154,.3), inset 0 0 60px rgba(0,0,0,.4); } }
-                              @keyframes ringOrbit { from { transform: rotateX(75deg) rotate(0deg); } to { transform: rotateX(75deg) rotate(360deg); } }
-                            `}</style>
-                            {/* Outer glow ring */}
-                            <div style={{ position: "absolute", inset: -20, borderRadius: "50%",
-                              background: "radial-gradient(circle, transparent 50%, rgba(91,196,224,.06) 70%, transparent 80%)",
-                              animation: "globePulse 4s ease-in-out infinite" }} />
-                            {/* Globe */}
-                            <div style={{ width: 260, height: 260, borderRadius: "50%",
-                              background: "radial-gradient(circle at 35% 35%, #1a5f8a 0%, #0d3558 30%, #07203a 60%, #030e1a 100%)",
-                              animation: "globePulse 4s ease-in-out infinite",
-                              position: "relative", overflow: "hidden" }}>
-                              {/* Continents suggestion */}
-                              <div style={{ position: "absolute", top: "22%", left: "15%", width: "35%", height: "28%",
-                                background: "rgba(45,180,100,.35)", borderRadius: "40% 60% 50% 40%", filter: "blur(2px)" }} />
-                              <div style={{ position: "absolute", top: "30%", left: "55%", width: "30%", height: "22%",
-                                background: "rgba(45,180,100,.3)", borderRadius: "50% 40% 60% 50%", filter: "blur(2px)" }} />
-                              <div style={{ position: "absolute", top: "55%", left: "25%", width: "20%", height: "18%",
-                                background: "rgba(45,180,100,.28)", borderRadius: "50%", filter: "blur(2px)" }} />
-                              <div style={{ position: "absolute", top: "60%", left: "55%", width: "28%", height: "20%",
-                                background: "rgba(45,180,100,.25)", borderRadius: "40% 60% 50% 40%", filter: "blur(2px)" }} />
-                              {/* Latitude lines */}
-                              {[30,50,70].map(t => (
-                                <div key={t} style={{ position: "absolute", left: 0, right: 0, top: `${t}%`,
-                                  height: "1px", background: "rgba(91,196,224,.12)" }} />
-                              ))}
-                              {/* Shine */}
-                              <div style={{ position: "absolute", top: "10%", left: "15%", width: "40%", height: "30%",
-                                background: "radial-gradient(circle, rgba(255,255,255,.18) 0%, transparent 70%)",
-                                borderRadius: "50%", filter: "blur(4px)" }} />
-                              {/* Spinning overlay longitude lines */}
-                              <div style={{ position: "absolute", inset: 0, borderRadius: "50%", overflow: "hidden",
-                                animation: "globeSpin 20s linear infinite", opacity: .25 }}>
-                                {[0,30,60,90,120,150].map(d => (
-                                  <div key={d} style={{ position: "absolute", left: "50%", top: 0, bottom: 0, width: "1px",
-                                    background: "rgba(91,196,224,.6)", transform: `rotate(${d}deg)`, transformOrigin: "50% 50%" }} />
-                                ))}
-                              </div>
-                            </div>
-                            {/* Orbiting dot */}
-                            <div style={{ position: "absolute", inset: -10, borderRadius: "50%",
-                              animation: "ringOrbit 6s linear infinite" }}>
-                              <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
-                                width: 10, height: 10, borderRadius: "50%", background: "#5bc4e0",
-                                boxShadow: "0 0 10px #5bc4e0, 0 0 20px rgba(91,196,224,.6)" }} />
-                            </div>
-                          </div>
-                        )}
+                      {/* Right: Google Maps Embed — always visible */}
+                      <div className="globe-visual" style={{ position: "relative" }}>
+                        <style>{`
+                          @keyframes mapGlow {
+                            0%,100%{ box-shadow: 8px 0 40px rgba(43,122,154,.5), 12px 0 80px rgba(43,122,154,.2), -2px 0 12px rgba(43,122,154,.08); }
+                            50%{ box-shadow: 10px 0 56px rgba(91,196,224,.55), 16px 0 100px rgba(43,122,154,.28), -2px 0 14px rgba(43,122,154,.1); }
+                          }
+                          .map-embed-frame { animation: mapGlow 4s ease-in-out infinite; }
+                        `}</style>
+
+                        {/* Gradient fade — sisi KIRI melebur ke background */}
+                        <div style={{
+                          position: "absolute", top: 0, left: -2, width: 48, height: "100%",
+                          background: "linear-gradient(to right, #04080f 0%, transparent 100%)",
+                          zIndex: 4, pointerEvents: "none", borderRadius: "16px 0 0 16px"
+                        }} />
+
+                        <div className="map-embed-frame" style={{
+                          position: "relative", zIndex: 1,
+                          width: 360, height: 300,
+                          borderRadius: 16, overflow: "hidden",
+                          border: "2px solid rgba(91,196,224,.35)",
+                          borderLeft: "2px solid rgba(91,196,224,.08)",
+                        }}>
+                          {/* Corner accents — kanan saja yang mencolok */}
+                          <div style={{ position: "absolute", top: 0, left: 0, width: 20, height: 20, borderTop: "2px solid rgba(91,196,224,.2)", borderLeft: "2px solid rgba(91,196,224,.1)", borderRadius: "16px 0 0 0", zIndex: 3, pointerEvents: "none" }} />
+                          <div style={{ position: "absolute", top: 0, right: 0, width: 20, height: 20, borderTop: "2.5px solid #5bc4e0", borderRight: "2.5px solid #5bc4e0", borderRadius: "0 16px 0 0", zIndex: 3, pointerEvents: "none" }} />
+                          <div style={{ position: "absolute", bottom: 0, left: 0, width: 20, height: 20, borderBottom: "2px solid rgba(91,196,224,.2)", borderLeft: "2px solid rgba(91,196,224,.1)", borderRadius: "0 0 0 16px", zIndex: 3, pointerEvents: "none" }} />
+                          <div style={{ position: "absolute", bottom: 0, right: 0, width: 20, height: 20, borderBottom: "2.5px solid #5bc4e0", borderRight: "2.5px solid #5bc4e0", borderRadius: "0 0 16px 0", zIndex: 3, pointerEvents: "none" }} />
+
+                          <iframe
+                            key={mapLocation}
+                            title="Google Maps Preview"
+                            width="360" height="300"
+                            style={{ border: 0, display: "block", width: "100%", height: "100%" }}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            src={`https://www.google.com/maps?q=${encodeURIComponent(mapLocation)}&output=embed&z=12`}
+                          />
+                        </div>
+
+                        {/* Label below map */}
+                        <div style={{ marginTop: 10, textAlign: "center", fontSize: "0.6875rem", color: "rgba(91,196,224,.6)", letterSpacing: ".06em", textTransform: "uppercase", fontWeight: 600 }}>
+                          📍 {mapLocation}
+                        </div>
                       </div>
                     </div>
                   </section>
+
+                  {/* Reviews Slideshow */}
+                  {(data.reviews || []).length > 0 && (
+                    <ReviewSlideshow reviews={data.reviews || []} />
+                  )}
 
                   {/* Contact */}
                   <section className="section-md" style={{ background: "#fff" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="contact-grid">
                       <div>
                         <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#1a2e42", marginBottom: 18 }}>Contact Us</h2>
-                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 20 }}>{data.content.aboutText}</p>
+                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 20, whiteSpace: "pre-line" }}>{data.content.aboutText}</p>
                         <p style={{ fontSize: "0.9375rem", color: "#334f65", marginBottom: 8, fontWeight: 500 }}>✉ {data.content.email}</p>
                         <p style={{ fontSize: "0.9375rem", color: "#334f65", fontWeight: 500 }}>📞 {data.content.phone}</p>
                       </div>
@@ -4105,7 +4856,7 @@ export default function BricksyTravel() {
                       <div className="footer-grid" style={{ marginBottom: 40 }}>
                         <div>
                           <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#1a2e42", letterSpacing: ".06em", textTransform: "uppercase" }}>About Us</h3>
-                          <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.8, marginBottom: 14 }}>{data.content.aboutText}</p>
+                          <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.8, marginBottom: 14, whiteSpace: "pre-line" }}>{data.content.aboutText}</p>
                           <p style={{ fontSize: "0.875rem", color: "#4e6b80" }}>email: <a href={`mailto:${data.content.email}`} style={{ color: "#2b7a9a", fontWeight: 500 }}>{data.content.email}</a></p>
                           <p style={{ fontSize: "0.875rem", color: "#4e6b80", marginTop: 4 }}>phone: {data.content.phone}</p>
                         </div>
@@ -4197,10 +4948,104 @@ export default function BricksyTravel() {
                 Lupa sandi? Reset via OTP
               </button>
             </div>
-            <div style={{ marginTop: 24, padding: "14px", background: "#f4f9fb", borderRadius: 6, fontSize: 11, color: "#7a9db0", lineHeight: 1.8 }}>
-              <strong style={{ display: "block", marginBottom: 4, color: "#4a6680" }}>Demo Credentials:</strong>
-              admin: administrator / admin123<br />writer: writer1 / writer123<br />cs: cs1 / cs123
+            <div style={{ marginTop: 24 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                <div style={{ flex: 1, height: 1, background: "#e8eef4" }} />
+                <span style={{ fontSize: 11, color: "#b8d4e3", fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>atau masuk dengan</span>
+                <div style={{ flex: 1, height: 1, background: "#e8eef4" }} />
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {/* Google */}
+                <button onClick={() => setComingSoon("google")}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, width: "100%", padding: "11px 16px", background: "#fff", border: "1.5px solid #e0e6ed", borderRadius: 8, fontSize: 13, fontWeight: 600, color: "#3c4a5a", cursor: "pointer", transition: "all .18s", boxShadow: "0 1px 4px rgba(0,0,0,.06)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "#f7fafd"; e.currentTarget.style.borderColor = "#c5d5e4"; e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,.09)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.borderColor = "#e0e6ed"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,.06)"; }}>
+                  <svg width="18" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M43.611 20.083H42V20H24v8h11.303C33.654 32.657 29.332 35 24 35c-6.075 0-11-4.925-11-11s4.925-11 11-11c2.8 0 5.35 1.056 7.3 2.787l5.657-5.657C33.204 7.378 28.8 5 24 5 12.954 5 4 13.954 4 25s8.954 20 20 20 20-8.954 20-20c0-1.341-.138-2.65-.389-3.917z" fill="#FFC107"/>
+                    <path d="M6.306 14.691l6.571 4.819C14.655 16.108 19.001 13 24 13c2.8 0 5.35 1.056 7.3 2.787l5.657-5.657C33.204 7.378 28.8 5 24 5 16.318 5 9.656 9.337 6.306 14.691z" fill="#FF3D00"/>
+                    <path d="M24 45c4.686 0 8.978-1.73 12.218-4.559l-5.64-4.777A11.96 11.96 0 0 1 24 37c-5.313 0-9.625-3.324-11.29-7.948l-6.525 5.026C9.505 40.556 16.227 45 24 45z" fill="#4CAF50"/>
+                    <path d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 5.64 4.777C36.476 39.146 44 34 44 25c0-1.341-.138-2.65-.389-3.917z" fill="#1976D2"/>
+                  </svg>
+                  Lanjutkan dengan Google
+                </button>
+                {/* Apple */}
+                <button onClick={() => setComingSoon("apple")}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, width: "100%", padding: "11px 16px", background: "#111", border: "1.5px solid #111", borderRadius: 8, fontSize: 13, fontWeight: 600, color: "#fff", cursor: "pointer", transition: "all .18s", boxShadow: "0 1px 4px rgba(0,0,0,.18)" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "#222"; e.currentTarget.style.boxShadow = "0 3px 12px rgba(0,0,0,.28)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,.18)"; }}>
+                  <svg width="17" height="17" viewBox="0 0 814 1000" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.7-49 30.8 0 134.2 2.6 198.3 99zM549.1 141.3c20.1-23.1 33.5-54.8 33.5-86.5 0-4.5-.3-9-1-13.2-31.9 1.3-70.5 21.3-93.5 46.4-18.5 20.4-35.8 52.7-35.8 85 0 5.1.6 10.1 1 12.2 2 .3 4.5.6 7 .6 28.6 0 65.3-19.2 88.8-44.5z"/>
+                  </svg>
+                  Lanjutkan dengan Apple
+                </button>
+              </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ══════ COMING SOON POPUP ══════ */}
+      {comingSoon && (
+        <div onClick={() => setComingSoon(null)}
+          style={{ position: "fixed", inset: 0, background: "rgba(10,20,35,.65)", zIndex: 2500,
+            display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(6px)" }}>
+          <div onClick={e => e.stopPropagation()} className="fade-in"
+            style={{ background: "#fff", borderRadius: 20, padding: "52px 44px", maxWidth: 380, width: "90%",
+              textAlign: "center", boxShadow: "0 24px 72px rgba(0,0,0,.22)", position: "relative" }}>
+            {/* Close */}
+            <button onClick={() => setComingSoon(null)}
+              style={{ position: "absolute", top: 16, right: 18, background: "none", border: "none",
+                fontSize: 20, color: "#b8d4e3", cursor: "pointer", lineHeight: 1 }}>✕</button>
+
+            {/* Icon */}
+            <div style={{ width: 72, height: 72, borderRadius: "50%",
+              background: comingSoon === "google"
+                ? "linear-gradient(135deg,#4285f4,#34a853,#fbbc04,#ea4335)"
+                : "linear-gradient(135deg,#1c1c1e,#3a3a3c)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              margin: "0 auto 22px", boxShadow: "0 8px 28px rgba(0,0,0,.18)" }}>
+              {comingSoon === "google" ? (
+                <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                  <path d="M43.611 20.083H42V20H24v8h11.303C33.654 32.657 29.332 35 24 35c-6.075 0-11-4.925-11-11s4.925-11 11-11c2.8 0 5.35 1.056 7.3 2.787l5.657-5.657C33.204 7.378 28.8 5 24 5 12.954 5 4 13.954 4 25s8.954 20 20 20 20-8.954 20-20c0-1.341-.138-2.65-.389-3.917z" fill="#fff"/>
+                </svg>
+              ) : (
+                <svg width="28" height="28" viewBox="0 0 814 1000" fill="white">
+                  <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.7-49 30.8 0 134.2 2.6 198.3 99zM549.1 141.3c20.1-23.1 33.5-54.8 33.5-86.5 0-4.5-.3-9-1-13.2-31.9 1.3-70.5 21.3-93.5 46.4-18.5 20.4-35.8 52.7-35.8 85 0 5.1.6 10.1 1 12.2 2 .3 4.5.6 7 .6 28.6 0 65.3-19.2 88.8-44.5z"/>
+                </svg>
+              )}
+            </div>
+
+            {/* Badge */}
+            <div style={{ display: "inline-block", background: "#f0f9fc", border: "1px solid #b8d4e3",
+              color: "#2b7a9a", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".12em",
+              textTransform: "uppercase", padding: "5px 16px", borderRadius: 20, marginBottom: 18 }}>
+              🚧 Coming Soon
+            </div>
+
+            <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.625rem", fontWeight: 900,
+              color: "#1a2e42", marginBottom: 12, lineHeight: 1.15 }}>
+              Login dengan {comingSoon === "google" ? "Google" : "Apple"}
+            </h2>
+
+            <p style={{ fontSize: "0.9375rem", color: "#6b8999", lineHeight: 1.75, marginBottom: 28, maxWidth: 280, margin: "0 auto 28px" }}>
+              Fitur ini sedang dalam pengembangan dan akan segera hadir. Gunakan login manual untuk saat ini.
+            </p>
+
+            {/* Progress bar animation */}
+            <div style={{ height: 4, background: "#f0f4f8", borderRadius: 10, overflow: "hidden", marginBottom: 28 }}>
+              <style>{`@keyframes csProgress{0%{width:0%}100%{width:75%}}`}</style>
+              <div style={{ height: "100%", background: "linear-gradient(to right,#2b7a9a,#5bc4e0)",
+                borderRadius: 10, animation: "csProgress 2s ease-out forwards" }} />
+            </div>
+
+            <button onClick={() => setComingSoon(null)}
+              style={{ width: "100%", padding: "12px", background: "#1a2e42", color: "#fff",
+                border: "none", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700,
+                letterSpacing: ".04em", cursor: "pointer", transition: "background .2s" }}
+              onMouseEnter={e => e.currentTarget.style.background = "#2b7a9a"}
+              onMouseLeave={e => e.currentTarget.style.background = "#1a2e42"}>
+              Kembali ke Login
+            </button>
           </div>
         </div>
       )}
@@ -4362,6 +5207,7 @@ export default function BricksyTravel() {
                 { id: "team", icon: "👥", label: "Susunan Tim", access: isAdmin },
                 { id: "services", icon: "🛎", label: "Layanan / Paket", access: isAdmin },
                 { id: "content", icon: "🔤", label: "Site Content", access: isAdmin },
+                { id: "reviews", icon: "⭐", label: "Ulasan", access: isAdmin },
                 { id: "messages", icon: "✉", label: "Messages", access: canCS },
                 { id: "users", icon: "◎", label: "Users", access: isAdmin },
                 { id: "settings", icon: "⚙", label: "Settings", access: isAdmin },
@@ -5226,6 +6072,167 @@ export default function BricksyTravel() {
                 </div>
               )}
 
+              {/* REVIEWS ADMIN */}
+              {adminTab === "reviews" && isAdmin && (() => {
+                const reviews = data.reviews || [];
+                const tokens = data.reviewTokens || [];
+                const [editReviewId, setEditReviewId] = useState(null);
+                const [editReviewForm, setEditReviewForm] = useState({});
+                const [newTokenLabel, setNewTokenLabel] = useState("");
+                const [generatedLink, setGeneratedLink] = useState("");
+
+                const generateToken = () => {
+                  const token = Math.random().toString(36).slice(2, 11) + Math.random().toString(36).slice(2, 11);
+                  const label = newTokenLabel.trim() || "Tamu";
+                  const newToken = { id: Date.now().toString(), token, label, used: false, createdAt: new Date().toISOString().slice(0,10) };
+                  save({ ...data, reviewTokens: [...tokens, newToken] });
+                  const link = `${window.location.origin}${window.location.pathname}?review=${token}`;
+                  setGeneratedLink(link);
+                  setNewTokenLabel("");
+                  notify("✅ Link ulasan berhasil dibuat!");
+                };
+
+                const deleteToken = (id) => {
+                  save({ ...data, reviewTokens: tokens.filter(t => t.id !== id) });
+                  notify("Token dihapus.");
+                };
+
+                const deleteReview = (id) => {
+                  save({ ...data, reviews: reviews.filter(r => r.id !== id) });
+                  notify("Ulasan dihapus.");
+                };
+
+                const startEditReview = (r) => {
+                  setEditReviewId(r.id);
+                  setEditReviewForm({ name: r.name, content: r.content, stars: r.stars });
+                };
+
+                const saveEditReview = () => {
+                  save({ ...data, reviews: reviews.map(r => r.id === editReviewId ? { ...r, ...editReviewForm } : r) });
+                  setEditReviewId(null);
+                  notify("Ulasan diperbarui.");
+                };
+
+                return (
+                  <div className="fade-in">
+                    <h1 style={{ fontSize: 24, fontWeight: 500, color: "#1e3248", marginBottom: 28 }}>⭐ Kelola Ulasan</h1>
+
+                    {/* Generate Review Link */}
+                    <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #c9aa71" }}>
+                      <h3 style={{ fontSize: 15, fontWeight: 600, color: "#1e3248", marginBottom: 6 }}>🔗 Buat Link Form Ulasan</h3>
+                      <p style={{ fontSize: 12, color: "#7a9db0", marginBottom: 16, lineHeight: 1.6 }}>
+                        Buat link sekali pakai untuk dikirimkan ke klien. Link hanya bisa digunakan satu kali — setelah diisi, link akan hangus otomatis.
+                      </p>
+                      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
+                        <input value={newTokenLabel} onChange={e => setNewTokenLabel(e.target.value)}
+                          placeholder="Label (misal: Klien Wedding Budi, opsional)"
+                          style={{ flex: 1, minWidth: 240, padding: "9px 12px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                        <button onClick={generateToken}
+                          style={{ padding: "9px 18px", background: "#1e3248", color: "#fff", borderRadius: 6, fontSize: 13, border: "none", fontWeight: 600, whiteSpace: "nowrap" }}>
+                          + Buat Link
+                        </button>
+                      </div>
+                      {generatedLink && (
+                        <div style={{ background: "#f0f9fc", border: "1px solid #b8d4e3", borderRadius: 8, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: "#2b7a9a", marginBottom: 4, letterSpacing: ".05em", textTransform: "uppercase" }}>Link Form Ulasan Terbaru</div>
+                            <code style={{ fontSize: 12, color: "#1e3248", wordBreak: "break-all", display: "block" }}>{generatedLink}</code>
+                          </div>
+                          <button onClick={() => { navigator.clipboard?.writeText(generatedLink); notify("Link disalin!"); }}
+                            style={{ padding: "7px 14px", background: "#2b7a9a", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 600, flexShrink: 0 }}>
+                            📋 Salin
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Active Tokens */}
+                    <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
+                      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#1e3248", marginBottom: 14 }}>🔑 Token Aktif ({tokens.filter(t => !t.used).length})</h3>
+                      {tokens.length === 0 ? (
+                        <p style={{ fontSize: 13, color: "#7a9db0" }}>Belum ada token dibuat.</p>
+                      ) : (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                          {tokens.slice().reverse().map(tok => (
+                            <div key={tok.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: tok.used ? "#f9f9f9" : "#f0f9fc", borderRadius: 8, border: `1px solid ${tok.used ? "#e8e8e8" : "#b8d4e3"}` }}>
+                              <span style={{ fontSize: 16 }}>{tok.used ? "✅" : "🔑"}</span>
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <div style={{ fontSize: 13, fontWeight: 600, color: "#1e3248" }}>{tok.label || "—"}</div>
+                                <div style={{ fontSize: 11, color: "#7a9db0", fontFamily: "monospace", wordBreak: "break-all" }}>{tok.token}</div>
+                                <div style={{ fontSize: 11, color: "#7a9db0" }}>Dibuat: {tok.createdAt} · {tok.used ? "Sudah digunakan" : "Belum digunakan"}</div>
+                              </div>
+                              {!tok.used && (
+                                <button onClick={() => { const l = `${window.location.origin}${window.location.pathname}?review=${tok.token}`; navigator.clipboard?.writeText(l); notify("Link disalin!"); }}
+                                  style={{ padding: "5px 10px", background: "#3d8fab", color: "#fff", borderRadius: 5, fontSize: 11, border: "none" }}>📋</button>
+                              )}
+                              <button onClick={() => deleteToken(tok.id)}
+                                style={{ padding: "5px 10px", background: "#fee", color: "#e74c3c", borderRadius: 5, fontSize: 11, border: "none" }}>Hapus</button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Reviews List */}
+                    <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
+                      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#1e3248", marginBottom: 14 }}>💬 Ulasan Masuk ({reviews.length})</h3>
+                      {reviews.length === 0 ? (
+                        <div style={{ textAlign: "center", padding: "32px", color: "#7a9db0", fontSize: 13 }}>Belum ada ulasan masuk. Buat link dan kirimkan ke klien!</div>
+                      ) : (
+                        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                          {reviews.slice().reverse().map(r => (
+                            <div key={r.id} style={{ border: "1px solid #eef4f8", borderRadius: 10, overflow: "hidden" }}>
+                              <div style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "16px 20px" }}>
+                                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "linear-gradient(135deg,#1a2e42,#2b7a9a)", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18 }}>
+                                  {r.photo ? <img src={r.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : r.name?.charAt(0)?.toUpperCase()}
+                                </div>
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
+                                    <span style={{ fontSize: 14, fontWeight: 700, color: "#1e3248" }}>{r.name}</span>
+                                    <span style={{ fontSize: 12, color: "#7a9db0" }}>{r.email}</span>
+                                    <span style={{ marginLeft: "auto", fontSize: 12, color: "#7a9db0" }}>{r.date}</span>
+                                  </div>
+                                  <div style={{ display: "flex", gap: 2, marginBottom: 8 }}>
+                                    {[1,2,3,4,5].map(s => <span key={s} style={{ fontSize: 13, filter: s <= r.stars ? "none" : "grayscale(1) opacity(.3)" }}>⭐</span>)}
+                                  </div>
+                                  {editReviewId === r.id ? (
+                                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                                      <input value={editReviewForm.name} onChange={e => setEditReviewForm(p => ({ ...p, name: e.target.value }))}
+                                        style={{ padding: "7px 10px", border: "1px solid #d0e4ee", borderRadius: 5, fontSize: 13 }} placeholder="Nama" />
+                                      <div style={{ display: "flex", gap: 4 }}>
+                                        {[1,2,3,4,5].map(s => (
+                                          <button key={s} onClick={() => setEditReviewForm(p => ({ ...p, stars: s }))}
+                                            style={{ fontSize: 18, background: "none", border: "none", cursor: "pointer", filter: s <= editReviewForm.stars ? "none" : "grayscale(1) opacity(.3)" }}>⭐</button>
+                                        ))}
+                                      </div>
+                                      <textarea value={editReviewForm.content} onChange={e => setEditReviewForm(p => ({ ...p, content: e.target.value }))}
+                                        rows={3} style={{ padding: "7px 10px", border: "1px solid #d0e4ee", borderRadius: 5, fontSize: 13, resize: "vertical" }} />
+                                      <div style={{ display: "flex", gap: 8 }}>
+                                        <button onClick={saveEditReview} style={{ padding: "6px 16px", background: "#27ae60", color: "#fff", borderRadius: 5, fontSize: 12, border: "none" }}>Simpan</button>
+                                        <button onClick={() => setEditReviewId(null)} style={{ padding: "6px 14px", background: "#f4f9fb", color: "#6b8999", borderRadius: 5, fontSize: 12, border: "1px solid #d0e4ee" }}>Batal</button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <p style={{ fontSize: 13, color: "#334f65", lineHeight: 1.7, fontStyle: "italic", whiteSpace: "pre-line" }}>"{r.content}"</p>
+                                  )}
+                                  {r.tokenLabel && <div style={{ marginTop: 6, fontSize: 11, color: "#2b7a9a", fontWeight: 500 }}>🏷 {r.tokenLabel}</div>}
+                                </div>
+                              </div>
+                              {editReviewId !== r.id && (
+                                <div style={{ padding: "10px 20px", background: "#fafcfd", borderTop: "1px solid #f0f4f8", display: "flex", gap: 8 }}>
+                                  <button onClick={() => startEditReview(r)} style={{ padding: "5px 14px", background: "#e8f4fd", color: "#2b7a9a", borderRadius: 5, fontSize: 12, border: "none", fontWeight: 500 }}>✏ Edit</button>
+                                  <button onClick={() => { if (window.confirm("Hapus ulasan ini?")) deleteReview(r.id); }} style={{ padding: "5px 14px", background: "#fee", color: "#e74c3c", borderRadius: 5, fontSize: 12, border: "none" }}>🗑 Hapus</button>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })()}
+
               {/* SETTINGS */}
               {adminTab === "settings" && isAdmin && (
                 <div className="fade-in">
@@ -5273,6 +6280,32 @@ export default function BricksyTravel() {
                         </div>
                         <p style={{ fontSize: 11, color: "#7a9db0" }}>Disarankan: PNG transparan, min 200px lebar, rasio 3:1 atau 4:1</p>
                       </div>
+                    </div>
+                  </div>
+
+                  {/* Founding Year */}
+                  <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #c9aa71" }}>
+                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#1e3248", marginBottom: 6 }}>🗓 Tahun Berdiri Perusahaan</h3>
+                    <p style={{ fontSize: 12, color: "#7a9db0", marginBottom: 16, lineHeight: 1.6 }}>
+                      Tahun ini digunakan untuk teks "sejak [tahun]", statistik "X Tahun Pengalaman", dan label dekorasi halaman.
+                    </p>
+                    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+                      <input
+                        id="founding-year-input"
+                        defaultValue={data.content.foundingYear || "2026"}
+                        placeholder="cth: 2026"
+                        maxLength={4}
+                        style={{ width: 120, padding: "8px 12px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 14, outline: "none" }}
+                      />
+                      <button onClick={() => {
+                        const yr = document.getElementById("founding-year-input")?.value?.trim();
+                        if (!yr || !/^\d{4}$/.test(yr)) return notify("Masukkan tahun 4 digit (misal: 2026).", "error");
+                        save({ ...data, content: { ...data.content, foundingYear: yr } });
+                        notify(`✅ Tahun berdiri diperbarui ke ${yr}`);
+                      }} style={{ padding: "8px 16px", background: "#1e3248", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 500 }}>
+                        Simpan
+                      </button>
+                      <span style={{ fontSize: 12, color: "#7a9db0" }}>Saat ini: <strong style={{ color: "#1e3248" }}>{data.content.foundingYear || "2026"}</strong> · Pengalaman: <strong style={{ color: "#2b7a9a" }}>{new Date().getFullYear() - parseInt(data.content.foundingYear || "2026")} tahun</strong></span>
                     </div>
                   </div>
 
