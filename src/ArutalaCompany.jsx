@@ -14,12 +14,12 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
       {/* Left column */}
       <div>
         <div style={{ background: "#fff", borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,.06)", marginBottom: 16 }}>
-          <div style={{ display: "flex", borderBottom: "2px solid #f4f9fb" }} className="dash-tab-row">
+          <div style={{ display: "flex", borderBottom: "2px solid #edfafc" }} className="dash-tab-row">
             {tabs.map(t => (
               <button key={t.id} onClick={() => setDashTab(t.id)}
                 style={{ flex: 1, padding: "14px 8px", fontSize: "0.8125rem", fontWeight: dashTab === t.id ? 700 : 500,
-                  color: dashTab === t.id ? "#2d2d2d" : "#6b8999", background: dashTab === t.id ? "#fff" : "#fafcfd",
-                  border: "none", borderBottom: dashTab === t.id ? "2px solid #2d2d2d" : "2px solid transparent",
+                  color: dashTab === t.id ? "#0d3b66" : "#4a7f98", background: dashTab === t.id ? "#fff" : "#f5fdff",
+                  border: "none", borderBottom: dashTab === t.id ? "2px solid #0d3b66" : "2px solid transparent",
                   marginBottom: -2, cursor: "pointer", transition: "all .15s" }}>
                 {t.label}
               </button>
@@ -29,15 +29,15 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
           {dashTab === "notifications" && (
             <div style={{ padding: "8px 0" }}>
               {data.messages.length === 0 ? (
-                <div style={{ padding: "32px", textAlign: "center", color: "#6b8999", fontSize: "0.875rem" }}>🔔 Belum ada notifikasi.</div>
+                <div style={{ padding: "32px", textAlign: "center", color: "#4a7f98", fontSize: "0.875rem" }}>🔔 Belum ada notifikasi.</div>
               ) : data.messages.slice().reverse().slice(0, 5).map(m => (
-                <div key={m.id} style={{ display: "flex", gap: 14, padding: "16px 20px", borderBottom: "1px solid #f4f9fb", alignItems: "flex-start" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 8, background: "#f4f9fb", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>✉️</div>
+                <div key={m.id} style={{ display: "flex", gap: 14, padding: "16px 20px", borderBottom: "1px solid #edfafc", alignItems: "flex-start" }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 8, background: "#edfafc", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>✉️</div>
                   <div style={{ flex: 1 }}>
-                    <p style={{ fontSize: "0.875rem", color: "#2d2d2d", lineHeight: 1.6, marginBottom: 4 }}>
-                      Pesan baru dari <strong>{m.name}</strong> ({m.email}): <em style={{ color: "#4e6b80" }}>{m.message?.slice(0, 80)}{m.message?.length > 80 ? "…" : ""}</em>
+                    <p style={{ fontSize: "0.875rem", color: "#0d3b66", lineHeight: 1.6, marginBottom: 4 }}>
+                      Pesan baru dari <strong>{m.name}</strong> ({m.email}): <em style={{ color: "#1a5a78" }}>{m.message?.slice(0, 80)}{m.message?.length > 80 ? "…" : ""}</em>
                     </p>
-                    <span style={{ fontSize: "0.75rem", color: "#6b8999" }}>{m.date}</span>
+                    <span style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{m.date}</span>
                     {!m.read && <span style={{ marginLeft: 8, fontSize: "0.625rem", background: "#e74c3c", color: "#fff", borderRadius: 8, padding: "1px 7px", fontWeight: 700 }}>BARU</span>}
                   </div>
                 </div>
@@ -48,20 +48,20 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
           {dashTab === "articles" && canEdit && (
             <div style={{ padding: "16px 20px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-                <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "#2d2d2d" }}>Artikel Terbaru</span>
+                <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0d3b66" }}>Artikel Terbaru</span>
                 <button onClick={() => { setAdminTab("cms"); setCmsEditPost("new"); }}
-                  style={{ fontSize: "0.75rem", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 16, padding: "5px 14px", fontWeight: 600, cursor: "pointer" }}>+ Baru</button>
+                  style={{ fontSize: "0.75rem", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 16, padding: "5px 14px", fontWeight: 600, cursor: "pointer" }}>+ Baru</button>
               </div>
               {allPosts.length === 0 ? (
-                <p style={{ fontSize: "0.875rem", color: "#6b8999" }}>Belum ada artikel.</p>
+                <p style={{ fontSize: "0.875rem", color: "#4a7f98" }}>Belum ada artikel.</p>
               ) : allPosts.slice(-5).reverse().map(p => (
-                <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid #f4f9fb" }}>
+                <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid #edfafc" }}>
                   <div style={{ width: 42, height: 42, borderRadius: 6, overflow: "hidden", flexShrink: 0 }}>
                     <img src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#2d2d2d", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.title}</p>
-                    <span style={{ fontSize: "0.75rem", color: "#6b8999" }}>{p.section} · {formatDate(p.date)}</span>
+                    <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.title}</p>
+                    <span style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{p.section} · {formatDate(p.date)}</span>
                   </div>
                   <span style={{ fontSize: "0.6875rem", padding: "2px 10px", borderRadius: 10, fontWeight: 600, background: p.status === "published" ? "#e8f8ef" : "#fff8e1", color: p.status === "published" ? "#27ae60" : "#f39c12" }}>
                     {p.status === "published" ? "Tayang" : "Draft"}
@@ -75,19 +75,19 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
             <div style={{ padding: "20px" }}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
                 {[
-                  { label: "Total Artikel", value: allPosts.length, icon: "📄", color: "#2b7a9a" },
+                  { label: "Total Artikel", value: allPosts.length, icon: "📄", color: "#0891b2" },
                   { label: "Tayang", value: publishedCount, icon: "✅", color: "#27ae60" },
                   { label: "Draft", value: draftCount, icon: "📋", color: "#f39c12" },
                   { label: "Pesan Masuk", value: data.messages.length, icon: "✉️", color: "#8e44ad" },
                 ].map(s => (
-                  <div key={s.label} style={{ background: "#f4f9fb", borderRadius: 10, padding: "16px 18px", borderLeft: `3px solid ${s.color}` }}>
+                  <div key={s.label} style={{ background: "#edfafc", borderRadius: 10, padding: "16px 18px", borderLeft: `3px solid ${s.color}` }}>
                     <div style={{ fontSize: "1.5rem", fontWeight: 900, color: s.color, fontFamily: "'Playfair Display',serif" }}>{s.value}</div>
-                    <div style={{ fontSize: "0.8125rem", color: "#6b8999", marginTop: 2 }}>{s.icon} {s.label}</div>
+                    <div style={{ fontSize: "0.8125rem", color: "#4a7f98", marginTop: 2 }}>{s.icon} {s.label}</div>
                   </div>
                 ))}
               </div>
-              <div style={{ background: "#f4f9fb", borderRadius: 10, padding: "14px 18px" }}>
-                <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 10 }}>Distribusi per Seksi</div>
+              <div style={{ background: "#edfafc", borderRadius: 10, padding: "14px 18px" }}>
+                <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#4a7f98", letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 10 }}>Distribusi per Seksi</div>
                 {["news","shop","destinations"].map(s => {
                   const total = allPosts.length || 1;
                   const count = (data.posts?.[s] || []).length;
@@ -95,11 +95,11 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
                   return (
                     <div key={s} style={{ marginBottom: 10 }}>
                       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                        <span style={{ fontSize: "0.8125rem", color: "#2d2d2d", fontWeight: 600 }}>{SECTION_LABELS[s]}</span>
-                        <span style={{ fontSize: "0.8125rem", color: "#6b8999" }}>{count}</span>
+                        <span style={{ fontSize: "0.8125rem", color: "#0d3b66", fontWeight: 600 }}>{SECTION_LABELS[s]}</span>
+                        <span style={{ fontSize: "0.8125rem", color: "#4a7f98" }}>{count}</span>
                       </div>
-                      <div style={{ height: 6, background: "#ddeef5", borderRadius: 3, overflow: "hidden" }}>
-                        <div style={{ width: `${pct}%`, height: "100%", background: "#2b7a9a", borderRadius: 3, transition: "width .5s" }} />
+                      <div style={{ height: 6, background: "#c0e8f0", borderRadius: 3, overflow: "hidden" }}>
+                        <div style={{ width: `${pct}%`, height: "100%", background: "#0891b2", borderRadius: 3, transition: "width .5s" }} />
                       </div>
                     </div>
                   );
@@ -117,9 +117,9 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
                 { q: "Bagaimana cara mengganti teks di website?", a: "Masuk ke menu 'Site Content' (khusus admin) untuk mengedit semua teks halaman." },
                 { q: "Apa perbedaan Draft dan Published?", a: "Draft hanya terlihat di admin panel. Published akan tampil di website untuk pengunjung umum." },
               ].map((faq, i) => (
-                <div key={i} style={{ marginBottom: 14, padding: "14px 16px", background: "#f4f9fb", borderRadius: 8, borderLeft: "3px solid #2b7a9a" }}>
-                  <p style={{ fontSize: "0.875rem", fontWeight: 700, color: "#2d2d2d", marginBottom: 6 }}>❓ {faq.q}</p>
-                  <p style={{ fontSize: "0.8125rem", color: "#4e6b80", lineHeight: 1.65 }}>{faq.a}</p>
+                <div key={i} style={{ marginBottom: 14, padding: "14px 16px", background: "#edfafc", borderRadius: 8, borderLeft: "3px solid #0891b2" }}>
+                  <p style={{ fontSize: "0.875rem", fontWeight: 700, color: "#0d3b66", marginBottom: 6 }}>❓ {faq.q}</p>
+                  <p style={{ fontSize: "0.8125rem", color: "#1a5a78", lineHeight: 1.65 }}>{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -131,9 +131,9 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {/* Top Kontributor */}
         <div style={{ background: "#fff", borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
-          <div style={{ padding: "16px 20px", borderBottom: "1px solid #f4f9fb", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 800, color: "#2d2d2d" }}>Top Kontributor</span>
-            <span style={{ fontSize: "0.6875rem", color: "#6b8999" }}>Artikel tayang</span>
+          <div style={{ padding: "16px 20px", borderBottom: "1px solid #edfafc", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 800, color: "#0d3b66" }}>Top Kontributor</span>
+            <span style={{ fontSize: "0.6875rem", color: "#4a7f98" }}>Artikel tayang</span>
           </div>
           <div style={{ padding: "8px 0" }}>
             {(() => {
@@ -141,29 +141,29 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
               allPosts.filter(p => p.status === "published").forEach(p => { authorMap[p.author] = (authorMap[p.author] || 0) + 1; });
               const sorted = Object.entries(authorMap).sort((a,b) => b[1]-a[1]).slice(0, 3);
               const medals = ["🥇","🥈","🥉"];
-              if (!sorted.length) return <p style={{ padding: "16px 20px", fontSize: "0.8125rem", color: "#6b8999" }}>Belum ada artikel tayang.</p>;
+              if (!sorted.length) return <p style={{ padding: "16px 20px", fontSize: "0.8125rem", color: "#4a7f98" }}>Belum ada artikel tayang.</p>;
               return sorted.map(([author, count], i) => (
-                <div key={author} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 20px", borderBottom: "1px solid #f4f9fb" }}>
+                <div key={author} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 20px", borderBottom: "1px solid #edfafc" }}>
                   <span style={{ fontSize: "1.25rem", flexShrink: 0, minWidth: 28 }}>{medals[i]}</span>
-                  <div style={{ width: 34, height: 34, borderRadius: "50%", background: "linear-gradient(135deg,#2d2d2d,#2b7a9a)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: "0.875rem", flexShrink: 0 }}>
+                  <div style={{ width: 34, height: 34, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: "0.875rem", flexShrink: 0 }}>
                     {author.charAt(0).toUpperCase()}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#2d2d2d" }}>{author}</div>
-                    <div style={{ fontSize: "0.75rem", color: "#6b8999" }}>Artikel: {count}</div>
+                    <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#0d3b66" }}>{author}</div>
+                    <div style={{ fontSize: "0.75rem", color: "#4a7f98" }}>Artikel: {count}</div>
                   </div>
                   {author === user.username && <span style={{ fontSize: "0.625rem", background: "#e8f8ef", color: "#27ae60", borderRadius: 8, padding: "2px 7px", fontWeight: 700 }}>YOU</span>}
                 </div>
               ));
             })()}
-            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 20px", background: "#f4f9fb" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 20px", background: "#edfafc" }}>
               <span style={{ fontSize: "1.25rem", minWidth: 28 }}>—</span>
-              <div style={{ width: 34, height: 34, borderRadius: "50%", background: "linear-gradient(135deg,#2b7a9a,#5bc4e0)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: "0.875rem", flexShrink: 0 }}>
+              <div style={{ width: 34, height: 34, borderRadius: "50%", background: "linear-gradient(135deg,#0891b2,#22d3ee)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: "0.875rem", flexShrink: 0 }}>
                 {user.username.charAt(0).toUpperCase()}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#2d2d2d" }}>You ({user.username})</div>
-                <div style={{ fontSize: "0.75rem", color: "#6b8999" }}>Artikel: {allPosts.filter(p => p.author === user.username && p.status === "published").length}</div>
+                <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#0d3b66" }}>You ({user.username})</div>
+                <div style={{ fontSize: "0.75rem", color: "#4a7f98" }}>Artikel: {allPosts.filter(p => p.author === user.username && p.status === "published").length}</div>
               </div>
             </div>
           </div>
@@ -171,8 +171,8 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
 
         {/* Akses Cepat */}
         <div style={{ background: "#fff", borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
-          <div style={{ padding: "16px 20px", borderBottom: "1px solid #f4f9fb" }}>
-            <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 800, color: "#2d2d2d" }}>Akses Cepat</span>
+          <div style={{ padding: "16px 20px", borderBottom: "1px solid #edfafc" }}>
+            <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 800, color: "#0d3b66" }}>Akses Cepat</span>
           </div>
           <div style={{ padding: "12px 16px", display: "flex", flexDirection: "column", gap: 8 }}>
             {[
@@ -183,9 +183,9 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
               ...(isAdmin ? [{ label: "⚙ Pengaturan", action: () => setAdminTab("settings") }] : []),
             ].map(item => (
               <button key={item.label} onClick={item.action}
-                style={{ textAlign: "left", padding: "9px 12px", background: "#f4f9fb", border: "none", borderRadius: 7, fontSize: "0.8125rem", color: "#2d2d2d", fontWeight: 500, cursor: "pointer", transition: "background .15s" }}
-                onMouseEnter={e => e.currentTarget.style.background = "#ddeef5"}
-                onMouseLeave={e => e.currentTarget.style.background = "#f4f9fb"}>
+                style={{ textAlign: "left", padding: "9px 12px", background: "#edfafc", border: "none", borderRadius: 7, fontSize: "0.8125rem", color: "#0d3b66", fontWeight: 500, cursor: "pointer", transition: "background .15s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#c0e8f0"}
+                onMouseLeave={e => e.currentTarget.style.background = "#edfafc"}>
                 {item.label}
               </button>
             ))}
@@ -463,7 +463,7 @@ const DEFAULT_DATA = {
       category: "event",
       title: "Paket Event Plan Reguler",
       badge: "Populer",
-      badgeColor: "#2b7a9a",
+      badgeColor: "#0891b2",
       price: "Rp 5.000.000",
       priceNote: "/ event",
       images: ["https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop"],
@@ -642,10 +642,10 @@ const GS = () => (
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-    body{font-family:'DM Sans',sans-serif;background:#f4f9fb;color:#2d2d2d;line-height:1.6;font-size:16px}
-    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:#b8d4e3;border-radius:10px}
+    body{font-family:'DM Sans',sans-serif;background:#edfafc;color:#0d3b66;line-height:1.6;font-size:16px}
+    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:#86cad8;border-radius:10px}
     a{text-decoration:none;color:inherit}
-    a:focus-visible,button:focus-visible{outline:2px solid #3d8fab;outline-offset:3px;border-radius:3px}
+    a:focus-visible,button:focus-visible{outline:2px solid #0ea5c5;outline-offset:3px;border-radius:3px}
     img{max-width:100%;display:block;object-fit:cover}
     input,textarea,select,button{font-family:'DM Sans',sans-serif}
     button{cursor:pointer;border:none;background:none}
@@ -655,26 +655,26 @@ const GS = () => (
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
     @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
-    h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;color:#2d2d2d;line-height:1.15;font-weight:800;letter-spacing:-.01em}
+    h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;color:#0d3b66;line-height:1.15;font-weight:800;letter-spacing:-.01em}
     h1{font-size:clamp(2rem,5vw,3.5rem)}
     h2{font-size:clamp(1.6rem,3.5vw,2.6rem)}
     h3{font-size:clamp(1.2rem,2.5vw,1.6rem)}
-    p{font-size:1rem;line-height:1.75;color:#334f65}
+    p{font-size:1rem;line-height:1.75;color:#1a4a72}
     small{font-size:.875rem;line-height:1.5}
 
-    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:600;color:#334f65;transition:color .2s;text-shadow:0 1px 4px rgba(45,45,45,.18),0 0 12px rgba(43,122,154,.10)}
-    .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:#2b7a9a;transition:width .3s;border-radius:2px}
-    .nav-link:hover{color:#2b7a9a;text-shadow:0 1px 6px rgba(43,122,154,.28),0 0 18px rgba(43,122,154,.18)}
+    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:600;color:#1a4a72;transition:color .2s;text-shadow:0 1px 4px rgba(13,59,102,.18),0 0 12px rgba(8,145,178,.10)}
+    .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,#0891b2,#22d3ee);transition:width .3s;border-radius:2px}
+    .nav-link:hover{color:#0891b2;text-shadow:0 1px 6px rgba(8,145,178,.28),0 0 18px rgba(8,145,178,.18)}
     .nav-link:hover::after,.nav-link.active::after{width:100%}
-    .nav-link.active{color:#2b7a9a!important;text-shadow:0 1px 8px rgba(43,122,154,.35),0 0 20px rgba(43,122,154,.20)}
+    .nav-link.active{color:#0891b2!important;text-shadow:0 1px 8px rgba(8,145,178,.35),0 0 20px rgba(8,145,178,.20)}
 
     .hover-lift{transition:transform .3s,box-shadow .3s}
-    .hover-lift:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(45,45,45,.12)}
+    .hover-lift:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(13,59,102,.12)}
     .img-zoom{overflow:hidden}
     .img-zoom img{transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
     .img-zoom:hover img{transform:scale(1.07)}
-    .cms-toolbar button:hover{background:rgba(43,122,154,.12)!important}
-    .post-card:hover .post-card-title{color:#2b7a9a}
+    .cms-toolbar button:hover{background:rgba(8,145,178,.12)!important}
+    .post-card:hover .post-card-title{color:#0891b2}
 
     /* DESKTOP-ONLY ANIMATIONS */
     @media(pointer:fine){
@@ -683,10 +683,11 @@ const GS = () => (
       .anim-zoom{opacity:0;transform:scale(.94);transition:opacity .65s ease,transform .65s ease}
       .anim-zoom.visible{opacity:1;transform:scale(1)}
       .btn-magnetic{transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s}
-      .btn-magnetic:hover{transform:scale(1.045) translateY(-2px);box-shadow:0 12px 32px rgba(45,45,45,.18)}
+      .btn-magnetic:hover{transform:scale(1.045) translateY(-2px);box-shadow:0 12px 32px rgba(13,59,102,.18)}
       .post-card{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s;transform-style:preserve-3d}
-      .post-card:hover{transform:translateY(-6px) rotate3d(1,1,0,.8deg);box-shadow:0 20px 48px rgba(45,45,45,.14)}
+      .post-card:hover{transform:translateY(-6px) rotate3d(1,1,0,.8deg);box-shadow:0 20px 48px rgba(13,59,102,.14)}
       @keyframes heroReveal{from{opacity:0;letter-spacing:-.05em;filter:blur(6px)}to{opacity:1;letter-spacing:-.01em;filter:blur(0)}}
+      @keyframes flareShift{0%,100%{transform:scale(1) translate(0,0);opacity:.7}50%{transform:scale(1.15) translate(5px,-5px);opacity:1}}
       .hero-title-anim{animation:heroReveal .9s cubic-bezier(.22,1,.36,1) .15s both}
       @keyframes floatA{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
       @keyframes floatB{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
@@ -694,15 +695,15 @@ const GS = () => (
       .hero-img-grid>div:nth-child(2){animation:floatB 6s ease-in-out infinite .5s}
       .hero-img-grid>div:nth-child(3){animation:floatA 7s ease-in-out infinite 1s}
       .hero-img-grid>div:nth-child(4){animation:floatB 5.5s ease-in-out infinite .8s}
-      #cursor-glow{pointer-events:none;position:fixed;width:24px;height:24px;border-radius:50%;background:rgba(43,122,154,.22);border:1.5px solid rgba(43,122,154,.45);transform:translate(-50%,-50%);transition:left .06s ease,top .06s ease,width .25s,height .25s,background .25s;z-index:99998;mix-blend-mode:multiply}
-      #cursor-glow.expanded{width:48px;height:48px;background:rgba(43,122,154,.1)}
+      #cursor-glow{pointer-events:none;position:fixed;width:24px;height:24px;border-radius:50%;background:rgba(14,165,197,.28);border:1.5px solid rgba(14,165,197,.55);transform:translate(-50%,-50%);transition:left .06s ease,top .06s ease,width .25s,height .25s,background .25s;z-index:99998;mix-blend-mode:multiply}
+      #cursor-glow.expanded{width:48px;height:48px;background:rgba(8,145,178,.1)}
     }
 
-    .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#2d2d2d;text-shadow:0 1px 4px rgba(45,45,45,.22),0 2px 10px rgba(45,45,45,.13)}
-    .logo-brand-footer{font-family:'Playfair Display',serif;font-weight:800;font-size:.95rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#2d2d2d}
+    .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#0d3b66;text-shadow:0 1px 4px rgba(13,59,102,.22),0 2px 10px rgba(13,59,102,.13)}
+    .logo-brand-footer{font-family:'Playfair Display',serif;font-weight:800;font-size:.95rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#0d3b66}
     .logo-brand-admin{font-family:'Playfair Display',serif;font-weight:800;font-size:.9rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
     .label-xs{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
-    .card-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;line-height:1.3;color:#2d2d2d}
+    .card-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;line-height:1.3;color:#0d3b66}
 
     /* ── Visibility helpers ── */
     @media(max-width:900px){.hide-md{display:none!important}}
@@ -740,50 +741,50 @@ const GS = () => (
     .mag-img-main{grid-column:1;grid-row:1/3;border-radius:6px;overflow:hidden;position:relative}
     .mag-img-main img{width:100%;height:100%;min-height:320px;object-fit:cover;display:block;transition:transform .6s ease}
     .mag-img-main:hover img{transform:scale(1.04)}
-    .mag-img-main .foto-label{position:absolute;bottom:12px;left:12px;background:rgba(45,45,45,.82);color:#fff;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:3px;font-weight:600}
+    .mag-img-main .foto-label{position:absolute;bottom:12px;left:12px;background:rgba(13,59,102,.82);color:#fff;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:3px;font-weight:600}
     .mag-img-sm1{grid-column:2;grid-row:1;border-radius:6px;overflow:hidden}
     .mag-img-sm1 img{width:100%;height:155px;object-fit:cover;display:block;transition:transform .6s ease}
     .mag-img-sm1:hover img{transform:scale(1.04)}
-    .mag-card-text{grid-column:2;grid-row:2;background:#2d2d2d;border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;min-height:155px}
+    .mag-card-text{grid-column:2;grid-row:2;background:linear-gradient(135deg,#063d5c,#0875a8);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;min-height:155px}
     .adv-stats-row{display:flex;gap:32px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #eef3f7}
-    .adv-stat .num{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:#2d2d2d;line-height:1;margin-bottom:3px}
-    .adv-stat .lbl{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:#8aabbd;font-weight:600}
+    .adv-stat .num{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:#0d3b66;line-height:1;margin-bottom:3px}
+    .adv-stat .lbl{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:#6aaec8;font-weight:600}
     .adv-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:22px}
-    .adv-eyebrow .ey-line{width:36px;height:1.5px;background:#c9aa71;flex-shrink:0}
-    .adv-quote{font-size:.9375rem;color:#4e6b80;line-height:1.9;font-style:italic;max-width:400px;margin-bottom:28px;padding-left:18px;border-left:2px solid #c9aa71;white-space:pre-line}
+    .adv-eyebrow .ey-line{width:36px;height:1.5px;background:#38c5d8;flex-shrink:0}
+    .adv-quote{font-size:.9375rem;color:#1a5a78;line-height:1.9;font-style:italic;max-width:400px;margin-bottom:28px;padding-left:18px;border-left:2px solid #38c5d8;white-space:pre-line}
 
     /* Margin dekorasi kiri-kanan */
     .adv-margin-deco{position:absolute;top:0;bottom:0;width:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:20px 0}
-    .adv-margin-deco.left{left:0;border-right:1px solid #e8eef2}
-    .adv-margin-deco.right{right:0;border-left:1px solid #e8eef2}
-    .adv-margin-deco .issue-text{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#c0cdd6;writing-mode:vertical-rl;transform:rotate(180deg);font-weight:600}
+    .adv-margin-deco.left{left:0;border-right:1px solid #daf0f5}
+    .adv-margin-deco.right{right:0;border-left:1px solid #daf0f5}
+    .adv-margin-deco .issue-text{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#9ed4e0;writing-mode:vertical-rl;transform:rotate(180deg);font-weight:600}
     .adv-margin-deco .dot-col{display:flex;flex-direction:column;gap:6px;align-items:center}
-    .adv-margin-deco .dot{width:4px;height:4px;border-radius:50%;background:#ddeef5}
-    .adv-margin-deco .dot.on{background:#2d2d2d}
-    .deco-corner-tr{position:absolute;top:20px;right:60px;width:70px;height:70px;border-top:1.5px solid #e8eef2;border-right:1.5px solid #e8eef2;pointer-events:none}
-    .deco-corner-bl{position:absolute;bottom:20px;left:60px;width:50px;height:50px;border-bottom:1.5px solid #e8eef2;border-left:1.5px solid #e8eef2;pointer-events:none}
+    .adv-margin-deco .dot{width:4px;height:4px;border-radius:50%;background:#c0e8f0}
+    .adv-margin-deco .dot.on{background:#0d3b66}
+    .deco-corner-tr{position:absolute;top:20px;right:60px;width:70px;height:70px;border-top:1.5px solid #daf0f5;border-right:1.5px solid #daf0f5;pointer-events:none}
+    .deco-corner-bl{position:absolute;bottom:20px;left:60px;width:50px;height:50px;border-bottom:1.5px solid #daf0f5;border-left:1.5px solid #daf0f5;pointer-events:none}
     @media(max-width:900px){.adv-margin-deco{display:none}.deco-corner-tr,.deco-corner-bl{display:none}.section-inner{padding:0 24px!important}}
     @media(max-width:768px){.mag-grid{display:none}.adv-stats-row{gap:20px}}
 
     /* ── Hero Intro Section (Title + Subtitle after slideshow) ── */
-    .hero-intro{background:#fff;padding:56px 5% 48px;overflow:hidden;position:relative}
+    .hero-intro{background:linear-gradient(135deg,#f0fbfc 0%,#e0f7fa 100%);padding:56px 5% 48px;overflow:hidden;position:relative}
     .hero-intro-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-    .hero-intro-img{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(45,45,45,.14)}
+    .hero-intro-img{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(13,59,102,.14)}
     .hero-intro-img img{width:100%;height:380px;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.25,.46,.45,.94)}
     .hero-intro-img:hover img{transform:scale(1.04)}
     /* Ornamen shape */
-    .hero-intro-img::before{content:"";position:absolute;top:-18px;left:-18px;width:90px;height:90px;border-radius:50%;background:rgba(201,170,113,.18);z-index:0;pointer-events:none}
-    .hero-intro-img::after{content:"";position:absolute;bottom:-14px;right:-14px;width:60px;height:60px;border:3px solid rgba(43,122,154,.25);border-radius:50%;z-index:0;pointer-events:none}
+    .hero-intro-img::before{content:"";position:absolute;top:-18px;left:-18px;width:90px;height:90px;border-radius:50%;background:rgba(56,197,216,.18);z-index:0;pointer-events:none}
+    .hero-intro-img::after{content:"";position:absolute;bottom:-14px;right:-14px;width:60px;height:60px;border:3px solid rgba(8,145,178,.25);border-radius:50%;z-index:0;pointer-events:none}
     .hero-intro-txt{position:relative;z-index:1}
     .hero-intro-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-    .hero-intro-eyebrow .line{width:36px;height:2px;background:linear-gradient(90deg,#c9aa71,rgba(201,170,113,0));border-radius:1px}
-    .hero-intro-h1{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;color:#2d2d2d;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
-    .hero-intro-p{font-size:1rem;color:#4e6b80;line-height:1.85;margin-bottom:32px;max-width:400px}
+    .hero-intro-eyebrow .line{width:36px;height:2px;background:linear-gradient(90deg,#38c5d8,rgba(56,197,216,0));border-radius:1px}
+    .hero-intro-h1{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;color:#0d3b66;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
+    .hero-intro-p{font-size:1rem;color:#1a5a78;line-height:1.85;margin-bottom:32px;max-width:400px}
     /* Deco blobs background */
-    .hero-intro-blob1{position:absolute;top:-60px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(43,122,154,.07) 0%,rgba(43,122,154,0) 70%);pointer-events:none}
-    .hero-intro-blob2{position:absolute;bottom:-40px;left:40%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(201,170,113,.09) 0%,rgba(201,170,113,0) 70%);pointer-events:none}
+    .hero-intro-blob1{position:absolute;top:-60px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(8,145,178,.1) 0%,rgba(8,145,178,0) 70%);pointer-events:none}
+    .hero-intro-blob2{position:absolute;bottom:-40px;left:40%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(56,197,216,.09) 0%,rgba(56,197,216,0) 70%);pointer-events:none}
     /* Ornamen dekoratif teks */
-    .hero-intro-deco-line{position:absolute;top:0;right:0;width:1px;height:100%;background:linear-gradient(to bottom,rgba(45,45,45,0),rgba(45,45,45,.08),rgba(45,45,45,0));pointer-events:none}
+    .hero-intro-deco-line{position:absolute;top:0;right:0;width:1px;height:100%;background:linear-gradient(to bottom,rgba(13,59,102,0),rgba(13,59,102,.08),rgba(13,59,102,0));pointer-events:none}
     /* Animasi reveal */
     @keyframes introImgReveal{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
     @keyframes introTxtReveal{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
@@ -815,23 +816,23 @@ const GS = () => (
     .adv2-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1100px;margin:0 auto}
     /* Teks kiri */
     .adv2-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-    .adv2-eyebrow .line{width:36px;height:1.5px;background:#c9aa71;flex-shrink:0}
-    .adv2-eyebrow span{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#c9aa71;font-weight:700}
+    .adv2-eyebrow .line{width:36px;height:1.5px;background:#38c5d8;flex-shrink:0}
+    .adv2-eyebrow span{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#38c5d8;font-weight:700}
     .adv2-title{font-family:"Playfair Display",serif;font-size:clamp(1.8rem,3.8vw,2.8rem);font-weight:900;color:#fff;line-height:1.08;margin-bottom:14px}
     /* Quote slideshow */
-    .adv2-quote-wrap{position:relative;min-height:56px;margin-bottom:28px;padding-left:16px;border-left:2px solid #c9aa71}
+    .adv2-quote-wrap{position:relative;min-height:56px;margin-bottom:28px;padding-left:16px;border-left:2px solid #38c5d8}
     .adv2-quote-item{position:absolute;top:0;left:16px;right:0;font-size:.9375rem;color:rgba(255,255,255,.75);line-height:1.85;font-style:italic;opacity:0;transition:opacity .6s ease;pointer-events:none}
     .adv2-quote-item.active{opacity:1;position:relative;left:0}
     .adv2-quote-dots{display:flex;gap:6px;margin-bottom:28px}
     .adv2-qdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);border:none;cursor:pointer;transition:background .3s,width .3s}
-    .adv2-qdot.on{width:18px;border-radius:3px;background:#c9aa71}
+    .adv2-qdot.on{width:18px;border-radius:3px;background:#38c5d8}
     .adv2-stats{display:flex;gap:28px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.12)}
-    .adv2-stat .num{font-family:"Playfair Display",serif;font-size:1.75rem;font-weight:900;color:#c9aa71;line-height:1;margin-bottom:3px}
+    .adv2-stat .num{font-family:"Playfair Display",serif;font-size:1.75rem;font-weight:900;color:#38c5d8;line-height:1;margin-bottom:3px}
     .adv2-stat .lbl{font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:600}
     .adv2-btns{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
     .adv2-btn-pill{padding:8px 16px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
     .adv2-btn-pill:hover{background:rgba(255,255,255,.16);color:#fff}
-    .adv2-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;background:linear-gradient(135deg,#c9aa71,#e8c97e);color:#2d2d2d;border:none;border-radius:6px;font-size:.8125rem;font-weight:800;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:opacity .2s,transform .2s;font-family:"Playfair Display",serif}
+    .adv2-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;background:linear-gradient(135deg,#0ea5c5,#22d3ee);color:#063d5c;border:none;border-radius:6px;font-size:.8125rem;font-weight:800;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:opacity .2s,transform .2s;font-family:"Playfair Display",serif}
     .adv2-cta:hover{opacity:.9;transform:translateY(-1px)}
     /* Puzzle grid kanan */
     .adv2-puzzle{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;height:480px}
@@ -879,7 +880,7 @@ const GS = () => (
 
     /* Admin panel: sidebar + main */
     .admin-body{display:flex;flex:1;overflow:hidden}
-    .admin-sidebar{width:220px;background:#2d2d2d;flex-shrink:0;overflow-y:auto;display:flex;flex-direction:column;transition:transform .25s}
+    .admin-sidebar{width:220px;background:#0d3b66;flex-shrink:0;overflow-y:auto;display:flex;flex-direction:column;transition:transform .25s}
     .admin-main{flex:1;overflow-y:auto;padding:32px}
     @media(max-width:768px){
       .admin-sidebar{position:fixed;top:58px;left:0;bottom:0;z-index:200;transform:translateX(-100%)}
@@ -898,10 +899,10 @@ const GS = () => (
     /* CMS Editor: editor + sidebar */
     .cms-editor-grid{display:grid;grid-template-columns:1fr 300px;min-height:700px;max-height:calc(100vh - 120px);overflow:hidden}
     @media(max-width:900px){.cms-editor-grid{grid-template-columns:1fr;max-height:none;overflow:visible}}
-    .cms-editor-left{padding:32px 40px;border-right:1px solid #eef4f8;overflow-y:auto;max-height:calc(100vh - 120px)}
-    .cms-editor-right{padding:24px 20px;background:#fafcfd;display:flex;flex-direction:column;gap:20px;overflow-y:auto}
+    .cms-editor-left{padding:32px 40px;border-right:1px solid #e0f7fa;overflow-y:auto;max-height:calc(100vh - 120px)}
+    .cms-editor-right{padding:24px 20px;background:#f5fdff;display:flex;flex-direction:column;gap:20px;overflow-y:auto}
     @media(max-width:900px){
-      .cms-editor-left{padding:20px 16px;max-height:none;border-right:none;border-bottom:1px solid #eef4f8}
+      .cms-editor-left{padding:20px 16px;max-height:none;border-right:none;border-bottom:1px solid #e0f7fa}
       .cms-editor-right{padding:16px}
     }
 
@@ -931,7 +932,7 @@ const GS = () => (
     .section-filter-row{display:flex;gap:8px;flex-wrap:wrap}
 
     /* CMS top bar */
-    .cms-topbar{background:#2d2d2d;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .cms-topbar{background:#0d3b66;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
     @media(max-width:640px){.cms-topbar{padding:12px 14px}.cms-topbar-btns{gap:6px}}
 
     /* Login modal */
@@ -958,7 +959,7 @@ const GS = () => (
 
     /* 1. Navbar — compact on mobile, fully opaque */
     @media(max-width:640px){
-      nav{background:#fafcfd!important;backdrop-filter:none!important;padding:0 4%!important}
+      nav{background:#f5fdff!important;backdrop-filter:none!important;padding:0 4%!important}
       nav>div{height:60px!important;gap:10px!important}
     }
 
@@ -1051,7 +1052,7 @@ const GS = () => (
     @media(max-width:480px){
       .footer-grid{gap:18px!important}
       /* Footer bottom bar: stack */
-      div[style*="borderTop: \"1px solid #ddeef5\""] > div{flex-direction:column!important;gap:10px!important;align-items:flex-start!important}
+      div[style*="borderTop: \"1px solid #c0e8f0\""] > div{flex-direction:column!important;gap:10px!important;align-items:flex-start!important}
     }
 
     /* 12. Navbar mobile menu — tidak tumpang tindih konten */
@@ -1075,9 +1076,9 @@ const GS = () => (
     /* 15. Buttons: solid color, NO transparent background on mobile */
     @media(max-width:640px){
       /* About Us ghost button di hero → solid gelap */
-      button.hero-cta-btn[style*="transparent"]{background:#2d2d2d!important;border-color:#2d2d2d!important;color:#fff!important}
+      button.hero-cta-btn[style*="transparent"]{background:#0d3b66!important;border-color:#0d3b66!important;color:#fff!important}
       /* Explore All & Book Now ghost buttons → solid */
-      button[style*='"transparent"']{background:#2d2d2d!important;color:#fff!important}
+      button[style*='"transparent"']{background:#0d3b66!important;color:#fff!important}
     }
 
     /* 16. Input: prevent iOS zoom, full width */
@@ -1279,12 +1280,12 @@ function CEF({ val, multiline, onChange, onSave }) {
     <div style={{ display: "flex", gap: 8, alignItems: "flex-start", width: "100%" }}>
       {multiline
         ? <textarea value={val} onChange={onChange}
-            style={{ flex: 1, padding: "8px 10px", border: "1px solid #b8d4e3", borderRadius: 6, fontSize: 14, resize: "vertical", minHeight: 80 }} />
+            style={{ flex: 1, padding: "8px 10px", border: "1px solid #86cad8", borderRadius: 6, fontSize: 14, resize: "vertical", minHeight: 80 }} />
         : <input value={val} onChange={onChange}
-            style={{ flex: 1, padding: "8px 10px", border: "1px solid #b8d4e3", borderRadius: 6, fontSize: 14 }} />
+            style={{ flex: 1, padding: "8px 10px", border: "1px solid #86cad8", borderRadius: 6, fontSize: 14 }} />
       }
       <button onClick={onSave}
-        style={{ padding: "8px 14px", background: "#3d8fab", color: "#fff", borderRadius: 6, fontSize: 12, border: "none" }}>Save</button>
+        style={{ padding: "8px 14px", background: "#0ea5c5", color: "#fff", borderRadius: 6, fontSize: 12, border: "none" }}>Save</button>
     </div>
   );
 }
@@ -1311,11 +1312,11 @@ function LogoDisplay({ content, size = "nav" }) {
       <div style={{
         width: iconSz, height: iconSz,
         borderRadius: size === "nav" ? 12 : 8,
-        border: `1.5px dashed ${size === "admin" ? "rgba(255,255,255,.3)" : "#b8d4e3"}`,
+        border: `1.5px dashed ${size === "admin" ? "rgba(255,255,255,.3)" : "#86cad8"}`,
         display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
         background: size === "admin" ? "rgba(255,255,255,.06)" : "rgba(61,143,171,.06)"
       }}>
-        <svg viewBox="0 0 24 24" fill="none" stroke={size === "admin" ? "rgba(255,255,255,.4)" : "#9bbfd0"} strokeWidth="1.5"
+        <svg viewBox="0 0 24 24" fill="none" stroke={size === "admin" ? "rgba(255,255,255,.4)" : "#7bd3e4"} strokeWidth="1.5"
           width={size === "nav" ? 32 : 18} height={size === "nav" ? 32 : 18}>
           <rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/>
           <polyline points="21 15 16 10 5 21"/>
@@ -1338,51 +1339,51 @@ const formatDate = (d) => {
 
 /* ─────────────── RICH TEXT RENDERER ─────────────── */
 function RichRenderer({ blocks }) {
-  if (!blocks || !blocks.length) return <p style={{ color: "#6b8999", fontStyle: "italic" }}>No content yet.</p>;
+  if (!blocks || !blocks.length) return <p style={{ color: "#4a7f98", fontStyle: "italic" }}>No content yet.</p>;
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
       {blocks.map((b, i) => {
         if (b.type === "paragraph") return (
-          <div key={i} style={{ fontSize: "1rem", lineHeight: 1.85, color: "#334f65" }}
+          <div key={i} style={{ fontSize: "1rem", lineHeight: 1.85, color: "#1a4a72" }}
             dangerouslySetInnerHTML={{ __html: b.value }} />
         );
         if (b.type === "heading") return (
-          <h2 key={i} className="display" style={{ fontSize: "1.625rem", fontWeight: 800, color: "#2d2d2d", marginTop: 12 }}>{b.value}</h2>
+          <h2 key={i} className="display" style={{ fontSize: "1.625rem", fontWeight: 800, color: "#0d3b66", marginTop: 12 }}>{b.value}</h2>
         );
         if (b.type === "image") return (
           <figure key={i} style={{ margin: "10px 0" }}>
             <img src={b.value} alt={b.caption || ""} style={{ width: "100%", maxHeight: 460, objectFit: "cover", borderRadius: 8 }} />
-            {b.caption && <figcaption style={{ fontSize: "0.8125rem", color: "#4e6b80", textAlign: "center", marginTop: 10, fontStyle: "italic", lineHeight: 1.5 }}>{b.caption}</figcaption>}
+            {b.caption && <figcaption style={{ fontSize: "0.8125rem", color: "#1a5a78", textAlign: "center", marginTop: 10, fontStyle: "italic", lineHeight: 1.5 }}>{b.caption}</figcaption>}
           </figure>
         );
         if (b.type === "quote") return (
-          <blockquote key={i} style={{ borderLeft: "3px solid #2b7a9a", paddingLeft: 22, margin: "10px 0" }}>
-            <p style={{ fontSize: "1.125rem", fontStyle: "italic", color: "#334f65", lineHeight: 1.75, fontFamily: "'Cormorant Garamond',serif" }}>{b.value}</p>
+          <blockquote key={i} style={{ borderLeft: "3px solid #0891b2", paddingLeft: 22, margin: "10px 0" }}>
+            <p style={{ fontSize: "1.125rem", fontStyle: "italic", color: "#1a4a72", lineHeight: 1.75, fontFamily: "'Cormorant Garamond',serif" }}>{b.value}</p>
           </blockquote>
         );
         if (b.type === "embed_instagram") return (
           <div key={i} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <div style={{ background: "#f4f9fb", border: "1px solid #ddeef5", borderRadius: 8, padding: 16, fontSize: "0.8125rem", color: "#4e6b80" }}>
-              📸 <strong>Instagram Embed:</strong> <a href={b.value} target="_blank" rel="noopener noreferrer" style={{ color: "#2b7a9a" }}>{b.value}</a>
-              <blockquote className="instagram-media" data-instgrm-permalink={b.value} data-instgrm-version="14" style={{ border: "1px solid #d0e4ee", borderRadius: 6, padding: 10, marginTop: 8, background: "#fff" }}>
-                <a href={b.value} target="_blank" rel="noopener noreferrer" style={{ color: "#2b7a9a", display: "block", marginTop: 6 }}>View on Instagram</a>
+            <div style={{ background: "#edfafc", border: "1px solid #c0e8f0", borderRadius: 8, padding: 16, fontSize: "0.8125rem", color: "#1a5a78" }}>
+              📸 <strong>Instagram Embed:</strong> <a href={b.value} target="_blank" rel="noopener noreferrer" style={{ color: "#0891b2" }}>{b.value}</a>
+              <blockquote className="instagram-media" data-instgrm-permalink={b.value} data-instgrm-version="14" style={{ border: "1px solid #b0dce8", borderRadius: 6, padding: 10, marginTop: 8, background: "#fff" }}>
+                <a href={b.value} target="_blank" rel="noopener noreferrer" style={{ color: "#0891b2", display: "block", marginTop: 6 }}>View on Instagram</a>
               </blockquote>
             </div>
           </div>
         );
         if (b.type === "embed_tiktok") return (
           <div key={i} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <div style={{ background: "#f4f9fb", border: "1px solid #ddeef5", borderRadius: 8, padding: 16, fontSize: "0.8125rem", color: "#4e6b80" }}>
-              🎵 <strong>TikTok Embed:</strong> <a href={b.value} target="_blank" rel="noopener noreferrer" style={{ color: "#2b7a9a" }}>{b.value}</a>
-              <div style={{ background: "#fff", borderRadius: 6, border: "1px solid #d0e4ee", padding: "12px 14px", marginTop: 8 }}>
+            <div style={{ background: "#edfafc", border: "1px solid #c0e8f0", borderRadius: 8, padding: 16, fontSize: "0.8125rem", color: "#1a5a78" }}>
+              🎵 <strong>TikTok Embed:</strong> <a href={b.value} target="_blank" rel="noopener noreferrer" style={{ color: "#0891b2" }}>{b.value}</a>
+              <div style={{ background: "#fff", borderRadius: 6, border: "1px solid #b0dce8", padding: "12px 14px", marginTop: 8 }}>
                 <blockquote className="tiktok-embed" cite={b.value} data-video-id={b.value.split("/video/")[1]?.split("?")[0] || ""}>
-                  <section><a href={b.value} target="_blank" rel="noopener noreferrer" style={{ color: "#2b7a9a" }}>View on TikTok</a></section>
+                  <section><a href={b.value} target="_blank" rel="noopener noreferrer" style={{ color: "#0891b2" }}>View on TikTok</a></section>
                 </blockquote>
               </div>
             </div>
           </div>
         );
-        if (b.type === "divider") return <hr key={i} style={{ border: "none", borderTop: "1px solid #ddeef5" }} />;
+        if (b.type === "divider") return <hr key={i} style={{ border: "none", borderTop: "1px solid #c0e8f0" }} />;
         return null;
       })}
     </div>
@@ -1422,26 +1423,26 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
 
   const TB = ({ cmd, val = null, title, children, extraStyle = {} }) => (
     <button title={title} onMouseDown={e => { e.preventDefault(); exec(cmd, val); }}
-      style={{ padding: "3px 7px", fontSize: 13, border: "1px solid #d0e4ee", borderRadius: 4, background: "#fff", color: "#4a6680", cursor: "pointer", lineHeight: 1.4, display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 26, ...extraStyle }}>
+      style={{ padding: "3px 7px", fontSize: 13, border: "1px solid #b0dce8", borderRadius: 4, background: "#fff", color: "#4a6680", cursor: "pointer", lineHeight: 1.4, display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: 26, ...extraStyle }}>
       {children}
     </button>
   );
-  const SEP = () => <span style={{ width: 1, height: 20, background: "#d0e4ee", display: "inline-block", margin: "0 3px", verticalAlign: "middle" }} />;
+  const SEP = () => <span style={{ width: 1, height: 20, background: "#b0dce8", display: "inline-block", margin: "0 3px", verticalAlign: "middle" }} />;
 
-  const textColors = ["#000000","#2d2d2d","#2b7a9a","#e74c3c","#27ae60","#f39c12","#8e44ad","#e67e22","#7f8c8d","#ffffff"];
+  const textColors = ["#000000","#0d3b66","#0891b2","#e74c3c","#27ae60","#f39c12","#8e44ad","#e67e22","#7f8c8d","#ffffff"];
   const hlColors  = ["#ffff00","#00ff7f","#ff9900","#ffcccc","#cce5ff","#e2ccff","transparent"];
   const fontSizeMap = {"8":1,"10":2,"12":3,"14":4,"18":5,"24":6,"36":7};
 
   return (
-    <div style={{ border: "1.5px solid #d0e4ee", borderRadius: 8, overflow: "visible", background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,.04)" }}>
+    <div style={{ border: "1.5px solid #b0dce8", borderRadius: 8, overflow: "visible", background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,.04)" }}>
       {/* ── Toolbar Row 1: Font, Size, Basic Formatting ── */}
-      <div style={{ background: "#f4f9fb", borderBottom: "1px solid #ddeef5", padding: "6px 10px", display: "flex", gap: 5, flexWrap: "wrap", alignItems: "center" }}>
+      <div style={{ background: "#edfafc", borderBottom: "1px solid #c0e8f0", padding: "6px 10px", display: "flex", gap: 5, flexWrap: "wrap", alignItems: "center" }}>
         <select onChange={e => exec("fontName", e.target.value)}
-          style={{ height: 26, fontSize: 12, padding: "1px 4px", border: "1px solid #d0e4ee", borderRadius: 4, background: "#fff", color: "#2d2d2d", maxWidth: 130, cursor: "pointer" }}>
+          style={{ height: 26, fontSize: 12, padding: "1px 4px", border: "1px solid #b0dce8", borderRadius: 4, background: "#fff", color: "#0d3b66", maxWidth: 130, cursor: "pointer" }}>
           {["Calibri (Body)","Arial","Times New Roman","Georgia","Verdana","Courier New","Trebuchet MS"].map(f => <option key={f} value={f}>{f}</option>)}
         </select>
         <select onChange={e => exec("fontSize", fontSizeMap[e.target.value] || 3)}
-          style={{ height: 26, fontSize: 12, padding: "1px 4px", border: "1px solid #d0e4ee", borderRadius: 4, background: "#fff", color: "#2d2d2d", width: 52, cursor: "pointer" }}>
+          style={{ height: 26, fontSize: 12, padding: "1px 4px", border: "1px solid #b0dce8", borderRadius: 4, background: "#fff", color: "#0d3b66", width: 52, cursor: "pointer" }}>
           {["8","10","11","12","14","16","18","20","24","28","32","36"].map(s => <option key={s} value={s}>{s}</option>)}
         </select>
         <SEP />
@@ -1453,16 +1454,16 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
         {/* Text Color */}
         <div style={{position:"relative"}} data-richpicker="1">
           <button title="Font Color" onMouseDown={e=>{e.preventDefault();setColorMenuOpen(p=>!p);setHighlightMenuOpen(false);}}
-            style={{padding:"2px 7px",border:"1px solid #d0e4ee",borderRadius:4,background:"#fff",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:2,minHeight:26,lineHeight:1}}>
-            <span style={{fontSize:13,fontWeight:900,color:"#2d2d2d",lineHeight:1}}>A</span>
+            style={{padding:"2px 7px",border:"1px solid #b0dce8",borderRadius:4,background:"#fff",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:2,minHeight:26,lineHeight:1}}>
+            <span style={{fontSize:13,fontWeight:900,color:"#0d3b66",lineHeight:1}}>A</span>
             <span style={{width:14,height:3,background:"#e74c3c",borderRadius:1}}/>
           </button>
           {colorMenuOpen && (
-            <div style={{position:"absolute",top:32,left:0,background:"#fff",border:"1px solid #d0e4ee",borderRadius:8,padding:8,zIndex:9999,display:"flex",gap:4,flexWrap:"wrap",width:132,boxShadow:"0 6px 20px rgba(0,0,0,.15)"}}>
-              <div style={{width:"100%",fontSize:10,color:"#7a9db0",fontWeight:600,letterSpacing:".5px",textTransform:"uppercase",marginBottom:2}}>Warna Teks</div>
+            <div style={{position:"absolute",top:32,left:0,background:"#fff",border:"1px solid #b0dce8",borderRadius:8,padding:8,zIndex:9999,display:"flex",gap:4,flexWrap:"wrap",width:132,boxShadow:"0 6px 20px rgba(0,0,0,.15)"}}>
+              <div style={{width:"100%",fontSize:10,color:"#5090aa",fontWeight:600,letterSpacing:".5px",textTransform:"uppercase",marginBottom:2}}>Warna Teks</div>
               {textColors.map(c=>(
                 <button key={c} onMouseDown={e=>{e.preventDefault();exec("foreColor",c);setColorMenuOpen(false);}}
-                  style={{width:22,height:22,borderRadius:4,background:c,border:"1.5px solid #d0e4ee",cursor:"pointer",outline:"none"}}/>
+                  style={{width:22,height:22,borderRadius:4,background:c,border:"1.5px solid #b0dce8",cursor:"pointer",outline:"none"}}/>
               ))}
             </div>
           )}
@@ -1470,16 +1471,16 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
         {/* Highlight */}
         <div style={{position:"relative"}} data-richpicker="1">
           <button title="Sorot Teks" onMouseDown={e=>{e.preventDefault();setHighlightMenuOpen(p=>!p);setColorMenuOpen(false);}}
-            style={{padding:"2px 7px",border:"1px solid #d0e4ee",borderRadius:4,background:"#fff",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:2,minHeight:26,lineHeight:1}}>
+            style={{padding:"2px 7px",border:"1px solid #b0dce8",borderRadius:4,background:"#fff",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:2,minHeight:26,lineHeight:1}}>
             <span style={{fontSize:11,color:"#333",lineHeight:1,fontWeight:600}}>ab</span>
             <span style={{width:14,height:3,background:"#ffff00",border:"1px solid #ccc",borderRadius:1}}/>
           </button>
           {highlightMenuOpen && (
-            <div style={{position:"absolute",top:32,left:0,background:"#fff",border:"1px solid #d0e4ee",borderRadius:8,padding:8,zIndex:9999,display:"flex",gap:4,flexWrap:"wrap",width:110,boxShadow:"0 6px 20px rgba(0,0,0,.15)"}}>
-              <div style={{width:"100%",fontSize:10,color:"#7a9db0",fontWeight:600,letterSpacing:".5px",textTransform:"uppercase",marginBottom:2}}>Sorotan</div>
+            <div style={{position:"absolute",top:32,left:0,background:"#fff",border:"1px solid #b0dce8",borderRadius:8,padding:8,zIndex:9999,display:"flex",gap:4,flexWrap:"wrap",width:110,boxShadow:"0 6px 20px rgba(0,0,0,.15)"}}>
+              <div style={{width:"100%",fontSize:10,color:"#5090aa",fontWeight:600,letterSpacing:".5px",textTransform:"uppercase",marginBottom:2}}>Sorotan</div>
               {hlColors.map(c=>(
                 <button key={c} onMouseDown={e=>{e.preventDefault();exec("hiliteColor",c);setHighlightMenuOpen(false);}}
-                  style={{width:22,height:22,borderRadius:4,background:c,border:"1.5px solid #d0e4ee",cursor:"pointer",outline:"none"}} title={c === "transparent" ? "Hapus Sorotan" : c}/>
+                  style={{width:22,height:22,borderRadius:4,background:c,border:"1.5px solid #b0dce8",cursor:"pointer",outline:"none"}} title={c === "transparent" ? "Hapus Sorotan" : c}/>
               ))}
             </div>
           )}
@@ -1490,7 +1491,7 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
       </div>
 
       {/* ── Toolbar Row 2: Lists, Indent, Paragraph, Alignment ── */}
-      <div style={{ background: "#f4f9fb", borderBottom: "1px solid #ddeef5", padding: "5px 10px", display: "flex", gap: 5, alignItems: "center", flexWrap: "wrap" }}>
+      <div style={{ background: "#edfafc", borderBottom: "1px solid #c0e8f0", padding: "5px 10px", display: "flex", gap: 5, alignItems: "center", flexWrap: "wrap" }}>
         <TB cmd="insertUnorderedList" title="Daftar Bullet">
           <span style={{display:"flex",flexDirection:"column",gap:2,alignItems:"flex-start"}}>
             <span style={{display:"flex",alignItems:"center",gap:3}}><span style={{width:4,height:4,borderRadius:"50%",background:"currentColor"}}/>
@@ -1544,7 +1545,7 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
           onFocus={() => setIsEmpty(false)}
           onBlur={() => setIsEmpty(!editorRef.current?.textContent?.trim())}
           style={{
-            minHeight: 220, padding: "16px 18px", fontSize: 14, color: "#2d2d2d",
+            minHeight: 220, padding: "16px 18px", fontSize: 14, color: "#0d3b66",
             lineHeight: 1.85, outline: "none", background: "#fff",
             fontFamily: "'Calibri', Arial, sans-serif",
             borderRadius: "0 0 6px 6px",
@@ -1678,10 +1679,10 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
             <div style={{ textAlign: "center", marginBottom: 8 }}>
               <span style={{ fontSize: 32 }}>🚀</span>
             </div>
-            <h2 style={{ fontSize: 20, fontWeight: 800, color: "#2d2d2d", textAlign: "center", marginBottom: 6, fontFamily: "'Playfair Display',serif" }}>
+            <h2 style={{ fontSize: 20, fontWeight: 800, color: "#0d3b66", textAlign: "center", marginBottom: 6, fontFamily: "'Playfair Display',serif" }}>
               Pilih Tujuan Publish
             </h2>
-            <p style={{ fontSize: 13, color: "#6b8999", textAlign: "center", marginBottom: 24, lineHeight: 1.6 }}>
+            <p style={{ fontSize: 13, color: "#4a7f98", textAlign: "center", marginBottom: 24, lineHeight: 1.6 }}>
               Artikel akan ditayangkan di seksi yang kamu pilih di bawah ini.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -1696,31 +1697,31 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
                   handleSave("published", opt.key);
                 }} style={{
                   display: "flex", alignItems: "center", gap: 16, padding: "14px 18px",
-                  border: section === opt.key ? "2px solid #2d2d2d" : "1.5px solid #ddeef5",
+                  border: section === opt.key ? "2px solid #0d3b66" : "1.5px solid #c0e8f0",
                   borderRadius: 10, background: section === opt.key ? "#f0f5fa" : "#fff",
                   cursor: "pointer", textAlign: "left", transition: "all .15s"
                 }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = "#2b7a9a"; e.currentTarget.style.background = "#f4f9fb"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = section === opt.key ? "#2d2d2d" : "#ddeef5"; e.currentTarget.style.background = section === opt.key ? "#f0f5fa" : "#fff"; }}>
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = "#0891b2"; e.currentTarget.style.background = "#edfafc"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = section === opt.key ? "#0d3b66" : "#c0e8f0"; e.currentTarget.style.background = section === opt.key ? "#f0f5fa" : "#fff"; }}>
                   <span style={{ fontSize: 28, flexShrink: 0 }}>{opt.icon}</span>
                   <div>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: "#2d2d2d" }}>{opt.label}</div>
-                    <div style={{ fontSize: 12, color: "#6b8999", marginTop: 2 }}>{opt.desc}</div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: "#0d3b66" }}>{opt.label}</div>
+                    <div style={{ fontSize: 12, color: "#4a7f98", marginTop: 2 }}>{opt.desc}</div>
                   </div>
                   {section === opt.key && <span style={{ marginLeft: "auto", fontSize: 16, color: "#27ae60" }}>✓</span>}
                 </button>
               ))}
             </div>
             <button onClick={() => setPublishModal(false)} style={{
-              width: "100%", marginTop: 16, padding: "10px", border: "1px solid #d0e4ee",
-              borderRadius: 8, fontSize: 13, color: "#6b8999", background: "#fafcfd", cursor: "pointer"
+              width: "100%", marginTop: 16, padding: "10px", border: "1px solid #b0dce8",
+              borderRadius: 8, fontSize: 13, color: "#4a7f98", background: "#f5fdff", cursor: "pointer"
             }}>Batal</button>
           </div>
         </div>
       )}
 
       {/* CMS Top Bar */}
-      <div style={{ background: "#2d2d2d", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ background: "#0d3b66", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ color: "#fff", fontSize: 14, fontWeight: 500 }}>
             {post?.id ? "Edit Post" : "Add New Post"} — <span style={{ color: "#7dc8de" }}>{SECTION_LABELS[section] || section}</span>
@@ -1754,42 +1755,42 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
           <input value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
             placeholder="Masukkan judul artikel di sini..."
             style={{ width: "100%", fontSize: 28, fontFamily: "'Cormorant Garamond',serif", fontWeight: 600,
-              color: "#2d2d2d", border: "none", outline: "none", borderBottom: "2px solid #eef4f8",
+              color: "#0d3b66", border: "none", outline: "none", borderBottom: "2px solid #e0f7fa",
               paddingBottom: 14, marginBottom: 24, background: "transparent" }} />
 
           {/* Excerpt */}
           <textarea value={form.excerpt} onChange={e => setForm(p => ({ ...p, excerpt: e.target.value }))}
             placeholder="Ringkasan singkat artikel..."
             rows={3}
-            style={{ width: "100%", fontSize: 14, color: "#6b8999", border: "1px solid #eef4f8",
+            style={{ width: "100%", fontSize: 14, color: "#4a7f98", border: "1px solid #e0f7fa",
               borderRadius: 6, padding: "12px 14px", outline: "none", resize: "vertical",
-              marginBottom: 28, lineHeight: 1.65, background: "#fafcfd" }} />
+              marginBottom: 28, lineHeight: 1.65, background: "#f5fdff" }} />
 
           {/* Blocks */}
           <div style={{ marginBottom: 24 }}>
-            <div style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 12 }}>Content Blocks</div>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 12 }}>Content Blocks</div>
             {blocks.length === 0 && (
-              <div style={{ background: "#fafcfd", border: "2px dashed #d0e4ee", borderRadius: 8, padding: "32px", textAlign: "center", color: "#7a9db0", fontSize: 13 }}>
+              <div style={{ background: "#f5fdff", border: "2px dashed #b0dce8", borderRadius: 8, padding: "32px", textAlign: "center", color: "#5090aa", fontSize: 13 }}>
                 No content yet. Add your first block below.
               </div>
             )}
             {blocks.map((b, i) => (
-              <div key={i} style={{ background: "#fafcfd", border: "1px solid #eef4f8", borderRadius: 8, padding: "14px 16px", marginBottom: 10, position: "relative" }}>
+              <div key={i} style={{ background: "#f5fdff", border: "1px solid #e0f7fa", borderRadius: 8, padding: "14px 16px", marginBottom: 10, position: "relative" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                  <span style={{ fontSize: 11, background: "#e8f4fd", color: "#3d8fab", padding: "2px 8px", borderRadius: 10, fontWeight: 500 }}>{blockLabels[b.type] || b.type}</span>
+                  <span style={{ fontSize: 11, background: "#e8f4fd", color: "#0ea5c5", padding: "2px 8px", borderRadius: 10, fontWeight: 500 }}>{blockLabels[b.type] || b.type}</span>
                   <div style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
-                    <button onClick={() => moveBlock(i, -1)} style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #d0e4ee", borderRadius: 4, color: "#7a9db0" }}>↑</button>
-                    <button onClick={() => moveBlock(i, 1)} style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #d0e4ee", borderRadius: 4, color: "#7a9db0" }}>↓</button>
+                    <button onClick={() => moveBlock(i, -1)} style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #b0dce8", borderRadius: 4, color: "#5090aa" }}>↑</button>
+                    <button onClick={() => moveBlock(i, 1)} style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #b0dce8", borderRadius: 4, color: "#5090aa" }}>↓</button>
                     <button onClick={() => removeBlock(i)} style={{ padding: "3px 8px", fontSize: 11, border: "none", background: "#fee", color: "#e74c3c", borderRadius: 4 }}>✕</button>
                   </div>
                 </div>
                 {b.type === "image" ? (
                   <div>
                     <img src={b.value} alt="" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 6 }} onError={e => { e.target.style.display = "none"; }} />
-                    {b.caption && <p style={{ fontSize: 11, color: "#7a9db0", marginTop: 4, fontStyle: "italic" }}>{b.caption}</p>}
+                    {b.caption && <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4, fontStyle: "italic" }}>{b.caption}</p>}
                   </div>
                 ) : b.type === "divider" ? (
-                  <hr style={{ border: "none", borderTop: "2px solid #d0e4ee" }} />
+                  <hr style={{ border: "none", borderTop: "2px solid #b0dce8" }} />
                 ) : b.type === "paragraph" ? (
                   <div style={{ fontSize: 13, color: "#4a6680", lineHeight: 1.6, wordBreak: "break-word" }}
                     dangerouslySetInnerHTML={{ __html: b.value?.length > 200 ? b.value.slice(0, 200) + "…" : b.value }} />
@@ -1803,14 +1804,14 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
           </div>
 
           {/* Add Block Toolbar */}
-          <div style={{ background: "#f4f9fb", border: "1px solid #ddeef5", borderRadius: 10, padding: "18px 20px" }}>
-            <div style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 14 }}>Add Block</div>
+          <div style={{ background: "#edfafc", border: "1px solid #c0e8f0", borderRadius: 10, padding: "18px 20px" }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 14 }}>Add Block</div>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
               {Object.entries(blockLabels).map(([k, label]) => (
                 <button key={k} onClick={() => setAddType(k)} style={{
                   padding: "5px 12px", fontSize: 12, borderRadius: 20,
-                  border: addType === k ? "none" : "1px solid #d0e4ee",
-                  background: addType === k ? "#3d8fab" : "#fff",
+                  border: addType === k ? "none" : "1px solid #b0dce8",
+                  background: addType === k ? "#0ea5c5" : "#fff",
                   color: addType === k ? "#fff" : "#4a6680", fontWeight: addType === k ? 600 : 400,
                   transition: "all .15s"
                 }}>{label}</button>
@@ -1824,9 +1825,9 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
                     {["url", "upload"].map(m => (
                       <button key={m} onClick={() => setImgUploadMode(m)} style={{
                         padding: "4px 12px", fontSize: 11, borderRadius: 4,
-                        border: imgUploadMode === m ? "none" : "1px solid #d0e4ee",
-                        background: imgUploadMode === m ? "#2d2d2d" : "#fff",
-                        color: imgUploadMode === m ? "#fff" : "#6b8999"
+                        border: imgUploadMode === m ? "none" : "1px solid #b0dce8",
+                        background: imgUploadMode === m ? "#0d3b66" : "#fff",
+                        color: imgUploadMode === m ? "#fff" : "#4a7f98"
                       }}>{m === "url" ? "URL" : "Upload File"}</button>
                     ))}
                   </div>
@@ -1836,8 +1837,8 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
                   <div>
                     <input ref={fileRef} type="file" accept="image/*" onChange={handleImageFile} style={{ display: "none" }} />
                     <button onClick={() => fileRef.current?.click()} style={{
-                      padding: "10px 20px", border: "1.5px dashed #3d8fab", borderRadius: 8,
-                      color: "#3d8fab", fontSize: 13, background: "#f0f9fc", width: "100%", marginBottom: 8
+                      padding: "10px 20px", border: "1.5px dashed #0ea5c5", borderRadius: 8,
+                      color: "#0ea5c5", fontSize: 13, background: "#e8f9fc", width: "100%", marginBottom: 8
                     }}>📁 Click to Upload Image</button>
                     {addVal && <img src={addVal} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 6, marginBottom: 8 }} />}
                   </div>
@@ -1853,7 +1854,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
                   <textarea value={addVal} onChange={e => setAddVal(e.target.value)}
                     placeholder="Teks kutipan..."
                     rows={4}
-                    style={{ width: "100%", padding: "10px 12px", border: "1px solid #d0e4ee",
+                    style={{ width: "100%", padding: "10px 12px", border: "1px solid #b0dce8",
                       borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", marginBottom: 8, lineHeight: 1.6 }} />
                 ) : (
                   <input value={addVal} onChange={e => setAddVal(e.target.value)}
@@ -1863,21 +1864,21 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
                       addType === "embed_instagram" ? "https://www.instagram.com/p/..." :
                       addType === "embed_tiktok" ? "https://www.tiktok.com/@user/video/..." : ""
                     }
-                    style={{ width: "100%", padding: "10px 12px", border: "1px solid #d0e4ee",
+                    style={{ width: "100%", padding: "10px 12px", border: "1px solid #b0dce8",
                       borderRadius: 6, fontSize: 13, outline: "none", marginBottom: 8 }} />
                 )}
 
                 {addType === "image" && (
                   <input value={addCaption} onChange={e => setAddCaption(e.target.value)}
                     placeholder="Image caption (optional)"
-                    style={{ width: "100%", padding: "8px 12px", border: "1px solid #d0e4ee",
+                    style={{ width: "100%", padding: "8px 12px", border: "1px solid #b0dce8",
                       borderRadius: 6, fontSize: 12, outline: "none", marginBottom: 8 }} />
                 )}
               </>
             )}
 
             <button onClick={addBlock} style={{
-              padding: "9px 22px", background: "#2d2d2d", color: "#fff",
+              padding: "9px 22px", background: "#0d3b66", color: "#fff",
               borderRadius: 6, fontSize: 13, border: "none", fontWeight: 500
             }}>+ Add Block</button>
           </div>
@@ -1886,16 +1887,16 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
         {/* Right: Meta / Publish */}
         <div className="cms-editor-right">
           {/* Section Selector */}
-          <div style={{ background: "#fff", borderRadius: 8, border: "1px solid #eef4f8", overflow: "hidden" }}>
-            <div style={{ background: "#f4f9fb", padding: "12px 16px", borderBottom: "1px solid #eef4f8" }}>
-              <span style={{ fontSize: 12, fontWeight: 600, color: "#2d2d2d", letterSpacing: ".5px" }}>PUBLISH TO</span>
+          <div style={{ background: "#fff", borderRadius: 8, border: "1px solid #e0f7fa", overflow: "hidden" }}>
+            <div style={{ background: "#edfafc", padding: "12px 16px", borderBottom: "1px solid #e0f7fa" }}>
+              <span style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66", letterSpacing: ".5px" }}>PUBLISH TO</span>
             </div>
             <div style={{ padding: "12px 16px", display: "flex", flexDirection: "column", gap: 6 }}>
               {Object.entries(SECTION_LABELS).map(([key, label]) => (
                 <button key={key} onClick={() => onSectionChange && onSectionChange(key)} style={{
                   padding: "8px 12px", borderRadius: 6, fontSize: 12, fontWeight: section === key ? 600 : 400,
-                  border: section === key ? "none" : "1px solid #d0e4ee",
-                  background: section === key ? "#2d2d2d" : "#fff",
+                  border: section === key ? "none" : "1px solid #b0dce8",
+                  background: section === key ? "#0d3b66" : "#fff",
                   color: section === key ? "#fff" : "#4a6680",
                   textAlign: "left", transition: "all .15s"
                 }}>{section === key ? "✓ " : ""}{label}</button>
@@ -1904,29 +1905,29 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
           </div>
 
           {/* Publish Box */}
-          <div style={{ background: "#fff", borderRadius: 8, border: "1px solid #eef4f8", overflow: "hidden" }}>
-            <div style={{ background: "#f4f9fb", padding: "12px 16px", borderBottom: "1px solid #eef4f8" }}>
-              <span style={{ fontSize: 12, fontWeight: 600, color: "#2d2d2d", letterSpacing: ".5px" }}>PUBLISH</span>
+          <div style={{ background: "#fff", borderRadius: 8, border: "1px solid #e0f7fa", overflow: "hidden" }}>
+            <div style={{ background: "#edfafc", padding: "12px 16px", borderBottom: "1px solid #e0f7fa" }}>
+              <span style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66", letterSpacing: ".5px" }}>PUBLISH</span>
             </div>
             <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", gap: 10 }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 12, color: "#7a9db0" }}>Status:</span>
+                <span style={{ fontSize: 12, color: "#5090aa" }}>Status:</span>
                 <span style={{ fontSize: 12, fontWeight: 500, color: form.status === "published" ? "#27ae60" : "#f39c12",
                   background: form.status === "published" ? "#eeffee" : "#fff9ee", padding: "2px 10px", borderRadius: 10 }}>
                   {form.status === "published" ? "Published" : "Draft"}
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 12, color: "#7a9db0" }}>Visibility:</span>
+                <span style={{ fontSize: 12, color: "#5090aa" }}>Visibility:</span>
                 <span style={{ fontSize: 12, color: "#4a6680", fontWeight: 500 }}>Public</span>
               </div>
-              <div style={{ borderTop: "1px solid #eef4f8", paddingTop: 12, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ borderTop: "1px solid #e0f7fa", paddingTop: 12, display: "flex", flexDirection: "column", gap: 8 }}>
                 <button onClick={() => handleSave("draft")} style={{
-                  padding: "8px 0", border: "1px solid #d0e4ee", borderRadius: 6,
+                  padding: "8px 0", border: "1px solid #b0dce8", borderRadius: 6,
                   fontSize: 12, color: "#4a6680", background: "#fff", fontWeight: 500
                 }}>Save Draft</button>
                 <button onClick={() => setPublishModal(true)} style={{
-                  padding: "10px 0", background: "#2d2d2d", border: "none",
+                  padding: "10px 0", background: "#0d3b66", border: "none",
                   borderRadius: 6, fontSize: 12, color: "#fff", fontWeight: 600, letterSpacing: ".5px"
                 }}>🚀 Publish…</button>
               </div>
@@ -1939,42 +1940,42 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
             { label: "Category", key: "category", placeholder: "e.g. Beach, Gear, Asia" },
           ].map(f => (
             <div key={f.key}>
-              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
+              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
               <input type={f.type || "text"} value={form[f.key] || ""} placeholder={f.placeholder || ""}
                 onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
-                style={{ width: "100%", padding: "8px 10px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
             </div>
           ))}
 
           {/* Author — auto dari akun yang login */}
           <div>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>
               Author <span style={{ fontSize: 10, color: "#27ae60", fontWeight: 500, textTransform: "none", letterSpacing: 0 }}>· otomatis</span>
             </label>
             <div style={{ position: "relative" }}>
               <input value={form.author || ""} readOnly
-                style={{ width: "100%", padding: "8px 10px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", background: "#f4f9fb", color: "#2d2d2d", fontWeight: 600, cursor: "default" }} />
+                style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", background: "#edfafc", color: "#0d3b66", fontWeight: 600, cursor: "default" }} />
               <span style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", fontSize: 12 }}>🔒</span>
             </div>
-            <p style={{ fontSize: 11, color: "#7a9db0", marginTop: 4 }}>Diisi otomatis dari akun yang login</p>
+            <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4 }}>Diisi otomatis dari akun yang login</p>
           </div>
 
           {/* Tags */}
           <div>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Tags</label>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Tags</label>
             <input value={typeof form.tags === "string" ? form.tags : (form.tags || []).join(", ")}
               onChange={e => setForm(p => ({ ...p, tags: e.target.value }))}
               placeholder="beach, travel, gear"
-              style={{ width: "100%", padding: "8px 10px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
-            <p style={{ fontSize: 11, color: "#7a9db0", marginTop: 4 }}>Separate with commas</p>
+              style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
+            <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4 }}>Separate with commas</p>
           </div>
 
           {/* Cover Image */}
           <div>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Cover Image URL</label>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Cover Image URL</label>
             <input value={form.coverImage || ""} onChange={e => setForm(p => ({ ...p, coverImage: e.target.value }))}
               placeholder="https://..."
-              style={{ width: "100%", padding: "8px 10px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 12, outline: "none", marginBottom: 8 }} />
+              style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none", marginBottom: 8 }} />
             {form.coverImage && (
               <img src={form.coverImage} alt="" style={{ width: "100%", height: 100, objectFit: "cover", borderRadius: 6 }}
                 onError={e => e.target.style.display = "none"} />
@@ -1982,8 +1983,8 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
           </div>
 
           {/* Section badge */}
-          <div style={{ fontSize: 11, color: "#7a9db0", fontStyle: "italic", textAlign: "center", paddingTop: 4 }}>
-            Posting to: <strong style={{ color: "#3d8fab" }}>{SECTION_LABELS[section] || section}</strong>
+          <div style={{ fontSize: 11, color: "#5090aa", fontStyle: "italic", textAlign: "center", paddingTop: 4 }}>
+            Posting to: <strong style={{ color: "#0ea5c5" }}>{SECTION_LABELS[section] || section}</strong>
           </div>
         </div>
       </div>
@@ -2002,13 +2003,13 @@ function PostCard({ post, onClick, view = "grid" }) {
           onError={e => { e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=400&fit=crop"; }} />
       </div>
       <div style={{ padding: "14px 16px 14px 0", flex: 1 }}>
-        {post.category && <span className="label-xs" style={{ color: "#2b7a9a" }}>{post.category}</span>}
+        {post.category && <span className="label-xs" style={{ color: "#0891b2" }}>{post.category}</span>}
         <h3 className="post-card-title" style={{ fontFamily: "'Playfair Display',serif", fontWeight: 700,
-          fontSize: "1.1rem", color: "#2d2d2d", margin: "6px 0 8px", lineHeight: 1.3, transition: "color .2s" }}>{post.title}</h3>
-        <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.65, marginBottom: 10 }}>
+          fontSize: "1.1rem", color: "#0d3b66", margin: "6px 0 8px", lineHeight: 1.3, transition: "color .2s" }}>{post.title}</h3>
+        <p style={{ fontSize: "0.875rem", color: "#1a5a78", lineHeight: 1.65, marginBottom: 10 }}>
           {post.excerpt?.length > 100 ? post.excerpt.slice(0, 100) + "…" : post.excerpt}
         </p>
-        <span style={{ fontSize: "0.75rem", color: "#6b8999" }}>{formatDate(post.date)}</span>
+        <span style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{formatDate(post.date)}</span>
       </div>
     </article>
   );
@@ -2023,22 +2024,22 @@ function PostCard({ post, onClick, view = "grid" }) {
       </div>
       <div style={{ padding: "18px 20px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-          {post.category && <span className="label-xs" style={{ color: "#2b7a9a" }}>{post.category}</span>}
+          {post.category && <span className="label-xs" style={{ color: "#0891b2" }}>{post.category}</span>}
           {post.badge && <span style={{ fontSize: "0.6875rem", background: "#fff3cd", color: "#7a5c00", padding: "2px 9px", borderRadius: 10, fontWeight: 600, letterSpacing: ".03em" }}>{post.badge}</span>}
-          <span style={{ fontSize: "0.75rem", color: "#6b8999" }}>{formatDate(post.date)}</span>
+          <span style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{formatDate(post.date)}</span>
         </div>
         <h3 className="post-card-title" style={{ fontFamily: "'Playfair Display',serif", fontWeight: 700,
-          fontSize: "1.15rem", color: "#2d2d2d", marginBottom: 10, lineHeight: 1.3, transition: "color .2s" }}>{post.title}</h3>
-        <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.7 }}>
+          fontSize: "1.15rem", color: "#0d3b66", marginBottom: 10, lineHeight: 1.3, transition: "color .2s" }}>{post.title}</h3>
+        <p style={{ fontSize: "0.875rem", color: "#1a5a78", lineHeight: 1.7 }}>
           {post.excerpt?.length > 110 ? post.excerpt.slice(0, 110) + "…" : post.excerpt}
         </p>
         {post.price && (
-          <div style={{ marginTop: 12, fontSize: "1.25rem", fontWeight: 700, color: "#2d2d2d", fontFamily: "'Playfair Display',serif" }}>{post.price}</div>
+          <div style={{ marginTop: 12, fontSize: "1.25rem", fontWeight: 700, color: "#0891b2", fontFamily: "'Playfair Display',serif" }}>{post.price}</div>
         )}
         {post.tags?.length > 0 && (
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
             {post.tags.slice(0, 3).map(t => (
-              <span key={t} style={{ fontSize: "0.6875rem", padding: "3px 9px", background: "#f4f9fb", border: "1px solid #ddeef5", borderRadius: 10, color: "#4e6b80", fontWeight: 500 }}>#{t}</span>
+              <span key={t} style={{ fontSize: "0.6875rem", padding: "3px 9px", background: "#edfafc", border: "1px solid #c0e8f0", borderRadius: 10, color: "#1a5a78", fontWeight: 500 }}>#{t}</span>
             ))}
           </div>
         )}
@@ -2052,9 +2053,9 @@ function ArticleDetail({ post, onBack }) {
   return (
     <div className="fade-in" style={{ minHeight: "100vh", background: "#fff" }}>
       {/* Back Bar */}
-      <div className="article-back-bar" style={{ background: "rgba(250,252,253,.96)", backdropFilter: "blur(10px)", borderBottom: "1px solid #ddeef5",
+      <div className="article-back-bar" style={{ background: "rgba(250,252,253,.96)", backdropFilter: "blur(10px)", borderBottom: "1px solid #c0e8f0",
         padding: "12px 5%", position: "sticky", top: 96, zIndex: 90 }}>
-        <button onClick={onBack} style={{ fontSize: 13, color: "#3d8fab", display: "flex", alignItems: "center", gap: 6, fontWeight: 500 }}>
+        <button onClick={onBack} style={{ fontSize: 13, color: "#0ea5c5", display: "flex", alignItems: "center", gap: 6, fontWeight: 500 }}>
           ← Back
         </button>
       </div>
@@ -2069,28 +2070,28 @@ function ArticleDetail({ post, onBack }) {
       {/* Article */}
       <div className="article-body" style={{ maxWidth: 760, margin: "0 auto", padding: "48px 5% 80px" }}>
         {post.category && (
-          <div className="label-xs" style={{ color: "#2b7a9a", marginBottom: 16 }}>{post.category}</div>
+          <div className="label-xs" style={{ color: "#0891b2", marginBottom: 16 }}>{post.category}</div>
         )}
-        <h1 className="display" style={{ fontSize: "clamp(1.875rem, 5vw, 3.25rem)", fontWeight: 800, lineHeight: 1.12, color: "#2d2d2d", marginBottom: 20 }}>
+        <h1 className="display" style={{ fontSize: "clamp(1.875rem, 5vw, 3.25rem)", fontWeight: 800, lineHeight: 1.12, color: "#0d3b66", marginBottom: 20 }}>
           {post.title}
         </h1>
-        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32, paddingBottom: 24, borderBottom: "1px solid #ddeef5" }}>
-          <span style={{ fontSize: "0.875rem", color: "#4e6b80", fontWeight: 500 }}>By {post.author}</span>
-          <span style={{ fontSize: "0.875rem", color: "#b8d4e3" }}>·</span>
-          <span style={{ fontSize: "0.875rem", color: "#4e6b80" }}>{formatDate(post.date)}</span>
-          {post.price && <span style={{ fontSize: "1.375rem", fontWeight: 700, color: "#2d2d2d", fontFamily: "'Playfair Display',serif", marginLeft: "auto" }}>{post.price}</span>}
+        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32, paddingBottom: 24, borderBottom: "1px solid #c0e8f0" }}>
+          <span style={{ fontSize: "0.875rem", color: "#1a5a78", fontWeight: 500 }}>By {post.author}</span>
+          <span style={{ fontSize: "0.875rem", color: "#86cad8" }}>·</span>
+          <span style={{ fontSize: "0.875rem", color: "#1a5a78" }}>{formatDate(post.date)}</span>
+          {post.price && <span style={{ fontSize: "1.375rem", fontWeight: 700, color: "#0891b2", fontFamily: "'Playfair Display',serif", marginLeft: "auto" }}>{post.price}</span>}
         </div>
         {post.excerpt && (
-          <p style={{ fontSize: "1.125rem", color: "#334f65", lineHeight: 1.85, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400, whiteSpace: "pre-line" }}>
+          <p style={{ fontSize: "1.125rem", color: "#1a4a72", lineHeight: 1.85, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400, whiteSpace: "pre-line" }}>
             {post.excerpt}
           </p>
         )}
         <RichRenderer blocks={post.content} />
         {post.tags?.length > 0 && (
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 40, paddingTop: 24, borderTop: "1px solid #ddeef5" }}>
-            <span style={{ fontSize: "0.8125rem", color: "#4e6b80", fontWeight: 500 }}>Tags:</span>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 40, paddingTop: 24, borderTop: "1px solid #c0e8f0" }}>
+            <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 500 }}>Tags:</span>
             {post.tags.map(t => (
-              <span key={t} style={{ fontSize: "0.8125rem", padding: "3px 12px", background: "#f4f9fb", border: "1px solid #ddeef5", borderRadius: 20, color: "#334f65", fontWeight: 500 }}>#{t}</span>
+              <span key={t} style={{ fontSize: "0.8125rem", padding: "3px 12px", background: "#edfafc", border: "1px solid #c0e8f0", borderRadius: 20, color: "#1a4a72", fontWeight: 500 }}>#{t}</span>
             ))}
           </div>
         )}
@@ -2116,9 +2117,9 @@ function SectionPage({ section, posts, onReadPost }) {
   const meta = sectionMeta[section] || { title: section, sub: "", icon: "◈" };
 
   return (
-    <div className="fade-in" style={{ minHeight: "100vh", background: "#f4f9fb" }}>
+    <div className="fade-in" style={{ minHeight: "100vh", background: "#edfafc" }}>
       {/* Hero Banner */}
-      <div style={{ background: "linear-gradient(135deg, #2b7a9a 0%, #3d8fab 100%)", padding: "60px 5%", color: "#fff" }}>
+      <div style={{ background: "linear-gradient(135deg, #0891b2 0%, #0ea5c5 100%)", padding: "60px 5%", color: "#fff" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#7dc8de", textTransform: "uppercase", marginBottom: 12, fontWeight: 600 }}>
             {meta.icon} Arutala Organizer
@@ -2140,8 +2141,8 @@ function SectionPage({ section, posts, onReadPost }) {
                 {cats.map(c => (
                   <button key={c} onClick={() => setFilter(c)} style={{
                     padding: "6px 16px", fontSize: 12, borderRadius: 20,
-                    border: filter === c ? "none" : "1px solid #d0e4ee",
-                    background: filter === c ? "#2b7a9a" : "#fff",
+                    border: filter === c ? "none" : "1px solid #b0dce8",
+                    background: filter === c ? "#0891b2" : "#fff",
                     color: filter === c ? "#fff" : "#4a6680", fontWeight: filter === c ? 500 : 400,
                     transition: "all .2s"
                   }}>{c}</button>
@@ -2151,16 +2152,16 @@ function SectionPage({ section, posts, onReadPost }) {
                 {[["grid", "▦"], ["list", "☰"]].map(([mode, icon]) => (
                   <button key={mode} onClick={() => setViewMode(mode)} style={{
                     padding: "7px 12px", fontSize: 14,
-                    border: `1px solid ${viewMode === mode ? "#3d8fab" : "#d0e4ee"}`,
+                    border: `1px solid ${viewMode === mode ? "#0ea5c5" : "#b0dce8"}`,
                     borderRadius: 6, background: viewMode === mode ? "#e8f4fd" : "#fff",
-                    color: viewMode === mode ? "#3d8fab" : "#7a9db0"
+                    color: viewMode === mode ? "#0ea5c5" : "#5090aa"
                   }}>{icon}</button>
                 ))}
               </div>
             </div>
 
             {filtered.length === 0 ? (
-              <div style={{ textAlign: "center", padding: "60px 0", color: "#7a9db0" }}>
+              <div style={{ textAlign: "center", padding: "60px 0", color: "#5090aa" }}>
                 <div style={{ fontSize: 40, marginBottom: 16 }}>📭</div>
                 <p style={{ fontSize: 15 }}>No posts published yet.</p>
               </div>
@@ -2177,17 +2178,17 @@ function SectionPage({ section, posts, onReadPost }) {
           <aside>
             {/* Popular / Recent */}
             <div style={{ background: "#fff", borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,.06)", marginBottom: 24 }}>
-              <div style={{ background: "#2d2d2d", padding: "14px 20px" }}>
+              <div style={{ background: "#0d3b66", padding: "14px 20px" }}>
                 <span style={{ fontSize: 12, fontWeight: 600, color: "#fff", letterSpacing: "1px", textTransform: "uppercase" }}>Most Popular</span>
               </div>
               <div style={{ padding: "8px 0" }}>
                 {popular.map((p, i) => (
                   <div key={p.id} onClick={() => onReadPost(p)}
-                    style={{ display: "flex", gap: 12, padding: "10px 20px", cursor: "pointer", borderBottom: "1px solid #f4f9fb", transition: "background .15s" }}
-                    onMouseEnter={e => e.currentTarget.style.background = "#f4f9fb"}
+                    style={{ display: "flex", gap: 12, padding: "10px 20px", cursor: "pointer", borderBottom: "1px solid #edfafc", transition: "background .15s" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "#edfafc"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                    <span style={{ fontSize: 22, fontWeight: 700, color: i < 3 ? "#e74c3c" : "#b8d4e3", fontFamily: "'Cormorant Garamond',serif", lineHeight: 1, minWidth: 24 }}>{i + 1}</span>
-                    <span style={{ fontSize: 13, color: "#2d2d2d", lineHeight: 1.5, fontWeight: 400 }}>{p.title}</span>
+                    <span style={{ fontSize: 22, fontWeight: 700, color: i < 3 ? "#e74c3c" : "#86cad8", fontFamily: "'Cormorant Garamond',serif", lineHeight: 1, minWidth: 24 }}>{i + 1}</span>
+                    <span style={{ fontSize: 13, color: "#0d3b66", lineHeight: 1.5, fontWeight: 400 }}>{p.title}</span>
                   </div>
                 ))}
               </div>
@@ -2195,8 +2196,8 @@ function SectionPage({ section, posts, onReadPost }) {
 
             {/* Categories */}
             <div style={{ background: "#fff", borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,.06)" }}>
-              <div style={{ background: "#f4f9fb", padding: "14px 20px", borderBottom: "1px solid #eef4f8" }}>
-                <span style={{ fontSize: 12, fontWeight: 600, color: "#2d2d2d", letterSpacing: "1px", textTransform: "uppercase" }}>Categories</span>
+              <div style={{ background: "#edfafc", padding: "14px 20px", borderBottom: "1px solid #e0f7fa" }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66", letterSpacing: "1px", textTransform: "uppercase" }}>Categories</span>
               </div>
               <div style={{ padding: "12px 20px", display: "flex", flexDirection: "column", gap: 8 }}>
                 {cats.filter(c => c !== "All").map(c => {
@@ -2204,10 +2205,10 @@ function SectionPage({ section, posts, onReadPost }) {
                   return (
                     <button key={c} onClick={() => setFilter(c)}
                       style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
-                        padding: "6px 0", borderBottom: "1px solid #f4f9fb", background: "none",
+                        padding: "6px 0", borderBottom: "1px solid #edfafc", background: "none",
                         border: "none", cursor: "pointer", textAlign: "left" }}>
-                      <span style={{ fontSize: 13, color: "#3d8fab" }}>→ {c}</span>
-                      <span style={{ fontSize: 11, background: "#f4f9fb", color: "#7a9db0", padding: "2px 8px", borderRadius: 10 }}>{count}</span>
+                      <span style={{ fontSize: 13, color: "#0ea5c5" }}>→ {c}</span>
+                      <span style={{ fontSize: 11, background: "#edfafc", color: "#5090aa", padding: "2px 8px", borderRadius: 10 }}>{count}</span>
                     </button>
                   );
                 })}
@@ -2229,7 +2230,7 @@ function ServicesPage({ content, services, navigateTo }) {
 
   const CATEGORIES = [
     { key: "traveling", label: "✈️ Traveling", color: "#27ae60" },
-    { key: "event",     label: "🎉 Event Plan", color: "#2b7a9a" },
+    { key: "event",     label: "🎉 Event Plan", color: "#0891b2" },
     { key: "wedding",   label: "💍 Wedding Organizer", color: "#8e44ad" },
   ];
 
@@ -2250,17 +2251,17 @@ function ServicesPage({ content, services, navigateTo }) {
     const facilityImgs = imgs.slice(1);
 
     return (
-      <div style={{ minHeight: "100vh", background: "#f8f5f0", fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#e8f7fc 0%,#f0fbfd 100%)", fontFamily: "'DM Sans', sans-serif" }}>
         <style>{`
           @keyframes mgFadeUp { from { opacity:0; transform:translateY(28px);} to { opacity:1; transform:none;} }
           .mg-fade { animation: mgFadeUp .55s cubic-bezier(.22,1,.36,1) both; }
           .mg-fade-2 { animation: mgFadeUp .55s .12s cubic-bezier(.22,1,.36,1) both; }
           .mg-fade-3 { animation: mgFadeUp .55s .22s cubic-bezier(.22,1,.36,1) both; }
-          .mg-feat-row:hover { background: #ede8e1 !important; }
+          .mg-feat-row:hover { background: #d6f1f6 !important; }
           .mg-related { transition: transform .2s, box-shadow .2s; }
           .mg-related:hover { transform: translateX(5px); }
           .mg-cta-wa:hover { background: #ffffff !important; }
-          .mg-cta-tel:hover { background: #ede8e1 !important; }
+          .mg-cta-tel:hover { background: #d6f1f6 !important; }
           .mg-thumb { transition: all .2s; }
           .mg-thumb:hover { opacity: 1 !important; transform: scale(1.06); }
           @media(max-width:768px){
@@ -2272,14 +2273,14 @@ function ServicesPage({ content, services, navigateTo }) {
         `}</style>
 
         {/* ── Back Bar ── */}
-        <div style={{ background: "#2d2d2d", padding: "0 5%", position: "sticky", top: 96, zIndex: 90, borderBottom: "1px solid #ddeef5" }}>
+        <div style={{ background: "linear-gradient(90deg,#063d5c,#0891b2)", padding: "0 5%", position: "sticky", top: 96, zIndex: 90, borderBottom: "1px solid #c0e8f0" }}>
           <button onClick={closeDetail} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#7ab8d0", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer", padding: "13px 0", letterSpacing: ".04em", textTransform: "uppercase" }}>
             <span style={{ fontSize: 18, lineHeight: 1 }}>←</span> Kembali ke Layanan
           </button>
         </div>
 
         {/* ── MAGAZINE HERO ── */}
-        <div className="mg-fade" style={{ position: "relative", background: "#2d2d2d", overflow: "hidden" }}>
+        <div className="mg-fade" style={{ position: "relative", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", overflow: "hidden" }}>
           {/* Deco grid lines */}
           <div style={{ position: "absolute", inset: 0, backgroundImage: "repeating-linear-gradient(90deg, rgba(255,255,255,.025) 0, rgba(255,255,255,.025) 1px, transparent 1px, transparent 80px)", pointerEvents: "none" }} />
           <div style={{ position: "absolute", top: 32, left: "5%", width: 1, height: "calc(100% - 32px)", background: "rgba(255,255,255,.08)", pointerEvents: "none" }} />
@@ -2292,14 +2293,14 @@ function ServicesPage({ content, services, navigateTo }) {
               <div style={{ padding: "56px 40px 48px 0", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,.09)" }}>
                 {/* Category tag */}
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 22 }}>
-                  <div style={{ width: 28, height: 2, background: catInfo.color || "#2b7a9a" }} />
-                  <span style={{ fontSize: "0.625rem", letterSpacing: "3px", color: catInfo.color || "#5bc4e0", fontWeight: 700, textTransform: "uppercase" }}>
+                  <div style={{ width: 28, height: 2, background: catInfo.color || "#0891b2" }} />
+                  <span style={{ fontSize: "0.625rem", letterSpacing: "3px", color: catInfo.color || "#22d3ee", fontWeight: 700, textTransform: "uppercase" }}>
                     {(catInfo.label || svc.category).replace(/[^\w\s]/g, "").trim()}
                   </span>
                 </div>
                 {/* Badge */}
                 {svc.badge && (
-                  <div style={{ display: "inline-flex", alignItems: "center", background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 4, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 18, alignSelf: "flex-start", boxShadow: `0 4px 18px ${svc.badgeColor || "#2b7a9a"}55` }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", background: svc.badgeColor || "#0891b2", color: "#fff", borderRadius: 4, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 18, alignSelf: "flex-start", boxShadow: `0 4px 18px ${svc.badgeColor || "#0891b2"}55` }}>
                     ★ {svc.badge}
                   </div>
                 )}
@@ -2307,8 +2308,8 @@ function ServicesPage({ content, services, navigateTo }) {
                 <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem,4vw,3rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: 22, letterSpacing: "-.01em" }}>{svc.title}</h1>
                 {/* Ornamental divider */}
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 22 }}>
-                  <div style={{ height: 1, width: 40, background: catInfo.color || "#5bc4e0", opacity: .8 }} />
-                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: catInfo.color || "#5bc4e0" }} />
+                  <div style={{ height: 1, width: 40, background: catInfo.color || "#22d3ee", opacity: .8 }} />
+                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: catInfo.color || "#22d3ee" }} />
                   <div style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,.3)" }} />
                   <div style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,.15)" }} />
                   <div style={{ height: 1, flex: 1, background: "rgba(255,255,255,.12)" }} />
@@ -2331,7 +2332,7 @@ function ServicesPage({ content, services, navigateTo }) {
               {/* Right: Main Hero Image */}
               <div style={{ position: "relative", overflow: "hidden", display: "flex", alignItems: "stretch" }}>
                 {/* Deco corner frames */}
-                <div className="mg-deco-shape" style={{ position: "absolute", top: 20, right: 20, width: 70, height: 70, border: `1.5px solid ${catInfo.color || "#5bc4e0"}`, borderRadius: 6, zIndex: 3, opacity: .55, pointerEvents: "none" }} />
+                <div className="mg-deco-shape" style={{ position: "absolute", top: 20, right: 20, width: 70, height: 70, border: `1.5px solid ${catInfo.color || "#22d3ee"}`, borderRadius: 6, zIndex: 3, opacity: .55, pointerEvents: "none" }} />
                 <div className="mg-deco-shape" style={{ position: "absolute", top: 30, right: 30, width: 70, height: 70, border: "1.5px solid rgba(255,255,255,.12)", borderRadius: 6, zIndex: 3, pointerEvents: "none" }} />
                 <div className="mg-deco-shape" style={{ position: "absolute", bottom: 20, left: -8, width: 50, height: 50, border: "1.5px solid rgba(255,255,255,.15)", borderRadius: 4, zIndex: 3, pointerEvents: "none" }} />
                 <div style={{ flex: 1, position: "relative", minHeight: 400 }}>
@@ -2339,7 +2340,7 @@ function ServicesPage({ content, services, navigateTo }) {
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity .4s" }}
                     onError={e => { e.target.src = "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=900&fit=crop"; }} />
                   {/* Bottom fade */}
-                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 90, background: "linear-gradient(to top, rgba(45,45,45,.65), transparent)", pointerEvents: "none" }} />
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 90, background: "linear-gradient(to top, rgba(13,59,102,.65), transparent)", pointerEvents: "none" }} />
                   {imgs.length > 1 && (
                     <div style={{ position: "absolute", bottom: 14, right: 14, background: "rgba(0,0,0,.5)", backdropFilter: "blur(4px)", borderRadius: 20, padding: "4px 12px", fontSize: "0.75rem", color: "#fff", fontWeight: 600 }}>
                       {activeImg + 1} / {imgs.length}
@@ -2353,11 +2354,11 @@ function ServicesPage({ content, services, navigateTo }) {
 
         {/* ── THUMBNAIL STRIP ── */}
         {imgs.length > 1 && (
-          <div className="mg-fade-2" style={{ background: "#2d2d2d", borderTop: "1px solid rgba(255,255,255,.07)", padding: "12px 5%" }}>
+          <div className="mg-fade-2" style={{ background: "#0d3b66", borderTop: "1px solid rgba(255,255,255,.07)", padding: "12px 5%" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", gap: 10, overflowX: "auto", paddingBottom: 2 }}>
               {imgs.map((img, i) => (
                 <div key={i} className="mg-thumb" onClick={() => setActiveImg(i)}
-                  style={{ width: 80, height: 56, borderRadius: 6, overflow: "hidden", cursor: "pointer", flexShrink: 0, border: activeImg === i ? `2.5px solid ${catInfo.color || "#5bc4e0"}` : "2.5px solid rgba(255,255,255,.12)", opacity: activeImg === i ? 1 : 0.5 }}>
+                  style={{ width: 80, height: 56, borderRadius: 6, overflow: "hidden", cursor: "pointer", flexShrink: 0, border: activeImg === i ? `2.5px solid ${catInfo.color || "#22d3ee"}` : "2.5px solid rgba(255,255,255,.12)", opacity: activeImg === i ? 1 : 0.5 }}>
                   <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=56&fit=crop"} />
                 </div>
               ))}
@@ -2377,29 +2378,29 @@ function ServicesPage({ content, services, navigateTo }) {
                 <div className="mg-fade-2" style={{ marginBottom: 52 }}>
                   {/* Section heading with ornamental bar */}
                   <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-                    <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || "#2b7a9a"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+                    <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || "#0891b2"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
                     <div>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#a0b8c5", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Dokumentasi</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#2d2d2d", lineHeight: 1.1 }}>Fasilitas &amp; Suasana</div>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Dokumentasi</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Fasilitas &amp; Suasana</div>
                     </div>
-                    <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #ddd5c8, transparent)" }} />
+                    <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
                     {/* Decorative dot cluster */}
                     <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
-                      {[1,2,3].map(d => <div key={d} style={{ width: 5, height: 5, borderRadius: "50%", background: d === 1 ? (catInfo.color || "#2b7a9a") : "#ddd5c8" }} />)}
+                      {[1,2,3].map(d => <div key={d} style={{ width: 5, height: 5, borderRadius: "50%", background: d === 1 ? (catInfo.color || "#0891b2") : "#c0e8f0" }} />)}
                     </div>
                   </div>
                   {/* Masonry grid */}
                   <div style={{ display: "grid", gridTemplateColumns: facilityImgs.length >= 3 ? "1.4fr 1fr 1fr" : facilityImgs.length === 2 ? "1fr 1fr" : "1fr", gap: 10, gridAutoRows: facilityImgs.length >= 3 ? "200px" : "260px" }}>
                     {facilityImgs.slice(0, 5).map((img, i) => (
                       <div key={i}
-                        style={{ borderRadius: 10, overflow: "hidden", position: "relative", gridRow: i === 0 && facilityImgs.length >= 3 ? "span 2" : "auto", boxShadow: "0 4px 18px rgba(45,45,45,.1)", transition: "transform .25s, box-shadow .25s", cursor: "pointer" }}
-                        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.025)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(45,45,45,.2)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 18px rgba(45,45,45,.1)"; }}>
+                        style={{ borderRadius: 10, overflow: "hidden", position: "relative", gridRow: i === 0 && facilityImgs.length >= 3 ? "span 2" : "auto", boxShadow: "0 4px 18px rgba(13,59,102,.1)", transition: "transform .25s, box-shadow .25s", cursor: "pointer" }}
+                        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.025)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(13,59,102,.2)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 18px rgba(13,59,102,.1)"; }}>
                         <img src={img} alt={`Fasilitas ${i + 1}`}
                           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                           onError={e => e.target.src = `https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=700&fit=crop`} />
                         {/* Gradient overlay */}
-                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(45,45,45,.45) 0%, transparent 50%)", pointerEvents: "none" }} />
+                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13,59,102,.45) 0%, transparent 50%)", pointerEvents: "none" }} />
                         {/* Number badge */}
                         <div style={{ position: "absolute", top: 10, left: 10, background: "rgba(0,0,0,.48)", backdropFilter: "blur(6px)", borderRadius: 4, padding: "3px 9px", fontSize: "0.625rem", color: "#fff", fontWeight: 800, letterSpacing: ".1em" }}>
                           {String(i + 1).padStart(2, "0")}
@@ -2420,21 +2421,21 @@ function ServicesPage({ content, services, navigateTo }) {
               {/* FEATURES — 2-col magazine checklist */}
               <div className="mg-fade-3" style={{ marginBottom: 48 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 26 }}>
-                  <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || "#2b7a9a"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+                  <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || "#0891b2"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
                   <div>
-                    <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#a0b8c5", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Sudah Termasuk</div>
-                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#2d2d2d", lineHeight: 1.1 }}>Yang Anda Dapatkan</div>
+                    <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Sudah Termasuk</div>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Yang Anda Dapatkan</div>
                   </div>
-                  <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #ddd5c8, transparent)" }} />
+                  <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
                 </div>
                 <div className="mg-feat-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                   {(svc.features || []).map((feat, i) => (
-                    <div key={i} className="mg-feat-row" style={{ display: "flex", gap: 11, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px 13px 18px", border: "1px solid #e8e0d6", transition: "background .18s", position: "relative", overflow: "hidden" }}>
-                      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: catInfo.color || "#2b7a9a", borderRadius: "10px 0 0 10px" }} />
+                    <div key={i} className="mg-feat-row" style={{ display: "flex", gap: 11, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px 13px 18px", border: "1px solid #c8eaf2", transition: "background .18s", position: "relative", overflow: "hidden" }}>
+                      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: catInfo.color || "#0891b2", borderRadius: "10px 0 0 10px" }} />
                       <div style={{ width: 20, height: 20, borderRadius: "50%", background: catInfo.color ? `${catInfo.color}15` : "#e4f2f8", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
-                        <span style={{ color: catInfo.color || "#2b7a9a", fontSize: "0.6875rem", fontWeight: 900 }}>✓</span>
+                        <span style={{ color: catInfo.color || "#0891b2", fontSize: "0.6875rem", fontWeight: 900 }}>✓</span>
                       </div>
-                      <span style={{ fontSize: "0.85rem", color: "#3d8fab", lineHeight: 1.5, fontWeight: 500 }}>{feat}</span>
+                      <span style={{ fontSize: "0.85rem", color: "#0ea5c5", lineHeight: 1.5, fontWeight: 500 }}>{feat}</span>
                     </div>
                   ))}
                 </div>
@@ -2444,29 +2445,29 @@ function ServicesPage({ content, services, navigateTo }) {
               {relatedSvcs.length > 0 && (
                 <div className="mg-fade-3">
                   <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
-                    <div style={{ width: 4, height: 30, background: "linear-gradient(to bottom, #9ab0bf, transparent)", borderRadius: 2, flexShrink: 0 }} />
+                    <div style={{ width: 4, height: 30, background: "linear-gradient(to bottom, #7ab5cc, transparent)", borderRadius: 2, flexShrink: 0 }} />
                     <div>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#a0b8c5", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Lihat Juga</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#2d2d2d", lineHeight: 1.1 }}>Paket Serupa</div>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Lihat Juga</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Paket Serupa</div>
                     </div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {relatedSvcs.map(s => (
                       <div key={s.id} className="mg-related" onClick={() => openDetail(s)}
-                        style={{ display: "flex", gap: 0, alignItems: "stretch", background: "#fff", borderRadius: 12, overflow: "hidden", cursor: "pointer", boxShadow: "0 2px 10px rgba(45,45,45,.07)", border: "1px solid #e8e0d6" }}
-                        onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 28px rgba(45,45,45,.14)"}
-                        onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(45,45,45,.07)"}>
+                        style={{ display: "flex", gap: 0, alignItems: "stretch", background: "#fff", borderRadius: 12, overflow: "hidden", cursor: "pointer", boxShadow: "0 2px 10px rgba(13,59,102,.07)", border: "1px solid #c8eaf2" }}
+                        onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 28px rgba(13,59,102,.14)"}
+                        onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(13,59,102,.07)"}>
                         <div style={{ width: 90, flexShrink: 0, overflow: "hidden", position: "relative" }}>
                           <img src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
                             onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=70&fit=crop"} />
                         </div>
-                        <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#2b7a9a"}, transparent)` }} />
+                        <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#0891b2"}, transparent)` }} />
                         <div style={{ padding: "12px 14px", flex: 1 }}>
-                          {s.badge && <div style={{ fontSize: "0.5625rem", color: s.badgeColor || "#2b7a9a", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{s.badge}</div>}
-                          <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#2d2d2d", marginBottom: 4, lineHeight: 1.3 }}>{s.title}</div>
-                          <div style={{ fontSize: "0.8125rem", color: s.badgeColor || "#2b7a9a", fontWeight: 800 }}>{s.price} <span style={{ color: "#a0b8c5", fontWeight: 400, fontSize: "0.75rem" }}>{s.priceNote}</span></div>
+                          {s.badge && <div style={{ fontSize: "0.5625rem", color: s.badgeColor || "#0891b2", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{s.badge}</div>}
+                          <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#0d3b66", marginBottom: 4, lineHeight: 1.3 }}>{s.title}</div>
+                          <div style={{ fontSize: "0.8125rem", color: s.badgeColor || "#0891b2", fontWeight: 800 }}>{s.price} <span style={{ color: "#7ab5cc", fontWeight: 400, fontSize: "0.75rem" }}>{s.priceNote}</span></div>
                         </div>
-                        <div style={{ display: "flex", alignItems: "center", paddingRight: 14, color: "#c8c0b5", fontSize: "1.125rem" }}>›</div>
+                        <div style={{ display: "flex", alignItems: "center", paddingRight: 14, color: "#9ed4e0", fontSize: "1.125rem" }}>›</div>
                       </div>
                     ))}
                   </div>
@@ -2478,20 +2479,20 @@ function ServicesPage({ content, services, navigateTo }) {
             <div style={{ position: "sticky", top: 128 }}>
 
               {/* Price Card */}
-              <div className="mg-fade-2" style={{ background: svc.highlight ? "linear-gradient(145deg,#1a1a1a 0%,#2d2d2d 55%,#2b7a9a 100%)" : "#fff", borderRadius: 16, overflow: "hidden", boxShadow: svc.highlight ? "0 24px 64px rgba(12,26,40,.5)" : "0 8px 32px rgba(45,45,45,.11)", border: svc.highlight ? "none" : "1px solid #e8e0d6", marginBottom: 18 }}>
+              <div className="mg-fade-2" style={{ background: svc.highlight ? "linear-gradient(145deg,#1a1a1a 0%,#0d3b66 55%,#0891b2 100%)" : "#fff", borderRadius: 16, overflow: "hidden", boxShadow: svc.highlight ? "0 24px 64px rgba(12,26,40,.5)" : "0 8px 32px rgba(13,59,102,.11)", border: svc.highlight ? "none" : "1px solid #c8eaf2", marginBottom: 18 }}>
                 {/* Top gradient bar */}
-                <div style={{ height: 4, background: `linear-gradient(to right, ${catInfo.color || "#2b7a9a"}, ${svc.badgeColor || catInfo.color || "#2d2d2d"})` }} />
+                <div style={{ height: 4, background: `linear-gradient(to right, ${catInfo.color || "#0891b2"}, ${svc.badgeColor || catInfo.color || "#0d3b66"})` }} />
                 {/* Deco border inner */}
                 <div style={{ margin: "16px 16px 0", border: `1px solid ${svc.highlight ? "rgba(255,255,255,.07)" : "#f0e8df"}`, borderRadius: 10, padding: "20px 18px 24px", position: "relative", overflow: "hidden" }}>
                   {/* BG shape */}
-                  <div style={{ position: "absolute", bottom: -20, right: -20, width: 80, height: 80, borderRadius: "50%", background: svc.highlight ? "rgba(255,255,255,.04)" : `${catInfo.color || "#2b7a9a"}08`, pointerEvents: "none" }} />
+                  <div style={{ position: "absolute", bottom: -20, right: -20, width: 80, height: 80, borderRadius: "50%", background: svc.highlight ? "rgba(255,255,255,.04)" : `${catInfo.color || "#0891b2"}08`, pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
                     <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: svc.highlight ? "rgba(255,255,255,.3)" : "#b8a898", textTransform: "uppercase", fontWeight: 700, marginBottom: 16, textAlign: "center" }}>— Penawaran Spesial —</div>
                     {/* Harga */}
                     <div style={{ textAlign: "center", marginBottom: 10 }}>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: svc.highlight ? "rgba(255,255,255,.38)" : "#a0b8c5", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Harga Mulai</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.6rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#2d2d2d", lineHeight: 1, marginBottom: 4 }}>{svc.price}</div>
-                      <div style={{ fontSize: "0.875rem", color: svc.highlight ? "rgba(255,255,255,.45)" : "#a0b8c5", fontWeight: 500 }}>{svc.priceNote}</div>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: svc.highlight ? "rgba(255,255,255,.38)" : "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Harga Mulai</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.6rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#0d3b66", lineHeight: 1, marginBottom: 4 }}>{svc.price}</div>
+                      <div style={{ fontSize: "0.875rem", color: svc.highlight ? "rgba(255,255,255,.45)" : "#7ab5cc", fontWeight: 500 }}>{svc.priceNote}</div>
                     </div>
                     <div style={{ height: 1, background: svc.highlight ? "rgba(255,255,255,.08)" : "#f0e8df", margin: "18px 0" }} />
                     {/* Nego */}
@@ -2504,28 +2505,28 @@ function ServicesPage({ content, services, navigateTo }) {
                 {/* CTA Buttons */}
                 <div style={{ padding: "16px" }}>
                   <button className="mg-cta-wa" onClick={() => handleBook(svc)}
-                    style={{ width: "100%", padding: "15px 20px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 10, transition: "background .2s", letterSpacing: ".01em" }}>
+                    style={{ width: "100%", padding: "15px 20px", background: "linear-gradient(135deg,#0891b2,#0ea5c5)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 10, transition: "background .2s", letterSpacing: ".01em" }}>
                     <span style={{ fontSize: "1.1rem" }}>💬</span> Pesan via WhatsApp
                   </button>
                   <a href={`tel:${content.phone}`} className="mg-cta-tel"
-                    style={{ width: "100%", padding: "13px 20px", background: "#f5f1ec", color: "#2d2d2d", border: "1.5px solid #ddd5c8", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "background .2s" }}>
+                    style={{ width: "100%", padding: "13px 20px", background: "#edf8fb", color: "#0d3b66", border: "1.5px solid #c0e8f0", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "background .2s" }}>
                     <span style={{ fontSize: "1rem" }}>📞</span> Hubungi Langsung
                   </a>
                 </div>
               </div>
 
               {/* Why Us — dark card with deco border */}
-              <div className="mg-fade-3" style={{ background: "#2d2d2d", borderRadius: 14, padding: "2px", overflow: "hidden", position: "relative" }}>
+              <div className="mg-fade-3" style={{ background: "linear-gradient(135deg,#063d5c,#0875a8)", borderRadius: 14, padding: "2px", overflow: "hidden", position: "relative" }}>
                 {/* Gradient border effect */}
-                <div style={{ position: "absolute", inset: 0, background: `linear-gradient(145deg, ${catInfo.color || "#2b7a9a"}44, transparent, rgba(255,255,255,.06))`, borderRadius: 14, pointerEvents: "none" }} />
-                <div style={{ background: "#2d2d2d", borderRadius: 12, padding: "22px 20px", position: "relative" }}>
+                <div style={{ position: "absolute", inset: 0, background: `linear-gradient(145deg, ${catInfo.color || "#0891b2"}44, transparent, rgba(255,255,255,.06))`, borderRadius: 14, pointerEvents: "none" }} />
+                <div style={{ background: "linear-gradient(135deg,#063d5c,#0875a8)", borderRadius: 12, padding: "22px 20px", position: "relative" }}>
                   {/* Inner deco frame */}
                   <div style={{ position: "absolute", top: 10, left: 10, right: 10, bottom: 10, border: "1px solid rgba(255,255,255,.05)", borderRadius: 8, pointerEvents: "none" }} />
                   {/* BG shapes */}
-                  <div style={{ position: "absolute", bottom: -25, right: -25, width: 90, height: 90, borderRadius: "50%", background: `${catInfo.color || "#2b7a9a"}18`, pointerEvents: "none" }} />
+                  <div style={{ position: "absolute", bottom: -25, right: -25, width: 90, height: 90, borderRadius: "50%", background: `${catInfo.color || "#0891b2"}18`, pointerEvents: "none" }} />
                   <div style={{ position: "relative" }}>
-                    <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: catInfo.color || "#5bc4e0", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Keunggulan Kami</div>
-                    <div style={{ width: 28, height: 2, background: catInfo.color || "#5bc4e0", borderRadius: 1, marginBottom: 18 }} />
+                    <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: catInfo.color || "#22d3ee", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Keunggulan Kami</div>
+                    <div style={{ width: 28, height: 2, background: catInfo.color || "#22d3ee", borderRadius: 1, marginBottom: 18 }} />
                     {[
                       { icon: "🏆", label: "Tim Profesional", desc: "Berpengalaman di bidangnya" },
                       { icon: "🤝", label: "Konsultasi Gratis", desc: "Diskusi tanpa biaya apapun" },
@@ -2555,19 +2556,24 @@ function ServicesPage({ content, services, navigateTo }) {
   const filteredServices = activeCategory ? services.filter(s => s.category === activeCategory) : [];
 
   return (
-    <div className="fade-in" style={{ minHeight: "100vh", background: "#f4f9fb" }}>
-      {/* Header */}
-      <div style={{ background: "linear-gradient(135deg,#2d2d2d 0%,#2b7a9a 100%)", padding: "72px 5% 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: -80, right: -80, width: 350, height: 350, borderRadius: "50%", background: "rgba(255,255,255,.04)", pointerEvents: "none" }} />
+    <div className="fade-in" style={{ minHeight: "100vh", background: "#edfafc" }}>
+      {/* Header — gradient + radial flare like reference */}
+      <div style={{ background: "linear-gradient(120deg,#063d5c 0%,#0875a8 40%,#0aa8bf 72%,#1ed8e8 100%)", padding: "72px 5% 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        {/* Flare glow center-right */}
+        <div style={{ position: "absolute", top: "50%", right: "18%", transform: "translateY(-50%)", width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle, rgba(30,216,232,.38) 0%, rgba(10,168,191,.18) 40%, transparent 70%)", pointerEvents: "none", filter: "blur(12px)" }} />
+        {/* Flare glow left */}
+        <div style={{ position: "absolute", top: "60%", left: "8%", transform: "translateY(-50%)", width: 280, height: 280, borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,197,.28) 0%, transparent 70%)", pointerEvents: "none", filter: "blur(20px)" }} />
+        {/* Grid pattern overlay */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1px)", backgroundSize: "28px 28px", pointerEvents: "none" }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: 680, margin: "0 auto" }}>
-          <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "rgba(255,255,255,.6)", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Apa yang Kami Tawarkan</div>
-          <h1 className="display" style={{ fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 18 }}>{content.servicesPageTitle || "Paket Layanan Kami"}</h1>
-          <p style={{ fontSize: "1.0625rem", color: "rgba(255,255,255,.75)", lineHeight: 1.8 }}>{content.servicesPageSub || "Pilih kategori layanan sesuai kebutuhan Anda."}</p>
+          <div style={{ fontSize: "0.6875rem", letterSpacing: "3px", color: "rgba(255,255,255,.7)", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>Apa yang Kami Tawarkan</div>
+          <h1 className="display" style={{ fontSize: "clamp(2rem,5vw,3.25rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 18, textShadow: "0 2px 24px rgba(0,0,0,.22)" }}>{content.servicesPageTitle || "Paket Layanan Kami"}</h1>
+          <p style={{ fontSize: "1.0625rem", color: "rgba(255,255,255,.82)", lineHeight: 1.8 }}>{content.servicesPageSub || "Pilih kategori layanan sesuai kebutuhan Anda."}</p>
         </div>
       </div>
 
       {/* Category Buttons */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #ddeef5", padding: "0 5%" }}>
+      <div style={{ background: "#fff", borderBottom: "1px solid #c0e8f0", padding: "0 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", gap: 0, overflowX: "auto" }}>
           {CATEGORIES.map(cat => {
             const isActive = activeCategory === cat.key;
@@ -2575,10 +2581,10 @@ function ServicesPage({ content, services, navigateTo }) {
             return (
               <button key={cat.key} onClick={() => setActiveCategory(isActive ? null : cat.key)}
                 style={{ padding: "20px 28px", border: "none", background: "none", fontSize: "0.9375rem", fontWeight: isActive ? 700 : 500,
-                  color: isActive ? cat.color : "#4e6b80", borderBottom: isActive ? `3px solid ${cat.color}` : "3px solid transparent",
+                  color: isActive ? cat.color : "#1a5a78", borderBottom: isActive ? `3px solid ${cat.color}` : "3px solid transparent",
                   cursor: "pointer", whiteSpace: "nowrap", transition: "all .25s", display: "flex", alignItems: "center", gap: 8 }}>
                 {cat.label}
-                <span style={{ fontSize: "0.75rem", background: isActive ? cat.color : "#f4f9fb", color: isActive ? "#fff" : "#6b8999", borderRadius: 12, padding: "2px 8px", fontWeight: 700, transition: "all .25s" }}>{count}</span>
+                <span style={{ fontSize: "0.75rem", background: isActive ? cat.color : "#edfafc", color: isActive ? "#fff" : "#4a7f98", borderRadius: 12, padding: "2px 8px", fontWeight: 700, transition: "all .25s" }}>{count}</span>
               </button>
             );
           })}
@@ -2590,8 +2596,8 @@ function ServicesPage({ content, services, navigateTo }) {
         {!activeCategory && (
           <div style={{ textAlign: "center", padding: "60px 20px" }}>
             <div style={{ fontSize: 56, marginBottom: 20 }}>👆</div>
-            <h2 className="display" style={{ fontSize: "1.75rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 12 }}>Pilih Kategori Layanan</h2>
-            <p style={{ fontSize: "1rem", color: "#6b8999" }}>Klik salah satu tab di atas untuk melihat paket layanan yang tersedia.</p>
+            <h2 className="display" style={{ fontSize: "1.75rem", fontWeight: 900, color: "#0d3b66", marginBottom: 12 }}>Pilih Kategori Layanan</h2>
+            <p style={{ fontSize: "1rem", color: "#4a7f98" }}>Klik salah satu tab di atas untuk melihat paket layanan yang tersedia.</p>
           </div>
         )}
 
@@ -2599,27 +2605,27 @@ function ServicesPage({ content, services, navigateTo }) {
         {activeCategory && (
           <div style={{ animation: "fadeIn .35s ease" }}>
             <div style={{ marginBottom: 32 }}>
-              <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 6 }}>
+              <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>
                 {CATEGORIES.find(c => c.key === activeCategory)?.label}
               </h2>
-              <p style={{ fontSize: "0.9375rem", color: "#6b8999" }}>{filteredServices.length} paket tersedia</p>
+              <p style={{ fontSize: "0.9375rem", color: "#4a7f98" }}>{filteredServices.length} paket tersedia</p>
             </div>
             {filteredServices.length === 0 ? (
-              <div style={{ textAlign: "center", padding: "60px 0", color: "#7a9db0" }}>Belum ada paket untuk kategori ini.</div>
+              <div style={{ textAlign: "center", padding: "60px 0", color: "#5090aa" }}>Belum ada paket untuk kategori ini.</div>
             ) : (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 28 }}>
                 {filteredServices.map(svc => (
                   <div key={svc.id}
                     onMouseEnter={() => setHoveredCard(svc.id)}
                     onMouseLeave={() => setHoveredCard(null)}
-                    style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: hoveredCard === svc.id ? "0 20px 48px rgba(45,45,45,.16)" : "0 4px 16px rgba(45,45,45,.08)", transform: hoveredCard === svc.id ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #2b7a9a" : "2px solid transparent", position: "relative" }}>
+                    style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: hoveredCard === svc.id ? "0 20px 48px rgba(13,59,102,.16)" : "0 4px 16px rgba(13,59,102,.08)", transform: hoveredCard === svc.id ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #0891b2" : "2px solid transparent", position: "relative" }}>
                     {svc.badge && (
-                      <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
+                      <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2, background: svc.badgeColor || "#0891b2", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
                         {svc.badge}
                       </div>
                     )}
                     {svc.highlight && (
-                      <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "#2d2d2d", color: "#fff", borderRadius: 20, padding: "4px 12px", fontSize: "0.6875rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
+                      <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "#0d3b66", color: "#fff", borderRadius: 20, padding: "4px 12px", fontSize: "0.6875rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
                     )}
                     <div style={{ height: 200, overflow: "hidden" }}>
                       <img src={(svc.images?.[0] || svc.image)} alt={svc.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
@@ -2628,28 +2634,28 @@ function ServicesPage({ content, services, navigateTo }) {
                         onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=600&fit=crop"; }} />
                     </div>
                     <div style={{ padding: "22px 22px 20px" }}>
-                      <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#2d2d2d", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
-                      <p style={{ fontSize: "0.875rem", color: "#6b8999", lineHeight: 1.7, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
+                      <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
+                      <p style={{ fontSize: "0.875rem", color: "#4a7f98", lineHeight: 1.7, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
                       <div style={{ marginBottom: 16 }}>
                         {(svc.features || []).slice(0, 3).map((feat, i) => (
                           <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
                             <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem" }}>✓</span>
-                            <span style={{ fontSize: "0.8125rem", color: "#4e6b80" }}>{feat}</span>
+                            <span style={{ fontSize: "0.8125rem", color: "#1a5a78" }}>{feat}</span>
                           </div>
                         ))}
                         {(svc.features || []).length > 3 && (
-                          <div style={{ fontSize: "0.75rem", color: "#2b7a9a", fontWeight: 600, marginTop: 4 }}>+{svc.features.length - 3} fitur lainnya</div>
+                          <div style={{ fontSize: "0.75rem", color: "#0891b2", fontWeight: 600, marginTop: 4 }}>+{svc.features.length - 3} fitur lainnya</div>
                         )}
                       </div>
                       <div style={{ borderTop: "1px solid #f0f7fb", paddingTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
                         <div>
-                          <div style={{ fontSize: "0.65rem", color: "#7a9db0", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 2 }}>Mulai Dari</div>
-                          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.375rem", fontWeight: 900, color: "#2d2d2d", lineHeight: 1 }}>{svc.price}</div>
-                          <div style={{ fontSize: "0.6875rem", color: "#6b8999" }}>{svc.priceNote}</div>
-                          <div style={{ fontSize: "0.6875rem", color: "#2b7a9a", fontWeight: 600, fontStyle: "italic", marginTop: 2 }}>Nego / Konsultasi dulu</div>
+                          <div style={{ fontSize: "0.65rem", color: "#5090aa", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 2 }}>Mulai Dari</div>
+                          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.375rem", fontWeight: 900, color: "#0d3b66", lineHeight: 1 }}>{svc.price}</div>
+                          <div style={{ fontSize: "0.6875rem", color: "#4a7f98" }}>{svc.priceNote}</div>
+                          <div style={{ fontSize: "0.6875rem", color: "#0891b2", fontWeight: 600, fontStyle: "italic", marginTop: 2 }}>Nego / Konsultasi dulu</div>
                         </div>
                         <button onClick={() => openDetail(svc)}
-                          style={{ padding: "10px 18px", background: svc.highlight ? "linear-gradient(135deg,#2d2d2d,#2b7a9a)" : "#2d2d2d", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s", letterSpacing: ".03em", whiteSpace: "nowrap" }}
+                          style={{ padding: "10px 18px", background: svc.highlight ? "linear-gradient(135deg,#0d3b66,#0891b2)" : "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s", letterSpacing: ".03em", whiteSpace: "nowrap" }}
                           onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
                           onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
                           Lihat Detail
@@ -2665,13 +2671,13 @@ function ServicesPage({ content, services, navigateTo }) {
       </div>
 
       {/* CTA Banner */}
-      <section style={{ background: "linear-gradient(135deg,#2d2d2d,#2b7a9a)", padding: "72px 5%", textAlign: "center" }}>
+      <section style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", padding: "72px 5%", textAlign: "center" }}>
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.5rem)", fontWeight: 900, color: "#fff", marginBottom: 16, lineHeight: 1.15 }}>Tidak Menemukan Paket yang Cocok?</h2>
           <p style={{ color: "rgba(255,255,255,.75)", fontSize: "1rem", marginBottom: 36, lineHeight: 1.7 }}>Kami siap membuat paket khusus sesuai kebutuhan dan budget Anda.</p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <button onClick={() => window.open(content.waLink || "https://wa.me/6285745571442", "_blank")}
-              style={{ padding: "14px 32px", background: "#fff", color: "#2d2d2d", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "background .2s" }}
+              style={{ padding: "14px 32px", background: "#fff", color: "#0d3b66", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "background .2s" }}
               onMouseEnter={e => e.currentTarget.style.background = "#c5dde9"}
               onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
               💬 WhatsApp Kami
@@ -2696,7 +2702,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
   const svcs = data.services || [];
 
   const openNew = () => {
-    setSvcForm({ id: Date.now(), category: "traveling", title: "", badge: "", badgeColor: "#2b7a9a", price: "", priceNote: "/ orang", images: [], image: "", description: "", features: [], highlight: false });
+    setSvcForm({ id: Date.now(), category: "traveling", title: "", badge: "", badgeColor: "#0891b2", price: "", priceNote: "/ orang", images: [], image: "", description: "", features: [], highlight: false });
     setEditSvc("new");
   };
   const openEdit = (s) => { setSvcForm({ ...s, features: [...(s.features || [])], images: [...(s.images || (s.image ? [s.image] : []))] }); setEditSvc(s.id); };
@@ -2729,27 +2735,27 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
     <div className="fade-in">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <div>
-          <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d", marginBottom: 4 }}>Layanan / Paket</h1>
-          <p style={{ fontSize: 12, color: "#7a9db0" }}>Kelola paket layanan yang tampil di halaman Layanan Kami.</p>
+          <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 4 }}>Layanan / Paket</h1>
+          <p style={{ fontSize: 12, color: "#5090aa" }}>Kelola paket layanan yang tampil di halaman Layanan Kami.</p>
         </div>
         <button onClick={openNew}
-          style={{ padding: "9px 20px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+          style={{ padding: "9px 20px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
           + Tambah Paket
         </button>
       </div>
 
       {/* Form Tambah / Edit */}
       {editSvc !== null && (
-        <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 28, boxShadow: "0 4px 16px rgba(0,0,0,.08)", borderTop: "4px solid #3d8fab" }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#2d2d2d", marginBottom: 20 }}>
+        <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 28, boxShadow: "0 4px 16px rgba(0,0,0,.08)", borderTop: "4px solid #0ea5c5" }}>
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#0d3b66", marginBottom: 20 }}>
             {editSvc === "new" ? "➕ Tambah Paket Baru" : "✏ Edit Paket"}
           </h2>
 
           {/* Kategori */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Kategori *</label>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Kategori *</label>
             <select value={svcForm.category || "traveling"} onChange={e => setSvcForm(p => ({ ...p, category: e.target.value }))}
-              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }}>
+              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }}>
               <option value="traveling">✈️ Traveling</option>
               <option value="event">🎉 Event Plan</option>
               <option value="wedding">💍 Wedding Organizer</option>
@@ -2765,30 +2771,30 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
               { label: "Warna Badge (hex)", key: "badgeColor", placeholder: "#e67e22" },
             ].map(f => (
               <div key={f.key}>
-                <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
+                <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
                 <input value={svcForm[f.key] || ""} onChange={e => setSvcForm(p => ({ ...p, [f.key]: e.target.value }))}
                   placeholder={f.placeholder}
-                  style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                  style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
               </div>
             ))}
           </div>
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Deskripsi</label>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Deskripsi</label>
             <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
               rows={3} placeholder="Deskripsi singkat paket layanan..."
-              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.6 }} />
+              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.6 }} />
           </div>
 
           {/* Multi-Image Upload */}
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Galeri Gambar ({(svcForm.images || []).length} foto)</label>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Galeri Gambar ({(svcForm.images || []).length} foto)</label>
             {/* Preview thumbnails */}
             {(svcForm.images || []).length > 0 && (
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
                 {(svcForm.images || []).map((img, i) => (
                   <div key={i} style={{ position: "relative" }}>
-                    <img src={img} alt="" style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, border: i === 0 ? "2px solid #2b7a9a" : "2px solid #ddeef5" }} />
-                    {i === 0 && <div style={{ position: "absolute", bottom: 2, left: 2, fontSize: 8, background: "#2b7a9a", color: "#fff", borderRadius: 3, padding: "1px 4px", fontWeight: 700 }}>COVER</div>}
+                    <img src={img} alt="" style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, border: i === 0 ? "2px solid #0891b2" : "2px solid #c0e8f0" }} />
+                    {i === 0 && <div style={{ position: "absolute", bottom: 2, left: 2, fontSize: 8, background: "#0891b2", color: "#fff", borderRadius: 3, padding: "1px 4px", fontWeight: 700 }}>COVER</div>}
                     <button onClick={() => setSvcForm(p => ({ ...p, images: p.images.filter((_, j) => j !== i), image: i === 0 ? (p.images[1] || "") : p.image }))}
                       style={{ position: "absolute", top: -4, right: -4, width: 18, height: 18, borderRadius: "50%", background: "#e74c3c", color: "#fff", border: "none", cursor: "pointer", fontSize: 10, lineHeight: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
                   </div>
@@ -2806,59 +2812,59 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                 });
                 notify(`${files.length} gambar berhasil diupload!`);
               } catch { notify("Gagal upload gambar.", "error"); }
-            }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #3d8fab", borderRadius: 6, background: "#f0f9fc", color: "#3d8fab", width: "100%" }} />
-            <div style={{ fontSize: 11, color: "#7a9db0", marginTop: 4 }}>Bisa pilih beberapa foto sekaligus. Foto pertama = cover.</div>
+            }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #0ea5c5", borderRadius: 6, background: "#e8f9fc", color: "#0ea5c5", width: "100%" }} />
+            <div style={{ fontSize: 11, color: "#5090aa", marginTop: 4 }}>Bisa pilih beberapa foto sekaligus. Foto pertama = cover.</div>
           </div>
 
           <div style={{ marginBottom: 16 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-              <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase" }}>Fitur / Yang Termasuk</label>
+              <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Fitur / Yang Termasuk</label>
               <button onClick={addFeature} style={{ fontSize: 12, padding: "4px 12px", background: "#e8f8ef", color: "#27ae60", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 700 }}>+ Tambah</button>
             </div>
             {(svcForm.features || []).map((feat, i) => (
               <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
                 <input value={feat} onChange={e => updateFeature(i, e.target.value)}
                   placeholder={`Fitur ${i + 1}...`}
-                  style={{ flex: 1, padding: "8px 10px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                  style={{ flex: 1, padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
                 <button onClick={() => removeFeature(i)} style={{ padding: "8px 12px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: 700 }}>✕</button>
               </div>
             ))}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
             <input type="checkbox" id="svc-highlight" checked={!!svcForm.highlight} onChange={e => setSvcForm(p => ({ ...p, highlight: e.target.checked }))} style={{ width: 16, height: 16, cursor: "pointer" }} />
-            <label htmlFor="svc-highlight" style={{ fontSize: 13, color: "#2d2d2d", fontWeight: 600, cursor: "pointer" }}>Tandai sebagai Pilihan Utama (highlight)</label>
+            <label htmlFor="svc-highlight" style={{ fontSize: 13, color: "#0d3b66", fontWeight: 600, cursor: "pointer" }}>Tandai sebagai Pilihan Utama (highlight)</label>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={saveSvc} style={{ padding: "10px 22px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan Paket</button>
-            <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#f4f9fb", color: "#6b8999", border: "1px solid #d0e4ee", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
+            <button onClick={saveSvc} style={{ padding: "10px 22px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan Paket</button>
+            <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#edfafc", color: "#4a7f98", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
           </div>
         </div>
       )}
 
       {/* Daftar Paket */}
       {svcs.length === 0 && editSvc === null ? (
-        <div style={{ background: "#fff", borderRadius: 10, padding: "60px 20px", textAlign: "center", color: "#7a9db0", boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
+        <div style={{ background: "#fff", borderRadius: 10, padding: "60px 20px", textAlign: "center", color: "#5090aa", boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
           <div style={{ fontSize: 40, marginBottom: 12 }}>🛎</div>
           <p style={{ fontSize: 14 }}>Belum ada paket layanan. Klik "+ Tambah Paket" untuk memulai.</p>
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           {svcs.map(svc => (
-            <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "18px 20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", gap: 16, alignItems: "flex-start", borderLeft: svc.highlight ? "4px solid #3d8fab" : "4px solid #ddeef5" }}>
+            <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "18px 20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", gap: 16, alignItems: "flex-start", borderLeft: svc.highlight ? "4px solid #0ea5c5" : "4px solid #c0e8f0" }}>
               {svc.image && (
                 <img src={svc.image} alt={svc.title} style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
               )}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 4 }}>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: "#2d2d2d" }}>{svc.title}</span>
-                  {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor || "#2b7a9a", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
-                  {svc.highlight && <span style={{ fontSize: 10, background: "#2d2d2d", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
+                  <span style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66" }}>{svc.title}</span>
+                  {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor || "#0891b2", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
+                  {svc.highlight && <span style={{ fontSize: 10, background: "#0d3b66", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
                 </div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#3d8fab" }}>{svc.price}<span style={{ color: "#7a9db0", fontWeight: 400 }}> {svc.priceNote}</span></div>
-                <div style={{ fontSize: 12, color: "#7a9db0", marginTop: 4 }}>{(svc.features || []).length} fitur termasuk</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#0ea5c5" }}>{svc.price}<span style={{ color: "#5090aa", fontWeight: 400 }}> {svc.priceNote}</span></div>
+                <div style={{ fontSize: 12, color: "#5090aa", marginTop: 4 }}>{(svc.features || []).length} fitur termasuk</div>
               </div>
               <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
-                <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: "#f4f9fb", color: "#2d2d2d", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
+                <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: "#edfafc", color: "#0d3b66", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
                 <button onClick={() => deleteSvc(svc.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
               </div>
             </div>
@@ -2912,13 +2918,13 @@ function AboutPage({ content, images, teamMembers }) {
       {/* ── HERO ── */}
       <div style={{ background: "linear-gradient(135deg, #e8f4fb 0%, #d0eaf7 50%, #b8ddf0 100%)", padding: "80px 5% 90px", overflow: "hidden", position: "relative" }}>
         <div style={{ position: "absolute", top: -60, right: -60, width: 400, height: 400, borderRadius: "50%", background: "rgba(255,255,255,.12)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: -80, left: "20%", width: 300, height: 300, borderRadius: "50%", background: "rgba(43,122,154,.1)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: -80, left: "20%", width: 300, height: 300, borderRadius: "50%", background: "rgba(8,145,178,.1)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 1200, margin: "0 auto" }} className="about-hero-grid">
           <div style={{ position: "relative", zIndex: 1 }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(43,122,154,.15)", border: "1px solid rgba(43,122,154,.3)", borderRadius: 20, padding: "5px 16px", marginBottom: 24 }}>
-              <span style={{ fontSize: 10, letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700 }}>Tentang Kami</span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(8,145,178,.15)", border: "1px solid rgba(8,145,178,.3)", borderRadius: 20, padding: "5px 16px", marginBottom: 24 }}>
+              <span style={{ fontSize: 10, letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700 }}>Tentang Kami</span>
             </div>
-            <h1 className="display" style={{ fontSize: "clamp(2.25rem,5vw,3.75rem)", fontWeight: 900, lineHeight: 1.06, color: "#2d2d2d", marginBottom: 24 }}>
+            <h1 className="display" style={{ fontSize: "clamp(2.25rem,5vw,3.75rem)", fontWeight: 900, lineHeight: 1.06, color: "#0d3b66", marginBottom: 24 }}>
               {content.aboutHeroTitle || "Arutala Travel & Organizer"}
             </h1>
             <p style={{ fontSize: "1.0625rem", color: "#2d4f65", lineHeight: 1.9, maxWidth: 420, marginBottom: 32, whiteSpace: "pre-line" }}>
@@ -2926,20 +2932,20 @@ function AboutPage({ content, images, teamMembers }) {
             </p>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
               <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
-                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "#2d2d2d", color: "#fff", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s" }}
-                onMouseEnter={e => e.currentTarget.style.background = "#2b7a9a"}
-                onMouseLeave={e => e.currentTarget.style.background = "#2d2d2d"}>
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "#0d3b66", color: "#fff", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
+                onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                 💬 Hubungi Kami
               </a>
               <a href={`tel:${content.phone}`}
-                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "transparent", color: "#2d2d2d", border: "1.5px solid #2d2d2d", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none" }}>
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "transparent", color: "#0d3b66", border: "1.5px solid #0d3b66", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none" }}>
                 📞 {content.phone || "Telepon"}
               </a>
             </div>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             {images.hero.slice(0, 4).map((src, i) => (
-              <div key={i} className="img-zoom" style={{ borderRadius: 8, overflow: "hidden", aspectRatio: "4/3", boxShadow: "0 8px 24px rgba(45,45,45,.15)" }}>
+              <div key={i} className="img-zoom" style={{ borderRadius: 8, overflow: "hidden", aspectRatio: "4/3", boxShadow: "0 8px 24px rgba(13,59,102,.15)" }}>
                 <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             ))}
@@ -2948,7 +2954,7 @@ function AboutPage({ content, images, teamMembers }) {
       </div>
 
       {/* ── STATS STRIP ── */}
-      <div style={{ background: "#2d2d2d", padding: "36px 5%" }}>
+      <div style={{ background: "#0d3b66", padding: "36px 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 24, textAlign: "center" }}>
           {[
             { num: "500+", label: "Klien Puas" },
@@ -2957,7 +2963,7 @@ function AboutPage({ content, images, teamMembers }) {
             { num: "24/7", label: "Layanan Support" },
           ].map(s => (
             <div key={s.label}>
-              <div style={{ fontSize: "clamp(1.75rem,4vw,2.5rem)", fontWeight: 900, color: "#5bc4e0", fontFamily: "'Playfair Display',serif", lineHeight: 1 }}>{s.num}</div>
+              <div style={{ fontSize: "clamp(1.75rem,4vw,2.5rem)", fontWeight: 900, color: "#22d3ee", fontFamily: "'Playfair Display',serif", lineHeight: 1 }}>{s.num}</div>
               <div style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.65)", marginTop: 6, fontWeight: 500, letterSpacing: ".04em" }}>{s.label}</div>
             </div>
           ))}
@@ -2967,20 +2973,20 @@ function AboutPage({ content, images, teamMembers }) {
       {/* ── VISI MISI ── */}
       <div style={{ padding: "80px 5%", maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }} className="grid-2">
-          <div style={{ background: "linear-gradient(135deg, #2b7a9a 0%, #3d8fab 100%)", borderRadius: 12, padding: "40px 36px", color: "#fff" }}>
+          <div style={{ background: "linear-gradient(135deg, #0891b2 0%, #0ea5c5 100%)", borderRadius: 12, padding: "40px 36px", color: "#fff" }}>
             <div style={{ fontSize: 36, marginBottom: 20 }}>🎯</div>
             <h3 style={{ fontSize: "1.5rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, marginBottom: 16, color: "#fff" }}>Visi Kami</h3>
             <p style={{ fontSize: "0.9375rem", lineHeight: 1.85, color: "rgba(255,255,255,.8)" }}>
               Menjadi perusahaan travel dan organizer terkemuka di Indonesia yang dikenal atas pelayanan profesional, kreativitas, dan kemampuan mewujudkan momen-momen tak terlupakan bagi setiap klien.
             </p>
           </div>
-          <div style={{ background: "#f4f9fb", borderRadius: 12, padding: "40px 36px", borderLeft: "4px solid #2b7a9a" }}>
+          <div style={{ background: "#edfafc", borderRadius: 12, padding: "40px 36px", borderLeft: "4px solid #0891b2" }}>
             <div style={{ fontSize: 36, marginBottom: 20 }}>🚀</div>
-            <h3 style={{ fontSize: "1.5rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, marginBottom: 16, color: "#2d2d2d" }}>Misi Kami</h3>
+            <h3 style={{ fontSize: "1.5rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, marginBottom: 16, color: "#0d3b66" }}>Misi Kami</h3>
             <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
               {["Memberikan layanan terbaik dengan standar profesional tinggi", "Memastikan kepuasan klien di setiap momen yang kami tangani", "Berinovasi dalam layanan travel & event secara berkelanjutan", "Membangun kepercayaan jangka panjang bersama klien dan mitra"].map(m => (
-                <li key={m} style={{ display: "flex", gap: 10, fontSize: "0.9rem", color: "#4e6b80", lineHeight: 1.6 }}>
-                  <span style={{ color: "#2b7a9a", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                <li key={m} style={{ display: "flex", gap: 10, fontSize: "0.9rem", color: "#1a5a78", lineHeight: 1.6 }}>
+                  <span style={{ color: "#0891b2", fontWeight: 700, flexShrink: 0 }}>✓</span>
                   {m}
                 </li>
               ))}
@@ -2990,18 +2996,18 @@ function AboutPage({ content, images, teamMembers }) {
       </div>
 
       {/* ── WHY CHOOSE US ── */}
-      <div style={{ background: "#f4f9fb", padding: "80px 5%" }}>
+      <div style={{ background: "#edfafc", padding: "80px 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Keunggulan Kami</div>
-            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#2d2d2d" }}>{content.aboutWhyTitle || "Mengapa Memilih Arutala?"}</h2>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Keunggulan Kami</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#0d3b66" }}>{content.aboutWhyTitle || "Mengapa Memilih Arutala?"}</h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
             {values.map((v, i) => (
-              <div key={v.title} className="hover-lift" style={{ background: "#fff", borderRadius: 12, padding: "32px 28px", boxShadow: "0 2px 12px rgba(45,45,45,.06)", borderTop: "3px solid #2b7a9a", transition: "all .3s" }}>
+              <div key={v.title} className="hover-lift" style={{ background: "#fff", borderRadius: 12, padding: "32px 28px", boxShadow: "0 2px 12px rgba(13,59,102,.06)", borderTop: "3px solid #0891b2", transition: "all .3s" }}>
                 <div style={{ fontSize: 36, marginBottom: 16 }}>{v.icon}</div>
-                <h3 style={{ fontSize: "1.05rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#2d2d2d", marginBottom: 10 }}>{v.title}</h3>
-                <p style={{ fontSize: "0.9rem", color: "#4e6b80", lineHeight: 1.75, whiteSpace: "pre-line" }}>{v.desc}</p>
+                <h3 style={{ fontSize: "1.05rem", fontFamily: "'Playfair Display',serif", fontWeight: 700, color: "#0d3b66", marginBottom: 10 }}>{v.title}</h3>
+                <p style={{ fontSize: "0.9rem", color: "#1a5a78", lineHeight: 1.75, whiteSpace: "pre-line" }}>{v.desc}</p>
               </div>
             ))}
           </div>
@@ -3012,17 +3018,17 @@ function AboutPage({ content, images, teamMembers }) {
       <div style={{ padding: "80px 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Orang-Orang di Balik Layanan</div>
-            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#2d2d2d" }}>Susunan Tim Kami</h2>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Orang-Orang di Balik Layanan</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#0d3b66" }}>Susunan Tim Kami</h2>
           </div>
           {(!teamMembers || teamMembers.length === 0) ? (
-            <div style={{ textAlign: "center", padding: "40px 0", color: "#7a9db0" }}>Susunan tim belum diisi. Hubungi administrator.</div>
+            <div style={{ textAlign: "center", padding: "40px 0", color: "#5090aa" }}>Susunan tim belum diisi. Hubungi administrator.</div>
           ) : (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 28 }}>
               {teamMembers.map((member, i) => (
-                <div key={member.id || i} className="hover-lift" style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 4px 16px rgba(45,45,45,.08)", textAlign: "center", transition: "all .3s" }}>
+                <div key={member.id || i} className="hover-lift" style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 4px 16px rgba(13,59,102,.08)", textAlign: "center", transition: "all .3s" }}>
                   {/* Photo */}
-                  <div style={{ height: 220, overflow: "hidden", background: "linear-gradient(135deg,#2d2d2d,#2b7a9a)", position: "relative" }}>
+                  <div style={{ height: 220, overflow: "hidden", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", position: "relative" }}>
                     {member.photo ? (
                       <img src={member.photo} alt={member.name}
                         style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block", transition: "transform .4s ease" }}
@@ -3035,13 +3041,13 @@ function AboutPage({ content, images, teamMembers }) {
                       <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,.5)", letterSpacing: "1px", textTransform: "uppercase" }}>No Photo</span>
                     </div>
                     {/* Name overlay at bottom */}
-                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 60, background: "linear-gradient(to top, rgba(45,45,45,.75), transparent)", pointerEvents: "none" }} />
+                    <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 60, background: "linear-gradient(to top, rgba(13,59,102,.75), transparent)", pointerEvents: "none" }} />
                   </div>
                   <div style={{ padding: "20px 20px 24px" }}>
-                    <h3 style={{ fontSize: "1rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#2d2d2d", marginBottom: 4 }}>{member.name}</h3>
-                    <div style={{ fontSize: "0.8125rem", color: "#2b7a9a", fontWeight: 600, marginBottom: 12 }}>{member.role}</div>
+                    <h3 style={{ fontSize: "1rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#0d3b66", marginBottom: 4 }}>{member.name}</h3>
+                    <div style={{ fontSize: "0.8125rem", color: "#0891b2", fontWeight: 600, marginBottom: 12 }}>{member.role}</div>
                     {member.quotes && (
-                      <p style={{ fontSize: "0.8125rem", color: "#6b8999", fontStyle: "italic", lineHeight: 1.65, whiteSpace: "pre-line" }}>"{member.quotes}"</p>
+                      <p style={{ fontSize: "0.8125rem", color: "#4a7f98", fontStyle: "italic", lineHeight: 1.65, whiteSpace: "pre-line" }}>"{member.quotes}"</p>
                     )}
                   </div>
                 </div>
@@ -3055,16 +3061,16 @@ function AboutPage({ content, images, teamMembers }) {
       <div style={{ padding: "80px 5%", background: "#fff" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Apa yang Kami Tawarkan</div>
-            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#2d2d2d" }}>Layanan Lengkap Kami</h2>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Apa yang Kami Tawarkan</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#0d3b66" }}>Layanan Lengkap Kami</h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 28 }}>
             {[
-              { icon: "✈️", title: "Travel & Wisata", color: "#2b7a9a", items: ["Paket Wisata Lokal & Mancanegara", "Tiket Pesawat & Hotel", "Tour Guide Profesional", "Itinerary Kustom", "Transportasi Pribadi"] },
+              { icon: "✈️", title: "Travel & Wisata", color: "#0891b2", items: ["Paket Wisata Lokal & Mancanegara", "Tiket Pesawat & Hotel", "Tour Guide Profesional", "Itinerary Kustom", "Transportasi Pribadi"] },
               { icon: "💍", title: "Wedding Organizer", color: "#8e44ad", items: ["Konsultasi & Perencanaan", "Dekorasi & Venue", "Koordinasi Hari H", "Dokumentasi & Foto", "Catering & Entertainment"] },
               { icon: "🎉", title: "Event Organizer", color: "#e67e22", items: ["Corporate Event", "Birthday & Anniversary", "Gathering & Outbound", "Seminar & Conference", "Pesta Perpisahan & Reunian"] },
             ].map(s => (
-              <div key={s.title} style={{ border: "1px solid #ddeef5", borderRadius: 12, overflow: "hidden" }}>
+              <div key={s.title} style={{ border: "1px solid #c0e8f0", borderRadius: 12, overflow: "hidden" }}>
                 <div style={{ background: s.color, padding: "24px 28px", display: "flex", alignItems: "center", gap: 14 }}>
                   <span style={{ fontSize: 32 }}>{s.icon}</span>
                   <h3 style={{ fontSize: "1.125rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#fff" }}>{s.title}</h3>
@@ -3072,7 +3078,7 @@ function AboutPage({ content, images, teamMembers }) {
                 <div style={{ padding: "20px 28px" }}>
                   <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
                     {s.items.map(item => (
-                      <li key={item} style={{ display: "flex", gap: 10, fontSize: "0.9rem", color: "#4e6b80" }}>
+                      <li key={item} style={{ display: "flex", gap: 10, fontSize: "0.9rem", color: "#1a5a78" }}>
                         <span style={{ color: s.color, fontWeight: 700 }}>→</span> {item}
                       </li>
                     ))}
@@ -3088,9 +3094,9 @@ function AboutPage({ content, images, teamMembers }) {
       <div style={{ background: "linear-gradient(135deg, #c5dde9 0%, #a8cfe0 100%)", padding: "80px 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Hubungi Kami</div>
-            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#2d2d2d" }}>Contact Us</h2>
-            <p style={{ fontSize: "1rem", color: "#4e6b80", marginTop: 12, maxWidth: 480, margin: "12px auto 0" }}>Siap membantu Anda merencanakan momen terbaik. Hubungi kami sekarang!</p>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Hubungi Kami</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#0d3b66" }}>Contact Us</h2>
+            <p style={{ fontSize: "1rem", color: "#1a5a78", marginTop: 12, maxWidth: 480, margin: "12px auto 0" }}>Siap membantu Anda merencanakan momen terbaik. Hubungi kami sekarang!</p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 48 }} className="contact-grid">
             {/* Info kontak */}
@@ -3102,12 +3108,12 @@ function AboutPage({ content, images, teamMembers }) {
                 { icon: "🕐", label: "Jam Operasional", value: content.hours || "Senin – Sabtu: 08.00 – 20.00 WIB", type: "text" },
               ].map(info => (
                 <div key={info.label} style={{ display: "flex", gap: 16, alignItems: "flex-start", background: "rgba(255,255,255,.7)", borderRadius: 10, padding: "18px 20px", backdropFilter: "blur(8px)" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 10, background: "#2d2d2d", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{info.icon}</div>
+                  <div style={{ width: 44, height: 44, borderRadius: 10, background: "#0d3b66", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{info.icon}</div>
                   <div>
-                    <div style={{ fontSize: "0.75rem", color: "#7a9db0", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 4 }}>{info.label}</div>
+                    <div style={{ fontSize: "0.75rem", color: "#5090aa", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 4 }}>{info.label}</div>
                     {info.type === "link"
-                      ? <a href={info.href} target={info.href.startsWith("https") ? "_blank" : "_self"} rel="noopener noreferrer" style={{ fontSize: "0.9375rem", color: "#2b7a9a", fontWeight: 600, textDecoration: "none" }}>{info.value}</a>
-                      : <div style={{ fontSize: "0.9375rem", color: "#2d2d2d", fontWeight: 500 }}>{info.value}</div>
+                      ? <a href={info.href} target={info.href.startsWith("https") ? "_blank" : "_self"} rel="noopener noreferrer" style={{ fontSize: "0.9375rem", color: "#0891b2", fontWeight: 600, textDecoration: "none" }}>{info.value}</a>
+                      : <div style={{ fontSize: "0.9375rem", color: "#0d3b66", fontWeight: 500 }}>{info.value}</div>
                     }
                   </div>
                 </div>
@@ -3115,7 +3121,7 @@ function AboutPage({ content, images, teamMembers }) {
 
               {/* Social Media */}
               <div style={{ background: "rgba(255,255,255,.7)", borderRadius: 10, padding: "18px 20px", backdropFilter: "blur(8px)" }}>
-                <div style={{ fontSize: "0.75rem", color: "#7a9db0", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 14 }}>Media Sosial</div>
+                <div style={{ fontSize: "0.75rem", color: "#5090aa", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 14 }}>Media Sosial</div>
                 <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                   {[
                     { label: "WhatsApp", icon: "💬", href: content.waLink || "https://wa.me/6285745571442", color: "#25d366" },
@@ -3134,46 +3140,46 @@ function AboutPage({ content, images, teamMembers }) {
             </div>
 
             {/* Form */}
-            <div style={{ background: "#fff", borderRadius: 14, padding: "36px 32px", boxShadow: "0 8px 40px rgba(45,45,45,.12)" }}>
-              <h3 style={{ fontSize: "1.25rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#2d2d2d", marginBottom: 24 }}>Kirim Pesan</h3>
+            <div style={{ background: "#fff", borderRadius: 14, padding: "36px 32px", boxShadow: "0 8px 40px rgba(13,59,102,.12)" }}>
+              <h3 style={{ fontSize: "1.25rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#0d3b66", marginBottom: 24 }}>Kirim Pesan</h3>
               {contactSent ? (
                 <div style={{ textAlign: "center", padding: "40px 20px" }}>
                   <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
                   <h4 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.25rem", color: "#27ae60", marginBottom: 8 }}>Pesan Terkirim!</h4>
-                  <p style={{ color: "#4e6b80", fontSize: "0.9rem" }}>Kami akan segera menghubungi Anda melalui WhatsApp.</p>
+                  <p style={{ color: "#1a5a78", fontSize: "0.9rem" }}>Kami akan segera menghubungi Anda melalui WhatsApp.</p>
                 </div>
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <div>
-                      <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Nama *</label>
+                      <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Nama *</label>
                       <input value={contactForm.name} onChange={e => setContactForm(p => ({ ...p, name: e.target.value }))}
                         placeholder="Nama lengkap"
-                        style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", transition: "border .2s" }}
-                        onFocus={e => e.target.style.borderColor = "#2b7a9a"}
-                        onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+                        style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: "0.9rem", outline: "none", transition: "border .2s" }}
+                        onFocus={e => e.target.style.borderColor = "#0891b2"}
+                        onBlur={e => e.target.style.borderColor = "#b0dce8"} />
                     </div>
                     <div>
-                      <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>No. HP</label>
+                      <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>No. HP</label>
                       <input value={contactForm.phone} onChange={e => setContactForm(p => ({ ...p, phone: e.target.value }))}
                         placeholder="08xx-xxxx-xxxx"
-                        style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", transition: "border .2s" }}
-                        onFocus={e => e.target.style.borderColor = "#2b7a9a"}
-                        onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+                        style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: "0.9rem", outline: "none", transition: "border .2s" }}
+                        onFocus={e => e.target.style.borderColor = "#0891b2"}
+                        onBlur={e => e.target.style.borderColor = "#b0dce8"} />
                     </div>
                   </div>
                   <div>
-                    <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Email</label>
+                    <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Email</label>
                     <input value={contactForm.email} onChange={e => setContactForm(p => ({ ...p, email: e.target.value }))}
                       placeholder="email@domain.com"
-                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", transition: "border .2s" }}
-                      onFocus={e => e.target.style.borderColor = "#2b7a9a"}
-                      onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: "0.9rem", outline: "none", transition: "border .2s" }}
+                      onFocus={e => e.target.style.borderColor = "#0891b2"}
+                      onBlur={e => e.target.style.borderColor = "#b0dce8"} />
                   </div>
                   <div>
-                    <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Keperluan</label>
+                    <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Keperluan</label>
                     <select value={contactForm.subject} onChange={e => setContactForm(p => ({ ...p, subject: e.target.value }))}
-                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", background: "#fff", color: contactForm.subject ? "#2d2d2d" : "#9bb5c7" }}>
+                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: "0.9rem", outline: "none", background: "#fff", color: contactForm.subject ? "#0d3b66" : "#7ab5cc" }}>
                       <option value="">-- Pilih keperluan --</option>
                       <option value="Travel & Wisata">✈️ Travel & Wisata</option>
                       <option value="Wedding Organizer">💍 Wedding Organizer</option>
@@ -3183,21 +3189,21 @@ function AboutPage({ content, images, teamMembers }) {
                     </select>
                   </div>
                   <div>
-                    <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#7a9db0", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Pesan *</label>
+                    <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: ".05em", display: "block", marginBottom: 6 }}>Pesan *</label>
                     <textarea value={contactForm.message} onChange={e => setContactForm(p => ({ ...p, message: e.target.value }))}
                       placeholder="Ceritakan kebutuhan Anda..."
                       rows={4}
-                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9rem", outline: "none", resize: "vertical", lineHeight: 1.65, transition: "border .2s" }}
-                      onFocus={e => e.target.style.borderColor = "#2b7a9a"}
-                      onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+                      style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: "0.9rem", outline: "none", resize: "vertical", lineHeight: 1.65, transition: "border .2s" }}
+                      onFocus={e => e.target.style.borderColor = "#0891b2"}
+                      onBlur={e => e.target.style.borderColor = "#b0dce8"} />
                   </div>
                   <button onClick={handleContactSubmit}
-                    style={{ padding: "13px 28px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", cursor: "pointer", transition: "background .2s", display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}
-                    onMouseEnter={e => e.currentTarget.style.background = "#2b7a9a"}
-                    onMouseLeave={e => e.currentTarget.style.background = "#2d2d2d"}>
+                    style={{ padding: "13px 28px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", cursor: "pointer", transition: "background .2s", display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
+                    onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                     💬 Kirim via WhatsApp
                   </button>
-                  <p style={{ fontSize: "0.8rem", color: "#9bb5c7", textAlign: "center" }}>Pesan akan diteruskan ke WhatsApp kami untuk respons lebih cepat.</p>
+                  <p style={{ fontSize: "0.8rem", color: "#7ab5cc", textAlign: "center" }}>Pesan akan diteruskan ke WhatsApp kami untuk respons lebih cepat.</p>
                 </div>
               )}
             </div>
@@ -3252,49 +3258,49 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
   return (
     <div className="fade-in">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d" }}>👥 Susunan Tim</h1>
-        {!editId && <button onClick={openNew} style={{ padding: "10px 20px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>+ Tambah Anggota</button>}
+        <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66" }}>👥 Susunan Tim</h1>
+        {!editId && <button onClick={openNew} style={{ padding: "10px 20px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>+ Tambah Anggota</button>}
       </div>
 
       {/* Form Edit */}
       {editId && (
-        <div style={{ background: "#fff", borderRadius: 12, padding: "28px", boxShadow: "0 4px 20px rgba(0,0,0,.08)", marginBottom: 28, borderTop: "4px solid #3d8fab" }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#2d2d2d", marginBottom: 20 }}>{editId === "new" ? "➕ Tambah Anggota Tim" : "✏ Edit Anggota Tim"}</h2>
+        <div style={{ background: "#fff", borderRadius: 12, padding: "28px", boxShadow: "0 4px 20px rgba(0,0,0,.08)", marginBottom: 28, borderTop: "4px solid #0ea5c5" }}>
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#0d3b66", marginBottom: 20 }}>{editId === "new" ? "➕ Tambah Anggota Tim" : "✏ Edit Anggota Tim"}</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             {[
               { label: "Nama *", key: "name", placeholder: "Budi Santoso" },
               { label: "Jabatan", key: "role", placeholder: "Wedding Coordinator" },
             ].map(f => (
               <div key={f.key}>
-                <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
+                <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
                 <input value={form[f.key] || ""} onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
-                  placeholder={f.placeholder} style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                  placeholder={f.placeholder} style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
               </div>
             ))}
           </div>
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Quotes / Motto</label>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Quotes / Motto</label>
             <input value={form.quotes || ""} onChange={e => setForm(p => ({ ...p, quotes: e.target.value }))}
               placeholder="Setiap momen spesial layak dirayakan dengan sempurna."
-              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
           </div>
           <div style={{ marginBottom: 20 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Foto</label>
-            {form.photo && <img src={form.photo} alt="preview" style={{ height: 80, width: 80, objectFit: "cover", borderRadius: "50%", marginBottom: 10, border: "2px solid #ddeef5" }} />}
+            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Foto</label>
+            {form.photo && <img src={form.photo} alt="preview" style={{ height: 80, width: 80, objectFit: "cover", borderRadius: "50%", marginBottom: 10, border: "2px solid #c0e8f0" }} />}
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <input type="file" accept="image/*" onChange={async e => {
                 const file = e.target.files?.[0]; if (!file) return;
                 try { notify("⏳ Mengupload foto..."); const url = await uploadToCloudinary(file); setForm(p => ({ ...p, photo: url })); notify("Foto berhasil diupload!"); }
                 catch { notify("Gagal upload foto.", "error"); }
-              }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #3d8fab", borderRadius: 6, background: "#f0f9fc", color: "#3d8fab", width: "100%" }} />
-              <div style={{ fontSize: 11, color: "#9ab0bf", textAlign: "center" }}>— atau paste URL foto —</div>
+              }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #0ea5c5", borderRadius: 6, background: "#e8f9fc", color: "#0ea5c5", width: "100%" }} />
+              <div style={{ fontSize: 11, color: "#7ab5cc", textAlign: "center" }}>— atau paste URL foto —</div>
               <input type="url" value={form.photo || ""} onChange={e => setForm(p => ({ ...p, photo: e.target.value }))}
-                placeholder="https://..." style={{ width: "100%", padding: "8px 12px", border: "1.5px solid #d0e4ee", borderRadius: 6, fontSize: 12, outline: "none" }} />
+                placeholder="https://..." style={{ width: "100%", padding: "8px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none" }} />
             </div>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={saveMember} style={{ padding: "10px 22px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan</button>
-            <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#f4f9fb", color: "#6b8999", border: "1px solid #d0e4ee", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
+            <button onClick={saveMember} style={{ padding: "10px 22px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan</button>
+            <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#edfafc", color: "#4a7f98", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
           </div>
         </div>
       )}
@@ -3303,22 +3309,22 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 16 }}>
         {members.map(m => (
           <div key={m.id} style={{ background: "#fff", borderRadius: 12, padding: "20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center" }}>
-            <div style={{ width: 72, height: 72, borderRadius: "50%", overflow: "hidden", background: "#f4f9fb", border: "2px solid #ddeef5", flexShrink: 0 }}>
+            <div style={{ width: 72, height: 72, borderRadius: "50%", overflow: "hidden", background: "#edfafc", border: "2px solid #c0e8f0", flexShrink: 0 }}>
               {m.photo ? <img src={m.photo} alt={m.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>👤</div>}
             </div>
             <div>
-              <div style={{ fontWeight: 700, color: "#2d2d2d", fontSize: 14 }}>{m.name}</div>
-              <div style={{ fontSize: 12, color: "#2b7a9a", fontWeight: 600 }}>{m.role}</div>
-              {m.quotes && <div style={{ fontSize: 11, color: "#7a9db0", fontStyle: "italic", marginTop: 6, lineHeight: 1.5, whiteSpace: "pre-line" }}>"{m.quotes}"</div>}
+              <div style={{ fontWeight: 700, color: "#0d3b66", fontSize: 14 }}>{m.name}</div>
+              <div style={{ fontSize: 12, color: "#0891b2", fontWeight: 600 }}>{m.role}</div>
+              {m.quotes && <div style={{ fontSize: 11, color: "#5090aa", fontStyle: "italic", marginTop: 6, lineHeight: 1.5, whiteSpace: "pre-line" }}>"{m.quotes}"</div>}
             </div>
             <div style={{ display: "flex", gap: 8 }}>
-              <button onClick={() => openEdit(m)} style={{ padding: "6px 14px", background: "#f0f9fc", color: "#3d8fab", border: "1px solid #c5dde9", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
+              <button onClick={() => openEdit(m)} style={{ padding: "6px 14px", background: "#e8f9fc", color: "#0ea5c5", border: "1px solid #c5dde9", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
               <button onClick={() => deleteMember(m.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
             </div>
           </div>
         ))}
         {members.length === 0 && !editId && (
-          <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "60px 0", color: "#7a9db0" }}>
+          <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "60px 0", color: "#5090aa" }}>
             <div style={{ fontSize: 40, marginBottom: 12 }}>👥</div>
             <p>Belum ada anggota tim. Klik "+ Tambah Anggota" untuk mulai.</p>
           </div>
@@ -3345,7 +3351,10 @@ function AdvSection({ data, navigateTo }) {
     data.images.gal[3] || data.images.hero[3],
   ];
   return (
-    <section className="section-md" style={{ background: "#2d2d2d" }}>
+    <section className="section-md" style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", position: "relative", overflow: "hidden" }}>
+      {/* Flare effects */}
+      <div style={{ position: "absolute", top: "30%", right: "15%", width: 360, height: 360, borderRadius: "50%", background: "radial-gradient(circle, rgba(30,216,232,.32) 0%, transparent 70%)", pointerEvents: "none", filter: "blur(16px)" }} />
+      <div style={{ position: "absolute", bottom: "10%", left: "5%", width: 220, height: 220, borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,197,.25) 0%, transparent 70%)", pointerEvents: "none", filter: "blur(20px)" }} />
       <div className="adv2-grid">
         {/* KIRI: Teks clean */}
         <div>
@@ -3554,7 +3563,7 @@ function HeroSlideshow({ data, navigateTo }) {
               Read More →
             </button>
             <button className="hero-cta-btn" onClick={() => navigateTo("about")}
-              style={{ padding: "13px 30px", background: "#2d2d2d", color: "#fff", border: "2px solid rgba(255,255,255,.55)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
+              style={{ padding: "13px 30px", background: "#0d3b66", color: "#fff", border: "2px solid rgba(255,255,255,.55)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
               About Us →
             </button>
           </div>
@@ -3602,32 +3611,32 @@ function ReviewForm({ token, onSubmitDone, data, save, notify }) {
   const tokenObj = (data.reviewTokens || []).find(t => t.token === token);
 
   if (!tokenObj) return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f4f9fb" }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#edfafc" }}>
       <div style={{ textAlign: "center", background: "#fff", borderRadius: 16, padding: "48px 40px", maxWidth: 400, boxShadow: "0 8px 40px rgba(0,0,0,.1)" }}>
         <div style={{ fontSize: 56, marginBottom: 16 }}>❌</div>
-        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", color: "#2d2d2d", marginBottom: 12 }}>Link Tidak Valid</h2>
-        <p style={{ color: "#6b8999", fontSize: "0.9375rem", lineHeight: 1.7 }}>Link form ulasan ini tidak ditemukan atau sudah tidak berlaku.</p>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", color: "#0d3b66", marginBottom: 12 }}>Link Tidak Valid</h2>
+        <p style={{ color: "#4a7f98", fontSize: "0.9375rem", lineHeight: 1.7 }}>Link form ulasan ini tidak ditemukan atau sudah tidak berlaku.</p>
       </div>
     </div>
   );
 
   if (tokenObj.used) return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f4f9fb" }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#edfafc" }}>
       <div style={{ textAlign: "center", background: "#fff", borderRadius: 16, padding: "48px 40px", maxWidth: 400, boxShadow: "0 8px 40px rgba(0,0,0,.1)" }}>
         <div style={{ fontSize: 56, marginBottom: 16 }}>⏰</div>
-        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", color: "#2d2d2d", marginBottom: 12 }}>Link Sudah Digunakan</h2>
-        <p style={{ color: "#6b8999", fontSize: "0.9375rem", lineHeight: 1.7 }}>Form ulasan ini sudah pernah diisi. Setiap link hanya bisa digunakan satu kali.</p>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", color: "#0d3b66", marginBottom: 12 }}>Link Sudah Digunakan</h2>
+        <p style={{ color: "#4a7f98", fontSize: "0.9375rem", lineHeight: 1.7 }}>Form ulasan ini sudah pernah diisi. Setiap link hanya bisa digunakan satu kali.</p>
       </div>
     </div>
   );
 
   if (step === "done") return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#f4f9fb,#e8f4fd)" }}>
-      <div style={{ textAlign: "center", background: "#fff", borderRadius: 20, padding: "56px 48px", maxWidth: 440, boxShadow: "0 16px 56px rgba(45,45,45,.12)" }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#edfafc,#e8f4fd)" }}>
+      <div style={{ textAlign: "center", background: "#fff", borderRadius: 20, padding: "56px 48px", maxWidth: 440, boxShadow: "0 16px 56px rgba(13,59,102,.12)" }}>
         <div style={{ fontSize: 64, marginBottom: 20 }}>🎉</div>
-        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.875rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 14 }}>Terima Kasih!</h2>
-        <p style={{ color: "#4e6b80", fontSize: "1rem", lineHeight: 1.8 }}>Ulasan Anda telah berhasil dikirim. Kami sangat menghargai kepercayaan Anda kepada Arutala Organizer.</p>
-        <div style={{ width: 48, height: 3, background: "#2b7a9a", borderRadius: 2, margin: "28px auto 0" }} />
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.875rem", fontWeight: 900, color: "#0d3b66", marginBottom: 14 }}>Terima Kasih!</h2>
+        <p style={{ color: "#1a5a78", fontSize: "1rem", lineHeight: 1.8 }}>Ulasan Anda telah berhasil dikirim. Kami sangat menghargai kepercayaan Anda kepada Arutala Organizer.</p>
+        <div style={{ width: 48, height: 3, background: "#0891b2", borderRadius: 2, margin: "28px auto 0" }} />
       </div>
     </div>
   );
@@ -3671,53 +3680,53 @@ function ReviewForm({ token, onSubmitDone, data, save, notify }) {
   const content_data = data.content;
 
   return (
-    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#f4f9fb 0%,#e8f0f8 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 5%" }}>
-      <div style={{ background: "#fff", borderRadius: 20, padding: "48px 44px", maxWidth: 520, width: "100%", boxShadow: "0 16px 56px rgba(45,45,45,.12)" }}>
+    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#edfafc 0%,#e8f0f8 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 5%" }}>
+      <div style={{ background: "#fff", borderRadius: 20, padding: "48px 44px", maxWidth: 520, width: "100%", boxShadow: "0 16px 56px rgba(13,59,102,.12)" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 36 }}>
-          <div style={{ width: 64, height: 64, borderRadius: "50%", background: "linear-gradient(135deg,#2d2d2d,#2b7a9a)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: 28 }}>⭐</div>
-          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 8 }}>Berikan Ulasan Anda</h1>
-          <p style={{ color: "#6b8999", fontSize: "0.9375rem", lineHeight: 1.6 }}>Bagikan pengalaman Anda bersama {content_data.logoText?.replace("\n"," ") || "Arutala Organizer"}</p>
-          {tokenObj.label && <div style={{ marginTop: 10, display: "inline-block", background: "#f0f9fc", border: "1px solid #b8d4e3", color: "#2b7a9a", fontSize: "0.75rem", fontWeight: 600, padding: "4px 14px", borderRadius: 20 }}>{tokenObj.label}</div>}
+          <div style={{ width: 64, height: 64, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: 28 }}>⭐</div>
+          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#0d3b66", marginBottom: 8 }}>Berikan Ulasan Anda</h1>
+          <p style={{ color: "#4a7f98", fontSize: "0.9375rem", lineHeight: 1.6 }}>Bagikan pengalaman Anda bersama {content_data.logoText?.replace("\n"," ") || "Arutala Organizer"}</p>
+          {tokenObj.label && <div style={{ marginTop: 10, display: "inline-block", background: "#e8f9fc", border: "1px solid #86cad8", color: "#0891b2", fontSize: "0.75rem", fontWeight: 600, padding: "4px 14px", borderRadius: 20 }}>{tokenObj.label}</div>}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
           {/* Photo Upload */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase" }}>Foto Profil (Opsional)</label>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase" }}>Foto Profil (Opsional)</label>
             <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-              <div style={{ width: 60, height: 60, borderRadius: "50%", background: form.photo ? "transparent" : "linear-gradient(135deg,#ddeef5,#c5dde9)", border: "2px solid #ddeef5", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: 60, height: 60, borderRadius: "50%", background: form.photo ? "transparent" : "linear-gradient(135deg,#c0e8f0,#c5dde9)", border: "2px solid #c0e8f0", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {form.photo ? <img src={form.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ fontSize: 24 }}>👤</span>}
               </div>
               <div style={{ flex: 1 }}>
                 <input type="file" accept="image/*" onChange={e => handlePhotoUpload(e.target.files?.[0])}
-                  style={{ fontSize: "0.8125rem", color: "#4e6b80", width: "100%" }} />
-                {photoUploading && <span style={{ fontSize: "0.75rem", color: "#2b7a9a" }}>⏳ Mengupload...</span>}
+                  style={{ fontSize: "0.8125rem", color: "#1a5a78", width: "100%" }} />
+                {photoUploading && <span style={{ fontSize: "0.75rem", color: "#0891b2" }}>⏳ Mengupload...</span>}
               </div>
             </div>
           </div>
 
           {/* Name */}
           <div>
-            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Nama Lengkap *</label>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Nama Lengkap *</label>
             <input value={form.name} onChange={e => { setForm(p => ({ ...p, name: e.target.value })); setErr(""); }}
               placeholder="Masukkan nama Anda"
-              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9375rem", outline: "none", transition: "border-color .2s" }}
-              onFocus={e => e.target.style.borderColor = "#2b7a9a"} onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: "0.9375rem", outline: "none", transition: "border-color .2s" }}
+              onFocus={e => e.target.style.borderColor = "#0891b2"} onBlur={e => e.target.style.borderColor = "#b0dce8"} />
           </div>
 
           {/* Email */}
           <div>
-            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Email *</label>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Email *</label>
             <input type="email" value={form.email} onChange={e => { setForm(p => ({ ...p, email: e.target.value })); setErr(""); }}
               placeholder="email@contoh.com"
-              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9375rem", outline: "none", transition: "border-color .2s" }}
-              onFocus={e => e.target.style.borderColor = "#2b7a9a"} onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: "0.9375rem", outline: "none", transition: "border-color .2s" }}
+              onFocus={e => e.target.style.borderColor = "#0891b2"} onBlur={e => e.target.style.borderColor = "#b0dce8"} />
           </div>
 
           {/* Stars */}
           <div>
-            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Rating *</label>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 10 }}>Rating *</label>
             <div style={{ display: "flex", gap: 8 }}>
               {[1,2,3,4,5].map(s => (
                 <button key={s} onClick={() => setForm(p => ({ ...p, stars: s }))}
@@ -3725,7 +3734,7 @@ function ReviewForm({ token, onSubmitDone, data, save, notify }) {
                   onMouseEnter={e => e.currentTarget.style.transform = "scale(1.2)"}
                   onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>⭐</button>
               ))}
-              <span style={{ fontSize: "0.875rem", color: "#6b8999", alignSelf: "center", marginLeft: 6 }}>
+              <span style={{ fontSize: "0.875rem", color: "#4a7f98", alignSelf: "center", marginLeft: 6 }}>
                 {["","Sangat Buruk","Buruk","Cukup","Bagus","Sangat Bagus"][form.stars]}
               </span>
             </div>
@@ -3733,18 +3742,18 @@ function ReviewForm({ token, onSubmitDone, data, save, notify }) {
 
           {/* Review Content */}
           <div>
-            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#6b8999", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Isi Ulasan *</label>
+            <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Isi Ulasan *</label>
             <textarea value={form.content} onChange={e => { setForm(p => ({ ...p, content: e.target.value })); setErr(""); }}
               placeholder="Ceritakan pengalaman Anda bersama kami..."
               rows={5}
-              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #d0e4ee", borderRadius: 8, fontSize: "0.9375rem", outline: "none", resize: "vertical", lineHeight: 1.7, transition: "border-color .2s" }}
-              onFocus={e => e.target.style.borderColor = "#2b7a9a"} onBlur={e => e.target.style.borderColor = "#d0e4ee"} />
+              style={{ width: "100%", padding: "12px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: "0.9375rem", outline: "none", resize: "vertical", lineHeight: 1.7, transition: "border-color .2s" }}
+              onFocus={e => e.target.style.borderColor = "#0891b2"} onBlur={e => e.target.style.borderColor = "#b0dce8"} />
           </div>
 
           {err && <div style={{ background: "#fef0f0", border: "1px solid #f5c6c6", borderRadius: 8, padding: "10px 14px", color: "#c0392b", fontSize: "0.875rem" }}>{err}</div>}
 
           <button onClick={handleSubmit} disabled={submitting || photoUploading}
-            style={{ padding: "14px", background: submitting ? "#7a9db0" : "linear-gradient(135deg,#2d2d2d,#2b7a9a)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, letterSpacing: ".05em", cursor: submitting ? "not-allowed" : "pointer", transition: "opacity .2s" }}>
+            style={{ padding: "14px", background: submitting ? "#5090aa" : "linear-gradient(135deg,#0d3b66,#0891b2)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, letterSpacing: ".05em", cursor: submitting ? "not-allowed" : "pointer", transition: "opacity .2s" }}>
             {submitting ? "⏳ Mengirim..." : "✨ Kirim Ulasan"}
           </button>
         </div>
@@ -3801,24 +3810,24 @@ function ReviewSlideshow({ reviews }) {
       })();
 
   return (
-    <section style={{ padding: "80px 0 72px", background: "linear-gradient(180deg,#f4f9fb 0%,#fff 100%)", overflow: "hidden" }}>
+    <section style={{ padding: "80px 0 72px", background: "linear-gradient(180deg,#eafcff 0%,#f8fdff 100%)", overflow: "hidden" }}>
       <style>{`
         @keyframes reviewIn { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
         .rev-card { transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .5s ease, box-shadow .3s; }
-        .rev-card:hover { transform: translateY(-6px) !important; box-shadow: 0 20px 48px rgba(45,45,45,.14) !important; }
+        .rev-card:hover { transform: translateY(-6px) !important; box-shadow: 0 20px 48px rgba(13,59,102,.14) !important; }
       `}</style>
 
       {/* Section Header */}
       <div style={{ textAlign: "center", marginBottom: 52, padding: "0 5%" }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-          <div style={{ width: 32, height: 1.5, background: "#c9aa71" }} />
-          <span style={{ fontSize: "0.6875rem", letterSpacing: "3px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700 }}>Testimoni Klien</span>
-          <div style={{ width: 32, height: 1.5, background: "#c9aa71" }} />
+          <div style={{ width: 32, height: 1.5, background: "#38c5d8" }} />
+          <span style={{ fontSize: "0.6875rem", letterSpacing: "3px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700 }}>Testimoni Klien</span>
+          <div style={{ width: 32, height: 1.5, background: "#38c5d8" }} />
         </div>
-        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#2d2d2d", lineHeight: 1.1 }}>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#0d3b66", lineHeight: 1.1 }}>
           Apa Kata Mereka?
         </h2>
-        <p style={{ fontSize: "1rem", color: "#6b8999", marginTop: 12, maxWidth: 440, margin: "12px auto 0", lineHeight: 1.7 }}>
+        <p style={{ fontSize: "1rem", color: "#4a7f98", marginTop: 12, maxWidth: 440, margin: "12px auto 0", lineHeight: 1.7 }}>
           Kepuasan klien adalah prioritas utama kami di setiap layanan.
         </p>
       </div>
@@ -3828,12 +3837,12 @@ function ReviewSlideshow({ reviews }) {
         {(() => {
           const avg = reviews.reduce((s, r) => s + (r.stars || 5), 0) / reviews.length;
           return (
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1px solid #ddeef5", borderRadius: 40, padding: "10px 24px", boxShadow: "0 4px 16px rgba(45,45,45,.06)" }}>
-              <span style={{ fontSize: "1.5rem", fontWeight: 900, fontFamily: "'Playfair Display',serif", color: "#2d2d2d" }}>{avg.toFixed(1)}</span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1px solid #c0e8f0", borderRadius: 40, padding: "10px 24px", boxShadow: "0 4px 16px rgba(13,59,102,.06)" }}>
+              <span style={{ fontSize: "1.5rem", fontWeight: 900, fontFamily: "'Playfair Display',serif", color: "#0d3b66" }}>{avg.toFixed(1)}</span>
               <div style={{ display: "flex", gap: 2 }}>
                 {[1,2,3,4,5].map(s => <span key={s} style={{ fontSize: 16, filter: s <= Math.round(avg) ? "none" : "grayscale(1) opacity(.3)" }}>⭐</span>)}
               </div>
-              <span style={{ fontSize: "0.8125rem", color: "#6b8999", fontWeight: 500 }}>{reviews.length} ulasan</span>
+              <span style={{ fontSize: "0.8125rem", color: "#4a7f98", fontWeight: 500 }}>{reviews.length} ulasan</span>
             </div>
           );
         })()}
@@ -3882,13 +3891,13 @@ function ReviewSlideshow({ reviews }) {
         {total > 1 && (
           <>
             <button onClick={() => { setCurrent(p => (p - 1 + total) % total); }}
-              style={{ position: "absolute", left: "2%", top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "#fff", border: "1.5px solid #ddeef5", boxShadow: "0 4px 16px rgba(45,45,45,.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: "#2d2d2d", cursor: "pointer", transition: "all .2s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#2d2d2d"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#2d2d2d"; }}>‹</button>
+              style={{ position: "absolute", left: "2%", top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "#fff", border: "1.5px solid #c0e8f0", boxShadow: "0 4px 16px rgba(13,59,102,.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: "#0d3b66", cursor: "pointer", transition: "all .2s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#0d3b66"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#0d3b66"; }}>‹</button>
             <button onClick={() => { setCurrent(p => (p + 1) % total); }}
-              style={{ position: "absolute", right: "2%", top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "#fff", border: "1.5px solid #ddeef5", boxShadow: "0 4px 16px rgba(45,45,45,.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: "#2d2d2d", cursor: "pointer", transition: "all .2s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#2d2d2d"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#2d2d2d"; }}>›</button>
+              style={{ position: "absolute", right: "2%", top: "50%", transform: "translateY(-50%)", zIndex: 10, width: 44, height: 44, borderRadius: "50%", background: "#fff", border: "1.5px solid #c0e8f0", boxShadow: "0 4px 16px rgba(13,59,102,.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, color: "#0d3b66", cursor: "pointer", transition: "all .2s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#0d3b66"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#0d3b66"; }}>›</button>
           </>
         )}
       </div>
@@ -3898,7 +3907,7 @@ function ReviewSlideshow({ reviews }) {
         <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 28 }}>
           {reviews.map((_, i) => (
             <button key={i} onClick={() => setCurrent(i)}
-              style={{ width: i === current ? 24 : 8, height: 8, borderRadius: 4, background: i === current ? "#2d2d2d" : "#c9d9e3", border: "none", cursor: "pointer", transition: "all .3s", padding: 0 }} />
+              style={{ width: i === current ? 24 : 8, height: 8, borderRadius: 4, background: i === current ? "#0d3b66" : "#86c8d8", border: "none", cursor: "pointer", transition: "all .3s", padding: 0 }} />
           ))}
         </div>
       )}
@@ -3909,7 +3918,7 @@ function ReviewSlideshow({ reviews }) {
 function ReviewCard({ review }) {
   const stars = review.stars || 5;
   return (
-    <div style={{ background: "#fff", borderRadius: 16, padding: "28px 24px", boxShadow: "0 4px 24px rgba(45,45,45,.08)", border: "1px solid #eef4f8", height: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
+    <div style={{ background: "#fff", borderRadius: 16, padding: "28px 24px", boxShadow: "0 4px 24px rgba(13,59,102,.08)", border: "1px solid #e0f7fa", height: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
       {/* Stars */}
       <div style={{ display: "flex", gap: 3 }}>
         {[1,2,3,4,5].map(s => (
@@ -3917,23 +3926,23 @@ function ReviewCard({ review }) {
         ))}
       </div>
       {/* Quote */}
-      <p style={{ fontSize: "0.9rem", color: "#334f65", lineHeight: 1.75, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", flex: 1, whiteSpace: "pre-line" }}>
+      <p style={{ fontSize: "0.9rem", color: "#1a4a72", lineHeight: 1.75, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", flex: 1, whiteSpace: "pre-line" }}>
         "{review.content?.length > 180 ? review.content.slice(0, 180) + "…" : review.content}"
       </p>
       {/* Author */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 12, borderTop: "1px solid #f0f4f8" }}>
-        <div style={{ width: 44, height: 44, borderRadius: "50%", overflow: "hidden", flexShrink: 0, background: "linear-gradient(135deg,#2d2d2d,#2b7a9a)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+        <div style={{ width: 44, height: 44, borderRadius: "50%", overflow: "hidden", flexShrink: 0, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
           {review.photo
             ? <img src={review.photo} alt={review.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             : <span style={{ color: "#fff", fontWeight: 700, fontSize: "1rem" }}>{review.name?.charAt(0)?.toUpperCase() || "?"}</span>
           }
         </div>
         <div style={{ minWidth: 0 }}>
-          <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#2d2d2d", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{review.name}</div>
-          <div style={{ fontSize: "0.75rem", color: "#6b8999" }}>{review.date}</div>
+          <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{review.name}</div>
+          <div style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{review.date}</div>
         </div>
         {review.tokenLabel && (
-          <div style={{ marginLeft: "auto", fontSize: "0.625rem", background: "#f0f9fc", color: "#2b7a9a", padding: "2px 8px", borderRadius: 10, fontWeight: 600, flexShrink: 0, maxWidth: 80, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{review.tokenLabel}</div>
+          <div style={{ marginLeft: "auto", fontSize: "0.625rem", background: "#e8f9fc", color: "#0891b2", padding: "2px 8px", borderRadius: 10, fontWeight: 600, flexShrink: 0, maxWidth: 80, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{review.tokenLabel}</div>
         )}
       </div>
     </div>
@@ -3984,31 +3993,31 @@ function AdminReviews({ data, save, notify }) {
 
   return (
   <div className="fade-in">
-    <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d", marginBottom: 28 }}>⭐ Kelola Ulasan</h1>
+    <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 28 }}>⭐ Kelola Ulasan</h1>
 
     {/* Generate Review Link */}
-    <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #c9aa71" }}>
-      <h3 style={{ fontSize: 15, fontWeight: 600, color: "#2d2d2d", marginBottom: 6 }}>🔗 Buat Link Form Ulasan</h3>
-      <p style={{ fontSize: 12, color: "#7a9db0", marginBottom: 16, lineHeight: 1.6 }}>
+    <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #38c5d8" }}>
+      <h3 style={{ fontSize: 15, fontWeight: 600, color: "#0d3b66", marginBottom: 6 }}>🔗 Buat Link Form Ulasan</h3>
+      <p style={{ fontSize: 12, color: "#5090aa", marginBottom: 16, lineHeight: 1.6 }}>
         Buat link sekali pakai untuk dikirimkan ke klien. Link hanya bisa digunakan satu kali — setelah diisi, link akan hangus otomatis.
       </p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
         <input value={newTokenLabel} onChange={e => setNewTokenLabel(e.target.value)}
           placeholder="Label (misal: Klien Wedding Budi, opsional)"
-          style={{ flex: 1, minWidth: 240, padding: "9px 12px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+          style={{ flex: 1, minWidth: 240, padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
         <button onClick={generateToken}
-          style={{ padding: "9px 18px", background: "#2d2d2d", color: "#fff", borderRadius: 6, fontSize: 13, border: "none", fontWeight: 600, whiteSpace: "nowrap" }}>
+          style={{ padding: "9px 18px", background: "#0d3b66", color: "#fff", borderRadius: 6, fontSize: 13, border: "none", fontWeight: 600, whiteSpace: "nowrap" }}>
           + Buat Link
         </button>
       </div>
       {generatedLink && (
-        <div style={{ background: "#f0f9fc", border: "1px solid #b8d4e3", borderRadius: 8, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+        <div style={{ background: "#e8f9fc", border: "1px solid #86cad8", borderRadius: 8, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: "#2b7a9a", marginBottom: 4, letterSpacing: ".05em", textTransform: "uppercase" }}>Link Form Ulasan Terbaru</div>
-            <code style={{ fontSize: 12, color: "#2d2d2d", wordBreak: "break-all", display: "block" }}>{generatedLink}</code>
+            <div style={{ fontSize: 11, fontWeight: 700, color: "#0891b2", marginBottom: 4, letterSpacing: ".05em", textTransform: "uppercase" }}>Link Form Ulasan Terbaru</div>
+            <code style={{ fontSize: 12, color: "#0d3b66", wordBreak: "break-all", display: "block" }}>{generatedLink}</code>
           </div>
           <button onClick={() => { navigator.clipboard?.writeText(generatedLink); notify("Link disalin!"); }}
-            style={{ padding: "7px 14px", background: "#2b7a9a", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 600, flexShrink: 0 }}>
+            style={{ padding: "7px 14px", background: "#0891b2", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 600, flexShrink: 0 }}>
             📋 Salin
           </button>
         </div>
@@ -4017,22 +4026,22 @@ function AdminReviews({ data, save, notify }) {
 
     {/* Active Tokens */}
     <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
-      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#2d2d2d", marginBottom: 14 }}>🔑 Token Aktif ({tokens.filter(t => !t.used).length})</h3>
+      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#0d3b66", marginBottom: 14 }}>🔑 Token Aktif ({tokens.filter(t => !t.used).length})</h3>
       {tokens.length === 0 ? (
-        <p style={{ fontSize: 13, color: "#7a9db0" }}>Belum ada token dibuat.</p>
+        <p style={{ fontSize: 13, color: "#5090aa" }}>Belum ada token dibuat.</p>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {tokens.slice().reverse().map(tok => (
-            <div key={tok.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: tok.used ? "#f9f9f9" : "#f0f9fc", borderRadius: 8, border: `1px solid ${tok.used ? "#e8e8e8" : "#b8d4e3"}` }}>
+            <div key={tok.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: tok.used ? "#f9f9f9" : "#e8f9fc", borderRadius: 8, border: `1px solid ${tok.used ? "#e8e8e8" : "#86cad8"}` }}>
               <span style={{ fontSize: 16 }}>{tok.used ? "✅" : "🔑"}</span>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#2d2d2d" }}>{tok.label || "—"}</div>
-                <div style={{ fontSize: 11, color: "#7a9db0", fontFamily: "monospace", wordBreak: "break-all" }}>{tok.token}</div>
-                <div style={{ fontSize: 11, color: "#7a9db0" }}>Dibuat: {tok.createdAt} · {tok.used ? "Sudah digunakan" : "Belum digunakan"}</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: "#0d3b66" }}>{tok.label || "—"}</div>
+                <div style={{ fontSize: 11, color: "#5090aa", fontFamily: "monospace", wordBreak: "break-all" }}>{tok.token}</div>
+                <div style={{ fontSize: 11, color: "#5090aa" }}>Dibuat: {tok.createdAt} · {tok.used ? "Sudah digunakan" : "Belum digunakan"}</div>
               </div>
               {!tok.used && (
                 <button onClick={() => { const l = `${window.location.origin}${window.location.pathname}?review=${tok.token}`; navigator.clipboard?.writeText(l); notify("Link disalin!"); }}
-                  style={{ padding: "5px 10px", background: "#3d8fab", color: "#fff", borderRadius: 5, fontSize: 11, border: "none" }}>📋</button>
+                  style={{ padding: "5px 10px", background: "#0ea5c5", color: "#fff", borderRadius: 5, fontSize: 11, border: "none" }}>📋</button>
               )}
               <button onClick={() => deleteToken(tok.id)}
                 style={{ padding: "5px 10px", background: "#fee", color: "#e74c3c", borderRadius: 5, fontSize: 11, border: "none" }}>Hapus</button>
@@ -4044,22 +4053,22 @@ function AdminReviews({ data, save, notify }) {
 
     {/* Reviews List */}
     <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
-      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#2d2d2d", marginBottom: 14 }}>💬 Ulasan Masuk ({reviews.length})</h3>
+      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#0d3b66", marginBottom: 14 }}>💬 Ulasan Masuk ({reviews.length})</h3>
       {reviews.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "32px", color: "#7a9db0", fontSize: 13 }}>Belum ada ulasan masuk. Buat link dan kirimkan ke klien!</div>
+        <div style={{ textAlign: "center", padding: "32px", color: "#5090aa", fontSize: 13 }}>Belum ada ulasan masuk. Buat link dan kirimkan ke klien!</div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {reviews.slice().reverse().map(r => (
-            <div key={r.id} style={{ border: "1px solid #eef4f8", borderRadius: 10, overflow: "hidden" }}>
+            <div key={r.id} style={{ border: "1px solid #e0f7fa", borderRadius: 10, overflow: "hidden" }}>
               <div style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "16px 20px" }}>
-                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "linear-gradient(135deg,#2d2d2d,#2b7a9a)", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18 }}>
+                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18 }}>
                   {r.photo ? <img src={r.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : r.name?.charAt(0)?.toUpperCase()}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: "#2d2d2d" }}>{r.name}</span>
-                    <span style={{ fontSize: 12, color: "#7a9db0" }}>{r.email}</span>
-                    <span style={{ marginLeft: "auto", fontSize: 12, color: "#7a9db0" }}>{r.date}</span>
+                    <span style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66" }}>{r.name}</span>
+                    <span style={{ fontSize: 12, color: "#5090aa" }}>{r.email}</span>
+                    <span style={{ marginLeft: "auto", fontSize: 12, color: "#5090aa" }}>{r.date}</span>
                   </div>
                   <div style={{ display: "flex", gap: 2, marginBottom: 8 }}>
                     {[1,2,3,4,5].map(s => <span key={s} style={{ fontSize: 13, filter: s <= r.stars ? "none" : "grayscale(1) opacity(.3)" }}>⭐</span>)}
@@ -4067,7 +4076,7 @@ function AdminReviews({ data, save, notify }) {
                   {editReviewId === r.id ? (
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                       <input value={editReviewForm.name} onChange={e => setEditReviewForm(p => ({ ...p, name: e.target.value }))}
-                        style={{ padding: "7px 10px", border: "1px solid #d0e4ee", borderRadius: 5, fontSize: 13 }} placeholder="Nama" />
+                        style={{ padding: "7px 10px", border: "1px solid #b0dce8", borderRadius: 5, fontSize: 13 }} placeholder="Nama" />
                       <div style={{ display: "flex", gap: 4 }}>
                         {[1,2,3,4,5].map(s => (
                           <button key={s} onClick={() => setEditReviewForm(p => ({ ...p, stars: s }))}
@@ -4075,21 +4084,21 @@ function AdminReviews({ data, save, notify }) {
                         ))}
                       </div>
                       <textarea value={editReviewForm.content} onChange={e => setEditReviewForm(p => ({ ...p, content: e.target.value }))}
-                        rows={3} style={{ padding: "7px 10px", border: "1px solid #d0e4ee", borderRadius: 5, fontSize: 13, resize: "vertical" }} />
+                        rows={3} style={{ padding: "7px 10px", border: "1px solid #b0dce8", borderRadius: 5, fontSize: 13, resize: "vertical" }} />
                       <div style={{ display: "flex", gap: 8 }}>
                         <button onClick={saveEditReview} style={{ padding: "6px 16px", background: "#27ae60", color: "#fff", borderRadius: 5, fontSize: 12, border: "none" }}>Simpan</button>
-                        <button onClick={() => setEditReviewId(null)} style={{ padding: "6px 14px", background: "#f4f9fb", color: "#6b8999", borderRadius: 5, fontSize: 12, border: "1px solid #d0e4ee" }}>Batal</button>
+                        <button onClick={() => setEditReviewId(null)} style={{ padding: "6px 14px", background: "#edfafc", color: "#4a7f98", borderRadius: 5, fontSize: 12, border: "1px solid #b0dce8" }}>Batal</button>
                       </div>
                     </div>
                   ) : (
-                    <p style={{ fontSize: 13, color: "#334f65", lineHeight: 1.7, fontStyle: "italic", whiteSpace: "pre-line" }}>"{r.content}"</p>
+                    <p style={{ fontSize: 13, color: "#1a4a72", lineHeight: 1.7, fontStyle: "italic", whiteSpace: "pre-line" }}>"{r.content}"</p>
                   )}
-                  {r.tokenLabel && <div style={{ marginTop: 6, fontSize: 11, color: "#2b7a9a", fontWeight: 500 }}>🏷 {r.tokenLabel}</div>}
+                  {r.tokenLabel && <div style={{ marginTop: 6, fontSize: 11, color: "#0891b2", fontWeight: 500 }}>🏷 {r.tokenLabel}</div>}
                 </div>
               </div>
               {editReviewId !== r.id && (
-                <div style={{ padding: "10px 20px", background: "#fafcfd", borderTop: "1px solid #f0f4f8", display: "flex", gap: 8 }}>
-                  <button onClick={() => startEditReview(r)} style={{ padding: "5px 14px", background: "#e8f4fd", color: "#2b7a9a", borderRadius: 5, fontSize: 12, border: "none", fontWeight: 500 }}>✏ Edit</button>
+                <div style={{ padding: "10px 20px", background: "#f5fdff", borderTop: "1px solid #f0f4f8", display: "flex", gap: 8 }}>
+                  <button onClick={() => startEditReview(r)} style={{ padding: "5px 14px", background: "#e8f4fd", color: "#0891b2", borderRadius: 5, fontSize: 12, border: "none", fontWeight: 500 }}>✏ Edit</button>
                   <button onClick={() => { if (window.confirm("Hapus ulasan ini?")) deleteReview(r.id); }} style={{ padding: "5px 14px", background: "#fee", color: "#e74c3c", borderRadius: 5, fontSize: 12, border: "none" }}>🗑 Hapus</button>
                 </div>
               )}
@@ -4458,44 +4467,44 @@ export default function BricksyTravel() {
             {/* Close */}
             <button onClick={() => setShowDevProfile(false)}
               style={{ position: "absolute", top: 14, right: 16, background: "none", border: "none",
-                fontSize: 18, color: "#b8d4e3", cursor: "pointer", lineHeight: 1 }}>✕</button>
+                fontSize: 18, color: "#86cad8", cursor: "pointer", lineHeight: 1 }}>✕</button>
             {/* Power Icon */}
-            <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#f0f9fc",
-              border: "2px solid #ddeef5", display: "flex", alignItems: "center", justifyContent: "center",
+            <div style={{ width: 56, height: 56, borderRadius: "50%", background: "#e8f9fc",
+              border: "2px solid #c0e8f0", display: "flex", alignItems: "center", justifyContent: "center",
               margin: "0 auto 20px" }}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="#3d8fab" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="26" height="26">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#0ea5c5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="26" height="26">
                 <path d="M18.36 6.64A9 9 0 1 1 5.64 6.64" /><line x1="12" y1="2" x2="12" y2="12" />
               </svg>
             </div>
-            <div style={{ fontSize: 10, letterSpacing: "2px", color: "#7a9db0", textTransform: "uppercase", marginBottom: 10, fontWeight: 600 }}>Developer Profile</div>
-            <h2 className="serif" style={{ fontSize: 24, fontWeight: 400, color: "#2d2d2d", marginBottom: 6, lineHeight: 1.2 }}>
+            <div style={{ fontSize: 10, letterSpacing: "2px", color: "#5090aa", textTransform: "uppercase", marginBottom: 10, fontWeight: 600 }}>Developer Profile</div>
+            <h2 className="serif" style={{ fontSize: 24, fontWeight: 400, color: "#0d3b66", marginBottom: 6, lineHeight: 1.2 }}>
               Mahfud Febry Styanto
             </h2>
-            <div style={{ width: 32, height: 2, background: "#3d8fab", borderRadius: 2, margin: "0 auto 20px" }} />
+            <div style={{ width: 32, height: 2, background: "#0ea5c5", borderRadius: 2, margin: "0 auto 20px" }} />
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               <a href="https://wa.me/6282234651413" target="_blank" rel="noopener noreferrer"
                 style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
-                  background: "#f4f9fb", borderRadius: 8, textDecoration: "none",
-                  transition: "background .2s", border: "1px solid #eef4f8" }}
+                  background: "#edfafc", borderRadius: 8, textDecoration: "none",
+                  transition: "background .2s", border: "1px solid #e0f7fa" }}
                 onMouseEnter={e => e.currentTarget.style.background = "#e8f4fd"}
-                onMouseLeave={e => e.currentTarget.style.background = "#f4f9fb"}>
+                onMouseLeave={e => e.currentTarget.style.background = "#edfafc"}>
                 <span style={{ fontSize: 18 }}>💬</span>
                 <div style={{ textAlign: "left" }}>
-                  <div style={{ fontSize: 10, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", fontWeight: 600 }}>WhatsApp</div>
-                  <div style={{ fontSize: 14, color: "#2d2d2d", fontWeight: 500 }}>082234651413</div>
+                  <div style={{ fontSize: 10, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", fontWeight: 600 }}>WhatsApp</div>
+                  <div style={{ fontSize: 14, color: "#0d3b66", fontWeight: 500 }}>082234651413</div>
                 </div>
-                <span style={{ marginLeft: "auto", fontSize: 11, color: "#3d8fab", fontWeight: 500 }}>Hubungi →</span>
+                <span style={{ marginLeft: "auto", fontSize: 11, color: "#0ea5c5", fontWeight: 500 }}>Hubungi →</span>
               </a>
               <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 16px",
-                background: "#f4f9fb", borderRadius: 8, border: "1px solid #eef4f8" }}>
+                background: "#edfafc", borderRadius: 8, border: "1px solid #e0f7fa" }}>
                 <span style={{ fontSize: 18 }}>✉️</span>
                 <div style={{ textAlign: "left" }}>
-                  <div style={{ fontSize: 10, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", fontWeight: 600 }}>Email</div>
-                  <div style={{ fontSize: 13, color: "#2d2d2d" }}>mahfudfebrys@gmail.com</div>
+                  <div style={{ fontSize: 10, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", fontWeight: 600 }}>Email</div>
+                  <div style={{ fontSize: 13, color: "#0d3b66" }}>mahfudfebrys@gmail.com</div>
                 </div>
               </div>
             </div>
-            <p style={{ fontSize: 11, color: "#b8d4e3", marginTop: 20, fontStyle: "italic" }}>
+            <p style={{ fontSize: 11, color: "#86cad8", marginTop: 20, fontStyle: "italic" }}>
               Website developed & designed by Mahfud Febry Styanto
             </p>
           </div>
@@ -4511,8 +4520,8 @@ export default function BricksyTravel() {
       {!showAdmin && !reviewTokenParam && (
         <>
           {/* NAVBAR — Fixed floating always */}
-          <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(250,252,253,.97)",
-            backdropFilter: "blur(12px)", borderBottom: "1px solid #ddeef5", padding: "0 5%",
+          <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(240,252,255,.97)",
+            backdropFilter: "blur(12px)", borderBottom: "1px solid #c0e8f0", padding: "0 5%",
             isolation: "isolate" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 96, maxWidth: 1200, margin: "0 auto", gap: 20 }}>
 
@@ -4549,15 +4558,15 @@ export default function BricksyTravel() {
               <div className="hide-sm" style={{ display: "flex", gap: 10, alignItems: "center", flexShrink: 0 }}>
                 {user
                   ? <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2 }}>
-                      <span style={{ fontSize: "0.8125rem", color: "#2d2d2d", fontWeight: 700, lineHeight: 1.2 }}>
+                      <span style={{ fontSize: "0.8125rem", color: "#0d3b66", fontWeight: 700, lineHeight: 1.2 }}>
                         {user.name || user.username}
                       </span>
                       <button onClick={() => setShowAdmin(true)}
                         style={{ fontSize: "0.6875rem", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 700,
-                          color: "#2b7a9a", background: "none", border: "none", cursor: "pointer", padding: 0, lineHeight: 1.2,
+                          color: "#0891b2", background: "none", border: "none", cursor: "pointer", padding: 0, lineHeight: 1.2,
                           transition: "color .15s" }}
-                        onMouseEnter={e => e.currentTarget.style.color = "#2d2d2d"}
-                        onMouseLeave={e => e.currentTarget.style.color = "#2b7a9a"}>
+                        onMouseEnter={e => e.currentTarget.style.color = "#0d3b66"}
+                        onMouseLeave={e => e.currentTarget.style.color = "#0891b2"}>
                         Control Panel →
                       </button>
                     </div>
@@ -4565,12 +4574,12 @@ export default function BricksyTravel() {
                     className="login-collapse-btn"
                     style={{
                       display: "flex", alignItems: "center", gap: 0, overflow: "hidden",
-                      width: 36, border: "1.5px solid #2d2d2d", borderRadius: 6,
+                      width: 36, border: "1.5px solid #0d3b66", borderRadius: 6,
                       fontSize: "0.75rem", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 700,
-                      background: "transparent", color: "#2d2d2d", padding: "7px 9px",
+                      background: "transparent", color: "#0d3b66", padding: "7px 9px",
                       cursor: "pointer", transition: "width .28s cubic-bezier(.4,0,.2,1), padding .28s, background .18s, color .18s", whiteSpace: "nowrap" }}
-                    onMouseEnter={e => { const b = e.currentTarget; b.style.width = "90px"; b.style.paddingRight = "14px"; b.style.gap = "7px"; b.style.background = "#2d2d2d"; b.style.color = "#fff"; b.querySelector(".lcb-text").style.opacity = "1"; b.querySelector(".lcb-text").style.maxWidth = "80px"; }}
-                    onMouseLeave={e => { const b = e.currentTarget; b.style.width = "36px"; b.style.paddingRight = "9px"; b.style.gap = "0"; b.style.background = "transparent"; b.style.color = "#2d2d2d"; b.querySelector(".lcb-text").style.opacity = "0"; b.querySelector(".lcb-text").style.maxWidth = "0"; }}>
+                    onMouseEnter={e => { const b = e.currentTarget; b.style.width = "90px"; b.style.paddingRight = "14px"; b.style.gap = "7px"; b.style.background = "#0d3b66"; b.style.color = "#fff"; b.querySelector(".lcb-text").style.opacity = "1"; b.querySelector(".lcb-text").style.maxWidth = "80px"; }}
+                    onMouseLeave={e => { const b = e.currentTarget; b.style.width = "36px"; b.style.paddingRight = "9px"; b.style.gap = "0"; b.style.background = "transparent"; b.style.color = "#0d3b66"; b.querySelector(".lcb-text").style.opacity = "0"; b.querySelector(".lcb-text").style.maxWidth = "0"; }}>
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" style={{ flexShrink: 0 }}>
                       <rect y="0" width="16" height="2" rx="1" fill="currentColor"/>
                       <rect y="5" width="16" height="2" rx="1" fill="currentColor"/>
@@ -4583,13 +4592,13 @@ export default function BricksyTravel() {
                 }
               </div>
               <button className="show-sm" onClick={() => setMobileMenu(!mobileMenu)}
-                style={{ fontSize: 22, color: "#2d2d2d" }} aria-label="Menu">☰</button>
+                style={{ fontSize: 22, color: "#0d3b66" }} aria-label="Menu">☰</button>
             </div>
             {mobileMenu && (
               <div style={{
                 position: "absolute", top: "100%", left: 0, right: 0,
                 background: "#ffffff",
-                borderTop: "2px solid #2b7a9a", borderBottom: "1px solid #2b7a9a",
+                borderTop: "2px solid #0891b2", borderBottom: "1px solid #0891b2",
                 boxShadow: "0 16px 48px rgba(0,0,0,0.15)",
                 display: "flex", flexDirection: "column", gap: 4,
                 padding: "14px 5% 22px", zIndex: 1000
@@ -4599,25 +4608,25 @@ export default function BricksyTravel() {
                     className="mobile-nav-item"
                     style={{
                       fontSize: "1rem",
-                      color: page === item.key ? "#2b7a9a" : "#334f65",
+                      color: page === item.key ? "#0891b2" : "#1a4a72",
                       fontWeight: page === item.key ? 700 : 500,
                       textShadow: "none",
                       border: "none",
-                      background: page === item.key ? "#2b7a9a" : "#f8fafc",
+                      background: page === item.key ? "#0891b2" : "#f8fafc",
                       textAlign: "left", padding: "13px 16px", borderRadius: 8, width: "100%",
-                      borderLeft: page === item.key ? "3px solid #5bc4e0" : "3px solid #ddeef5",
+                      borderLeft: page === item.key ? "3px solid #22d3ee" : "3px solid #c0e8f0",
                       transition: "all .15s", cursor: "pointer"
                     }}
-                    onMouseEnter={e => { if (page !== item.key) { e.currentTarget.style.background = "#e0f0f6"; e.currentTarget.style.color = "#1a5a6b"; e.currentTarget.style.borderLeft = "3px solid #2b7a9a"; e.currentTarget.style.textShadow = "none"; } }}
-                    onMouseLeave={e => { if (page !== item.key) { e.currentTarget.style.background = "#f8fafc"; e.currentTarget.style.color = "#334f65"; e.currentTarget.style.borderLeft = "3px solid #ddeef5"; e.currentTarget.style.textShadow = "none"; } }}>
+                    onMouseEnter={e => { if (page !== item.key) { e.currentTarget.style.background = "#e0f0f6"; e.currentTarget.style.color = "#1a5a6b"; e.currentTarget.style.borderLeft = "3px solid #0891b2"; e.currentTarget.style.textShadow = "none"; } }}
+                    onMouseLeave={e => { if (page !== item.key) { e.currentTarget.style.background = "#f8fafc"; e.currentTarget.style.color = "#1a4a72"; e.currentTarget.style.borderLeft = "3px solid #c0e8f0"; e.currentTarget.style.textShadow = "none"; } }}>
                     {item.label}
                   </button>
                 ))}
                 {user && (
-                  <div style={{ padding: "12px 4px 4px", borderTop: "1px solid #ddeef5", marginTop: 8 }}>
-                    <div style={{ fontSize: ".8125rem", color: "#7a9db0", marginBottom: 10, padding: "0 12px" }}>Login sebagai <strong style={{ color: "#2d2d2d" }}>{user.name || user.username}</strong></div>
+                  <div style={{ padding: "12px 4px 4px", borderTop: "1px solid #c0e8f0", marginTop: 8 }}>
+                    <div style={{ fontSize: ".8125rem", color: "#5090aa", marginBottom: 10, padding: "0 12px" }}>Login sebagai <strong style={{ color: "#0d3b66" }}>{user.name || user.username}</strong></div>
                     <button onClick={() => { setShowAdmin(true); setMobileMenu(false); }}
-                      style={{ fontSize: ".875rem", color: "#fff", background: "#2b7a9a", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, width: "100%", marginBottom: 8, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>
+                      style={{ fontSize: ".875rem", color: "#fff", background: "#0891b2", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, width: "100%", marginBottom: 8, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>
                       Admin Panel
                     </button>
                     <button onClick={() => { logout(); setMobileMenu(false); }}
@@ -4627,7 +4636,7 @@ export default function BricksyTravel() {
                   </div>
                 )}
                 {!user && <button onClick={() => { setShowLogin(true); setMobileMenu(false); }}
-                  style={{ padding: "13px 16px", border: "none", background: "#2b7a9a", borderRadius: 8, fontSize: "1rem", color: "#fff", textAlign: "center", fontWeight: 600, marginTop: 8, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>Login</button>}
+                  style={{ padding: "13px 16px", border: "none", background: "#0891b2", borderRadius: 8, fontSize: "1rem", color: "#fff", textAlign: "center", fontWeight: 600, marginTop: 8, textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>Login</button>}
               </div>
             )}
           </nav>
@@ -4697,11 +4706,11 @@ export default function BricksyTravel() {
                           alt={data.content.heroTitle}
                         />
                         {/* Ornamen badge di atas gambar */}
-                        <div style={{ position: "absolute", top: 18, left: 18, background: "#2d2d2d", color: "#c9aa71", fontSize: ".6rem", letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 800, padding: "5px 12px", borderRadius: 2, zIndex: 2 }}>
+                        <div style={{ position: "absolute", top: 18, left: 18, background: "#0d3b66", color: "#38c5d8", fontSize: ".6rem", letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 800, padding: "5px 12px", borderRadius: 2, zIndex: 2 }}>
                           Arutala Organizer
                         </div>
                         {/* Shadow overlay bawah */}
-                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(45,45,45,.5), rgba(45,45,45,0))", pointerEvents: "none", zIndex: 1 }} />
+                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(13,59,102,.5), rgba(13,59,102,0))", pointerEvents: "none", zIndex: 1 }} />
                       </div>
 
                       {/* KANAN: Teks */}
@@ -4710,7 +4719,7 @@ export default function BricksyTravel() {
                         <div className="hero-intro-deco-line" />
                         <div className="hero-intro-eyebrow">
                           <div className="line" />
-                          <span style={{ fontSize: ".65rem", letterSpacing: ".2em", textTransform: "uppercase", color: "#c9aa71", fontWeight: 700 }}>
+                          <span style={{ fontSize: ".65rem", letterSpacing: ".2em", textTransform: "uppercase", color: "#38c5d8", fontWeight: 700 }}>
                             {data.content.advSub || "TRAVEL & OUTDOOR RECREATION"}
                           </span>
                         </div>
@@ -4731,23 +4740,23 @@ export default function BricksyTravel() {
                             { num: "10+", lbl: "Kota" },
                           ].map(s => (
                             <div key={s.lbl} style={{ textAlign: "center" }}>
-                              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#2d2d2d", lineHeight: 1 }}>{s.num}</div>
-                              <div style={{ fontSize: ".6875rem", letterSpacing: ".1em", textTransform: "uppercase", color: "#8aabbd", fontWeight: 600, marginTop: 3 }}>{s.lbl}</div>
+                              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", lineHeight: 1 }}>{s.num}</div>
+                              <div style={{ fontSize: ".6875rem", letterSpacing: ".1em", textTransform: "uppercase", color: "#6aaec8", fontWeight: 600, marginTop: 3 }}>{s.lbl}</div>
                             </div>
                           ))}
                         </div>
 
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                           <button onClick={() => navigateTo("services")}
-                            style={{ padding: "12px 26px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 6, fontSize: ".8125rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s" }}
+                            style={{ padding: "12px 26px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 6, fontSize: ".8125rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s" }}
                             onMouseEnter={e => e.currentTarget.style.opacity = ".82"}
                             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
                             Layanan Kami →
                           </button>
                           <button onClick={() => navigateTo("about")}
-                            style={{ padding: "12px 24px", background: "#f4f9fb", color: "#2d2d2d", border: "1.5px solid #ddeef5", borderRadius: 6, fontSize: ".8125rem", fontWeight: 600, cursor: "pointer", transition: "all .2s" }}
-                            onMouseEnter={e => { e.currentTarget.style.background = "#ddeef5"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = "#f4f9fb"; }}>
+                            style={{ padding: "12px 24px", background: "#edfafc", color: "#0d3b66", border: "1.5px solid #c0e8f0", borderRadius: 6, fontSize: ".8125rem", fontWeight: 600, cursor: "pointer", transition: "all .2s" }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "#c0e8f0"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "#edfafc"; }}>
                             Tentang Kami
                           </button>
                         </div>
@@ -4759,13 +4768,13 @@ export default function BricksyTravel() {
                   <AdvSection data={data} navigateTo={navigateTo} />
 
                   {/* Gallery */}
-                  <section className="section-md" style={{ background: "#f4f9fb" }}>
+                  <section className="section-md" style={{ background: "linear-gradient(180deg,#e4f9fc 0%,#edfafc 100%)" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto", textAlign: "center" }}>
-                      <div className="label-xs" style={{ color: "#6b8999", marginBottom: 14 }}>INTRODUCING</div>
-                      <h2 className="display" style={{ fontSize: "clamp(1.75rem,4.5vw,3rem)", fontWeight: 900, color: "#2d2d2d", marginBottom: 16 }}>
+                      <div className="label-xs" style={{ color: "#4a7f98", marginBottom: 14 }}>INTRODUCING</div>
+                      <h2 className="display" style={{ fontSize: "clamp(1.75rem,4.5vw,3rem)", fontWeight: 900, color: "#0d3b66", marginBottom: 16 }}>
                         {data.content.newAdvTitle}
                       </h2>
-                      <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px", whiteSpace: "pre-line" }}>{data.content.newAdvSub}</p>
+                      <p style={{ fontSize: "0.9375rem", color: "#1a5a78", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px", whiteSpace: "pre-line" }}>{data.content.newAdvSub}</p>
                       <div className="gal-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, marginBottom: 40 }}>
                         {(() => {
                           const allSecs = ["news","shop","destinations"];
@@ -4782,17 +4791,17 @@ export default function BricksyTravel() {
                       </div>
                       <div style={{ position: "relative", display: "inline-block" }}>
                         <button onClick={() => setExploreOpen(v => !v)} className="btn-outline-solid"
-                          style={{ padding: "12px 30px", border: "1.5px solid #2d2d2d", background: exploreOpen ? "#2d2d2d" : "#fff",
+                          style={{ padding: "12px 30px", border: "1.5px solid #0d3b66", background: exploreOpen ? "#0d3b66" : "#fff",
                           fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700,
-                          color: exploreOpen ? "#fff" : "#2d2d2d", transition: "all .2s", display: "flex", alignItems: "center", gap: 8 }}
-                          onMouseEnter={e => { if (!exploreOpen) { e.currentTarget.style.background = "#2d2d2d"; e.currentTarget.style.color = "#fff"; } }}
-                          onMouseLeave={e => { if (!exploreOpen) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#2d2d2d"; } }}>
+                          color: exploreOpen ? "#fff" : "#0d3b66", transition: "all .2s", display: "flex", alignItems: "center", gap: 8 }}
+                          onMouseEnter={e => { if (!exploreOpen) { e.currentTarget.style.background = "#0d3b66"; e.currentTarget.style.color = "#fff"; } }}
+                          onMouseLeave={e => { if (!exploreOpen) { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#0d3b66"; } }}>
                           Explore All <span style={{ fontSize: "0.6rem", transition: "transform .2s", display: "inline-block", transform: exploreOpen ? "rotate(180deg)" : "none" }}>▼</span>
                         </button>
                         {exploreOpen && (
                           <div style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, background: "#fff",
-                            border: "1.5px solid #2d2d2d", borderRadius: 4, minWidth: 200, zIndex: 50,
-                            boxShadow: "0 8px 32px rgba(45,45,45,.15)", overflow: "hidden" }}>
+                            border: "1.5px solid #0d3b66", borderRadius: 4, minWidth: 200, zIndex: 50,
+                            boxShadow: "0 8px 32px rgba(13,59,102,.15)", overflow: "hidden" }}>
                             {[
                               { label: "🎉 Event Plan", key: "destinations" },
                               { label: "✈️ Traveling", key: "shop" },
@@ -4800,9 +4809,9 @@ export default function BricksyTravel() {
                             ].map(item => (
                               <button key={item.key} onClick={() => { navigateTo(item.key); setExploreOpen(false); }}
                                 style={{ display: "block", width: "100%", textAlign: "left", padding: "12px 20px",
-                                  fontSize: "0.875rem", fontWeight: 500, color: "#2d2d2d", background: "none",
-                                  border: "none", borderBottom: "1px solid #f4f9fb", cursor: "pointer", transition: "background .15s" }}
-                                onMouseEnter={e => e.currentTarget.style.background = "#f4f9fb"}
+                                  fontSize: "0.875rem", fontWeight: 500, color: "#0d3b66", background: "none",
+                                  border: "none", borderBottom: "1px solid #edfafc", cursor: "pointer", transition: "background .15s" }}
+                                onMouseEnter={e => e.currentTarget.style.background = "#edfafc"}
                                 onMouseLeave={e => e.currentTarget.style.background = "none"}>
                                 {item.label}
                               </button>
@@ -4828,15 +4837,15 @@ export default function BricksyTravel() {
                         </div>
                       </div>
                       <div>
-                        <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, lineHeight: 1.1, color: "#2d2d2d", marginBottom: 18 }}>
+                        <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, lineHeight: 1.1, color: "#0d3b66", marginBottom: 18 }}>
                           {data.content.bookTitle}
                         </h2>
-                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 28, maxWidth: 340, whiteSpace: "pre-line" }}>{data.content.bookSub}</p>
+                        <p style={{ fontSize: "0.9375rem", color: "#1a5a78", lineHeight: 1.85, marginBottom: 28, maxWidth: 340, whiteSpace: "pre-line" }}>{data.content.bookSub}</p>
                         <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
-                          style={{ display: "inline-block", padding: "12px 30px", border: "1.5px solid #2d2d2d", background: "#fff",
-                          fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700, color: "#2d2d2d", transition: "all .2s", textDecoration: "none" }}
-                          onMouseEnter={e => { e.currentTarget.style.background = "#2d2d2d"; e.currentTarget.style.color = "#fff"; }}
-                          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#2d2d2d"; }}>
+                          style={{ display: "inline-block", padding: "12px 30px", border: "1.5px solid #0d3b66", background: "#fff",
+                          fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700, color: "#0d3b66", transition: "all .2s", textDecoration: "none" }}
+                          onMouseEnter={e => { e.currentTarget.style.background = "#0d3b66"; e.currentTarget.style.color = "#fff"; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#0d3b66"; }}>
                           Book Now
                         </a>
                       </div>
@@ -4847,8 +4856,8 @@ export default function BricksyTravel() {
                   <section className="section-md" style={{ background: "#fff" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 36 }}>
-                        <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#2d2d2d" }}>Latest News</h2>
-                        <button onClick={() => navigateTo("news")} style={{ fontSize: "0.875rem", color: "#2b7a9a", border: "none", background: "none", fontWeight: 600 }}>
+                        <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#0d3b66" }}>Latest News</h2>
+                        <button onClick={() => navigateTo("news")} style={{ fontSize: "0.875rem", color: "#0891b2", border: "none", background: "none", fontWeight: 600 }}>
                           View all →
                         </button>
                       </div>
@@ -4882,7 +4891,7 @@ export default function BricksyTravel() {
                     {/* Teks & search — kanan */}
                     <div style={{ position: "relative", zIndex: 4, display: "flex", justifyContent: "flex-end" }}>
                       <div className="map-text-width" style={{ width: "50%", padding: "56px 6% 56px 0" }}>
-                        <div className="label-xs" style={{ color: "#5bc4e0", marginBottom: 14 }}>✦ Jelajahi Dunia</div>
+                        <div className="label-xs" style={{ color: "#22d3ee", marginBottom: 14 }}>✦ Jelajahi Dunia</div>
                         <h2 className="display" style={{ fontSize: "clamp(1.75rem,3.5vw,2.75rem)", fontWeight: 900, color: "#fff", marginBottom: 10, lineHeight: 1.1 }}>
                           {data.content.newsletterTitle}
                         </h2>
@@ -4919,22 +4928,22 @@ export default function BricksyTravel() {
                                 setMapLocation(mapQuery.trim());
                               }
                             }}
-                            style={{ padding: "12px 20px", background: "#2b7a9a", color: "#fff", border: "none",
+                            style={{ padding: "12px 20px", background: "#0891b2", color: "#fff", border: "none",
                               fontSize: "0.75rem", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 700,
                               borderRadius: "0 4px 4px 0", cursor: "pointer", transition: "background .2s", whiteSpace: "nowrap" }}
-                            onMouseEnter={e => e.currentTarget.style.background = "#3d8fab"}
-                            onMouseLeave={e => e.currentTarget.style.background = "#2b7a9a"}>
+                            onMouseEnter={e => e.currentTarget.style.background = "#0ea5c5"}
+                            onMouseLeave={e => e.currentTarget.style.background = "#0891b2"}>
                             🔍 Jelajahi
                           </button>
                         </div>
                         {mapQuery && mapQuery.trim() !== mapLocation && (
                           <p style={{ fontSize: "0.8125rem", color: "rgba(91,196,224,.8)", marginTop: 10 }}>
-                            ⌛ Memuat peta untuk <strong style={{ color: "#5bc4e0" }}>{mapQuery}</strong>…
+                            ⌛ Memuat peta untuk <strong style={{ color: "#22d3ee" }}>{mapQuery}</strong>…
                           </p>
                         )}
                         {mapQuery.trim() && mapQuery.trim() === mapLocation && (
                           <p style={{ fontSize: "0.8125rem", color: "rgba(91,196,224,.8)", marginTop: 10 }}>
-                            📍 Menampilkan: <strong style={{ color: "#5bc4e0" }}>{mapLocation}</strong>
+                            📍 Menampilkan: <strong style={{ color: "#22d3ee" }}>{mapLocation}</strong>
                           </p>
                         )}
                       </div>
@@ -4950,27 +4959,27 @@ export default function BricksyTravel() {
                   <section className="section-md" style={{ background: "#fff" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="contact-grid">
                       <div>
-                        <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#2d2d2d", marginBottom: 18 }}>Contact Us</h2>
-                        <p style={{ fontSize: "0.9375rem", color: "#4e6b80", lineHeight: 1.85, marginBottom: 20, whiteSpace: "pre-line" }}>{data.content.contactText || data.content.aboutContactSub}</p>
-                        <p style={{ fontSize: "0.9375rem", color: "#334f65", marginBottom: 8, fontWeight: 500 }}>✉ {data.content.email}</p>
-                        <p style={{ fontSize: "0.9375rem", color: "#334f65", fontWeight: 500 }}>📞 {data.content.phone}</p>
+                        <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#0d3b66", marginBottom: 18 }}>Contact Us</h2>
+                        <p style={{ fontSize: "0.9375rem", color: "#1a5a78", lineHeight: 1.85, marginBottom: 20, whiteSpace: "pre-line" }}>{data.content.contactText || data.content.aboutContactSub}</p>
+                        <p style={{ fontSize: "0.9375rem", color: "#1a4a72", marginBottom: 8, fontWeight: 500 }}>✉ {data.content.email}</p>
+                        <p style={{ fontSize: "0.9375rem", color: "#1a4a72", fontWeight: 500 }}>📞 {data.content.phone}</p>
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                         {["name", "email"].map(f => (
                           <input key={f} placeholder={f.charAt(0).toUpperCase() + f.slice(1)}
                             value={contact[f]} onChange={e => setContact(p => ({ ...p, [f]: e.target.value }))}
                             aria-label={f.charAt(0).toUpperCase() + f.slice(1)}
-                            style={{ padding: "12px 14px", border: "1.5px solid #d0e4ee", fontSize: "0.9375rem", outline: "none", borderRadius: 4 }} />
+                            style={{ padding: "12px 14px", border: "1.5px solid #b0dce8", fontSize: "0.9375rem", outline: "none", borderRadius: 4 }} />
                         ))}
                         <textarea placeholder="Message" rows={4} value={contact.message}
                           onChange={e => setContact(p => ({ ...p, message: e.target.value }))}
                           aria-label="Message"
-                          style={{ padding: "12px 14px", border: "1.5px solid #d0e4ee", fontSize: "0.9375rem", outline: "none", borderRadius: 4, resize: "vertical", lineHeight: 1.65 }} />
-                        <button onClick={submitMsg} style={{ padding: "12px 26px", background: "#2d2d2d", color: "#fff",
+                          style={{ padding: "12px 14px", border: "1.5px solid #b0dce8", fontSize: "0.9375rem", outline: "none", borderRadius: 4, resize: "vertical", lineHeight: 1.65 }} />
+                        <button onClick={submitMsg} style={{ padding: "12px 26px", background: "#0d3b66", color: "#fff",
                           fontSize: "0.75rem", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 700,
                           border: "none", borderRadius: 4, alignSelf: "flex-start", transition: "background .2s" }}
-                          onMouseEnter={e => e.currentTarget.style.background = "#2b7a9a"}
-                          onMouseLeave={e => e.currentTarget.style.background = "#2d2d2d"}>
+                          onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
+                          onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                           Send Message
                         </button>
                       </div>
@@ -4978,17 +4987,17 @@ export default function BricksyTravel() {
                   </section>
 
                   {/* Footer */}
-                  <footer style={{ background: "#fafcfd", borderTop: "1px solid #ddeef5", padding: "56px 5% 32px" }}>
+                  <footer style={{ background: "#f5fdff", borderTop: "1px solid #c0e8f0", padding: "56px 5% 32px" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }}>
                       <div className="footer-grid" style={{ marginBottom: 40 }}>
                         <div>
-                          <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#2d2d2d", letterSpacing: ".06em", textTransform: "uppercase" }}>About Us</h3>
-                          <p style={{ fontSize: "0.875rem", color: "#4e6b80", lineHeight: 1.8, marginBottom: 14, whiteSpace: "pre-line" }}>{data.content.aboutText}</p>
-                          <p style={{ fontSize: "0.875rem", color: "#4e6b80" }}>email: <a href={`mailto:${data.content.email}`} style={{ color: "#2b7a9a", fontWeight: 500 }}>{data.content.email}</a></p>
-                          <p style={{ fontSize: "0.875rem", color: "#4e6b80", marginTop: 4 }}>phone: {data.content.phone}</p>
+                          <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#0d3b66", letterSpacing: ".06em", textTransform: "uppercase" }}>About Us</h3>
+                          <p style={{ fontSize: "0.875rem", color: "#1a5a78", lineHeight: 1.8, marginBottom: 14, whiteSpace: "pre-line" }}>{data.content.aboutText}</p>
+                          <p style={{ fontSize: "0.875rem", color: "#1a5a78" }}>email: <a href={`mailto:${data.content.email}`} style={{ color: "#0891b2", fontWeight: 500 }}>{data.content.email}</a></p>
+                          <p style={{ fontSize: "0.875rem", color: "#1a5a78", marginTop: 4 }}>phone: {data.content.phone}</p>
                         </div>
                         <div>
-                          <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#2d2d2d", letterSpacing: ".06em", textTransform: "uppercase" }}>Our Gallery</h3>
+                          <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#0d3b66", letterSpacing: ".06em", textTransform: "uppercase" }}>Our Gallery</h3>
                           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                             {data.images.gal.slice(0, 6).map((src, i) => (
                               <div key={i} style={{ borderRadius: 4, overflow: "hidden" }}>
@@ -4998,28 +5007,28 @@ export default function BricksyTravel() {
                           </div>
                         </div>
                         <div>
-                          <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#2d2d2d", letterSpacing: ".06em", textTransform: "uppercase" }}>Navigation</h3>
+                          <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#0d3b66", letterSpacing: ".06em", textTransform: "uppercase" }}>Navigation</h3>
                           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
                             {navItems.map(n => (
                               <li key={n.key}>
-                                <button onClick={() => navigateTo(n.key)} style={{ fontSize: "0.875rem", color: "#2b7a9a", border: "none", background: "none", cursor: "pointer", textAlign: "left", fontWeight: 500 }}>{n.label}</button>
+                                <button onClick={() => navigateTo(n.key)} style={{ fontSize: "0.875rem", color: "#0891b2", border: "none", background: "none", cursor: "pointer", textAlign: "left", fontWeight: 500 }}>{n.label}</button>
                               </li>
                             ))}
                           </ul>
                         </div>
                       </div>
-                      <div style={{ borderTop: "1px solid #ddeef5", paddingTop: 20, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
+                      <div style={{ borderTop: "1px solid #c0e8f0", paddingTop: 20, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
                           <button onClick={() => setShowDevProfile(true)} title="Developer Info"
-                            style={{ display: "flex", alignItems: "center", gap: 6, background: "none", border: "none", cursor: "pointer", padding: 0, color: "#7a9db0", fontSize: "0.75rem", fontWeight: 500, transition: "color .2s" }}
-                            onMouseEnter={e => e.currentTarget.style.color = "#2b7a9a"}
-                            onMouseLeave={e => e.currentTarget.style.color = "#7a9db0"}>
+                            style={{ display: "flex", alignItems: "center", gap: 6, background: "none", border: "none", cursor: "pointer", padding: 0, color: "#5090aa", fontSize: "0.75rem", fontWeight: 500, transition: "color .2s" }}
+                            onMouseEnter={e => e.currentTarget.style.color = "#0891b2"}
+                            onMouseLeave={e => e.currentTarget.style.color = "#5090aa"}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14">
                               <path d="M18.36 6.64A9 9 0 1 1 5.64 6.64" /><line x1="12" y1="2" x2="12" y2="12" />
                             </svg>
                             Power Developer
                           </button>
-                          <p style={{ fontSize: "0.8125rem", color: "#6b8999" }}>© 2026 Arutala All Rights Reserved</p>
+                          <p style={{ fontSize: "0.8125rem", color: "#4a7f98" }}>© 2026 Arutala All Rights Reserved</p>
                         </div>
                         <LogoDisplay content={data.content} size="footer" />
                       </div>
@@ -5053,32 +5062,32 @@ export default function BricksyTravel() {
           display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
           <div className="login-modal fade-in">
             <button onClick={() => { setShowLogin(false); setLoginErr(""); }}
-              style={{ position: "absolute", top: 16, right: 20, fontSize: 20, color: "#7a9db0" }}>×</button>
-            <h2 className="display" style={{ fontSize: "1.75rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 6 }}>Welcome Back</h2>
-            <p style={{ fontSize: "0.875rem", color: "#6b8999", marginBottom: 28, letterSpacing: ".02em" }}>Sign in to your account</p>
+              style={{ position: "absolute", top: 16, right: 20, fontSize: 20, color: "#5090aa" }}>×</button>
+            <h2 className="display" style={{ fontSize: "1.75rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>Welcome Back</h2>
+            <p style={{ fontSize: "0.875rem", color: "#4a7f98", marginBottom: 28, letterSpacing: ".02em" }}>Sign in to your account</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               <input placeholder="Username" value={loginForm.username}
                 onChange={e => setLoginForm(p => ({ ...p, username: e.target.value }))}
                 onKeyDown={e => e.key === "Enter" && login()}
-                style={{ padding: "12px 14px", border: "1px solid #d0e4ee", borderRadius: 4, fontSize: 14, outline: "none" }} />
+                style={{ padding: "12px 14px", border: "1px solid #b0dce8", borderRadius: 4, fontSize: 14, outline: "none" }} />
               <input placeholder="Password" type="password" value={loginForm.password}
                 onChange={e => setLoginForm(p => ({ ...p, password: e.target.value }))}
                 onKeyDown={e => e.key === "Enter" && login()}
-                style={{ padding: "12px 14px", border: "1px solid #d0e4ee", borderRadius: 4, fontSize: 14, outline: "none" }} />
+                style={{ padding: "12px 14px", border: "1px solid #b0dce8", borderRadius: 4, fontSize: 14, outline: "none" }} />
               {loginErr && <p style={{ fontSize: 12, color: "#e74c3c" }}>{loginErr}</p>}
-              <button onClick={login} style={{ padding: "13px", background: "#2d2d2d", color: "#fff",
+              <button onClick={login} style={{ padding: "13px", background: "#0d3b66", color: "#fff",
                 border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: 500 }}>
                 Sign In
               </button>
               <button onClick={() => { setShowLogin(false); setForgotStep("input_user"); }}
-                style={{ background: "none", border: "none", color: "#3d8fab", fontSize: 13, cursor: "pointer", textAlign: "center", padding: "4px 0" }}>
+                style={{ background: "none", border: "none", color: "#0ea5c5", fontSize: 13, cursor: "pointer", textAlign: "center", padding: "4px 0" }}>
                 Lupa sandi? Reset via OTP
               </button>
             </div>
             <div style={{ marginTop: 24 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
                 <div style={{ flex: 1, height: 1, background: "#e8eef4" }} />
-                <span style={{ fontSize: 11, color: "#b8d4e3", fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>atau masuk dengan</span>
+                <span style={{ fontSize: 11, color: "#86cad8", fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>atau masuk dengan</span>
                 <div style={{ flex: 1, height: 1, background: "#e8eef4" }} />
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -5122,7 +5131,7 @@ export default function BricksyTravel() {
             {/* Close */}
             <button onClick={() => setComingSoon(null)}
               style={{ position: "absolute", top: 16, right: 18, background: "none", border: "none",
-                fontSize: 20, color: "#b8d4e3", cursor: "pointer", lineHeight: 1 }}>✕</button>
+                fontSize: 20, color: "#86cad8", cursor: "pointer", lineHeight: 1 }}>✕</button>
 
             {/* Icon */}
             <div style={{ width: 72, height: 72, borderRadius: "50%",
@@ -5143,34 +5152,34 @@ export default function BricksyTravel() {
             </div>
 
             {/* Badge */}
-            <div style={{ display: "inline-block", background: "#f0f9fc", border: "1px solid #b8d4e3",
-              color: "#2b7a9a", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".12em",
+            <div style={{ display: "inline-block", background: "#e8f9fc", border: "1px solid #86cad8",
+              color: "#0891b2", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".12em",
               textTransform: "uppercase", padding: "5px 16px", borderRadius: 20, marginBottom: 18 }}>
               🚧 Coming Soon
             </div>
 
             <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.625rem", fontWeight: 900,
-              color: "#2d2d2d", marginBottom: 12, lineHeight: 1.15 }}>
+              color: "#0d3b66", marginBottom: 12, lineHeight: 1.15 }}>
               Login dengan {comingSoon === "google" ? "Google" : "Apple"}
             </h2>
 
-            <p style={{ fontSize: "0.9375rem", color: "#6b8999", lineHeight: 1.75, marginBottom: 28, maxWidth: 280, margin: "0 auto 28px" }}>
+            <p style={{ fontSize: "0.9375rem", color: "#4a7f98", lineHeight: 1.75, marginBottom: 28, maxWidth: 280, margin: "0 auto 28px" }}>
               Fitur ini sedang dalam pengembangan dan akan segera hadir. Gunakan login manual untuk saat ini.
             </p>
 
             {/* Progress bar animation */}
             <div style={{ height: 4, background: "#f0f4f8", borderRadius: 10, overflow: "hidden", marginBottom: 28 }}>
               <style>{`@keyframes csProgress{0%{width:0%}100%{width:75%}}`}</style>
-              <div style={{ height: "100%", background: "linear-gradient(to right,#2b7a9a,#5bc4e0)",
+              <div style={{ height: "100%", background: "linear-gradient(to right,#0891b2,#22d3ee)",
                 borderRadius: 10, animation: "csProgress 2s ease-out forwards" }} />
             </div>
 
             <button onClick={() => setComingSoon(null)}
-              style={{ width: "100%", padding: "12px", background: "#2d2d2d", color: "#fff",
+              style={{ width: "100%", padding: "12px", background: "#0d3b66", color: "#fff",
                 border: "none", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700,
                 letterSpacing: ".04em", cursor: "pointer", transition: "background .2s" }}
-              onMouseEnter={e => e.currentTarget.style.background = "#2b7a9a"}
-              onMouseLeave={e => e.currentTarget.style.background = "#2d2d2d"}>
+              onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
+              onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
               Kembali ke Login
             </button>
           </div>
@@ -5183,7 +5192,7 @@ export default function BricksyTravel() {
           display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
           <div className="login-modal fade-in" style={{ maxWidth: 420 }}>
             <button onClick={closeForgot}
-              style={{ position: "absolute", top: 16, right: 20, fontSize: 20, color: "#7a9db0" }}>×</button>
+              style={{ position: "absolute", top: 16, right: 20, fontSize: 20, color: "#5090aa" }}>×</button>
 
             {/* Step indicator */}
             <div style={{ display: "flex", gap: 6, marginBottom: 24 }}>
@@ -5192,7 +5201,7 @@ export default function BricksyTravel() {
                 const cur = stepMap[forgotStep] || 1;
                 return (
                   <div key={n} style={{ flex: 1, height: 3, borderRadius: 2,
-                    background: n <= cur ? "#2b7a9a" : "#ddeef5", transition: "background .3s" }} />
+                    background: n <= cur ? "#0891b2" : "#c0e8f0", transition: "background .3s" }} />
                 );
               })}
             </div>
@@ -5200,20 +5209,20 @@ export default function BricksyTravel() {
             {/* STEP 1 — Username */}
             {forgotStep === "input_user" && (
               <>
-                <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 6 }}>Lupa Sandi</h2>
-                <p style={{ fontSize: "0.875rem", color: "#6b8999", marginBottom: 24 }}>Masukkan username akun Anda.</p>
+                <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>Lupa Sandi</h2>
+                <p style={{ fontSize: "0.875rem", color: "#4a7f98", marginBottom: 24 }}>Masukkan username akun Anda.</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   <input placeholder="Username" value={forgotUser}
                     onChange={e => { setForgotUser(e.target.value); setForgotErr(""); }}
                     onKeyDown={e => e.key === "Enter" && forgotStep1()}
-                    style={{ padding: "12px 14px", border: "1px solid #d0e4ee", borderRadius: 4, fontSize: 14, outline: "none" }} />
+                    style={{ padding: "12px 14px", border: "1px solid #b0dce8", borderRadius: 4, fontSize: 14, outline: "none" }} />
                   {forgotErr && <p style={{ fontSize: 12, color: "#e74c3c" }}>{forgotErr}</p>}
                   <button onClick={forgotStep1}
-                    style={{ padding: "13px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500 }}>
+                    style={{ padding: "13px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500 }}>
                     Lanjut
                   </button>
                   <button onClick={() => { closeForgot(); setShowLogin(true); }}
-                    style={{ background: "none", border: "none", color: "#6b8999", fontSize: 12, cursor: "pointer" }}>← Kembali ke Login</button>
+                    style={{ background: "none", border: "none", color: "#4a7f98", fontSize: 12, cursor: "pointer" }}>← Kembali ke Login</button>
                 </div>
               </>
             )}
@@ -5221,23 +5230,23 @@ export default function BricksyTravel() {
             {/* STEP 2 — Verifikasi Email */}
             {forgotStep === "input_email" && (
               <>
-                <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 6 }}>Verifikasi Email</h2>
-                <p style={{ fontSize: "0.875rem", color: "#6b8999", marginBottom: 24 }}>
-                  Masukkan email yang terdaftar untuk akun <strong style={{ color: "#2d2d2d" }}>{forgotUser}</strong>.
+                <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>Verifikasi Email</h2>
+                <p style={{ fontSize: "0.875rem", color: "#4a7f98", marginBottom: 24 }}>
+                  Masukkan email yang terdaftar untuk akun <strong style={{ color: "#0d3b66" }}>{forgotUser}</strong>.
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   <input placeholder="Email terdaftar" type="email" value={forgotEmail}
                     onChange={e => { setForgotEmail(e.target.value); setForgotErr(""); }}
                     onKeyDown={e => e.key === "Enter" && forgotStep2()}
-                    style={{ padding: "12px 14px", border: "1px solid #d0e4ee", borderRadius: 4, fontSize: 14, outline: "none" }} />
+                    style={{ padding: "12px 14px", border: "1px solid #b0dce8", borderRadius: 4, fontSize: 14, outline: "none" }} />
                   {forgotErr && <p style={{ fontSize: 12, color: "#e74c3c" }}>{forgotErr}</p>}
                   <button onClick={forgotStep2} disabled={forgotOTP.sending}
-                    style={{ padding: "13px", background: forgotOTP.sending ? "#7a9db0" : "#2d2d2d", color: "#fff",
+                    style={{ padding: "13px", background: forgotOTP.sending ? "#5090aa" : "#0d3b66", color: "#fff",
                       border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500, cursor: forgotOTP.sending ? "not-allowed" : "pointer" }}>
                     {forgotOTP.sending ? "⏳ Mengirim OTP..." : "Kirim OTP"}
                   </button>
                   <button onClick={() => { setForgotStep("input_user"); setForgotErr(""); }}
-                    style={{ background: "none", border: "none", color: "#6b8999", fontSize: 12, cursor: "pointer" }}>← Kembali</button>
+                    style={{ background: "none", border: "none", color: "#4a7f98", fontSize: 12, cursor: "pointer" }}>← Kembali</button>
                 </div>
               </>
             )}
@@ -5245,24 +5254,24 @@ export default function BricksyTravel() {
             {/* STEP 3 — Input OTP */}
             {forgotStep === "input_otp" && (
               <>
-                <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 6 }}>Masukkan Kode OTP</h2>
-                <p style={{ fontSize: "0.875rem", color: "#6b8999", marginBottom: 8 }}>
-                  Kode 6 digit telah dikirim ke <strong style={{ color: "#2d2d2d" }}>{forgotEmail}</strong>.
+                <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>Masukkan Kode OTP</h2>
+                <p style={{ fontSize: "0.875rem", color: "#4a7f98", marginBottom: 8 }}>
+                  Kode 6 digit telah dikirim ke <strong style={{ color: "#0d3b66" }}>{forgotEmail}</strong>.
                 </p>
                 <p style={{ fontSize: "0.8125rem", color: "#f39c12", marginBottom: 20 }}>⏱ Berlaku 15 menit.</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   <input placeholder="Kode OTP 6 digit" value={forgotOTP.input} maxLength={6}
                     onChange={e => { setForgotOTP(p => ({ ...p, input: e.target.value.replace(/\D/g, "") })); setForgotErr(""); }}
                     onKeyDown={e => e.key === "Enter" && forgotStep3()}
-                    style={{ padding: "12px 14px", border: "1.5px solid #d0e4ee", borderRadius: 4, fontSize: 20,
-                      letterSpacing: "8px", textAlign: "center", outline: "none", fontWeight: 700, color: "#2d2d2d" }} />
+                    style={{ padding: "12px 14px", border: "1.5px solid #b0dce8", borderRadius: 4, fontSize: 20,
+                      letterSpacing: "8px", textAlign: "center", outline: "none", fontWeight: 700, color: "#0d3b66" }} />
                   {forgotErr && <p style={{ fontSize: 12, color: "#e74c3c" }}>{forgotErr}</p>}
                   <button onClick={forgotStep3}
-                    style={{ padding: "13px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500 }}>
+                    style={{ padding: "13px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500 }}>
                     Verifikasi OTP
                   </button>
                   <button onClick={() => { setForgotStep("input_email"); setForgotOTP({ code:"",input:"",expiry:0,sending:false }); setForgotErr(""); }}
-                    style={{ background: "none", border: "none", color: "#3d8fab", fontSize: 12, cursor: "pointer" }}>
+                    style={{ background: "none", border: "none", color: "#0ea5c5", fontSize: 12, cursor: "pointer" }}>
                     ↺ Kirim ulang OTP
                   </button>
                 </div>
@@ -5272,19 +5281,19 @@ export default function BricksyTravel() {
             {/* STEP 4 — Password Baru */}
             {forgotStep === "input_newpass" && (
               <>
-                <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 6 }}>Password Baru</h2>
-                <p style={{ fontSize: "0.875rem", color: "#6b8999", marginBottom: 24 }}>
-                  OTP terverifikasi ✅. Buat password baru untuk <strong style={{ color: "#2d2d2d" }}>{forgotUser}</strong>.
+                <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>Password Baru</h2>
+                <p style={{ fontSize: "0.875rem", color: "#4a7f98", marginBottom: 24 }}>
+                  OTP terverifikasi ✅. Buat password baru untuk <strong style={{ color: "#0d3b66" }}>{forgotUser}</strong>.
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   <input placeholder="Password baru (min. 6 karakter)" type="password" value={forgotNewPass.val}
                     onChange={e => { setForgotNewPass(p => ({ ...p, val: e.target.value })); setForgotErr(""); }}
                     onKeyDown={e => e.key === "Enter" && forgotStep4()}
-                    style={{ padding: "12px 14px", border: "1px solid #d0e4ee", borderRadius: 4, fontSize: 14, outline: "none" }} />
+                    style={{ padding: "12px 14px", border: "1px solid #b0dce8", borderRadius: 4, fontSize: 14, outline: "none" }} />
                   <input placeholder="Ulangi password baru" type="password" value={forgotNewPass.confirm}
                     onChange={e => { setForgotNewPass(p => ({ ...p, confirm: e.target.value })); setForgotErr(""); }}
                     onKeyDown={e => e.key === "Enter" && forgotStep4()}
-                    style={{ padding: "12px 14px", border: "1px solid #d0e4ee", borderRadius: 4, fontSize: 14, outline: "none" }} />
+                    style={{ padding: "12px 14px", border: "1px solid #b0dce8", borderRadius: 4, fontSize: 14, outline: "none" }} />
                   {forgotErr && <p style={{ fontSize: 12, color: "#e74c3c" }}>{forgotErr}</p>}
                   <button onClick={forgotStep4}
                     style={{ padding: "13px", background: "#27ae60", color: "#fff", border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500 }}>
@@ -5299,9 +5308,9 @@ export default function BricksyTravel() {
 
       {/* ══════ ADMIN PANEL ══════ */}
       {showAdmin && user && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 1500, background: "#f4f9fb", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <div style={{ position: "fixed", inset: 0, zIndex: 1500, background: "#edfafc", display: "flex", flexDirection: "column", overflow: "hidden" }}>
           {/* Admin Nav */}
-          <div style={{ background: "#2d2d2d", color: "#fff", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 58, flexShrink: 0 }}>
+          <div style={{ background: "#0d3b66", color: "#fff", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 58, flexShrink: 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               {/* Hamburger – mobile only */}
               <button className="admin-hamburger" onClick={() => setSidebarOpen(v => !v)} aria-label="Toggle menu">
@@ -5342,7 +5351,7 @@ export default function BricksyTravel() {
                 <button key={tab.id} onClick={() => { setAdminTab(tab.id); setCmsEditPost(null); setSidebarOpen(false); }} style={{
                   width: "100%", padding: "12px 24px", textAlign: "left", background: adminTab === tab.id ? "rgba(61,143,171,.25)" : "none",
                   color: adminTab === tab.id ? "#7dc8de" : "rgba(255,255,255,.6)", fontSize: 13,
-                  borderLeft: adminTab === tab.id ? "3px solid #3d8fab" : "3px solid transparent",
+                  borderLeft: adminTab === tab.id ? "3px solid #0ea5c5" : "3px solid transparent",
                   transition: "all .15s", display: "flex", alignItems: "center", gap: 10, border: "none",
                 }}>
                   <span style={{ fontSize: 14 }}>{tab.icon}</span> {tab.label}
@@ -5388,7 +5397,7 @@ export default function BricksyTravel() {
                   {/* Profile Header Card */}
                   <div style={{ background: "#fff", borderRadius: 12, padding: "28px 32px", boxShadow: "0 2px 12px rgba(0,0,0,.07)", marginBottom: 20 }} className="dash-profile-header">
                     {/* Avatar */}
-                    <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(135deg,#2d2d2d,#2b7a9a)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, color: "#fff", fontWeight: 700, fontFamily: "'Playfair Display',serif", border: "3px solid #ddeef5", overflow: "hidden", cursor: "pointer" }}
+                    <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, color: "#fff", fontWeight: 700, fontFamily: "'Playfair Display',serif", border: "3px solid #c0e8f0", overflow: "hidden", cursor: "pointer" }}
                       onClick={() => setAdminTab("profile")} title="Edit Profil">
                       {user.photo
                         ? <img src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -5396,24 +5405,24 @@ export default function BricksyTravel() {
                     </div>
                     {/* Info */}
                     <div style={{ flex: 1, minWidth: 200 }}>
-                      <div style={{ fontSize: "0.75rem", color: "#6b8999", fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 4 }}>
+                      <div style={{ fontSize: "0.75rem", color: "#4a7f98", fontWeight: 600, letterSpacing: ".06em", textTransform: "uppercase", marginBottom: 4 }}>
                         {ROLES[user.role]?.label}
                       </div>
-                      <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#2d2d2d", marginBottom: 8, lineHeight: 1.1 }}>
+                      <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#0d3b66", marginBottom: 8, lineHeight: 1.1 }}>
                         {user.name || user.username}
                       </h2>
                       <div style={{ display: "flex", gap: 20, marginBottom: 14, flexWrap: "wrap" }}>
-                        <span style={{ fontSize: "0.8125rem", color: "#6b8999", display: "flex", alignItems: "center", gap: 5 }}>
-                          <span>📝</span> Published: <strong style={{ color: "#2d2d2d" }}>{publishedCount}</strong>
+                        <span style={{ fontSize: "0.8125rem", color: "#4a7f98", display: "flex", alignItems: "center", gap: 5 }}>
+                          <span>📝</span> Published: <strong style={{ color: "#0d3b66" }}>{publishedCount}</strong>
                         </span>
-                        <span style={{ fontSize: "0.8125rem", color: "#6b8999", display: "flex", alignItems: "center", gap: 5 }}>
-                          <span>👁</span> Drafts: <strong style={{ color: "#2d2d2d" }}>{draftCount}</strong>
+                        <span style={{ fontSize: "0.8125rem", color: "#4a7f98", display: "flex", alignItems: "center", gap: 5 }}>
+                          <span>👁</span> Drafts: <strong style={{ color: "#0d3b66" }}>{draftCount}</strong>
                         </span>
-                        <span style={{ fontSize: "0.8125rem", color: "#6b8999", display: "flex", alignItems: "center", gap: 5 }}>
-                          <span>✉</span> Msgs: <strong style={{ color: "#2d2d2d" }}>{data.messages.length}</strong>
+                        <span style={{ fontSize: "0.8125rem", color: "#4a7f98", display: "flex", alignItems: "center", gap: 5 }}>
+                          <span>✉</span> Msgs: <strong style={{ color: "#0d3b66" }}>{data.messages.length}</strong>
                         </span>
                       </div>
-                      <p style={{ fontSize: "0.875rem", color: "#4e6b80", fontStyle: "italic", lineHeight: 1.7, maxWidth: 500, borderLeft: "3px solid #ddeef5", paddingLeft: 14 }}>
+                      <p style={{ fontSize: "0.875rem", color: "#1a5a78", fontStyle: "italic", lineHeight: 1.7, maxWidth: 500, borderLeft: "3px solid #c0e8f0", paddingLeft: 14 }}>
                         {user.desc ||
                           (user.role === "admin"
                             ? "Administrator Arutala Organizer. Kelola konten, pengguna, pesan, dan seluruh pengaturan website."
@@ -5426,16 +5435,16 @@ export default function BricksyTravel() {
                     <div className="dash-action-btns">
                       {canEdit && (
                         <button onClick={() => { setAdminTab("cms"); setCmsEditPost("new"); }}
-                          style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "#2d2d2d", color: "#fff", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "none", cursor: "pointer", letterSpacing: ".03em", transition: "background .2s" }}
-                          onMouseEnter={e => e.currentTarget.style.background = "#2b7a9a"}
-                          onMouseLeave={e => e.currentTarget.style.background = "#2d2d2d"}>
+                          style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "#0d3b66", color: "#fff", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "none", cursor: "pointer", letterSpacing: ".03em", transition: "background .2s" }}
+                          onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
+                          onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                           ✏ Buat Artikel
                         </button>
                       )}
                       <button onClick={() => setAdminTab("messages")}
-                        style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "transparent", color: "#2d2d2d", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "2px solid #ddeef5", cursor: "pointer", letterSpacing: ".03em", transition: "all .2s" }}
-                        onMouseEnter={e => { e.currentTarget.style.borderColor = "#2d2d2d"; }}
-                        onMouseLeave={e => { e.currentTarget.style.borderColor = "#ddeef5"; }}>
+                        style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "transparent", color: "#0d3b66", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "2px solid #c0e8f0", cursor: "pointer", letterSpacing: ".03em", transition: "all .2s" }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = "#0d3b66"; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = "#c0e8f0"; }}>
                         🔔 Pesan Masuk {data.messages.filter(m => !m.read).length > 0 && <span style={{ background: "#e74c3c", color: "#fff", borderRadius: 10, padding: "1px 7px", fontSize: "0.6875rem", fontWeight: 700 }}>{data.messages.filter(m => !m.read).length}</span>}
                       </button>
                     </div>
@@ -5463,20 +5472,20 @@ export default function BricksyTravel() {
               {/* PROFILE */}
               {adminTab === "profile" && (
                 <div className="fade-in">
-                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d", marginBottom: 28 }}>Profil Saya</h1>
+                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 28 }}>Profil Saya</h1>
                   <div className="profile-grid">
                     {/* Photo Card */}
                     <div style={{ background: "#fff", borderRadius: 12, padding: "28px 24px", boxShadow: "0 2px 12px rgba(0,0,0,.07)", textAlign: "center" }}>
-                      <div style={{ width: 100, height: 100, borderRadius: "50%", background: "linear-gradient(135deg,#2d2d2d,#2b7a9a)", margin: "0 auto 16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, color: "#fff", fontWeight: 700, overflow: "hidden", border: "3px solid #ddeef5" }}>
+                      <div style={{ width: 100, height: 100, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", margin: "0 auto 16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, color: "#fff", fontWeight: 700, overflow: "hidden", border: "3px solid #c0e8f0" }}>
                         {user.photo
                           ? <img src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                           : (user.name || user.username).charAt(0).toUpperCase()}
                       </div>
-                      <p style={{ fontSize: 14, fontWeight: 700, color: "#2d2d2d", marginBottom: 2 }}>{user.name || user.username}</p>
-                      <p style={{ fontSize: 11, color: "#7a9db0", marginBottom: 20, background: "#f4f9fb", display: "inline-block", padding: "3px 10px", borderRadius: 10 }}>{ROLES[user.role]?.label}</p>
+                      <p style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{user.name || user.username}</p>
+                      <p style={{ fontSize: 11, color: "#5090aa", marginBottom: 20, background: "#edfafc", display: "inline-block", padding: "3px 10px", borderRadius: 10 }}>{ROLES[user.role]?.label}</p>
                       {/* Upload Photo */}
                       <div style={{ marginTop: 4 }}>
-                        <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Upload Foto Profil</label>
+                        <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Upload Foto Profil</label>
                         <input type="file" accept="image/*" onChange={async e => {
                           const file = e.target.files?.[0];
                           if (!file) return;
@@ -5490,7 +5499,7 @@ export default function BricksyTravel() {
                           } catch {
                             notify("Gagal upload foto. Coba lagi.", "error");
                           }
-                        }} style={{ fontSize: 11, border: "1.5px dashed #3d8fab", borderRadius: 6, padding: "6px", background: "#f0f9fc", color: "#3d8fab", width: "100%", boxSizing: "border-box" }} />
+                        }} style={{ fontSize: 11, border: "1.5px dashed #0ea5c5", borderRadius: 6, padding: "6px", background: "#e8f9fc", color: "#0ea5c5", width: "100%", boxSizing: "border-box" }} />
                         {user.photo && (
                           <button onClick={async () => {
                             const updated = { ...user, photo: "" };
@@ -5505,30 +5514,30 @@ export default function BricksyTravel() {
                     {/* Edit Form */}
                     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                       {/* Data Diri */}
-                      <div style={{ background: "#fff", borderRadius: 12, padding: "28px 28px", boxShadow: "0 2px 12px rgba(0,0,0,.07)", borderTop: "4px solid #3d8fab" }}>
-                        <h3 style={{ fontSize: 15, fontWeight: 600, color: "#2d2d2d", marginBottom: 20 }}>✏ Edit Data Diri</h3>
+                      <div style={{ background: "#fff", borderRadius: 12, padding: "28px 28px", boxShadow: "0 2px 12px rgba(0,0,0,.07)", borderTop: "4px solid #0ea5c5" }}>
+                        <h3 style={{ fontSize: 15, fontWeight: 600, color: "#0d3b66", marginBottom: 20 }}>✏ Edit Data Diri</h3>
                         {[
                           { label: "Nama Lengkap", key: "name", placeholder: "Masukkan nama lengkap", type: "text" },
                           { label: "Nomor HP / WhatsApp", key: "phone", placeholder: "08xxxxxxxxxx", type: "tel" },
                           { label: "Email", key: "email", placeholder: "nama@email.com", type: "email" },
                         ].map(f => (
                           <div key={f.key} style={{ marginBottom: 16 }}>
-                            <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
+                            <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
                             <input type={f.type} placeholder={f.placeholder}
                               value={profileEdit[f.key] !== undefined && profileEditMode ? profileEdit[f.key] : (user[f.key] || "")}
                               onChange={e => setProfileEdit(p => ({ ...p, [f.key]: e.target.value }))}
                               onFocus={() => { if (!profileEditMode) { setProfileEditMode(true); setProfileEdit({ name: user.name || "", phone: user.phone || "", email: user.email || "", desc: user.desc || "", newPass: "", confirmPass: "" }); } }}
-                              style={{ width: "100%", padding: "10px 12px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                              style={{ width: "100%", padding: "10px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                           </div>
                         ))}
                         <div style={{ marginBottom: 20 }}>
-                          <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Deskripsi Diri</label>
+                          <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Deskripsi Diri</label>
                           <textarea placeholder="Tuliskan deskripsi singkat tentang diri Anda..."
                             value={profileEditMode ? profileEdit.desc : (user.desc || "")}
                             onChange={e => setProfileEdit(p => ({ ...p, desc: e.target.value }))}
                             onFocus={() => { if (!profileEditMode) { setProfileEditMode(true); setProfileEdit({ name: user.name || "", phone: user.phone || "", email: user.email || "", desc: user.desc || "", newPass: "", confirmPass: "" }); } }}
                             rows={3}
-                            style={{ width: "100%", padding: "10px 12px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+                            style={{ width: "100%", padding: "10px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
                         </div>
                         {profileEditMode && (
                           <div style={{ display: "flex", gap: 10 }}>
@@ -5538,37 +5547,37 @@ export default function BricksyTravel() {
                               try { const prev = await fsGet(`profile-${user.username}`) || {}; await fsSet(`profile-${user.username}`, { ...prev, name: profileEdit.name, phone: profileEdit.phone, email: profileEdit.email, desc: profileEdit.desc, photo: user.photo || "" }); } catch {}
                               setProfileEditMode(false);
                               notify("Data diri berhasil disimpan!");
-                            }} style={{ padding: "10px 24px", background: "#2d2d2d", color: "#fff", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Simpan Perubahan</button>
+                            }} style={{ padding: "10px 24px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Simpan Perubahan</button>
                             <button onClick={() => setProfileEditMode(false)}
-                              style={{ padding: "10px 20px", background: "#f4f9fb", color: "#4a6680", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, cursor: "pointer" }}>Batal</button>
+                              style={{ padding: "10px 20px", background: "#edfafc", color: "#4a6680", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, cursor: "pointer" }}>Batal</button>
                           </div>
                         )}
                       </div>
 
                       {/* Ganti Sandi */}
                       <div style={{ background: "#fff", borderRadius: 12, padding: "28px 28px", boxShadow: "0 2px 12px rgba(0,0,0,.07)", borderTop: "4px solid #e74c3c" }}>
-                        <h3 style={{ fontSize: 15, fontWeight: 600, color: "#2d2d2d", marginBottom: 4 }}>🔒 Ganti Password</h3>
-                        <p style={{ fontSize: 12, color: "#7a9db0", marginBottom: 20, lineHeight: 1.6 }}>Masukkan password lama untuk verifikasi, lalu isi password baru.</p>
+                        <h3 style={{ fontSize: 15, fontWeight: 600, color: "#0d3b66", marginBottom: 4 }}>🔒 Ganti Password</h3>
+                        <p style={{ fontSize: 12, color: "#5090aa", marginBottom: 20, lineHeight: 1.6 }}>Masukkan password lama untuk verifikasi, lalu isi password baru.</p>
                         <div style={{ marginBottom: 14 }}>
-                          <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Password Lama</label>
+                          <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Password Lama</label>
                           <input type="password" placeholder="Masukkan password saat ini"
                             value={profileEdit.oldPass}
                             onChange={e => setProfileEdit(p => ({ ...p, oldPass: e.target.value }))}
-                            style={{ width: "100%", padding: "10px 12px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                            style={{ width: "100%", padding: "10px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                         </div>
                         <div style={{ marginBottom: 14 }}>
-                          <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Password Baru</label>
+                          <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Password Baru</label>
                           <input type="password" placeholder="Minimal 6 karakter"
                             value={profileEdit.newPass}
                             onChange={e => setProfileEdit(p => ({ ...p, newPass: e.target.value }))}
-                            style={{ width: "100%", padding: "10px 12px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                            style={{ width: "100%", padding: "10px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                         </div>
                         <div style={{ marginBottom: 20 }}>
-                          <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Konfirmasi Password</label>
+                          <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Konfirmasi Password</label>
                           <input type="password" placeholder="Ulangi password baru"
                             value={profileEdit.confirmPass}
                             onChange={e => setProfileEdit(p => ({ ...p, confirmPass: e.target.value }))}
-                            style={{ width: "100%", padding: "10px 12px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                            style={{ width: "100%", padding: "10px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                         </div>
                         <button onClick={async () => {
                           if (!profileEdit.oldPass) return notify("Masukkan password lama terlebih dahulu.", "error");
@@ -5609,7 +5618,7 @@ export default function BricksyTravel() {
                   ) : (
                     <>
                       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
-                        <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d" }}>Posts & CMS</h1>
+                        <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66" }}>Posts & CMS</h1>
                         <button onClick={() => setCmsEditPost("new")} style={{
                           padding: "9px 22px", background: "#27ae60", color: "#fff",
                           borderRadius: 6, fontSize: 13, border: "none", fontWeight: 500
@@ -5623,8 +5632,8 @@ export default function BricksyTravel() {
                           return (
                             <button key={s} onClick={() => setAdminSection(s)} style={{
                               padding: "8px 20px", fontSize: 13, borderRadius: 6,
-                              border: adminSection === s ? "none" : "1px solid #d0e4ee",
-                              background: adminSection === s ? "#2d2d2d" : "#fff",
+                              border: adminSection === s ? "none" : "1px solid #b0dce8",
+                              background: adminSection === s ? "#0d3b66" : "#fff",
                               color: adminSection === s ? "#fff" : "#4a6680", fontWeight: adminSection === s ? 500 : 400,
                               transition: "all .15s"
                             }}>{SECTION_LABELS[s]} <span style={{ opacity: .6 }}>({count})</span></button>
@@ -5636,27 +5645,27 @@ export default function BricksyTravel() {
                       <div style={{ background: "#fff", borderRadius: 8, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
                         <table style={{ width: "100%", borderCollapse: "collapse" }}>
                           <thead>
-                            <tr style={{ background: "#f4f9fb" }}>
+                            <tr style={{ background: "#edfafc" }}>
                               {["Title", "Category", "Author", "Date", "Status", "Actions"].map(h => (
                                 <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontSize: 11,
-                                  fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase",
+                                  fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase",
                                   borderBottom: "1px solid #e8f2f8" }}>{h}</th>
                               ))}
                             </tr>
                           </thead>
                           <tbody>
                             {(data.posts?.[adminSection] || []).length === 0 ? (
-                              <tr><td colSpan={6} style={{ padding: "32px", textAlign: "center", color: "#7a9db0", fontSize: 14 }}>
-                                No posts yet. <button onClick={() => setCmsEditPost("new")} style={{ color: "#3d8fab", border: "none", background: "none", cursor: "pointer" }}>Create the first one →</button>
+                              <tr><td colSpan={6} style={{ padding: "32px", textAlign: "center", color: "#5090aa", fontSize: 14 }}>
+                                No posts yet. <button onClick={() => setCmsEditPost("new")} style={{ color: "#0ea5c5", border: "none", background: "none", cursor: "pointer" }}>Create the first one →</button>
                               </td></tr>
                             ) : (data.posts?.[adminSection] || []).map(post => (
-                              <tr key={post.id} style={{ borderBottom: "1px solid #eef4f8" }}>
-                                <td style={{ padding: "14px 16px", fontSize: 13, fontWeight: 500, color: "#2d2d2d", maxWidth: 240 }}>
+                              <tr key={post.id} style={{ borderBottom: "1px solid #e0f7fa" }}>
+                                <td style={{ padding: "14px 16px", fontSize: 13, fontWeight: 500, color: "#0d3b66", maxWidth: 240 }}>
                                   <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{post.title}</div>
                                 </td>
-                                <td style={{ padding: "14px 16px", fontSize: 12, color: "#7a9db0" }}>{post.category || "—"}</td>
-                                <td style={{ padding: "14px 16px", fontSize: 12, color: "#7a9db0" }}>{post.author}</td>
-                                <td style={{ padding: "14px 16px", fontSize: 12, color: "#7a9db0" }}>{formatDate(post.date)}</td>
+                                <td style={{ padding: "14px 16px", fontSize: 12, color: "#5090aa" }}>{post.category || "—"}</td>
+                                <td style={{ padding: "14px 16px", fontSize: 12, color: "#5090aa" }}>{post.author}</td>
+                                <td style={{ padding: "14px 16px", fontSize: 12, color: "#5090aa" }}>{formatDate(post.date)}</td>
                                 <td style={{ padding: "14px 16px" }}>
                                   <span style={{ fontSize: 11, padding: "3px 10px", borderRadius: 10,
                                     background: post.status === "published" ? "#eeffee" : "#fff9ee",
@@ -5667,7 +5676,7 @@ export default function BricksyTravel() {
                                 <td style={{ padding: "14px 16px", display: "flex", gap: 6 }}>
                                   <button onClick={() => setCmsEditPost(post)} style={{
                                     fontSize: 12, padding: "5px 12px", borderRadius: 6,
-                                    border: "1px solid #d0e4ee", background: "#f4f9fb", color: "#3d8fab" }}>Edit</button>
+                                    border: "1px solid #b0dce8", background: "#edfafc", color: "#0ea5c5" }}>Edit</button>
                                   <button onClick={() => {
                                     const np = { ...post, status: post.status === "published" ? "draft" : "published" };
                                     savePost(np);
@@ -5694,9 +5703,9 @@ export default function BricksyTravel() {
               {/* IMAGES */}
               {adminTab === "images" && canEdit && (
                 <div className="fade-in">
-                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d", marginBottom: 8 }}>Image Management</h1>
-                  <p style={{ fontSize: 13, color: "#7a9db0", marginBottom: 8 }}>Update images via Cloudinary URL or direct URL</p>
-                  <div style={{ fontSize: 12, background: "#e8f4fd", border: "1px solid #b8d4e3", borderRadius: 6, padding: "10px 14px", marginBottom: 28, color: "#3d8fab" }}>
+                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 8 }}>Image Management</h1>
+                  <p style={{ fontSize: 13, color: "#5090aa", marginBottom: 8 }}>Update images via Cloudinary URL or direct URL</p>
+                  <div style={{ fontSize: 12, background: "#e8f4fd", border: "1px solid #86cad8", borderRadius: 6, padding: "10px 14px", marginBottom: 28, color: "#0ea5c5" }}>
                     💡 Upload to Cloudinary first, then paste the delivery URL here.
                   </div>
                   {editImg.group !== null && (
@@ -5705,7 +5714,7 @@ export default function BricksyTravel() {
                       <div style={{ display: "flex", gap: 10 }}>
                         <input value={editImg.url} onChange={e => setEditImg(p => ({ ...p, url: e.target.value }))}
                           placeholder="https://..."
-                          style={{ flex: 1, padding: "10px 14px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                          style={{ flex: 1, padding: "10px 14px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
                         <button onClick={updateImg} style={{ padding: "10px 20px", background: "#27ae60", color: "#fff", borderRadius: 6, fontSize: 13, border: "none" }}>Update</button>
                         <button onClick={() => setEditImg({ group: null, idx: null, url: "" })}
                           style={{ padding: "10px 20px", background: "#eee", borderRadius: 6, fontSize: 13, border: "none" }}>Cancel</button>
@@ -5719,7 +5728,7 @@ export default function BricksyTravel() {
                     { key: "gal", label: "Gallery Images" },
                   ].map(group => (
                     <div key={group.key} style={{ background: "#fff", borderRadius: 8, padding: "20px 24px", marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
-                      <h3 style={{ fontSize: 15, fontWeight: 500, color: "#2d2d2d", marginBottom: 16 }}>{group.label}</h3>
+                      <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0d3b66", marginBottom: 16 }}>{group.label}</h3>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                         {data.images[group.key].map((src, i) => (
                           <div key={i} style={{ position: "relative", width: 140 }}>
@@ -5740,19 +5749,19 @@ export default function BricksyTravel() {
                 <div className="fade-in">
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28 }}>
                     <div>
-                      <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d", marginBottom: 4 }}>Setting About Us</h1>
-                      <p style={{ fontSize: 12, color: "#7a9db0" }}>Kelola semua konten halaman About Us yang tampil di website.</p>
+                      <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 4 }}>Setting About Us</h1>
+                      <p style={{ fontSize: 12, color: "#5090aa" }}>Kelola semua konten halaman About Us yang tampil di website.</p>
                     </div>
                     <button onClick={() => { navigateTo("about"); setShowAdmin(false); }}
-                      style={{ padding: "8px 16px", background: "#f4f9fb", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 12, color: "#3d8fab", cursor: "pointer", fontWeight: 600 }}>
+                      style={{ padding: "8px 16px", background: "#edfafc", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, color: "#0ea5c5", cursor: "pointer", fontWeight: 600 }}>
                       👁 Lihat Halaman →
                     </button>
                   </div>
 
                   {/* HERO SECTION */}
-                  <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #2b7a9a" }}>
-                    <h3 style={{ fontSize: 14, fontWeight: 700, color: "#2d2d2d", marginBottom: 18, display: "flex", alignItems: "center", gap: 8 }}>
-                      <span style={{ background: "#e8f4fd", borderRadius: 6, padding: "4px 10px", fontSize: 12, color: "#3d8fab" }}>Hero Section</span>
+                  <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #0891b2" }}>
+                    <h3 style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66", marginBottom: 18, display: "flex", alignItems: "center", gap: 8 }}>
+                      <span style={{ background: "#e8f4fd", borderRadius: 6, padding: "4px 10px", fontSize: 12, color: "#0ea5c5" }}>Hero Section</span>
                     </h3>
                     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                       {[
@@ -5761,7 +5770,7 @@ export default function BricksyTravel() {
                         { label: "Teks Deskripsi Hero", key: "aboutHeroSub", multiline: true, placeholder: "Deskripsi singkat perusahaan..." },
                       ].map(f => (
                         <div key={f.key}>
-                          <label style={{ fontSize: 11, fontWeight: 700, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
+                          <label style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
                           <CEF
                             val={getCEFVal(f.key) ?? f.placeholder}
                             multiline={f.multiline}
@@ -5775,11 +5784,11 @@ export default function BricksyTravel() {
 
                   {/* WHY CHOOSE US */}
                   <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #27ae60" }}>
-                    <h3 style={{ fontSize: 14, fontWeight: 700, color: "#2d2d2d", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}>
+                    <h3 style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66", marginBottom: 6, display: "flex", alignItems: "center", gap: 8 }}>
                       <span style={{ background: "#e8f8ef", borderRadius: 6, padding: "4px 10px", fontSize: 12, color: "#27ae60" }}>Why Choose Us</span>
                     </h3>
                     <div style={{ marginBottom: 18 }}>
-                      <label style={{ fontSize: 11, fontWeight: 700, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Judul Seksi</label>
+                      <label style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Judul Seksi</label>
                       <CEF
                         val={getCEFVal("aboutWhyTitle") ?? "Why Choose Us"}
                         onChange={e => setEditContent(p => ({ ...p, aboutWhyTitle: e.target.value }))}
@@ -5789,7 +5798,7 @@ export default function BricksyTravel() {
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                       {[1,2,3,4].map(n => (
                         <div key={n} style={{ background: "#f8fbfc", borderRadius: 8, padding: "16px 18px", border: "1px solid #e8f2f8" }}>
-                          <div style={{ fontSize: 11, fontWeight: 700, color: "#7a9db0", letterSpacing: ".5px", textTransform: "uppercase", marginBottom: 12 }}>Keunggulan #{n}</div>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: ".5px", textTransform: "uppercase", marginBottom: 12 }}>Keunggulan #{n}</div>
                           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                             {[
                               { label: "Ikon (emoji)", key: `aboutV${n}Icon`, placeholder: ["🌍","🛡","🌱","⭐"][n-1] },
@@ -5797,7 +5806,7 @@ export default function BricksyTravel() {
                               { label: "Deskripsi", key: `aboutV${n}Desc`, multiline: true, placeholder: "Deskripsi keunggulan..." },
                             ].map(f => (
                               <div key={f.key}>
-                                <label style={{ fontSize: 10, fontWeight: 700, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>{f.label}</label>
+                                <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>{f.label}</label>
                                 <CEF
                                   val={getCEFVal(f.key) ?? f.placeholder}
                                   multiline={f.multiline}
@@ -5814,7 +5823,7 @@ export default function BricksyTravel() {
 
                   {/* CONTACT SECTION */}
                   <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #8e44ad" }}>
-                    <h3 style={{ fontSize: 14, fontWeight: 700, color: "#2d2d2d", marginBottom: 18, display: "flex", alignItems: "center", gap: 8 }}>
+                    <h3 style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66", marginBottom: 18, display: "flex", alignItems: "center", gap: 8 }}>
                       <span style={{ background: "#f3e8fd", borderRadius: 6, padding: "4px 10px", fontSize: 12, color: "#8e44ad" }}>Seksi Kontak</span>
                     </h3>
                     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -5825,7 +5834,7 @@ export default function BricksyTravel() {
                         { label: "Nomor Telepon", key: "phone", placeholder: "+62 xxx xxxx xxxx" },
                       ].map(f => (
                         <div key={f.key}>
-                          <label style={{ fontSize: 11, fontWeight: 700, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
+                          <label style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
                           <CEF
                             val={getCEFVal(f.key) ?? f.placeholder}
                             multiline={f.multiline}
@@ -5838,24 +5847,24 @@ export default function BricksyTravel() {
                   </div>
 
                   {/* PREVIEW CARD */}
-                  <div style={{ background: "#f4f9fb", borderRadius: 10, padding: "20px 24px", border: "1px dashed #b8d4e3" }}>
-                    <p style={{ fontSize: 11, fontWeight: 700, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 14 }}>Preview Ringkas</p>
+                  <div style={{ background: "#edfafc", borderRadius: 10, padding: "20px 24px", border: "1px dashed #86cad8" }}>
+                    <p style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 14 }}>Preview Ringkas</p>
                     <div style={{ background: "#c5dde9", borderRadius: 8, padding: "20px 24px", marginBottom: 12 }}>
-                      <div style={{ fontSize: 10, letterSpacing: "2px", color: "#2b7a9a", textTransform: "uppercase", fontWeight: 700, marginBottom: 6 }}>{data.content.aboutHeroLabel || "About Us"}</div>
-                      <div style={{ fontSize: 18, fontWeight: 900, color: "#2d2d2d", marginBottom: 8 }}>{data.content.aboutHeroTitle || "We Live for Adventure"}</div>
-                      <div style={{ fontSize: 13, color: "#4e6b80", lineHeight: 1.7 }}>{(data.content.aboutHeroSub || data.content.aboutText || "").slice(0, 100)}{(data.content.aboutHeroSub || data.content.aboutText || "").length > 100 ? "…" : ""}</div>
+                      <div style={{ fontSize: 10, letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 6 }}>{data.content.aboutHeroLabel || "About Us"}</div>
+                      <div style={{ fontSize: 18, fontWeight: 900, color: "#0d3b66", marginBottom: 8 }}>{data.content.aboutHeroTitle || "We Live for Adventure"}</div>
+                      <div style={{ fontSize: 13, color: "#1a5a78", lineHeight: 1.7 }}>{(data.content.aboutHeroSub || data.content.aboutText || "").slice(0, 100)}{(data.content.aboutHeroSub || data.content.aboutText || "").length > 100 ? "…" : ""}</div>
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 12 }}>
                       {[1,2,3,4].map(n => (
-                        <div key={n} style={{ background: "#fff", borderRadius: 8, padding: "12px", textAlign: "center", border: "1px solid #ddeef5" }}>
+                        <div key={n} style={{ background: "#fff", borderRadius: 8, padding: "12px", textAlign: "center", border: "1px solid #c0e8f0" }}>
                           <div style={{ fontSize: 22, marginBottom: 6 }}>{data.content[`aboutV${n}Icon`] || ["🌍","🛡","🌱","⭐"][n-1]}</div>
-                          <div style={{ fontSize: 11, fontWeight: 700, color: "#2d2d2d" }}>{data.content[`aboutV${n}Title`] || ["Global Network","Safe & Trusted","Sustainable Travel","Award Winning"][n-1]}</div>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: "#0d3b66" }}>{data.content[`aboutV${n}Title`] || ["Global Network","Safe & Trusted","Sustainable Travel","Award Winning"][n-1]}</div>
                         </div>
                       ))}
                     </div>
                     <div style={{ background: "#daeaf3", borderRadius: 8, padding: "14px 20px", textAlign: "center" }}>
-                      <div style={{ fontSize: 15, fontWeight: 700, color: "#2d2d2d", marginBottom: 4 }}>{data.content.aboutContactTitle || "Get in Touch"}</div>
-                      <div style={{ fontSize: 12, color: "#4e6b80" }}>{data.content.aboutContactSub || "We'd love to help plan your next event."}</div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: "#0d3b66", marginBottom: 4 }}>{data.content.aboutContactTitle || "Get in Touch"}</div>
+                      <div style={{ fontSize: 12, color: "#1a5a78" }}>{data.content.aboutContactSub || "We'd love to help plan your next event."}</div>
                     </div>
                   </div>
                 </div>
@@ -5864,8 +5873,8 @@ export default function BricksyTravel() {
               {/* SITE CONTENT */}
               {adminTab === "content" && isAdmin && (
                 <div className="fade-in">
-                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d", marginBottom: 6 }}>Site Content</h1>
-                  <p style={{ fontSize: 13, color: "#7a9db0", marginBottom: 28 }}>Edit all text on the website</p>
+                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 6 }}>Site Content</h1>
+                  <p style={{ fontSize: 13, color: "#5090aa", marginBottom: 28 }}>Edit all text on the website</p>
                   {[
                     { label: "Logo / Brand Name", key: "logoText" },
                     { label: "Logo Image URL (kosongkan untuk teks)", key: "logoImage" },
@@ -5896,7 +5905,7 @@ export default function BricksyTravel() {
                     { label: "Layanan — Subjudul Halaman", key: "servicesPageSub", multiline: true },
                   ].map(f => (
                     <div key={f.key} style={{ background: "#fff", borderRadius: 8, padding: "18px 20px", marginBottom: 14, boxShadow: "0 1px 4px rgba(0,0,0,.05)" }}>
-                      <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>{f.label}</label>
+                      <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>{f.label}</label>
                       <CEF
                         key={f.key}
                         val={getCEFVal(f.key)}
@@ -5928,9 +5937,9 @@ export default function BricksyTravel() {
               {adminTab === "messages" && canCS && (
                 <div className="fade-in">
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-                    <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d" }}>Pesan Masuk</h1>
+                    <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66" }}>Pesan Masuk</h1>
                     <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                      <span style={{ fontSize: 12, color: "#7a9db0" }}>Total: {data.messages.length} pesan</span>
+                      <span style={{ fontSize: 12, color: "#5090aa" }}>Total: {data.messages.length} pesan</span>
                       {data.messages.filter(m => !m.read).length > 0 && (
                         <span style={{ fontSize: 11, background: "#e74c3c", color: "#fff", borderRadius: 10, padding: "3px 10px", fontWeight: 600 }}>
                           {data.messages.filter(m => !m.read).length} belum dibaca
@@ -5940,7 +5949,7 @@ export default function BricksyTravel() {
                         <button onClick={() => {
                           const msgs = data.messages.map(m => ({ ...m, read: true }));
                           save({ ...data, messages: msgs }); notify("Semua pesan ditandai sudah dibaca.");
-                        }} style={{ fontSize: 11, padding: "5px 12px", background: "#f4f9fb", border: "1px solid #d0e4ee", borderRadius: 6, color: "#4a6680", cursor: "pointer" }}>
+                        }} style={{ fontSize: 11, padding: "5px 12px", background: "#edfafc", border: "1px solid #b0dce8", borderRadius: 6, color: "#4a6680", cursor: "pointer" }}>
                           Tandai Semua Dibaca
                         </button>
                       )}
@@ -5948,43 +5957,43 @@ export default function BricksyTravel() {
                   </div>
 
                   {data.messages.length === 0
-                    ? <div style={{ textAlign: "center", padding: "60px", color: "#7a9db0", background: "#fff", borderRadius: 10, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
+                    ? <div style={{ textAlign: "center", padding: "60px", color: "#5090aa", background: "#fff", borderRadius: 10, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
                         <div style={{ fontSize: 40, marginBottom: 12 }}>✉️</div>
                         <p style={{ fontSize: 14 }}>Belum ada pesan masuk.</p>
                       </div>
                     : [...data.messages].reverse().map(m => (
                       <div key={m.id} style={{ background: "#fff", borderRadius: 10, marginBottom: 16,
-                        boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderLeft: m.read ? "3px solid #ddeef5" : "3px solid #e74c3c",
+                        boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderLeft: m.read ? "3px solid #c0e8f0" : "3px solid #e74c3c",
                         overflow: "hidden", opacity: m.deleted ? 0.5 : 1 }}>
                         {/* Header */}
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "16px 20px 12px", borderBottom: "1px solid #f4f9fb" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "16px 20px 12px", borderBottom: "1px solid #edfafc" }}>
                           <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                            <div style={{ width: 40, height: 40, borderRadius: "50%", background: "linear-gradient(135deg,#2d2d2d,#2b7a9a)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 16 }}>
+                            <div style={{ width: 40, height: 40, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 16 }}>
                               {m.name?.charAt(0).toUpperCase() || "?"}
                             </div>
                             <div>
-                              <div style={{ fontWeight: 700, fontSize: 14, color: "#2d2d2d", lineHeight: 1.3 }}>
+                              <div style={{ fontWeight: 700, fontSize: 14, color: "#0d3b66", lineHeight: 1.3 }}>
                                 {m.name}
                                 {!m.read && <span style={{ marginLeft: 8, fontSize: 9, background: "#e74c3c", color: "#fff", borderRadius: 8, padding: "2px 7px", fontWeight: 700, letterSpacing: ".5px" }}>BARU</span>}
                               </div>
-                              <div style={{ fontSize: 12, color: "#7a9db0", marginTop: 2 }}>{m.email}</div>
+                              <div style={{ fontSize: 12, color: "#5090aa", marginTop: 2 }}>{m.email}</div>
                             </div>
                           </div>
                           <div style={{ display: "flex", gap: 6, alignItems: "center", flexShrink: 0 }}>
-                            <span style={{ fontSize: 11, color: "#b8d4e3" }}>{m.date}</span>
+                            <span style={{ fontSize: 11, color: "#86cad8" }}>{m.date}</span>
                             {/* READ button */}
                             <button onClick={() => {
                               const msgs = data.messages.map(x => x.id === m.id ? { ...x, read: !x.read } : x);
                               save({ ...data, messages: msgs });
                             }} title={m.read ? "Tandai belum dibaca" : "Tandai sudah dibaca"}
-                              style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, border: "1px solid #d0e4ee",
-                                background: m.read ? "#f4f9fb" : "#e8f8ef", color: m.read ? "#7a9db0" : "#27ae60", cursor: "pointer", fontWeight: 600 }}>
+                              style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, border: "1px solid #b0dce8",
+                                background: m.read ? "#edfafc" : "#e8f8ef", color: m.read ? "#5090aa" : "#27ae60", cursor: "pointer", fontWeight: 600 }}>
                               {m.read ? "✓ Dibaca" : "Tandai Dibaca"}
                             </button>
                             {/* REPLY button */}
                             <button onClick={() => setReplyTo(replyTo === m.id ? null : m.id)}
-                              style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, border: "1px solid #b8d4e3",
-                                background: replyTo === m.id ? "#e8f4fd" : "none", color: "#3d8fab", cursor: "pointer", fontWeight: 600 }}>
+                              style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, border: "1px solid #86cad8",
+                                background: replyTo === m.id ? "#e8f4fd" : "none", color: "#0ea5c5", cursor: "pointer", fontWeight: 600 }}>
                               ↩ Reply
                             </button>
                             {/* DELETE button */}
@@ -6001,16 +6010,16 @@ export default function BricksyTravel() {
                         </div>
                         {/* Body */}
                         <div style={{ padding: "14px 20px 16px" }}>
-                          <p style={{ fontSize: 14, color: "#334f65", lineHeight: 1.75, whiteSpace: "pre-wrap" }}>{m.message}</p>
+                          <p style={{ fontSize: 14, color: "#1a4a72", lineHeight: 1.75, whiteSpace: "pre-wrap" }}>{m.message}</p>
                           {/* Reply history */}
                           {m.replies?.length > 0 && (
                             <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 8 }}>
-                              <div style={{ fontSize: 10, fontWeight: 700, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase" }}>Riwayat Balasan</div>
+                              <div style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Riwayat Balasan</div>
                               {m.replies.map((r, i) => (
-                                <div key={i} style={{ background: "#f4f9fb", borderRadius: 6, padding: "10px 14px", fontSize: 13, color: "#3a5066", borderLeft: "2px solid #3d8fab" }}>
+                                <div key={i} style={{ background: "#edfafc", borderRadius: 6, padding: "10px 14px", fontSize: 13, color: "#3a5066", borderLeft: "2px solid #0ea5c5" }}>
                                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                                    <strong style={{ color: "#3d8fab", fontSize: 12 }}>↩ {r.author}</strong>
-                                    <span style={{ fontSize: 11, color: "#b8d4e3" }}>{r.date}</span>
+                                    <strong style={{ color: "#0ea5c5", fontSize: 12 }}>↩ {r.author}</strong>
+                                    <span style={{ fontSize: 11, color: "#86cad8" }}>{r.date}</span>
                                   </div>
                                   {r.text}
                                 </div>
@@ -6023,12 +6032,12 @@ export default function BricksyTravel() {
                               <textarea value={replyText} onChange={e => setReplyText(e.target.value)}
                                 placeholder="Tulis balasan..."
                                 rows={3}
-                                style={{ flex: 1, padding: "10px 12px", border: "1.5px solid #3d8fab", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical" }} />
+                                style={{ flex: 1, padding: "10px 12px", border: "1.5px solid #0ea5c5", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical" }} />
                               <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                                 <button onClick={() => replyMsg(m.id)}
                                   style={{ padding: "9px 18px", background: "#27ae60", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 600, cursor: "pointer" }}>Kirim</button>
                                 <button onClick={() => { setReplyTo(null); setReplyText(""); }}
-                                  style={{ padding: "9px 14px", background: "#f4f9fb", borderRadius: 6, fontSize: 12, border: "1px solid #d0e4ee", cursor: "pointer" }}>Batal</button>
+                                  style={{ padding: "9px 14px", background: "#edfafc", borderRadius: 6, fontSize: 12, border: "1px solid #b0dce8", cursor: "pointer" }}>Batal</button>
                               </div>
                             </div>
                           )}
@@ -6043,10 +6052,10 @@ export default function BricksyTravel() {
               {adminTab === "users" && isAdmin && (
                 <div className="fade-in">
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-                    <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d" }}>User Management</h1>
+                    <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66" }}>User Management</h1>
                     <button onClick={() => setUserMgmtOpen(v => !v)}
-                      style={{ padding: "9px 20px", background: userMgmtOpen ? "#f4f9fb" : "#2d2d2d", color: userMgmtOpen ? "#4a6680" : "#fff",
-                        border: userMgmtOpen ? "1px solid #d0e4ee" : "none", borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+                      style={{ padding: "9px 20px", background: userMgmtOpen ? "#edfafc" : "#0d3b66", color: userMgmtOpen ? "#4a6680" : "#fff",
+                        border: userMgmtOpen ? "1px solid #b0dce8" : "none", borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
                       {userMgmtOpen ? "✕ Batal" : "+ Tambah User"}
                     </button>
                   </div>
@@ -6054,7 +6063,7 @@ export default function BricksyTravel() {
                   {/* Add User Form */}
                   {userMgmtOpen && (
                     <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 24, boxShadow: "0 2px 10px rgba(0,0,0,.07)", borderTop: "4px solid #27ae60" }}>
-                      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#2d2d2d", marginBottom: 18 }}>➕ Tambah Akun Baru</h3>
+                      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#0d3b66", marginBottom: 18 }}>➕ Tambah Akun Baru</h3>
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                         {[
                           { label: "Nama Lengkap", key: "name", placeholder: "Nama lengkap", type: "text" },
@@ -6063,16 +6072,16 @@ export default function BricksyTravel() {
                           { label: "Email", key: "email", placeholder: "email@domain.com", type: "email" },
                         ].map(f => (
                           <div key={f.key}>
-                            <label style={{ fontSize: 10, fontWeight: 700, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 5 }}>{f.label}</label>
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 5 }}>{f.label}</label>
                             <input type={f.type} placeholder={f.placeholder} value={userMgmtForm[f.key]}
                               onChange={e => setUserMgmtForm(p => ({ ...p, [f.key]: e.target.value }))}
-                              style={{ width: "100%", padding: "9px 11px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                              style={{ width: "100%", padding: "9px 11px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                           </div>
                         ))}
                         <div>
-                          <label style={{ fontSize: 10, fontWeight: 700, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 5 }}>Role</label>
+                          <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 5 }}>Role</label>
                           <select value={userMgmtForm.role} onChange={e => setUserMgmtForm(p => ({ ...p, role: e.target.value }))}
-                            style={{ width: "100%", padding: "9px 11px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }}>
+                            style={{ width: "100%", padding: "9px 11px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }}>
                             {Object.entries(ROLES).map(([k, v]) => (
                               <option key={k} value={k}>{v.label}</option>
                             ))}
@@ -6094,7 +6103,7 @@ export default function BricksyTravel() {
                           Simpan User
                         </button>
                         <button onClick={() => { setUserMgmtOpen(false); setUserMgmtForm({ username: "", password: "", role: "content_writer", email: "", name: "" }); }}
-                          style={{ padding: "10px 18px", background: "#f4f9fb", color: "#4a6680", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 13, cursor: "pointer" }}>
+                          style={{ padding: "10px 18px", background: "#edfafc", color: "#4a6680", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, cursor: "pointer" }}>
                           Batal
                         </button>
                       </div>
@@ -6105,26 +6114,26 @@ export default function BricksyTravel() {
                   <div className="table-wrap" style={{ background: "#fff", borderRadius: 10, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
                     <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 560 }}>
                       <thead>
-                        <tr style={{ background: "#f4f9fb" }}>
+                        <tr style={{ background: "#edfafc" }}>
                           {["#", "Nama / Username", "Role", "Email", "Status", "Aksi"].map(h => (
-                            <th key={h} style={{ padding: "13px 16px", textAlign: "left", fontSize: 10, fontWeight: 700, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", borderBottom: "1px solid #e8f2f8" }}>{h}</th>
+                            <th key={h} style={{ padding: "13px 16px", textAlign: "left", fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", borderBottom: "1px solid #e8f2f8" }}>{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {data.users.map((u, idx) => (
-                          <tr key={u.id} style={{ borderBottom: "1px solid #eef4f8", background: idx % 2 === 0 ? "#fff" : "#fafcfd" }}>
-                            <td style={{ padding: "13px 16px", fontSize: 12, color: "#b8d4e3" }}>{idx + 1}</td>
+                          <tr key={u.id} style={{ borderBottom: "1px solid #e0f7fa", background: idx % 2 === 0 ? "#fff" : "#f5fdff" }}>
+                            <td style={{ padding: "13px 16px", fontSize: 12, color: "#86cad8" }}>{idx + 1}</td>
                             <td style={{ padding: "13px 16px" }}>
-                              <div style={{ fontWeight: 600, fontSize: 13, color: "#2d2d2d" }}>{u.name || u.username}</div>
-                              <div style={{ fontSize: 11, color: "#7a9db0", marginTop: 1 }}>@{u.username}</div>
+                              <div style={{ fontWeight: 600, fontSize: 13, color: "#0d3b66" }}>{u.name || u.username}</div>
+                              <div style={{ fontSize: 11, color: "#5090aa", marginTop: 1 }}>@{u.username}</div>
                             </td>
                             <td style={{ padding: "13px 16px" }}>
                               {editRoleId === u.id ? (
                                 <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
                                   <select defaultValue={u.role}
                                     id={`role-select-${u.id}`}
-                                    style={{ padding: "5px 8px", border: "1px solid #d0e4ee", borderRadius: 5, fontSize: 12, outline: "none" }}>
+                                    style={{ padding: "5px 8px", border: "1px solid #b0dce8", borderRadius: 5, fontSize: 12, outline: "none" }}>
                                     {Object.entries(ROLES).map(([k, v]) => (
                                       <option key={k} value={k}>{v.label}</option>
                                     ))}
@@ -6137,7 +6146,7 @@ export default function BricksyTravel() {
                                     }
                                     setEditRoleId(null);
                                   }} style={{ fontSize: 11, padding: "4px 10px", background: "#27ae60", color: "#fff", borderRadius: 5, border: "none", cursor: "pointer" }}>✓</button>
-                                  <button onClick={() => setEditRoleId(null)} style={{ fontSize: 11, padding: "4px 8px", background: "#f4f9fb", borderRadius: 5, border: "1px solid #d0e4ee", cursor: "pointer" }}>✕</button>
+                                  <button onClick={() => setEditRoleId(null)} style={{ fontSize: 11, padding: "4px 8px", background: "#edfafc", borderRadius: 5, border: "1px solid #b0dce8", cursor: "pointer" }}>✕</button>
                                 </div>
                               ) : (
                                 <span style={{ fontSize: 11, padding: "3px 10px", borderRadius: 10, fontWeight: 500,
@@ -6147,7 +6156,7 @@ export default function BricksyTravel() {
                                 </span>
                               )}
                             </td>
-                            <td style={{ padding: "13px 16px", fontSize: 12, color: "#6b8999" }}>{u.email || "—"}</td>
+                            <td style={{ padding: "13px 16px", fontSize: 12, color: "#4a7f98" }}>{u.email || "—"}</td>
                             <td style={{ padding: "13px 16px" }}>
                               <span style={{ fontSize: 11, padding: "3px 10px", borderRadius: 10, fontWeight: 500,
                                 background: u.active ? "#e8f8ef" : "#fef0f0", color: u.active ? "#27ae60" : "#e74c3c" }}>
@@ -6159,7 +6168,7 @@ export default function BricksyTravel() {
                                 {/* Ganti Role */}
                                 {u.username !== "administrator" && editRoleId !== u.id && (
                                   <button onClick={() => setEditRoleId(u.id)}
-                                    style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, background: "#e8f4fd", color: "#3d8fab", border: "none", cursor: "pointer", fontWeight: 500 }}>
+                                    style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, background: "#e8f4fd", color: "#0ea5c5", border: "none", cursor: "pointer", fontWeight: 500 }}>
                                     Ganti Role
                                   </button>
                                 )}
@@ -6185,7 +6194,7 @@ export default function BricksyTravel() {
                                   </button>
                                 )}
                                 {u.username === "administrator" && (
-                                  <span style={{ fontSize: 11, color: "#b8d4e3", fontStyle: "italic" }}>Protected</span>
+                                  <span style={{ fontSize: 11, color: "#86cad8", fontStyle: "italic" }}>Protected</span>
                                 )}
                               </div>
                             </td>
@@ -6194,7 +6203,7 @@ export default function BricksyTravel() {
                       </tbody>
                     </table>
                     {data.users.length === 0 && (
-                      <div style={{ padding: "32px", textAlign: "center", color: "#7a9db0", fontSize: 13 }}>Belum ada user terdaftar.</div>
+                      <div style={{ padding: "32px", textAlign: "center", color: "#5090aa", fontSize: 13 }}>Belum ada user terdaftar.</div>
                     )}
                   </div>
                 </div>
@@ -6206,24 +6215,24 @@ export default function BricksyTravel() {
               {/* SETTINGS */}
               {adminTab === "settings" && isAdmin && (
                 <div className="fade-in">
-                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#2d2d2d", marginBottom: 28 }}>Settings</h1>
+                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 28 }}>Settings</h1>
 
                   {/* Logo Upload */}
-                  <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #3d8fab" }}>
-                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#2d2d2d", marginBottom: 6 }}>🖼 Logo Upload</h3>
-                    <p style={{ fontSize: 12, color: "#7a9db0", marginBottom: 16, lineHeight: 1.6 }}>
+                  <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #0ea5c5" }}>
+                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0d3b66", marginBottom: 6 }}>🖼 Logo Upload</h3>
+                    <p style={{ fontSize: 12, color: "#5090aa", marginBottom: 16, lineHeight: 1.6 }}>
                       Upload logo untuk ditampilkan di navbar, footer, admin panel, dan tab browser (favicon). Jika tidak diupload, nama brand teks akan digunakan.
                     </p>
                     <div style={{ display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
                       {data.content.logoImage && (
                         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
-                          <img src={data.content.logoImage} alt="Logo" style={{ height: 60, maxWidth: 180, objectFit: "contain", border: "1px solid #eef4f8", borderRadius: 6, padding: 8, background: "#f4f9fb" }} />
+                          <img src={data.content.logoImage} alt="Logo" style={{ height: 60, maxWidth: 180, objectFit: "contain", border: "1px solid #e0f7fa", borderRadius: 6, padding: 8, background: "#edfafc" }} />
                           <button onClick={() => { save({ ...data, content: { ...data.content, logoImage: "" } }); notify("Logo removed."); }}
                             style={{ fontSize: 11, padding: "4px 12px", background: "#fee", color: "#e74c3c", borderRadius: 6, border: "none" }}>Remove Logo</button>
                         </div>
                       )}
                       <div style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1, minWidth: 240 }}>
-                        <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase" }}>Upload File Logo</label>
+                        <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Upload File Logo</label>
                         <input type="file" accept="image/*" onChange={async e => {
                           const file = e.target.files?.[0];
                           if (!file) return;
@@ -6235,28 +6244,28 @@ export default function BricksyTravel() {
                           } catch {
                             notify("Gagal upload logo. Coba lagi.", "error");
                           }
-                        }} style={{ padding: "8px", border: "1.5px dashed #3d8fab", borderRadius: 8, fontSize: 12, background: "#f0f9fc", color: "#3d8fab" }} />
-                        <label style={{ fontSize: 11, fontWeight: 600, color: "#7a9db0", letterSpacing: "1px", textTransform: "uppercase", marginTop: 4 }}>Atau URL Gambar</label>
+                        }} style={{ padding: "8px", border: "1.5px dashed #0ea5c5", borderRadius: 8, fontSize: 12, background: "#e8f9fc", color: "#0ea5c5" }} />
+                        <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginTop: 4 }}>Atau URL Gambar</label>
                         <div style={{ display: "flex", gap: 8 }}>
                           <input placeholder="https://..." defaultValue={data.content.logoImage}
                             id="logo-url-input"
-                            style={{ flex: 1, padding: "8px 10px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 12, outline: "none" }} />
+                            style={{ flex: 1, padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none" }} />
                           <button onClick={() => {
                             const url = document.getElementById("logo-url-input")?.value?.trim();
                             if (!url) return notify("Masukkan URL logo.", "error");
                             save({ ...data, content: { ...data.content, logoImage: url } });
                             notify("Logo URL applied!");
-                          }} style={{ padding: "8px 14px", background: "#3d8fab", color: "#fff", borderRadius: 6, fontSize: 12, border: "none" }}>Apply</button>
+                          }} style={{ padding: "8px 14px", background: "#0ea5c5", color: "#fff", borderRadius: 6, fontSize: 12, border: "none" }}>Apply</button>
                         </div>
-                        <p style={{ fontSize: 11, color: "#7a9db0" }}>Disarankan: PNG transparan, min 200px lebar, rasio 3:1 atau 4:1</p>
+                        <p style={{ fontSize: 11, color: "#5090aa" }}>Disarankan: PNG transparan, min 200px lebar, rasio 3:1 atau 4:1</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Founding Year */}
-                  <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #c9aa71" }}>
-                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#2d2d2d", marginBottom: 6 }}>🗓 Tahun Berdiri Perusahaan</h3>
-                    <p style={{ fontSize: 12, color: "#7a9db0", marginBottom: 16, lineHeight: 1.6 }}>
+                  <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #38c5d8" }}>
+                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0d3b66", marginBottom: 6 }}>🗓 Tahun Berdiri Perusahaan</h3>
+                    <p style={{ fontSize: 12, color: "#5090aa", marginBottom: 16, lineHeight: 1.6 }}>
                       Tahun ini digunakan untuk teks "sejak [tahun]", statistik "X Tahun Pengalaman", dan label dekorasi halaman.
                     </p>
                     <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
@@ -6265,25 +6274,25 @@ export default function BricksyTravel() {
                         defaultValue={data.content.foundingYear || "2026"}
                         placeholder="cth: 2026"
                         maxLength={4}
-                        style={{ width: 120, padding: "8px 12px", border: "1px solid #d0e4ee", borderRadius: 6, fontSize: 14, outline: "none" }}
+                        style={{ width: 120, padding: "8px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 14, outline: "none" }}
                       />
                       <button onClick={() => {
                         const yr = document.getElementById("founding-year-input")?.value?.trim();
                         if (!yr || !/^\d{4}$/.test(yr)) return notify("Masukkan tahun 4 digit (misal: 2026).", "error");
                         save({ ...data, content: { ...data.content, foundingYear: yr } });
                         notify(`✅ Tahun berdiri diperbarui ke ${yr}`);
-                      }} style={{ padding: "8px 16px", background: "#2d2d2d", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 500 }}>
+                      }} style={{ padding: "8px 16px", background: "#0d3b66", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 500 }}>
                         Simpan
                       </button>
-                      <span style={{ fontSize: 12, color: "#7a9db0" }}>Saat ini: <strong style={{ color: "#2d2d2d" }}>{data.content.foundingYear || "2026"}</strong> · Pengalaman: <strong style={{ color: "#2b7a9a" }}>{new Date().getFullYear() - parseInt(data.content.foundingYear || "2026")} tahun</strong></span>
+                      <span style={{ fontSize: 12, color: "#5090aa" }}>Saat ini: <strong style={{ color: "#0d3b66" }}>{data.content.foundingYear || "2026"}</strong> · Pengalaman: <strong style={{ color: "#0891b2" }}>{new Date().getFullYear() - parseInt(data.content.foundingYear || "2026")} tahun</strong></span>
                     </div>
                   </div>
 
                   <div className="settings-grid">
                     {[
                       { title: "Firebase Config", desc: "Connect to Firestore for real-time data sync", btn: "Configure", color: "#f39c12" },
-                      { title: "Cloudinary Config", desc: "Set up image hosting and transformation pipeline", btn: "Configure", color: "#3d8fab" },
-                      { title: "Vercel Deploy", desc: "Deploy updates to production via Vercel CI/CD", btn: "Deploy", color: "#2d2d2d" },
+                      { title: "Cloudinary Config", desc: "Set up image hosting and transformation pipeline", btn: "Configure", color: "#0ea5c5" },
+                      { title: "Vercel Deploy", desc: "Deploy updates to production via Vercel CI/CD", btn: "Deploy", color: "#0d3b66" },
                       { title: "SEO Settings", desc: "Manage meta tags, sitemap, and schema markup", btn: "Edit SEO", color: "#27ae60" },
                       { title: "Analytics", desc: "View traffic, user behavior and conversion data", btn: "View", color: "#8e44ad" },
                       {
@@ -6296,8 +6305,8 @@ export default function BricksyTravel() {
                       },
                     ].map(s => (
                       <div key={s.title} style={{ background: "#fff", borderRadius: 8, padding: "20px 24px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: `4px solid ${s.color}` }}>
-                        <h3 style={{ fontSize: 15, fontWeight: 500, color: "#2d2d2d", marginBottom: 8 }}>{s.title}</h3>
-                        <p style={{ fontSize: 12, color: "#7a9db0", lineHeight: 1.6, marginBottom: 16 }}>{s.desc}</p>
+                        <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0d3b66", marginBottom: 8 }}>{s.title}</h3>
+                        <p style={{ fontSize: 12, color: "#5090aa", lineHeight: 1.6, marginBottom: 16 }}>{s.desc}</p>
                         <button onClick={s.action || (() => notify(`${s.title} — Configure in your deployment environment.`, "success"))}
                           style={{ padding: "8px 18px", background: s.color, color: "#fff", borderRadius: 6, fontSize: 12, border: "none" }}>{s.btn}</button>
                       </div>
