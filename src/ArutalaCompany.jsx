@@ -50,7 +50,7 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                 <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0d3b66" }}>Artikel Terbaru</span>
                 <button onClick={() => { setAdminTab("cms"); setCmsEditPost("new"); }}
-                  style={{ fontSize: "0.75rem", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 16, padding: "5px 14px", fontWeight: 600, cursor: "pointer" }}>+ Baru</button>
+                  style={{ fontSize: "0.75rem", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 16, padding: "5px 14px", fontWeight: 600, cursor: "pointer" }}>+ Baru</button>
               </div>
               {allPosts.length === 0 ? (
                 <p style={{ fontSize: "0.875rem", color: "#4a7f98" }}>Belum ada artikel.</p>
@@ -80,7 +80,7 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
                   { label: "Draft", value: draftCount, icon: "📋", color: "#f39c12" },
                   { label: "Pesan Masuk", value: data.messages.length, icon: "✉️", color: "#8e44ad" },
                 ].map(s => (
-                  <div key={s.label} style={{ background: "#edfafc", borderRadius: 10, padding: "16px 18px", borderLeft: `3px solid ${s.color}` }}>
+                  <div key={s.label} style={{ background: "rgba(255,255,255,.1)", borderRadius: 10, padding: "16px 18px", backdropFilter: "blur(6px)", borderLeft: `3px solid ${s.color}` }}>
                     <div style={{ fontSize: "1.5rem", fontWeight: 900, color: s.color, fontFamily: "'Playfair Display',serif" }}>{s.value}</div>
                     <div style={{ fontSize: "0.8125rem", color: "#4a7f98", marginTop: 2 }}>{s.icon} {s.label}</div>
                   </div>
@@ -642,8 +642,8 @@ const GS = () => (
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-    body{font-family:'DM Sans',sans-serif;background:#edfafc;color:#0d3b66;line-height:1.6;font-size:16px}
-    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:#86cad8;border-radius:10px}
+    body{font-family:'DM Sans',sans-serif;background:#063d5c;color:#0d3b66;line-height:1.6;font-size:16px}
+    ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:rgba(56,197,216,.5);border-radius:10px}
     a{text-decoration:none;color:inherit}
     a:focus-visible,button:focus-visible{outline:2px solid #0ea5c5;outline-offset:3px;border-radius:3px}
     img{max-width:100%;display:block;object-fit:cover}
@@ -655,18 +655,18 @@ const GS = () => (
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
     @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
-    h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;color:#0d3b66;line-height:1.15;font-weight:800;letter-spacing:-.01em}
+    h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;color:#fff;line-height:1.15;font-weight:800;letter-spacing:-.01em}
     h1{font-size:clamp(2rem,5vw,3.5rem)}
     h2{font-size:clamp(1.6rem,3.5vw,2.6rem)}
     h3{font-size:clamp(1.2rem,2.5vw,1.6rem)}
-    p{font-size:1rem;line-height:1.75;color:#1a4a72}
+    p{font-size:1rem;line-height:1.75;color:rgba(255,255,255,.8)}
     small{font-size:.875rem;line-height:1.5}
 
     .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:600;color:#1a4a72;transition:color .2s;text-shadow:0 1px 4px rgba(13,59,102,.18),0 0 12px rgba(8,145,178,.10)}
     .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,#0891b2,#22d3ee);transition:width .3s;border-radius:2px}
-    .nav-link:hover{color:#0891b2;text-shadow:0 1px 6px rgba(8,145,178,.28),0 0 18px rgba(8,145,178,.18)}
+    .nav-link:hover{color:#38c5d8;text-shadow:0 1px 6px rgba(8,145,178,.28),0 0 18px rgba(8,145,178,.18)}
     .nav-link:hover::after,.nav-link.active::after{width:100%}
-    .nav-link.active{color:#0891b2!important;text-shadow:0 1px 8px rgba(8,145,178,.35),0 0 20px rgba(8,145,178,.20)}
+    .nav-link.active{color:#38c5d8!important;text-shadow:0 1px 8px rgba(8,145,178,.35),0 0 20px rgba(8,145,178,.20)}
 
     .hover-lift{transition:transform .3s,box-shadow .3s}
     .hover-lift:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(13,59,102,.12)}
@@ -674,7 +674,7 @@ const GS = () => (
     .img-zoom img{transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
     .img-zoom:hover img{transform:scale(1.07)}
     .cms-toolbar button:hover{background:rgba(8,145,178,.12)!important}
-    .post-card:hover .post-card-title{color:#0891b2}
+    .post-card:hover .post-card-title{color:#38c5d8}
 
     /* DESKTOP-ONLY ANIMATIONS */
     @media(pointer:fine){
@@ -699,10 +699,10 @@ const GS = () => (
       #cursor-glow.expanded{width:48px;height:48px;background:rgba(8,145,178,.1)}
     }
 
-    .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#0d3b66;text-shadow:0 1px 4px rgba(13,59,102,.22),0 2px 10px rgba(13,59,102,.13)}
-    .logo-brand-footer{font-family:'Playfair Display',serif;font-weight:800;font-size:.95rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#0d3b66}
+    .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-shadow:0 1px 4px rgba(13,59,102,.22),0 2px 10px rgba(13,59,102,.13)}
+    .logo-brand-footer{font-family:'Playfair Display',serif;font-weight:800;font-size:.95rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff}
     .logo-brand-admin{font-family:'Playfair Display',serif;font-weight:800;font-size:.9rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
-    .label-xs{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+    .label-xs{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.65)}
     .card-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;line-height:1.3;color:#0d3b66}
 
     /* ── Visibility helpers ── */
@@ -747,7 +747,7 @@ const GS = () => (
     .mag-img-sm1:hover img{transform:scale(1.04)}
     .mag-card-text{grid-column:2;grid-row:2;background:linear-gradient(135deg,#063d5c,#0875a8);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;min-height:155px}
     .adv-stats-row{display:flex;gap:32px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid #eef3f7}
-    .adv-stat .num{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:#0d3b66;line-height:1;margin-bottom:3px}
+    .adv-stat .num{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:#38c5d8;line-height:1;margin-bottom:3px}
     .adv-stat .lbl{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;color:#6aaec8;font-weight:600}
     .adv-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:22px}
     .adv-eyebrow .ey-line{width:36px;height:1.5px;background:#38c5d8;flex-shrink:0}
@@ -767,7 +767,7 @@ const GS = () => (
     @media(max-width:768px){.mag-grid{display:none}.adv-stats-row{gap:20px}}
 
     /* ── Hero Intro Section (Title + Subtitle after slideshow) ── */
-    .hero-intro{background:linear-gradient(135deg,#f0fbfc 0%,#e0f7fa 100%);padding:56px 5% 48px;overflow:hidden;position:relative}
+    .hero-intro{background:linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%);padding:56px 5% 48px;overflow:hidden;position:relative}
     .hero-intro-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
     .hero-intro-img{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(13,59,102,.14)}
     .hero-intro-img img{width:100%;height:380px;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.25,.46,.45,.94)}
@@ -778,8 +778,8 @@ const GS = () => (
     .hero-intro-txt{position:relative;z-index:1}
     .hero-intro-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
     .hero-intro-eyebrow .line{width:36px;height:2px;background:linear-gradient(90deg,#38c5d8,rgba(56,197,216,0));border-radius:1px}
-    .hero-intro-h1{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;color:#0d3b66;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
-    .hero-intro-p{font-size:1rem;color:#1a5a78;line-height:1.85;margin-bottom:32px;max-width:400px}
+    .hero-intro-h1{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;color:#fff;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
+    .hero-intro-p{font-size:1rem;color:rgba(255,255,255,.82);line-height:1.85;margin-bottom:32px;max-width:400px}
     /* Deco blobs background */
     .hero-intro-blob1{position:absolute;top:-60px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(8,145,178,.1) 0%,rgba(8,145,178,0) 70%);pointer-events:none}
     .hero-intro-blob2{position:absolute;bottom:-40px;left:40%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(56,197,216,.09) 0%,rgba(56,197,216,0) 70%);pointer-events:none}
@@ -1721,7 +1721,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
       )}
 
       {/* CMS Top Bar */}
-      <div style={{ background: "#0d3b66", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", padding: "14px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ color: "#fff", fontSize: 14, fontWeight: 500 }}>
             {post?.id ? "Edit Post" : "Add New Post"} — <span style={{ color: "#7dc8de" }}>{SECTION_LABELS[section] || section}</span>
@@ -1878,7 +1878,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
             )}
 
             <button onClick={addBlock} style={{
-              padding: "9px 22px", background: "#0d3b66", color: "#fff",
+              padding: "9px 22px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff",
               borderRadius: 6, fontSize: 13, border: "none", fontWeight: 500
             }}>+ Add Block</button>
           </div>
@@ -1927,7 +1927,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
                   fontSize: 12, color: "#4a6680", background: "#fff", fontWeight: 500
                 }}>Save Draft</button>
                 <button onClick={() => setPublishModal(true)} style={{
-                  padding: "10px 0", background: "#0d3b66", border: "none",
+                  padding: "10px 0", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", border: "none",
                   borderRadius: 6, fontSize: 12, color: "#fff", fontWeight: 600, letterSpacing: ".5px"
                 }}>🚀 Publish…</button>
               </div>
@@ -2178,7 +2178,7 @@ function SectionPage({ section, posts, onReadPost }) {
           <aside>
             {/* Popular / Recent */}
             <div style={{ background: "#fff", borderRadius: 10, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,.06)", marginBottom: 24 }}>
-              <div style={{ background: "#0d3b66", padding: "14px 20px" }}>
+              <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", padding: "14px 20px" }}>
                 <span style={{ fontSize: 12, fontWeight: 600, color: "#fff", letterSpacing: "1px", textTransform: "uppercase" }}>Most Popular</span>
               </div>
               <div style={{ padding: "8px 0" }}>
@@ -2354,7 +2354,7 @@ function ServicesPage({ content, services, navigateTo }) {
 
         {/* ── THUMBNAIL STRIP ── */}
         {imgs.length > 1 && (
-          <div className="mg-fade-2" style={{ background: "#0d3b66", borderTop: "1px solid rgba(255,255,255,.07)", padding: "12px 5%" }}>
+          <div className="mg-fade-2" style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", borderTop: "1px solid rgba(255,255,255,.07)", padding: "12px 5%" }}>
             <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", gap: 10, overflowX: "auto", paddingBottom: 2 }}>
               {imgs.map((img, i) => (
                 <div key={i} className="mg-thumb" onClick={() => setActiveImg(i)}
@@ -2625,7 +2625,7 @@ function ServicesPage({ content, services, navigateTo }) {
                       </div>
                     )}
                     {svc.highlight && (
-                      <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "#0d3b66", color: "#fff", borderRadius: 20, padding: "4px 12px", fontSize: "0.6875rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
+                      <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 20, padding: "4px 12px", fontSize: "0.6875rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
                     )}
                     <div style={{ height: 200, overflow: "hidden" }}>
                       <img src={(svc.images?.[0] || svc.image)} alt={svc.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
@@ -2739,7 +2739,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           <p style={{ fontSize: 12, color: "#5090aa" }}>Kelola paket layanan yang tampil di halaman Layanan Kami.</p>
         </div>
         <button onClick={openNew}
-          style={{ padding: "9px 20px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+          style={{ padding: "9px 20px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
           + Tambah Paket
         </button>
       </div>
@@ -2835,7 +2835,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
             <label htmlFor="svc-highlight" style={{ fontSize: 13, color: "#0d3b66", fontWeight: 600, cursor: "pointer" }}>Tandai sebagai Pilihan Utama (highlight)</label>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={saveSvc} style={{ padding: "10px 22px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan Paket</button>
+            <button onClick={saveSvc} style={{ padding: "10px 22px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan Paket</button>
             <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#edfafc", color: "#4a7f98", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
           </div>
         </div>
@@ -2858,7 +2858,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                 <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 4 }}>
                   <span style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66" }}>{svc.title}</span>
                   {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor || "#0891b2", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
-                  {svc.highlight && <span style={{ fontSize: 10, background: "#0d3b66", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
+                  {svc.highlight && <span style={{ fontSize: 10, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
                 </div>
                 <div style={{ fontSize: 13, fontWeight: 700, color: "#0ea5c5" }}>{svc.price}<span style={{ color: "#5090aa", fontWeight: 400 }}> {svc.priceNote}</span></div>
                 <div style={{ fontSize: 12, color: "#5090aa", marginTop: 4 }}>{(svc.features || []).length} fitur termasuk</div>
@@ -2916,7 +2916,7 @@ function AboutPage({ content, images, teamMembers }) {
     <div className="fade-in" style={{ minHeight: "100vh", background: "#fff" }}>
 
       {/* ── HERO ── */}
-      <div style={{ background: "linear-gradient(135deg, #e8f4fb 0%, #d0eaf7 50%, #b8ddf0 100%)", padding: "80px 5% 90px", overflow: "hidden", position: "relative" }}>
+      <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", padding: "80px 5% 90px", overflow: "hidden", position: "relative" }}>
         <div style={{ position: "absolute", top: -60, right: -60, width: 400, height: 400, borderRadius: "50%", background: "rgba(255,255,255,.12)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: -80, left: "20%", width: 300, height: 300, borderRadius: "50%", background: "rgba(8,145,178,.1)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 1200, margin: "0 auto" }} className="about-hero-grid">
@@ -2932,7 +2932,7 @@ function AboutPage({ content, images, teamMembers }) {
             </p>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
               <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
-                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "#0d3b66", color: "#fff", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s" }}
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s" }}
                 onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
                 onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                 💬 Hubungi Kami
@@ -2954,7 +2954,7 @@ function AboutPage({ content, images, teamMembers }) {
       </div>
 
       {/* ── STATS STRIP ── */}
-      <div style={{ background: "#0d3b66", padding: "36px 5%" }}>
+      <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", padding: "36px 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 24, textAlign: "center" }}>
           {[
             { num: "500+", label: "Klien Puas" },
@@ -2996,7 +2996,7 @@ function AboutPage({ content, images, teamMembers }) {
       </div>
 
       {/* ── WHY CHOOSE US ── */}
-      <div style={{ background: "#edfafc", padding: "80px 5%" }}>
+      <div style={{ background: "linear-gradient(130deg,#084060 0%,#0a6ea0 50%,#0cb5cc 100%)", padding: "80px 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
             <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Keunggulan Kami</div>
@@ -3058,7 +3058,7 @@ function AboutPage({ content, images, teamMembers }) {
       </div>
 
       {/* ── LAYANAN KAMI ── */}
-      <div style={{ padding: "80px 5%", background: "#fff" }}>
+      <div style={ padding: "80px 5%", background: "linear-gradient(130deg,#0a5c88 0%,#0d95b8 55%,#12c8dc 100%)" }>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
             <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Apa yang Kami Tawarkan</div>
@@ -3091,7 +3091,7 @@ function AboutPage({ content, images, teamMembers }) {
       </div>
 
       {/* ── CONTACT US ── */}
-      <div style={{ background: "linear-gradient(135deg, #c5dde9 0%, #a8cfe0 100%)", padding: "80px 5%" }}>
+      <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", padding: "80px 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
             <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Hubungi Kami</div>
@@ -3108,7 +3108,7 @@ function AboutPage({ content, images, teamMembers }) {
                 { icon: "🕐", label: "Jam Operasional", value: content.hours || "Senin – Sabtu: 08.00 – 20.00 WIB", type: "text" },
               ].map(info => (
                 <div key={info.label} style={{ display: "flex", gap: 16, alignItems: "flex-start", background: "rgba(255,255,255,.7)", borderRadius: 10, padding: "18px 20px", backdropFilter: "blur(8px)" }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 10, background: "#0d3b66", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{info.icon}</div>
+                  <div style={{ width: 44, height: 44, borderRadius: 10, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{info.icon}</div>
                   <div>
                     <div style={{ fontSize: "0.75rem", color: "#5090aa", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 4 }}>{info.label}</div>
                     {info.type === "link"
@@ -3198,7 +3198,7 @@ function AboutPage({ content, images, teamMembers }) {
                       onBlur={e => e.target.style.borderColor = "#b0dce8"} />
                   </div>
                   <button onClick={handleContactSubmit}
-                    style={{ padding: "13px 28px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", cursor: "pointer", transition: "background .2s", display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}
+                    style={{ padding: "13px 28px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase", cursor: "pointer", transition: "background .2s", display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}
                     onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
                     onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                     💬 Kirim via WhatsApp
@@ -3259,7 +3259,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
     <div className="fade-in">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
         <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66" }}>👥 Susunan Tim</h1>
-        {!editId && <button onClick={openNew} style={{ padding: "10px 20px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>+ Tambah Anggota</button>}
+        {!editId && <button onClick={openNew} style={{ padding: "10px 20px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>+ Tambah Anggota</button>}
       </div>
 
       {/* Form Edit */}
@@ -3299,7 +3299,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
             </div>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={saveMember} style={{ padding: "10px 22px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan</button>
+            <button onClick={saveMember} style={{ padding: "10px 22px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan</button>
             <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#edfafc", color: "#4a7f98", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
           </div>
         </div>
@@ -3563,7 +3563,7 @@ function HeroSlideshow({ data, navigateTo }) {
               Read More →
             </button>
             <button className="hero-cta-btn" onClick={() => navigateTo("about")}
-              style={{ padding: "13px 30px", background: "#0d3b66", color: "#fff", border: "2px solid rgba(255,255,255,.55)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
+              style={{ padding: "13px 30px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "2px solid rgba(255,255,255,.55)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
               About Us →
             </button>
           </div>
@@ -3810,7 +3810,7 @@ function ReviewSlideshow({ reviews }) {
       })();
 
   return (
-    <section style={{ padding: "80px 0 72px", background: "linear-gradient(180deg,#eafcff 0%,#f8fdff 100%)", overflow: "hidden" }}>
+    <section style={{ padding: "80px 0 72px", background: "linear-gradient(130deg,#084060 0%,#0a6ea0 50%,#0cb5cc 100%)", overflow: "hidden" }}>
       <style>{`
         @keyframes reviewIn { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
         .rev-card { transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .5s ease, box-shadow .3s; }
@@ -3818,16 +3818,21 @@ function ReviewSlideshow({ reviews }) {
       `}</style>
 
       {/* Section Header */}
-      <div style={{ textAlign: "center", marginBottom: 52, padding: "0 5%" }}>
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: "20%", right: "8%", width: 420, height: 420, borderRadius: "50%", background: "radial-gradient(circle, rgba(30,216,232,.28) 0%, transparent 65%)", filter: "blur(22px)" }} />
+        <div style={{ position: "absolute", top: "50%", left: "3%", width: 280, height: 280, borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,197,.2) 0%, transparent 65%)", filter: "blur(26px)" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+      </div>
+      <div style={{ textAlign: "center", marginBottom: 52, padding: "0 5%", position: "relative", zIndex: 1 }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
           <div style={{ width: 32, height: 1.5, background: "#38c5d8" }} />
-          <span style={{ fontSize: "0.6875rem", letterSpacing: "3px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700 }}>Testimoni Klien</span>
+          <span style={{ fontSize: "0.6875rem", letterSpacing: "3px", color: "rgba(255,255,255,.7)", textTransform: "uppercase", fontWeight: 700 }}>Testimoni Klien</span>
           <div style={{ width: 32, height: 1.5, background: "#38c5d8" }} />
         </div>
-        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#0d3b66", lineHeight: 1.1 }}>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1 }}>
           Apa Kata Mereka?
         </h2>
-        <p style={{ fontSize: "1rem", color: "#4a7f98", marginTop: 12, maxWidth: 440, margin: "12px auto 0", lineHeight: 1.7 }}>
+        <p style={{ fontSize: "1rem", color: "rgba(255,255,255,.72)", marginTop: 12, maxWidth: 440, margin: "12px auto 0", lineHeight: 1.7 }}>
           Kepuasan klien adalah prioritas utama kami di setiap layanan.
         </p>
       </div>
@@ -3837,12 +3842,12 @@ function ReviewSlideshow({ reviews }) {
         {(() => {
           const avg = reviews.reduce((s, r) => s + (r.stars || 5), 0) / reviews.length;
           return (
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", border: "1px solid #c0e8f0", borderRadius: 40, padding: "10px 24px", boxShadow: "0 4px 16px rgba(13,59,102,.06)" }}>
-              <span style={{ fontSize: "1.5rem", fontWeight: 900, fontFamily: "'Playfair Display',serif", color: "#0d3b66" }}>{avg.toFixed(1)}</span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.2)", borderRadius: 40, padding: "10px 24px", backdropFilter: "blur(8px)", boxShadow: "0 4px 16px rgba(0,0,0,.2)" }}>
+              <span style={{ fontSize: "1.5rem", fontWeight: 900, fontFamily: "'Playfair Display',serif", color: "#fff" }}>{avg.toFixed(1)}</span>
               <div style={{ display: "flex", gap: 2 }}>
                 {[1,2,3,4,5].map(s => <span key={s} style={{ fontSize: 16, filter: s <= Math.round(avg) ? "none" : "grayscale(1) opacity(.3)" }}>⭐</span>)}
               </div>
-              <span style={{ fontSize: "0.8125rem", color: "#4a7f98", fontWeight: 500 }}>{reviews.length} ulasan</span>
+              <span style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.7)", fontWeight: 500 }}>{reviews.length} ulasan</span>
             </div>
           );
         })()}
@@ -3907,7 +3912,7 @@ function ReviewSlideshow({ reviews }) {
         <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 28 }}>
           {reviews.map((_, i) => (
             <button key={i} onClick={() => setCurrent(i)}
-              style={{ width: i === current ? 24 : 8, height: 8, borderRadius: 4, background: i === current ? "#0d3b66" : "#86c8d8", border: "none", cursor: "pointer", transition: "all .3s", padding: 0 }} />
+              style={{ width: i === current ? 24 : 8, height: 8, borderRadius: 4, background: i === current ? "#38c5d8" : "rgba(255,255,255,.3)", border: "none", cursor: "pointer", transition: "all .3s", padding: 0 }} />
           ))}
         </div>
       )}
@@ -4006,7 +4011,7 @@ function AdminReviews({ data, save, notify }) {
           placeholder="Label (misal: Klien Wedding Budi, opsional)"
           style={{ flex: 1, minWidth: 240, padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
         <button onClick={generateToken}
-          style={{ padding: "9px 18px", background: "#0d3b66", color: "#fff", borderRadius: 6, fontSize: 13, border: "none", fontWeight: 600, whiteSpace: "nowrap" }}>
+          style={{ padding: "9px 18px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 6, fontSize: 13, border: "none", fontWeight: 600, whiteSpace: "nowrap" }}>
           + Buat Link
         </button>
       </div>
@@ -4520,8 +4525,8 @@ export default function BricksyTravel() {
       {!showAdmin && !reviewTokenParam && (
         <>
           {/* NAVBAR — Fixed floating always */}
-          <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(240,252,255,.97)",
-            backdropFilter: "blur(12px)", borderBottom: "1px solid #c0e8f0", padding: "0 5%",
+          <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(6,61,92,.95)",
+            backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(56,197,216,.2)", padding: "0 5%",
             isolation: "isolate" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 96, maxWidth: 1200, margin: "0 auto", gap: 20 }}>
 
@@ -4698,7 +4703,12 @@ export default function BricksyTravel() {
                     {/* Blob background decorations */}
                     <div className="hero-intro-blob1" />
                     <div className="hero-intro-blob2" />
-                    <div className="hero-intro-inner">
+                    <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: "15%", right: "5%", width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle, rgba(30,216,232,.32) 0%, transparent 65%)", filter: "blur(20px)" }} />
+        <div style={{ position: "absolute", bottom: "20%", left: "35%", width: 240, height: 240, borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,197,.22) 0%, transparent 65%)", filter: "blur(24px)" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
+      </div>
+      <div className="hero-intro-inner">
                       {/* KIRI: Gambar */}
                       <div className="hero-intro-img">
                         <img
@@ -4706,7 +4716,7 @@ export default function BricksyTravel() {
                           alt={data.content.heroTitle}
                         />
                         {/* Ornamen badge di atas gambar */}
-                        <div style={{ position: "absolute", top: 18, left: 18, background: "#0d3b66", color: "#38c5d8", fontSize: ".6rem", letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 800, padding: "5px 12px", borderRadius: 2, zIndex: 2 }}>
+                        <div style={{ position: "absolute", top: 18, left: 18, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#38c5d8", fontSize: ".6rem", letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 800, padding: "5px 12px", borderRadius: 2, zIndex: 2 }}>
                           Arutala Organizer
                         </div>
                         {/* Shadow overlay bawah */}
@@ -4740,21 +4750,21 @@ export default function BricksyTravel() {
                             { num: "10+", lbl: "Kota" },
                           ].map(s => (
                             <div key={s.lbl} style={{ textAlign: "center" }}>
-                              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", lineHeight: 1 }}>{s.num}</div>
-                              <div style={{ fontSize: ".6875rem", letterSpacing: ".1em", textTransform: "uppercase", color: "#6aaec8", fontWeight: 600, marginTop: 3 }}>{s.lbl}</div>
+                              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#38c5d8", lineHeight: 1 }}>{s.num}</div>
+                              <div style={{ fontSize: ".6875rem", letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.65)", fontWeight: 600, marginTop: 3 }}>{s.lbl}</div>
                             </div>
                           ))}
                         </div>
 
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                           <button onClick={() => navigateTo("services")}
-                            style={{ padding: "12px 26px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 6, fontSize: ".8125rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s" }}
+                            style={{ padding: "12px 26px", background: "rgba(255,255,255,.15)", backdropFilter: "blur(8px)", color: "#fff", border: "1.5px solid rgba(255,255,255,.4)", borderRadius: 6, fontSize: ".8125rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s" }}
                             onMouseEnter={e => e.currentTarget.style.opacity = ".82"}
                             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
                             Layanan Kami →
                           </button>
                           <button onClick={() => navigateTo("about")}
-                            style={{ padding: "12px 24px", background: "#edfafc", color: "#0d3b66", border: "1.5px solid #c0e8f0", borderRadius: 6, fontSize: ".8125rem", fontWeight: 600, cursor: "pointer", transition: "all .2s" }}
+                            style={{ padding: "12px 24px", background: "rgba(255,255,255,.08)", color: "rgba(255,255,255,.85)", border: "1.5px solid rgba(255,255,255,.2)", borderRadius: 6, fontSize: ".8125rem", fontWeight: 600, cursor: "pointer", transition: "all .2s" }}
                             onMouseEnter={e => { e.currentTarget.style.background = "#c0e8f0"; }}
                             onMouseLeave={e => { e.currentTarget.style.background = "#edfafc"; }}>
                             Tentang Kami
@@ -4768,13 +4778,13 @@ export default function BricksyTravel() {
                   <AdvSection data={data} navigateTo={navigateTo} />
 
                   {/* Gallery */}
-                  <section className="section-md" style={{ background: "linear-gradient(180deg,#e4f9fc 0%,#edfafc 100%)" }}>
-                    <div style={{ maxWidth: 1200, margin: "0 auto", textAlign: "center" }}>
-                      <div className="label-xs" style={{ color: "#4a7f98", marginBottom: 14 }}>INTRODUCING</div>
-                      <h2 className="display" style={{ fontSize: "clamp(1.75rem,4.5vw,3rem)", fontWeight: 900, color: "#0d3b66", marginBottom: 16 }}>
+                  <section className="section-md" style={ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", position: "relative", overflow: "hidden" }>
+                    <div style={{ maxWidth: 1200, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
+                      <div className="label-xs" style={{ color: "rgba(255,255,255,.65)", marginBottom: 14 }}>INTRODUCING</div>
+                      <h2 className="display" style={{ fontSize: "clamp(1.75rem,4.5vw,3rem)", fontWeight: 900, color: "#fff", marginBottom: 16 }}>
                         {data.content.newAdvTitle}
                       </h2>
-                      <p style={{ fontSize: "0.9375rem", color: "#1a5a78", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px", whiteSpace: "pre-line" }}>{data.content.newAdvSub}</p>
+                      <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px", whiteSpace: "pre-line" }}>{data.content.newAdvSub}</p>
                       <div className="gal-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, marginBottom: 40 }}>
                         {(() => {
                           const allSecs = ["news","shop","destinations"];
@@ -4823,7 +4833,7 @@ export default function BricksyTravel() {
                   </section>
 
                   {/* Book */}
-                  <section className="section-md" style={{ background: "#c5dde9" }}>
+                  <section className="section-md" style={ background: "linear-gradient(130deg,#084060 0%,#0a6ea0 50%,#0cb5cc 100%)" }>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="grid-2">
                       <div className="book-img-grid">
                         <div className="img-zoom" style={{ gridColumn: "span 2", borderRadius: 4, overflow: "hidden" }}>
@@ -4975,7 +4985,7 @@ export default function BricksyTravel() {
                           onChange={e => setContact(p => ({ ...p, message: e.target.value }))}
                           aria-label="Message"
                           style={{ padding: "12px 14px", border: "1.5px solid #b0dce8", fontSize: "0.9375rem", outline: "none", borderRadius: 4, resize: "vertical", lineHeight: 1.65 }} />
-                        <button onClick={submitMsg} style={{ padding: "12px 26px", background: "#0d3b66", color: "#fff",
+                        <button onClick={submitMsg} style={{ padding: "12px 26px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff",
                           fontSize: "0.75rem", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 700,
                           border: "none", borderRadius: 4, alignSelf: "flex-start", transition: "background .2s" }}
                           onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
@@ -5028,7 +5038,7 @@ export default function BricksyTravel() {
                             </svg>
                             Power Developer
                           </button>
-                          <p style={{ fontSize: "0.8125rem", color: "#4a7f98" }}>© 2026 Arutala All Rights Reserved</p>
+                          <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.55)" }}>© 2026 Arutala All Rights Reserved</p>
                         </div>
                         <LogoDisplay content={data.content} size="footer" />
                       </div>
@@ -5075,7 +5085,7 @@ export default function BricksyTravel() {
                 onKeyDown={e => e.key === "Enter" && login()}
                 style={{ padding: "12px 14px", border: "1px solid #b0dce8", borderRadius: 4, fontSize: 14, outline: "none" }} />
               {loginErr && <p style={{ fontSize: 12, color: "#e74c3c" }}>{loginErr}</p>}
-              <button onClick={login} style={{ padding: "13px", background: "#0d3b66", color: "#fff",
+              <button onClick={login} style={{ padding: "13px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff",
                 border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1.5px", textTransform: "uppercase", fontWeight: 500 }}>
                 Sign In
               </button>
@@ -5175,7 +5185,7 @@ export default function BricksyTravel() {
             </div>
 
             <button onClick={() => setComingSoon(null)}
-              style={{ width: "100%", padding: "12px", background: "#0d3b66", color: "#fff",
+              style={{ width: "100%", padding: "12px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff",
                 border: "none", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700,
                 letterSpacing: ".04em", cursor: "pointer", transition: "background .2s" }}
               onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
@@ -5218,7 +5228,7 @@ export default function BricksyTravel() {
                     style={{ padding: "12px 14px", border: "1px solid #b0dce8", borderRadius: 4, fontSize: 14, outline: "none" }} />
                   {forgotErr && <p style={{ fontSize: 12, color: "#e74c3c" }}>{forgotErr}</p>}
                   <button onClick={forgotStep1}
-                    style={{ padding: "13px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500 }}>
+                    style={{ padding: "13px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500 }}>
                     Lanjut
                   </button>
                   <button onClick={() => { closeForgot(); setShowLogin(true); }}
@@ -5267,7 +5277,7 @@ export default function BricksyTravel() {
                       letterSpacing: "8px", textAlign: "center", outline: "none", fontWeight: 700, color: "#0d3b66" }} />
                   {forgotErr && <p style={{ fontSize: 12, color: "#e74c3c" }}>{forgotErr}</p>}
                   <button onClick={forgotStep3}
-                    style={{ padding: "13px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500 }}>
+                    style={{ padding: "13px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 4, fontSize: 13, letterSpacing: "1px", textTransform: "uppercase", fontWeight: 500 }}>
                     Verifikasi OTP
                   </button>
                   <button onClick={() => { setForgotStep("input_email"); setForgotOTP({ code:"",input:"",expiry:0,sending:false }); setForgotErr(""); }}
@@ -5310,7 +5320,7 @@ export default function BricksyTravel() {
       {showAdmin && user && (
         <div style={{ position: "fixed", inset: 0, zIndex: 1500, background: "#edfafc", display: "flex", flexDirection: "column", overflow: "hidden" }}>
           {/* Admin Nav */}
-          <div style={{ background: "#0d3b66", color: "#fff", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 58, flexShrink: 0 }}>
+          <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 58, flexShrink: 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               {/* Hamburger – mobile only */}
               <button className="admin-hamburger" onClick={() => setSidebarOpen(v => !v)} aria-label="Toggle menu">
@@ -5435,7 +5445,7 @@ export default function BricksyTravel() {
                     <div className="dash-action-btns">
                       {canEdit && (
                         <button onClick={() => { setAdminTab("cms"); setCmsEditPost("new"); }}
-                          style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "#0d3b66", color: "#fff", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "none", cursor: "pointer", letterSpacing: ".03em", transition: "background .2s" }}
+                          style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "none", cursor: "pointer", letterSpacing: ".03em", transition: "background .2s" }}
                           onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
                           onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                           ✏ Buat Artikel
@@ -5547,7 +5557,7 @@ export default function BricksyTravel() {
                               try { const prev = await fsGet(`profile-${user.username}`) || {}; await fsSet(`profile-${user.username}`, { ...prev, name: profileEdit.name, phone: profileEdit.phone, email: profileEdit.email, desc: profileEdit.desc, photo: user.photo || "" }); } catch {}
                               setProfileEditMode(false);
                               notify("Data diri berhasil disimpan!");
-                            }} style={{ padding: "10px 24px", background: "#0d3b66", color: "#fff", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Simpan Perubahan</button>
+                            }} style={{ padding: "10px 24px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Simpan Perubahan</button>
                             <button onClick={() => setProfileEditMode(false)}
                               style={{ padding: "10px 20px", background: "#edfafc", color: "#4a6680", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, cursor: "pointer" }}>Batal</button>
                           </div>
@@ -6281,7 +6291,7 @@ export default function BricksyTravel() {
                         if (!yr || !/^\d{4}$/.test(yr)) return notify("Masukkan tahun 4 digit (misal: 2026).", "error");
                         save({ ...data, content: { ...data.content, foundingYear: yr } });
                         notify(`✅ Tahun berdiri diperbarui ke ${yr}`);
-                      }} style={{ padding: "8px 16px", background: "#0d3b66", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 500 }}>
+                      }} style={{ padding: "8px 16px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 500 }}>
                         Simpan
                       </button>
                       <span style={{ fontSize: 12, color: "#5090aa" }}>Saat ini: <strong style={{ color: "#0d3b66" }}>{data.content.foundingYear || "2026"}</strong> · Pengalaman: <strong style={{ color: "#0891b2" }}>{new Date().getFullYear() - parseInt(data.content.foundingYear || "2026")} tahun</strong></span>
