@@ -539,91 +539,129 @@ const DEFAULT_DATA = {
       highlight: false,
     },
 
-    /* ── TRAVELING (3 paket) ── */
+    /* ── TRAVELING (4 paket — Bali, Jogja, Solo, Custom) ── */
     {
       id: 4,
       category: "traveling",
-      title: "Paket Wisata Domestik Group",
-      badge: "Hemat",
-      badgeColor: "#27ae60",
-      price: "Rp 1.800.000",
-      priceNote: "/ orang",
+      pkgId: "bali",
+      title: "Paket Bali",
+      tagline: "Surga Budaya & Alam Nusantara",
+      badge: "PALING POPULER",
+      badgeColor: "#e8a020",
+      accent: "#e8a020",
+      accentLight: "#fff8e6",
+      duration: "4 Hari 3 Malam",
+      minPeserta: "30",
+      price: "Rp 520.000",
+      priceNote: "/ orang (mulai)",
       images: [
-        "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=700&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1200px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/800px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg/800px-Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=700&fit=crop",
-      description: "Paket wisata domestik terjangkau untuk group minimal 10 orang ke destinasi populer dalam negeri seperti Bali, Lombok, Bromo, dan Jogja. Santai, hemat, berkesan.",
-      features: [
-        "Bus pariwisata ber-AC",
-        "Hotel bintang 3 (2 malam)",
-        "Makan 3x sehari",
-        "Tour guide lokal berpengalaman",
-        "Tiket masuk destinasi wisata",
-        "Asuransi perjalanan",
-        "Dokumentasi trip",
-        "Minimal 10 peserta",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1200px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      description: "Paket karyawisata ke Bali — Tanah Lot, Ubud, GWK, dan Pantai Kuta. Hotel bintang 3–4, konsumsi 3x sehari, tour leader & dokumentasi profesional.",
+      features: ["Hotel Bintang 3–4", "Konsumsi 3x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "ID Card & Buku Panduan"],
+      highlight: true,
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "520.000", points: ["Full AC Double Blower","Sleeper / Reclining seat","TV LCD + Audio System","Toilet dalam bus","USB charging per kursi","Snack 2x perjalanan"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "590.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk & nyaman","Power inverter 12V","Air mineral gratis","Bagasi atas & bawah"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "720.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "290.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
       ],
-      highlight: false,
     },
     {
       id: 5,
       category: "traveling",
-      title: "Paket Honeymoon Bali",
-      badge: "Romantis",
-      badgeColor: "#e84393",
-      price: "Rp 8.500.000",
-      priceNote: "/ pasangan",
+      pkgId: "jogja",
+      title: "Paket Yogyakarta",
+      tagline: "Kota Budaya, Sejarah & Pendidikan",
+      badge: "",
+      badgeColor: "#0d9e8a",
+      accent: "#0d9e8a",
+      accentLight: "#e0f7f4",
+      duration: "3 Hari 2 Malam",
+      minPeserta: "25",
+      price: "Rp 285.000",
+      priceNote: "/ orang (mulai)",
       images: [
-        "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1573790387438-4da905039392?w=1600&h=700&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Prambanan.jpg/800px-Prambanan.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Malioboro_yogyakarta.jpg/800px-Malioboro_yogyakarta.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=700&fit=crop",
-      description: "Rayakan awal kehidupan baru Anda dengan paket honeymoon eksklusif di Pulau Dewata. Vila private, spa couple, dan sunset dinner menjadi kenangan tak terlupakan.",
-      features: [
-        "Vila private dengan kolam renang",
-        "Sarapan romantis setiap hari",
-        "Spa couple 2 jam",
-        "Sunset dinner di tepi pantai",
-        "Dekorasi kamar spesial",
-        "Airport transfer private",
-        "Asuransi perjalanan",
-        "Tour Ubud & Seminyak",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+      description: "Paket karyawisata edukatif ke Yogyakarta — Borobudur, Prambanan, Malioboro & Keraton. Hotel bintang 2–3, konsumsi 3x, pemandu lokal bersertifikat.",
+      features: ["Hotel Bintang 2–3", "Konsumsi 3x Sehari (incl. Gudeg)", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "Workshop Batik Opsional"],
+      highlight: false,
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "285.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 1x perjalanan","USB charging per kursi","Reclining seat"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "320.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "380.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "145.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
       ],
-      highlight: true,
     },
     {
       id: 6,
       category: "traveling",
-      title: "Paket Wisata Mancanegara VIP",
-      badge: "Luxury",
-      badgeColor: "#8e44ad",
-      price: "Rp 18.500.000",
-      priceNote: "/ orang",
+      pkgId: "solo",
+      title: "Paket Solo",
+      tagline: "Kota Batik, Tradisi & Kuliner Otentik",
+      badge: "PAKET HEMAT",
+      badgeColor: "#c0392b",
+      accent: "#c0392b",
+      accentLight: "#fdf0ef",
+      duration: "2 Hari 1 Malam",
+      minPeserta: "20",
+      price: "Rp 195.000",
+      priceNote: "/ orang (mulai)",
       images: [
-        "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=700&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Kraton_Surakarta.jpg/1200px-Kraton_Surakarta.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Batik_Laweyan_Solo.jpg/800px-Batik_Laweyan_Solo.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pasar_Gede_Surakarta.jpg/800px-Pasar_Gede_Surakarta.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=700&fit=crop",
-      description: "Pengalaman perjalanan mewah ke destinasi premium Asia & Eropa. Layanan VIP dari keberangkatan hingga kepulangan dengan itinerary yang sepenuhnya dikustomisasi.",
-      features: [
-        "Tiket penerbangan kelas bisnis",
-        "Hotel bintang 5",
-        "Private tour guide",
-        "Makan fine dining",
-        "Airport transfer VIP",
-        "Asuransi perjalanan premium",
-        "Itinerary custom",
-        "Concierge 24 jam",
-      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Kraton_Surakarta.jpg/1200px-Kraton_Surakarta.jpg",
+      description: "Paket karyawisata ke Solo — Keraton Surakarta, Kampung Batik Laweyan, dan Pasar Gede. Paket paling terjangkau dengan nuansa seni & budaya Jawa.",
+      features: ["Hotel Bintang 2", "Konsumsi 2x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "Workshop Membatik"],
       highlight: false,
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "195.000", points: ["Full AC Double Blower","TV LCD + Audio System","Reclining seat","Snack 1x perjalanan","USB charging per kursi","Toilet dalam bus"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "235.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "295.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "105.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      ],
+    },
+    {
+      id: 7,
+      category: "traveling",
+      pkgId: "custom",
+      title: "Paket Custom",
+      tagline: "Desain Perjalanan Sesuai Impian Sekolah Anda",
+      badge: "BISA CUSTOM",
+      badgeColor: "#7c3aed",
+      accent: "#7c3aed",
+      accentLight: "#f0ebff",
+      duration: "Fleksibel",
+      minPeserta: "10",
+      price: "Hubungi Kami",
+      priceNote: "harga transparan",
+      images: [
+        "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1200",
+      ],
+      image: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1200",
+      description: "Paket wisata sepenuhnya dikustomisasi — tujuan bebas, durasi fleksibel, anggaran transparan. Jogja, Bali, Solo, Lombok, Bromo, dan lainnya.",
+      features: ["Tujuan Bebas Seluruh Indonesia", "Durasi 1 Hari – 2 Minggu", "Konsultasi Gratis", "Survey Lokasi", "Itinerary Custom bersama Tim Sekolah", "Support 24 Jam Selama Perjalanan"],
+      highlight: false,
+      prices: [
+        { vehicle: "Bus Executive",  icon: "🚌", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Armada premium besar","Full AC & fasilitas lengkap","Cocok untuk grup 35–60 org","Harga terbaik grup besar"] },
+        { vehicle: "Elf / Hiace",    icon: "🚐", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Fleksibel grup kecil","AC nyaman","Cocok 12–20 org","Mudah akses lokasi kecil"] },
+        { vehicle: "Mobil Pribadi",  icon: "🚗", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Untuk keluarga / grup kecil","AC & audio modern","Privat & nyaman","Bebas atur jadwal"] },
+        { vehicle: "Pick Up",        icon: "🛻", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Pilihan paling ekonomis","Cocok wisata alam terbuka","Terpal pelindung tersedia","Rute lokal & pendek"] },
+      ],
     },
 
     /* ── WEDDING ORGANIZER (3 paket) ── */
     {
-      id: 7,
+      id: 8,
       category: "wedding",
       title: "Paket Wedding Intimate Garden",
       badge: "Terlaris",
@@ -650,7 +688,7 @@ const DEFAULT_DATA = {
       highlight: false,
     },
     {
-      id: 8,
+      id: 9,
       category: "wedding",
       title: "Paket Wedding Syar'i Premium",
       badge: "Best Seller",
@@ -677,7 +715,7 @@ const DEFAULT_DATA = {
       highlight: true,
     },
     {
-      id: 9,
+      id: 10,
       category: "wedding",
       title: "Paket Wedding Glamour Ballroom",
       badge: "Mewah",
@@ -2300,6 +2338,156 @@ function SectionPage({ section, posts, onReadPost }) {
   );
 }
 
+/* ─────────────── TRAVEL PACKAGE CARD (accordion price) ─────────────── */
+function TravelPackageCard({ svc, onDetail }) {
+  const [openIdx, setOpenIdx] = useState(null);
+  const ac = svc.accent || "#e8a020";
+  const al = svc.accentLight || "#fff8e6";
+  const fmt = n => {
+    if (!n || isNaN(String(n).replace(/\./g, ""))) return n;
+    return Number(String(n).replace(/\./g, "")).toLocaleString("id-ID");
+  };
+  return (
+    <div style={{ background: "#fff", borderRadius: 16, overflow: "hidden", boxShadow: "0 4px 20px rgba(13,59,102,.09)", border: `2px solid ${svc.highlight ? ac : "transparent"}`, fontFamily: "'DM Sans',sans-serif" }}>
+      {/* Hero image */}
+      <div style={{ position: "relative", height: 180, overflow: "hidden" }}>
+        <img src={svc.images?.[0] || svc.image} alt={svc.title}
+          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
+          onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
+          onMouseLeave={e => e.target.style.transform = "scale(1)"}
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.55) 100%)" }} />
+        {svc.badge && (
+          <div style={{ position: "absolute", top: 12, left: 12, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "3px 12px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
+            {svc.badge}
+          </div>
+        )}
+        {svc.highlight && (
+          <div style={{ position: "absolute", top: 12, right: 12, background: "linear-gradient(130deg,#063d5c,#0891b2)", color: "#fff", borderRadius: 20, padding: "3px 10px", fontSize: "0.625rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
+        )}
+        <div style={{ position: "absolute", bottom: 12, left: 14, right: 14 }}>
+          <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 2 }}>{svc.title}</h3>
+          {svc.tagline && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,.8)", lineHeight: 1.4 }}>{svc.tagline}</p>}
+        </div>
+      </div>
+
+      {/* Info row */}
+      <div style={{ padding: "12px 16px 0", display: "flex", gap: 14, flexWrap: "wrap" }}>
+        {[`⏱ ${svc.duration}`, `👥 Min. ${svc.minPeserta} peserta`].map(m => (
+          <span key={m} style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{m}</span>
+        ))}
+      </div>
+
+      {/* Description */}
+      <p style={{ fontSize: "0.8125rem", color: "#4a7f98", lineHeight: 1.6, padding: "8px 16px 10px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
+
+      {/* Price header block */}
+      <div style={{ position: "relative", background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 50%,${ac} 100%)`, padding: "16px 16px 26px", margin: "0 0 -16px", overflow: "hidden" }}>
+        <div style={{ position: "absolute", right: -20, top: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,.04)" }} />
+        <p style={{ color: "rgba(255,255,255,.6)", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 2 }}>Harga Mulai Dari</p>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.8125rem", color: "rgba(255,255,255,.7)" }}>Rp</span>
+          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>
+            {fmt(svc.prices?.[0]?.price) || svc.price}
+          </span>
+          <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>/ orang</span>
+        </div>
+      </div>
+
+      {/* Price cards accordion */}
+      <div style={{ background: al, padding: "24px 12px 12px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25` }}>
+        <p style={{ fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8, paddingLeft: 4 }}>Harga per Kendaraan</p>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+          {(svc.prices || []).map((p, i) => {
+            const isOpen = openIdx === i;
+            return (
+              <div key={i} style={{ background: "#fff", borderRadius: 9, border: `1px solid ${isOpen ? ac : ac + "20"}`, overflow: "hidden", transition: "border-color .2s, box-shadow .2s", boxShadow: isOpen ? `0 3px 12px ${ac}25` : "none" }}>
+                <div onClick={() => setOpenIdx(isOpen ? null : i)}
+                  style={{ padding: "9px 10px", cursor: "pointer" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                    <span style={{ fontSize: 15 }}>{p.icon}</span>
+                    <span style={{ fontWeight: 600, fontSize: "0.75rem", color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
+                    <span style={{ fontSize: "0.5625rem", color: ac, fontWeight: 700, display: "inline-block", transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+                  </div>
+                  <div style={{ fontSize: "0.625rem", color: "#888", margin: "2px 0" }}>{p.capacity}</div>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 700, color: ac }}>
+                    {p.price === "Hubungi kami" ? p.price : `Rp ${fmt(p.price)}`}
+                  </div>
+                </div>
+                <div style={{ maxHeight: isOpen ? "300px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
+                  <ul style={{ listStyle: "none", padding: "0 10px 9px", display: "flex", flexDirection: "column", gap: 3, borderTop: `1px solid ${ac}15` }}>
+                    {(p.points || []).map((pt, pi) => (
+                      <li key={pi} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.6875rem", color: "#3a5266", marginTop: pi === 0 ? 6 : 0 }}>
+                        <span style={{ width: 4, height: 4, borderRadius: "50%", background: ac, flexShrink: 0, display: "inline-block" }} />
+                        {pt}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Footer CTA */}
+      <div style={{ padding: "12px 14px 14px", background: al, borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderBottom: `1px solid ${ac}25`, borderRadius: "0 0 14px 14px", display: "flex", justifyContent: "flex-end" }}>
+        <button onClick={onDetail}
+          style={{ padding: "9px 18px", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s" }}
+          onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+          Lihat Detail →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── TRAVEL DETAIL PRICE BLOCK (for service detail page) ─────────────── */
+function TravelDetailPriceBlock({ svc }) {
+  const [openIdx, setOpenIdx] = useState(null);
+  const ac = svc.accent || "#e8a020";
+  const al = svc.accentLight || "#fff8e6";
+  const fmt = n => {
+    if (!n || isNaN(String(n).replace(/\./g, ""))) return n;
+    return Number(String(n).replace(/\./g, "")).toLocaleString("id-ID");
+  };
+  return (
+    <div style={{ background: al, borderRadius: 14, padding: "20px 18px", border: `1px solid ${ac}30` }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 10 }}>
+        {(svc.prices || []).map((p, i) => {
+          const isOpen = openIdx === i;
+          return (
+            <div key={i} style={{ background: "#fff", borderRadius: 10, border: `1px solid ${isOpen ? ac : ac + "25"}`, overflow: "hidden", transition: "border-color .2s, box-shadow .2s", boxShadow: isOpen ? `0 4px 16px ${ac}30` : "none" }}>
+              <div onClick={() => setOpenIdx(isOpen ? null : i)} style={{ padding: "12px 14px", cursor: "pointer" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                  <span style={{ fontSize: 18 }}>{p.icon}</span>
+                  <span style={{ fontWeight: 600, fontSize: "0.8125rem", color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
+                  <span style={{ fontSize: "0.625rem", color: ac, fontWeight: 700, display: "inline-block", transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+                </div>
+                <div style={{ fontSize: "0.6875rem", color: "#888", margin: "3px 0 5px" }}>{p.capacity}</div>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 700, color: ac }}>
+                  {p.price === "Hubungi kami" ? p.price : `Rp ${fmt(p.price)}`}
+                </div>
+              </div>
+              <div style={{ maxHeight: isOpen ? "300px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
+                <ul style={{ listStyle: "none", padding: "0 14px 12px", display: "flex", flexDirection: "column", gap: 5, borderTop: `1px solid ${ac}15` }}>
+                  {(p.points || []).map((pt, pi) => (
+                    <li key={pi} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: "0.8125rem", color: "#3a5266", marginTop: pi === 0 ? 8 : 0 }}>
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", background: ac, flexShrink: 0, display: "inline-block" }} />
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /* ─────────────── SERVICES PAGE ─────────────── */
 function ServicesPage({ content, services, navigateTo }) {
   const [selectedService, setSelectedService] = useState(null);
@@ -2520,6 +2708,20 @@ function ServicesPage({ content, services, navigateTo }) {
                 </div>
               </div>
 
+              {/* PRICE ACCORDION — only for traveling packages */}
+              {svc.category === "traveling" && svc.prices?.length > 0 && (
+                <div className="mg-fade-3" style={{ marginBottom: 48 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+                    <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${svc.accent || "#e8a020"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+                    <div>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: svc.accent || "#e8a020", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Pilihan Armada</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Harga per Kendaraan</div>
+                    </div>
+                  </div>
+                  <TravelDetailPriceBlock svc={svc} />
+                </div>
+              )}
+
               {/* RELATED PACKAGES */}
               {relatedSvcs.length > 0 && (
                 <div className="mg-fade-3">
@@ -2691,7 +2893,15 @@ function ServicesPage({ content, services, navigateTo }) {
             </div>
             {filteredServices.length === 0 ? (
               <div style={{ textAlign: "center", padding: "60px 0", color: "#5090aa" }}>Belum ada paket untuk kategori ini.</div>
+            ) : activeCategory === "traveling" ? (
+              /* ── TRAVELING: 2-col grid with price accordion cards ── */
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 28 }}>
+                {filteredServices.map(svc => (
+                  <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} />
+                ))}
+              </div>
             ) : (
+              /* ── EVENT / WEDDING: original card style ── */
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 28 }}>
                 {filteredServices.map(svc => (
                   <div key={svc.id}
@@ -2781,7 +2991,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
   const svcs = data.services || [];
 
   const openNew = () => {
-    setSvcForm({ id: Date.now(), category: "traveling", title: "", badge: "", badgeColor: "#0891b2", price: "", priceNote: "/ orang", images: [], image: "", description: "", features: [], highlight: false });
+    setSvcForm({ id: Date.now(), category: "traveling", title: "", badge: "", badgeColor: "#0891b2", accent: "#e8a020", accentLight: "#fff8e6", duration: "3 Hari 2 Malam", minPeserta: "20", price: "", priceNote: "/ orang", images: [], image: "", description: "", features: [], highlight: false, prices: [{vehicle:"Bus Executive",icon:"🚌",capacity:"35–60 org",price:"0",points:["Keterangan 1","Keterangan 2"]}] });
     setEditSvc("new");
   };
   const openEdit = (s) => { setSvcForm({ ...s, features: [...(s.features || [])], images: [...(s.images || (s.image ? [s.image] : []))] }); setEditSvc(s.id); };
