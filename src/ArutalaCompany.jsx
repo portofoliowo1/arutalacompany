@@ -3390,7 +3390,7 @@ function AboutPage({ content, images, teamMembers }) {
       </div>
 
       {/* ── LAYANAN KAMI ── */}
-      <div style={{ padding: "80px 5%", background: "linear-gradient(130deg,#0a5c88 0%,#0d95b8 55%,#12c8dc 100%)" }>
+      <div style={{ padding: "80px 5%", background: "linear-gradient(130deg,#0a5c88 0%,#0d95b8 55%,#12c8dc 100%)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
             <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Apa yang Kami Tawarkan</div>
@@ -5143,7 +5143,7 @@ export default function BricksyTravel() {
                   <AdvSection data={data} navigateTo={navigateTo} />
 
                   {/* Gallery */}
-                  <section className="section-md" style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", position: "relative", overflow: "hidden" }>
+                  <section className="section-md" style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", position: "relative", overflow: "hidden" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
                       <div className="label-xs" style={{ color: "rgba(255,255,255,.65)", marginBottom: 14 }}>INTRODUCING</div>
                       <h2 className="display" style={{ fontSize: "clamp(1.75rem,4.5vw,3rem)", fontWeight: 900, color: "#fff", marginBottom: 16 }}>
@@ -5198,7 +5198,7 @@ export default function BricksyTravel() {
                   </section>
 
                   {/* Book */}
-                  <section className="section-md" style={{ background: "linear-gradient(130deg,#084060 0%,#0a6ea0 50%,#0cb5cc 100%)" }>
+                  <section className="section-md" style={{ background: "linear-gradient(130deg,#084060 0%,#0a6ea0 50%,#0cb5cc 100%)" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="grid-2">
                       <div className="book-img-grid">
                         <div className="img-zoom" style={{ gridColumn: "span 2", borderRadius: 4, overflow: "hidden" }}>
