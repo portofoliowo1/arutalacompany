@@ -3214,8 +3214,7 @@ function AboutPage({ content, images, teamMembers }) {
       "",
       "Pesan:",
       contactForm.message,
-    ].join("
-");
+    ].join("\n");
     window.open((content.waLink || "https://wa.me/6285745571442") + "?text=" + encodeURIComponent(lines), "_blank");
     setContactSent(true);
     setTimeout(() => { setContactSent(false); setContactForm({ name: "", email: "", phone: "", subject: "", message: "" }); }, 4000);
