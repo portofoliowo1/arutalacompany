@@ -458,60 +458,112 @@ const DEFAULT_DATA = {
   reviews: [],
   reviewTokens: [],
   services: [
+    /* ── EVENT PLAN (3 paket) ── */
     {
       id: 1,
       category: "event",
-      title: "Paket Event Plan Reguler",
-      badge: "Populer",
-      badgeColor: "#0891b2",
-      price: "Rp 5.000.000",
+      title: "Paket Event Starter",
+      badge: "Terjangkau",
+      badgeColor: "#27ae60",
+      price: "Rp 3.500.000",
       priceNote: "/ event",
-      images: ["https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop"],
-      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
-      description: "Paket perencanaan event lengkap untuk acara reguler seperti seminar, gathering, dan corporate event.",
-      features: ["Konsultasi event 2x pertemuan", "Dekorasi standar", "Dokumentasi foto", "Koordinasi vendor", "Rundown acara", "MC profesional"],
+      images: [
+        "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&h=700&fit=crop",
+      ],
+      image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&h=700&fit=crop",
+      description: "Paket event entry-level ideal untuk seminar, gathering kecil, atau peluncuran produk dengan kapasitas hingga 100 tamu. Semua kebutuhan dasar sudah tercakup.",
+      features: [
+        "Konsultasi event 1x pertemuan",
+        "Dekorasi standar",
+        "Dokumentasi foto (3 jam)",
+        "Koordinasi 3 vendor",
+        "Rundown & timeline acara",
+        "MC profesional",
+        "Kapasitas hingga 100 tamu",
+      ],
       highlight: false,
     },
     {
       id: 2,
-      category: "wedding",
-      title: "Paket Wedding Premium",
-      badge: "Best Seller",
-      badgeColor: "#e67e22",
-      price: "Rp 25.000.000",
-      priceNote: "/ wedding",
-      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop"],
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
-      description: "Paket pernikahan lengkap dengan sentuhan premium. Wujudkan pernikahan impian Anda bersama tim profesional kami.",
-      features: ["Konsultasi tak terbatas", "Dekorasi premium", "Dokumentasi foto & video", "Koordinasi 10+ vendor", "Wedding planner dedicated", "Catering 300 pax", "Entertainment & MC", "Souvenir tamu"],
+      category: "event",
+      title: "Paket Event Profesional",
+      badge: "Populer",
+      badgeColor: "#0891b2",
+      price: "Rp 12.500.000",
+      priceNote: "/ event",
+      images: [
+        "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=1600&h=700&fit=crop",
+      ],
+      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
+      description: "Paket lengkap untuk corporate event, seminar nasional, team building, dan peluncuran brand. Cocok untuk 100–300 tamu dengan layanan penuh hari H.",
+      features: [
+        "Konsultasi event tak terbatas",
+        "Dekorasi tematik custom",
+        "Dokumentasi foto & video (full day)",
+        "Koordinasi 8 vendor",
+        "Sound system & lighting profesional",
+        "MC bilingual",
+        "Coffee break & makan siang",
+        "Kapasitas 100–300 tamu",
+      ],
       highlight: true,
     },
     {
       id: 3,
-      category: "traveling",
-      title: "Paket Traveling Group",
-      badge: "Hemat",
-      badgeColor: "#27ae60",
-      price: "Rp 3.500.000",
-      priceNote: "/ orang",
-      images: ["https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=700&fit=crop"],
-      image: "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=700&fit=crop",
-      description: "Paket wisata group terjangkau dengan destinasi pilihan dalam dan luar negeri. Minimum 10 peserta.",
-      features: ["Transportasi PP", "Akomodasi 3 malam", "Tour guide lokal", "Makan 3x sehari", "Asuransi perjalanan", "Dokumentasi trip"],
+      category: "event",
+      title: "Paket Gala Dinner & Award Night",
+      badge: "Premium",
+      badgeColor: "#c0392b",
+      price: "Rp 35.000.000",
+      priceNote: "/ event",
+      images: [
+        "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=1600&h=700&fit=crop",
+      ],
+      image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop",
+      description: "Malam penghargaan perusahaan dengan nuansa ballroom mewah, red carpet, dan entertainment eksklusif. Dirancang untuk kesan tak terlupakan bagi 200–500 tamu undangan.",
+      features: [
+        "Dekorasi ballroom premium",
+        "Sound & lighting sinematik",
+        "MC bilingual & berpengalaman",
+        "Catering fine dining 300 pax",
+        "Live music & entertainment",
+        "Dokumentasi foto & video sinematik",
+        "Red carpet & photo booth",
+        "Event manager penuh hari H",
+      ],
       highlight: false,
     },
+
+    /* ── TRAVELING (3 paket) ── */
     {
       id: 4,
       category: "traveling",
-      title: "Paket Traveling Eksklusif",
-      badge: "Luxury",
-      badgeColor: "#8e44ad",
-      price: "Rp 15.000.000",
+      title: "Paket Wisata Domestik Group",
+      badge: "Hemat",
+      badgeColor: "#27ae60",
+      price: "Rp 1.800.000",
       priceNote: "/ orang",
-      images: ["https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=700&fit=crop"],
-      image: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=700&fit=crop",
-      description: "Pengalaman perjalanan mewah ke destinasi premium dunia. Layanan VIP dari keberangkatan hingga kepulangan.",
-      features: ["Tiket business class", "Hotel bintang 5", "Private tour guide", "Makan fine dining", "Airport transfer VIP", "Asuransi premium", "Itinerary custom", "Concierge 24 jam"],
+      images: [
+        "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=700&fit=crop",
+      ],
+      image: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=700&fit=crop",
+      description: "Paket wisata domestik terjangkau untuk group minimal 10 orang ke destinasi populer dalam negeri seperti Bali, Lombok, Bromo, dan Jogja. Santai, hemat, berkesan.",
+      features: [
+        "Bus pariwisata ber-AC",
+        "Hotel bintang 3 (2 malam)",
+        "Makan 3x sehari",
+        "Tour guide lokal berpengalaman",
+        "Tiket masuk destinasi wisata",
+        "Asuransi perjalanan",
+        "Dokumentasi trip",
+        "Minimal 10 peserta",
+      ],
       highlight: false,
     },
     {
@@ -522,109 +574,136 @@ const DEFAULT_DATA = {
       badgeColor: "#e84393",
       price: "Rp 8.500.000",
       priceNote: "/ pasangan",
-      images: ["https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1573790387438-4da905039392?w=1600&h=700&fit=crop"],
+      images: [
+        "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1573790387438-4da905039392?w=1600&h=700&fit=crop",
+      ],
       image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=700&fit=crop",
       description: "Rayakan awal kehidupan baru Anda dengan paket honeymoon eksklusif di Pulau Dewata. Vila private, spa couple, dan sunset dinner menjadi kenangan tak terlupakan.",
-      features: ["Vila private dengan kolam renang", "Sarapan romantis setiap hari", "Spa couple 2 jam", "Sunset dinner di tepi pantai", "Dekorasi kamar mewah", "Airport transfer private", "Asuransi perjalanan", "Tour Ubud & Seminyak"],
+      features: [
+        "Vila private dengan kolam renang",
+        "Sarapan romantis setiap hari",
+        "Spa couple 2 jam",
+        "Sunset dinner di tepi pantai",
+        "Dekorasi kamar spesial",
+        "Airport transfer private",
+        "Asuransi perjalanan",
+        "Tour Ubud & Seminyak",
+      ],
       highlight: true,
     },
     {
       id: 6,
       category: "traveling",
-      title: "Paket Wisata Edukasi Jogja",
-      badge: "Keluarga",
-      badgeColor: "#16a085",
-      price: "Rp 1.800.000",
+      title: "Paket Wisata Mancanegara VIP",
+      badge: "Luxury",
+      badgeColor: "#8e44ad",
+      price: "Rp 18.500.000",
       priceNote: "/ orang",
-      images: ["https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1584810359583-96fc3448beaa?w=1600&h=700&fit=crop"],
-      image: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=700&fit=crop",
-      description: "Paket wisata keluarga yang menggabungkan petualangan dan edukasi di Kota Budaya Yogyakarta. Cocok untuk liburan sekolah dan family gathering.",
-      features: ["Bus pariwisata ber-AC", "Hotel bintang 3 (2 malam)", "Makan 3x sehari", "Kunjungan Prambanan & Borobudur", "Tour guide berpengalaman", "Asuransi perjalanan", "Souvenir khas Jogja"],
+      images: [
+        "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=700&fit=crop",
+      ],
+      image: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=700&fit=crop",
+      description: "Pengalaman perjalanan mewah ke destinasi premium Asia & Eropa. Layanan VIP dari keberangkatan hingga kepulangan dengan itinerary yang sepenuhnya dikustomisasi.",
+      features: [
+        "Tiket penerbangan kelas bisnis",
+        "Hotel bintang 5",
+        "Private tour guide",
+        "Makan fine dining",
+        "Airport transfer VIP",
+        "Asuransi perjalanan premium",
+        "Itinerary custom",
+        "Concierge 24 jam",
+      ],
       highlight: false,
     },
+
+    /* ── WEDDING ORGANIZER (3 paket) ── */
     {
       id: 7,
-      category: "event",
-      title: "Paket Gala Dinner & Award Night",
-      badge: "Premium",
-      badgeColor: "#c0392b",
-      price: "Rp 35.000.000",
-      priceNote: "/ event",
-      images: ["https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=1600&h=700&fit=crop"],
-      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
-      description: "Selenggarakan malam penghargaan perusahaan Anda dengan nuansa mewah dan berkesan. Kami tangani dari dekorasi megah hingga entertainment eksklusif untuk 200–500 tamu.",
-      features: ["Dekorasi ballroom premium", "Sound & lighting profesional", "MC bilingual", "Catering fine dining 300 pax", "Live music & entertainment", "Dokumentasi foto & video sinematik", "Red carpet & photo booth", "Koordinasi penuh hari H"],
-      highlight: true,
-    },
-    {
-      id: 8,
-      category: "event",
-      title: "Paket Team Building Outdoor",
-      badge: "Korporat",
-      badgeColor: "#2980b9",
-      price: "Rp 750.000",
-      priceNote: "/ orang",
-      images: ["https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=1600&h=700&fit=crop"],
-      image: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1600&h=700&fit=crop",
-      description: "Perkuat solidaritas tim Anda dengan program team building outdoor yang seru dan berenergi. Dirancang oleh fasilitator bersertifikat dengan aktivitas yang menantang dan menyenangkan.",
-      features: ["Fasilitator bersertifikat", "Games & outbound activities", "Makan siang & snack", "Dokumentasi kegiatan", "Sertifikat peserta", "Shuttle dari titik kumpul", "Evaluasi & debrief sesi", "Min. 30 peserta"],
-      highlight: false,
-    },
-    {
-      id: 9,
-      category: "event",
-      title: "Paket Seminar & Workshop",
-      badge: "Edukatif",
-      badgeColor: "#27ae60",
-      price: "Rp 3.200.000",
-      priceNote: "/ event",
-      images: ["https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&h=700&fit=crop"],
-      image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&h=700&fit=crop",
-      description: "Paket penyelenggaraan seminar dan workshop profesional dengan fasilitas lengkap. Ideal untuk training karyawan, seminar publik, dan workshop kreatif hingga 150 peserta.",
-      features: ["Venue kapasitas 150 orang", "Proyektor & sound system", "Backdrop & signage branding", "Coffee break 2x & makan siang", "Registrasi & perlengkapan peserta", "Dokumentasi foto", "Koordinator acara", "Sertifikat digital peserta"],
-      highlight: false,
-    },
-    {
-      id: 10,
       category: "wedding",
       title: "Paket Wedding Intimate Garden",
       badge: "Terlaris",
       badgeColor: "#e67e22",
       price: "Rp 18.000.000",
       priceNote: "/ wedding",
-      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop"],
+      images: [
+        "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop",
+      ],
       image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
-      description: "Pernikahan intim nan hangat di taman dengan dekorasi bohemian elegan. Cocok untuk pernikahan kecil 50–100 tamu dengan nuansa natural yang tetap mewah dan berkesan.",
-      features: ["Dekorasi garden bohemian", "Wedding planner dedicated", "Dokumentasi foto & video", "Catering 100 pax", "Pelaminan custom", "Bunga segar premium", "MC profesional", "Koordinasi vendor"],
+      description: "Pernikahan intim nan hangat di taman dengan dekorasi bohemian elegan. Ideal untuk 50–100 tamu dengan nuansa natural yang tetap mewah dan berkesan.",
+      features: [
+        "Dekorasi garden bohemian",
+        "Wedding planner dedicated",
+        "Dokumentasi foto & video",
+        "Catering 100 pax",
+        "Pelaminan custom",
+        "Bunga segar premium",
+        "MC profesional",
+        "Koordinasi vendor",
+      ],
       highlight: false,
     },
     {
-      id: 11,
+      id: 8,
       category: "wedding",
-      title: "Paket Wedding Syar'i Lengkap",
-      badge: "Islami",
+      title: "Paket Wedding Syar'i Premium",
+      badge: "Best Seller",
       badgeColor: "#1abc9c",
-      price: "Rp 22.000.000",
+      price: "Rp 25.000.000",
       priceNote: "/ wedding",
-      images: ["https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop"],
+      images: [
+        "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
+      ],
       image: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop",
-      description: "Wujudkan pernikahan Islami yang penuh berkah dengan konsep syar'i modern. Kami memastikan setiap detail prosesi sesuai nilai Islam dengan tampilan yang tetap elegan dan menawan.",
-      features: ["Dekorasi Islami modern", "Pembatas tamu putra & putri", "Qori & sambutan religi", "Catering halal 200 pax", "Pelaminan syar'i", "Dokumentasi foto & video", "Wedding planner", "Buku tamu & souvenir"],
-      highlight: false,
+      description: "Wujudkan pernikahan Islami yang penuh berkah dan elegan. Setiap detail prosesi dirancang sesuai nilai-nilai Islam dengan tampilan modern yang tetap menawan untuk 150–250 tamu.",
+      features: [
+        "Dekorasi Islami modern",
+        "Pembatas tamu putra & putri",
+        "Qori & sambutan religi",
+        "Catering halal 200 pax",
+        "Pelaminan syar'i custom",
+        "Dokumentasi foto & video",
+        "Wedding planner dedicated",
+        "Buku tamu & souvenir",
+      ],
+      highlight: true,
     },
     {
-      id: 12,
+      id: 9,
       category: "wedding",
       title: "Paket Wedding Glamour Ballroom",
       badge: "Mewah",
       badgeColor: "#8e44ad",
       price: "Rp 55.000.000",
       priceNote: "/ wedding",
-      images: ["https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop", "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop"],
+      images: [
+        "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop",
+        "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop",
+      ],
       image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
-      description: "Pernikahan megah berkelas di ballroom bintang 5 dengan dekorasi mewah penuh chandelier dan bunga segar premium. Untuk 300–600 tamu dengan layanan all-inclusive terbaik.",
-      features: ["Ballroom hotel bintang 5", "Dekorasi full flowers premium", "Bridal suite 2 malam", "Catering fine dining 400 pax", "Entertainment & live band", "Foto & video sinematik", "Wedding planner senior", "Makeup artist profesional", "Souvenir premium", "Pagar ayu & pager bagus"],
-      highlight: true,
+      description: "Pernikahan megah berkelas di ballroom hotel bintang 5 dengan dekorasi chandelier dan bunga segar premium. All-inclusive terbaik untuk 300–600 tamu undangan.",
+      features: [
+        "Ballroom hotel bintang 5",
+        "Dekorasi full flowers premium",
+        "Bridal suite 2 malam",
+        "Catering fine dining 400 pax",
+        "Entertainment & live band",
+        "Foto & video sinematik",
+        "Wedding planner senior",
+        "Makeup artist profesional",
+        "Souvenir premium tamu",
+        "Pagar ayu & pager bagus",
+      ],
+      highlight: false,
     },
   ],
   teamMembers: [
@@ -959,7 +1038,7 @@ const GS = () => (
 
     /* 1. Navbar — compact on mobile, fully opaque */
     @media(max-width:640px){
-      nav{background:#f5fdff!important;backdrop-filter:none!important;padding:0 4%!important}
+      nav{background:rgba(6,61,92,.97)!important;backdrop-filter:none!important;padding:0 4%!important;overflow:visible!important}
       nav>div{height:60px!important;gap:10px!important}
     }
 
@@ -1058,7 +1137,7 @@ const GS = () => (
     /* 12. Navbar mobile menu — tidak tumpang tindih konten */
     @media(max-width:640px){
       /* Mobile menu dropdown: max-height + scroll kalau banyak item */
-      nav > div + div{max-height:calc(100vh - 60px)!important;overflow-y:auto!important}
+      nav .mobile-dropdown{max-height:calc(100vh - 60px)!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;display:flex!important;flex-direction:column!important}
     }
 
     /* 13. WhatsApp button — jangan tutupi konten penting */
@@ -2882,8 +2961,19 @@ function AboutPage({ content, images, teamMembers }) {
 
   const handleContactSubmit = () => {
     if (!contactForm.name || !contactForm.message) return;
-    const text = `Halo Arutala Organizer! 👋%0A%0ANama: ${contactForm.name}%0AEmail: ${contactForm.email}%0ANo. HP: ${contactForm.phone}%0AKeperluan: ${contactForm.subject}%0A%0APesan:%0A${contactForm.message}`;
-    window.open(`${content.waLink || "https://wa.me/6285745571442"}?text=${text}`, "_blank");
+    const lines = [
+      "Halo Arutala Organizer! 👋",
+      "",
+      "Nama: " + contactForm.name,
+      "Email: " + (contactForm.email || "-"),
+      "No. HP: " + (contactForm.phone || "-"),
+      "Keperluan: " + (contactForm.subject || "-"),
+      "",
+      "Pesan:",
+      contactForm.message,
+    ].join("
+");
+    window.open((content.waLink || "https://wa.me/6285745571442") + "?text=" + encodeURIComponent(lines), "_blank");
     setContactSent(true);
     setTimeout(() => { setContactSent(false); setContactForm({ name: "", email: "", phone: "", subject: "", message: "" }); }, 4000);
   };
@@ -4527,7 +4617,7 @@ export default function BricksyTravel() {
           {/* NAVBAR — Fixed floating always */}
           <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(6,61,92,.95)",
             backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(56,197,216,.2)", padding: "0 5%",
-            isolation: "isolate" }}>
+            overflow: "visible" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 96, maxWidth: 1200, margin: "0 auto", gap: 20 }}>
 
               {/* ── LOGO — full multi-line height ── */}
@@ -4613,15 +4703,18 @@ export default function BricksyTravel() {
               </button>
             </div>
             {mobileMenu && (
-              <div style={{
-                position: "absolute", top: "100%", left: 0, right: 0,
+              <div className="mobile-dropdown" style={{
+                position: "fixed", top: "60px", left: 0, right: 0,
                 background: "linear-gradient(160deg, #063d5c 0%, #0875a8 70%, #0aa8bf 100%)",
                 borderTop: "1px solid rgba(56,197,216,.3)",
                 boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
                 backdropFilter: "blur(12px)",
                 display: "flex", flexDirection: "column", gap: 6,
-                padding: "16px 5% 24px", zIndex: 1000,
-                animation: "fadeIn .25s ease"
+                padding: "16px 5% 24px", zIndex: 9999,
+                animation: "fadeIn .25s ease",
+                maxHeight: "calc(100vh - 60px)",
+                overflowY: "auto",
+                WebkitOverflowScrolling: "touch"
               }}>
                 {/* Dot grid overlay */}
                 <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px)", backgroundSize: "22px 22px", pointerEvents: "none", borderRadius: "0 0 8px 8px" }} />
