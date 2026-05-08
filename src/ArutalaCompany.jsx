@@ -2847,7 +2847,6 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
               { label: "Harga (teks)", key: "price", placeholder: "Rp 25.000.000" },
               { label: "Keterangan Harga", key: "priceNote", placeholder: "/ wedding" },
               { label: "Badge (opsional)", key: "badge", placeholder: "Best Seller" },
-              { label: "Warna Badge (hex)", key: "badgeColor", placeholder: "#e67e22" },
             ].map(f => (
               <div key={f.key}>
                 <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
@@ -2856,6 +2855,40 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                   style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
               </div>
             ))}
+
+            {/* Warna Badge — color picker ramah pemula */}
+            <div>
+              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Warna Badge</label>
+              {/* Palet warna cepat */}
+              <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginBottom: 8 }}>
+                {["#0891b2","#27ae60","#e67e22","#c0392b","#8e44ad","#e84393","#1abc9c","#f39c12","#0d3b66","#2c3e50"].map(c => (
+                  <button key={c} onClick={() => setSvcForm(p => ({ ...p, badgeColor: c }))}
+                    title={c}
+                    style={{
+                      width: 26, height: 26, borderRadius: "50%", background: c, border: "none", cursor: "pointer",
+                      boxShadow: svcForm.badgeColor === c ? `0 0 0 3px #fff, 0 0 0 5px ${c}` : "0 1px 3px rgba(0,0,0,.2)",
+                      transform: svcForm.badgeColor === c ? "scale(1.15)" : "scale(1)",
+                      transition: "all .15s", flexShrink: 0
+                    }} />
+                ))}
+              </div>
+              {/* Input hex + native color picker */}
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <input type="color" value={svcForm.badgeColor || "#0891b2"}
+                  onChange={e => setSvcForm(p => ({ ...p, badgeColor: e.target.value }))}
+                  style={{ width: 36, height: 36, border: "none", background: "none", cursor: "pointer", padding: 0, flexShrink: 0 }} />
+                <input value={svcForm.badgeColor || "#0891b2"}
+                  onChange={e => setSvcForm(p => ({ ...p, badgeColor: e.target.value }))}
+                  placeholder="#0891b2" maxLength={7}
+                  style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", fontFamily: "monospace" }} />
+                {/* Live preview badge */}
+                {svcForm.badge && (
+                  <span style={{ background: svcForm.badgeColor || "#0891b2", color: "#fff", borderRadius: 4, padding: "4px 10px", fontSize: 10, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                    {svcForm.badge}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
           <div style={{ marginBottom: 16 }}>
             <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Deskripsi</label>
