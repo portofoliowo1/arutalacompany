@@ -447,6 +447,10 @@ const DEFAULT_DATA = {
     fbLink: "https://facebook.com/arutalaorganizer",
     logoText: "ARUTALA\nORGANIZER",
     logoImage: "",
+    logoSingleLine: false,
+    logoFont: "Playfair Display",
+    logoColor: "#111111",
+    logoShadow: "0 1px 6px rgba(0,0,0,.35), 0 2px 14px rgba(0,0,0,.18)",
     loginBtnText: "LOGIN",
     nav1: "Home", nav2: "About", nav3: "Event Plan", nav4: "Traveling", nav5: "Wedding Organizer", nav6: "Layanan Kami",
     servicesPageTitle: "Paket Layanan Kami",
@@ -756,7 +760,7 @@ const DEFAULT_DATA = {
 /* ─────────────── GLOBAL STYLES ─────────────── */
 const GS = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@700;900&family=Montserrat:wght@700;800;900&family=Raleway:wght@700;800;900&family=Oswald:wght@600;700&family=Bebas+Neue&family=Lora:wght@700&family=Josefin+Sans:wght@700&family=Inter:wght@700;800;900&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
     body{font-family:'DM Sans',sans-serif;background:#063d5c;color:#0d3b66;line-height:1.6;font-size:16px}
@@ -816,7 +820,7 @@ const GS = () => (
       #cursor-glow.expanded{width:48px;height:48px;background:rgba(8,145,178,.1)}
     }
 
-    .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-shadow:0 1px 4px rgba(13,59,102,.22),0 2px 10px rgba(13,59,102,.13)}
+    .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#111;text-shadow:0 1px 6px rgba(0,0,0,.35),0 2px 14px rgba(0,0,0,.18)}
     .logo-brand-footer{font-family:'Playfair Display',serif;font-weight:800;font-size:.95rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff}
     .logo-brand-admin{font-family:'Playfair Display',serif;font-weight:800;font-size:.9rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
     .label-xs{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.65)}
@@ -1409,23 +1413,34 @@ function CEF({ val, multiline, onChange, onSave }) {
 
 /* ─────────────── LOGO DISPLAY ─────────────── */
 function LogoDisplay({ content, size = "nav" }) {
-  const lines = (content.logoText || "").split("\n");
+  const rawText = content.logoText || "";
+  const singleLine = content.logoSingleLine;
+  const lines = singleLine ? [rawText.replace(/\n/g, " ")] : rawText.split("\n");
   const iconSz = size === "nav" ? 72 : 34;
+
+  // Styling dinamis — hanya berlaku di nav (bukan footer/admin)
+  const isNav = size === "nav";
+  const dynStyle = isNav ? {
+    fontFamily: `'${content.logoFont || "Playfair Display"}', serif`,
+    color: content.logoColor || "#111111",
+    textShadow: content.logoShadow || "0 1px 6px rgba(0,0,0,.35), 0 2px 14px rgba(0,0,0,.18)",
+  } : {};
+
+  const brandClass = size === "admin" ? "logo-brand-admin" : size === "footer" ? "logo-brand-footer" : "logo-brand";
+
   if (content.logoImage) {
     return (
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <img src={content.logoImage} alt={content.logoText}
           style={{ height: size === "nav" ? 88 : iconSz, maxWidth: size === "nav" ? 180 : 120, objectFit: "contain", display: "block" }} />
-        <span className={size === "admin" ? "logo-brand-admin" : size === "footer" ? "logo-brand-footer" : "logo-brand"}>
-          {lines.map((line, i) => <span key={i} style={{ display: "block" }}>{line}</span>)}
+        <span className={brandClass} style={dynStyle}>
+          {lines.map((line, i) => <span key={i} style={{ display: singleLine ? "inline" : "block" }}>{line}</span>)}
         </span>
       </div>
     );
   }
-  /* Text-only: slot on left reserved for future logo image */
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-      {/* Logo placeholder slot — keeps layout stable when image is uploaded */}
       <div style={{
         width: iconSz, height: iconSz,
         borderRadius: size === "nav" ? 12 : 8,
@@ -1439,8 +1454,8 @@ function LogoDisplay({ content, size = "nav" }) {
           <polyline points="21 15 16 10 5 21"/>
         </svg>
       </div>
-      <span className={size === "admin" ? "logo-brand-admin" : size === "footer" ? "logo-brand-footer" : "logo-brand"}>
-        {lines.map((line, i) => <span key={i} style={{ display: "block" }}>{line}</span>)}
+      <span className={brandClass} style={dynStyle}>
+        {lines.map((line, i) => <span key={i} style={{ display: singleLine ? "inline" : "block" }}>{i > 0 && singleLine ? " " + line : line}</span>)}
       </span>
     </div>
   );
@@ -6280,6 +6295,145 @@ export default function BricksyTravel() {
                 <div className="fade-in">
                   <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 6 }}>Site Content</h1>
                   <p style={{ fontSize: 13, color: "#5090aa", marginBottom: 28 }}>Edit all text on the website</p>
+
+                  {/* ── LOGO STYLING PANEL ── */}
+                  <div style={{ background: "#fff", borderRadius: 10, padding: "20px 24px", marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #0891b2" }}>
+                    <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0d3b66", marginBottom: 4 }}>🔤 Nama Perusahaan — Tampilan</h3>
+                    <p style={{ fontSize: 12, color: "#5090aa", marginBottom: 18, lineHeight: 1.6 }}>Atur teks nama, layout, font, warna, dan shadow di navbar.</p>
+
+                    {/* Teks nama */}
+                    <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Teks Nama (Enter = baris baru)</label>
+                    <textarea
+                      defaultValue={data.content.logoText}
+                      id="logo-text-input"
+                      rows={3}
+                      style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, fontFamily: "monospace", resize: "vertical", outline: "none", marginBottom: 14, boxSizing: "border-box" }}
+                    />
+
+                    {/* Single line toggle */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66" }}>Layout:</span>
+                      {[
+                        { val: false, label: "📋 Multi Line" },
+                        { val: true,  label: "➖ Satu Baris" },
+                      ].map(opt => (
+                        <button key={String(opt.val)}
+                          onClick={() => save({ ...data, content: { ...data.content, logoSingleLine: opt.val } })}
+                          style={{
+                            padding: "6px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer", border: "1.5px solid",
+                            background: (!!data.content.logoSingleLine) === opt.val ? "#0891b2" : "#f5fdff",
+                            color: (!!data.content.logoSingleLine) === opt.val ? "#fff" : "#0891b2",
+                            borderColor: "#0891b2", transition: "all .15s"
+                          }}>
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Font picker */}
+                    <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Font</label>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+                      {[
+                        { name: "Playfair Display", label: "Playfair" },
+                        { name: "Cinzel",            label: "Cinzel" },
+                        { name: "Montserrat",        label: "Montserrat" },
+                        { name: "Raleway",           label: "Raleway" },
+                        { name: "Oswald",            label: "Oswald" },
+                        { name: "Cormorant Garamond",label: "Cormorant" },
+                        { name: "Bebas Neue",        label: "Bebas" },
+                        { name: "Lora",              label: "Lora" },
+                        { name: "Josefin Sans",      label: "Josefin" },
+                        { name: "Inter",             label: "Inter" },
+                      ].map(f => (
+                        <button key={f.name}
+                          onClick={() => save({ ...data, content: { ...data.content, logoFont: f.name } })}
+                          style={{
+                            padding: "6px 12px", borderRadius: 6, fontSize: 12, cursor: "pointer", border: "1.5px solid",
+                            background: data.content.logoFont === f.name ? "#0d3b66" : "#f5fdff",
+                            color: data.content.logoFont === f.name ? "#fff" : "#0d3b66",
+                            borderColor: data.content.logoFont === f.name ? "#0d3b66" : "#b0dce8",
+                            fontFamily: `'${f.name}', serif`, fontWeight: 700, transition: "all .15s"
+                          }}>
+                          {f.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Warna teks */}
+                    <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Warna Teks</label>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+                      {[
+                        { val: "#111111", label: "Hitam" },
+                        { val: "#ffffff", label: "Putih" },
+                        { val: "#0d3b66", label: "Navy" },
+                        { val: "#0891b2", label: "Teal" },
+                        { val: "#e8a020", label: "Gold" },
+                        { val: "#4a4a4a", label: "Abu" },
+                        { val: "#c8a96e", label: "Bronze" },
+                      ].map(c => (
+                        <button key={c.val}
+                          onClick={() => save({ ...data, content: { ...data.content, logoColor: c.val } })}
+                          style={{
+                            padding: "6px 14px", borderRadius: 20, fontSize: 11, fontWeight: 700, cursor: "pointer",
+                            background: c.val,
+                            color: ["#111111","#0d3b66","#4a4a4a","#c8a96e","#ffffff"].includes(c.val) ? (c.val === "#ffffff" ? "#111" : "#fff") : "#111",
+                            border: `2px solid ${data.content.logoColor === c.val ? "#0891b2" : "rgba(0,0,0,.12)"}`,
+                            boxShadow: data.content.logoColor === c.val ? "0 0 0 2px #0891b2" : "0 1px 3px rgba(0,0,0,.15)",
+                            transition: "all .15s"
+                          }}>
+                          {c.label}
+                        </button>
+                      ))}
+                      <label style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer", fontSize: 11, fontWeight: 600, color: "#0d3b66", border: "1.5px solid #b0dce8", borderRadius: 20, padding: "5px 12px", background: "#f5fdff" }}>
+                        🎨 Custom
+                        <input type="color" defaultValue={data.content.logoColor || "#111111"}
+                          onChange={e => save({ ...data, content: { ...data.content, logoColor: e.target.value } })}
+                          style={{ width: 22, height: 22, border: "none", background: "none", cursor: "pointer", padding: 0 }} />
+                      </label>
+                    </div>
+
+                    {/* Shadow preset */}
+                    <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Shadow Teks</label>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 18 }}>
+                      {[
+                        { label: "Tanpa Shadow",  val: "none" },
+                        { label: "Tipis",         val: "0 1px 3px rgba(0,0,0,.25)" },
+                        { label: "Sedang ✓",      val: "0 1px 6px rgba(0,0,0,.35), 0 2px 14px rgba(0,0,0,.18)" },
+                        { label: "Tebal",         val: "0 2px 8px rgba(0,0,0,.55), 0 4px 20px rgba(0,0,0,.30)" },
+                        { label: "Glow Putih",    val: "0 0 8px rgba(255,255,255,.9), 0 0 20px rgba(255,255,255,.6)" },
+                        { label: "Glow Teal",     val: "0 0 10px rgba(8,145,178,.8), 0 0 24px rgba(8,145,178,.4)" },
+                        { label: "Glow Gold",     val: "0 0 10px rgba(232,160,32,.8), 0 0 24px rgba(232,160,32,.4)" },
+                      ].map(s => (
+                        <button key={s.val}
+                          onClick={() => save({ ...data, content: { ...data.content, logoShadow: s.val } })}
+                          style={{
+                            padding: "6px 12px", borderRadius: 6, fontSize: 11, cursor: "pointer", border: "1.5px solid",
+                            background: data.content.logoShadow === s.val ? "#0d3b66" : "#f5fdff",
+                            color: data.content.logoShadow === s.val ? "#fff" : "#0d3b66",
+                            borderColor: data.content.logoShadow === s.val ? "#0d3b66" : "#b0dce8",
+                            fontWeight: 600, transition: "all .15s"
+                          }}>
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Preview strip */}
+                    <div style={{ background: "linear-gradient(105deg,#fff 0%,#e8f9fb 40%,#a8dde8 75%,#0aa8bf 100%)", borderRadius: 8, padding: "14px 20px", display: "flex", alignItems: "center", gap: 14, marginBottom: 16, minHeight: 64 }}>
+                      <div style={{ fontSize: 11, color: "#5090aa", fontWeight: 600, flexShrink: 0 }}>Preview:</div>
+                      <LogoDisplay content={data.content} size="nav" />
+                    </div>
+
+                    {/* Simpan teks */}
+                    <button onClick={() => {
+                      const txt = document.getElementById("logo-text-input")?.value ?? "";
+                      save({ ...data, content: { ...data.content, logoText: txt } });
+                      notify("✅ Nama perusahaan disimpan!");
+                    }} style={{ padding: "9px 22px", background: "linear-gradient(130deg,#063d5c,#0891b2)", color: "#fff", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+                      💾 Simpan Nama
+                    </button>
+                  </div>
+
                   {[
                     { label: "Logo / Brand Name", key: "logoText" },
                     { label: "Logo Image URL (kosongkan untuk teks)", key: "logoImage" },
