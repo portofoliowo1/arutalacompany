@@ -4633,8 +4633,19 @@ export default function BricksyTravel() {
       if (sv !== null && typeof sv === "object" && !Array.isArray(sv) && dv !== null && typeof dv === "object" && !Array.isArray(dv)) {
         // Objek nested → merge rekursif
         result[key] = mergeWithDefaults(sv, dv);
+      } else if (key === "services" && Array.isArray(sv) && Array.isArray(dv)) {
+        // Array services: gabungkan data Firebase + item DEFAULT yang id-nya belum ada.
+        // Ini memastikan paket baru (traveling id 4–7, dsb.) muncul meski Firebase
+        // menyimpan versi lama yang belum punya paket tersebut.
+        if (sv.length === 0) {
+          result[key] = dv; // Firebase kosong → seed penuh dari DEFAULT
+        } else {
+          const existingIds = new Set(sv.map(s => s.id));
+          const missing = dv.filter(s => !existingIds.has(s.id));
+          result[key] = [...sv, ...missing];
+        }
       } else {
-        // Primitif atau array → pakai nilai yang disimpan
+        // Primitif atau array lain → pakai nilai yang disimpan
         result[key] = sv;
       }
     }
