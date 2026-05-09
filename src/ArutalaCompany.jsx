@@ -3029,8 +3029,8 @@ function DestinationsSection({ svc, catInfo }) {
   );
 }
 
-/* ─────────────── HERO SLIDESHOW (panel kanan di atas) ─────────────── */
-function HeroSlideshow({ slides, catColor }) {
+/* ─────────────── SERVICE HERO SLIDESHOW (panel kanan di atas) ─────────────── */
+function ServiceHeroSlideshow({ slides, catColor }) {
   const [cur, setCur] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
@@ -3336,7 +3336,7 @@ function ServicesPage({ content, services, navigateTo }) {
                 const allSlides = heroSlides.length > 0
                   ? heroSlides
                   : fallbackSlides.map((img, i) => ({ img, name: svc.title, no: String(i+1).padStart(2,"0"), title: svc.title }));
-                return <HeroSlideshow key={svc.id} slides={allSlides} catColor={catInfo.color || "#22d3ee"} />;
+                return <ServiceHeroSlideshow key={svc.id} slides={allSlides} catColor={catInfo.color || "#22d3ee"} />;
               })()}
             </div>
           </div>
