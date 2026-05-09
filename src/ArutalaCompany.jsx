@@ -4933,7 +4933,7 @@ export default function BricksyTravel() {
                           color: "rgba(255,255,255,.85)", background: "none", border: "none", cursor: "pointer", padding: 0, lineHeight: 1.2,
                           transition: "color .15s" }}
                         onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-                        onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,.85)">
+                        onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,.85)"}>
                         Control Panel →
                       </button>
                     </div>
