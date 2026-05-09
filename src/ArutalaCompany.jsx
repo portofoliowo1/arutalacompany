@@ -779,11 +779,11 @@ const GS = () => (
     p{font-size:1rem;line-height:1.75;color:rgba(255,255,255,.8)}
     small{font-size:.875rem;line-height:1.5}
 
-    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:700;color:#0d4a6b;transition:color .2s;text-shadow:0 1px 3px rgba(255,255,255,.8),0 0 8px rgba(8,145,178,.08)}
-    .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,#0891b2,#22d3ee);transition:width .3s;border-radius:2px}
-    .nav-link:hover{color:#0aa8bf;text-shadow:0 1px 5px rgba(255,255,255,.9),0 0 14px rgba(8,145,178,.22)}
+    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:700;color:#fff;transition:color .2s;text-shadow:0 1px 4px rgba(0,80,120,.35),0 0 10px rgba(8,145,178,.18)}
+    .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,#fff,rgba(255,255,255,.4));transition:width .3s;border-radius:2px}
+    .nav-link:hover{color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(0,80,120,.4),0 0 18px rgba(255,255,255,.25)}
     .nav-link:hover::after,.nav-link.active::after{width:100%}
-    .nav-link.active{color:#0875a8!important;text-shadow:0 1px 6px rgba(255,255,255,.9),0 0 16px rgba(8,145,178,.28)}
+    .nav-link.active{color:#fff!important;text-shadow:0 1px 8px rgba(0,80,120,.45),0 0 20px rgba(255,255,255,.30)}
 
     .hover-lift{transition:transform .3s,box-shadow .3s}
     .hover-lift:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(13,59,102,.12)}
@@ -884,7 +884,7 @@ const GS = () => (
     @media(max-width:768px){.mag-grid{display:none}.adv-stats-row{gap:20px}}
 
     /* ── Hero Intro Section (Title + Subtitle after slideshow) ── */
-    .hero-intro{background:linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%);padding:56px 5% 48px;overflow:hidden;position:relative}
+    .hero-intro{background:#ffffff;padding:56px 5% 48px;overflow:hidden;position:relative;border-bottom:1px solid #e8f5f8}
     .hero-intro-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
     .hero-intro-img{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(13,59,102,.14)}
     .hero-intro-img img{width:100%;height:380px;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.25,.46,.45,.94)}
@@ -894,9 +894,9 @@ const GS = () => (
     .hero-intro-img::after{content:"";position:absolute;bottom:-14px;right:-14px;width:60px;height:60px;border:3px solid rgba(8,145,178,.25);border-radius:50%;z-index:0;pointer-events:none}
     .hero-intro-txt{position:relative;z-index:1}
     .hero-intro-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-    .hero-intro-eyebrow .line{width:36px;height:2px;background:linear-gradient(90deg,#38c5d8,rgba(56,197,216,0));border-radius:1px}
-    .hero-intro-h1{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;color:#fff;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
-    .hero-intro-p{font-size:1rem;color:rgba(255,255,255,.82);line-height:1.85;margin-bottom:32px;max-width:400px}
+    .hero-intro-eyebrow .line{width:36px;height:2px;background:linear-gradient(90deg,#0891b2,rgba(8,145,178,0));border-radius:1px}
+    .hero-intro-h1{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;color:#0d3b66;line-height:1.08;margin-bottom:20px;letter-spacing:-.02em}
+    .hero-intro-p{font-size:1rem;color:#4a7f98;line-height:1.85;margin-bottom:32px;max-width:400px}
     /* Deco blobs background */
     .hero-intro-blob1{position:absolute;top:-60px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(8,145,178,.1) 0%,rgba(8,145,178,0) 70%);pointer-events:none}
     .hero-intro-blob2{position:absolute;bottom:-40px;left:40%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(56,197,216,.09) 0%,rgba(56,197,216,0) 70%);pointer-events:none}
@@ -1415,7 +1415,7 @@ function LogoDisplay({ content, size = "nav" }) {
     return (
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <img src={content.logoImage} alt={content.logoText}
-          style={{ height: iconSz, maxWidth: size === "nav" ? 72 : 120, objectFit: "contain", display: "block" }} />
+          style={{ height: size === "nav" ? 88 : iconSz, maxWidth: size === "nav" ? 180 : 120, objectFit: "contain", display: "block" }} />
         <span className={size === "admin" ? "logo-brand-admin" : size === "footer" ? "logo-brand-footer" : "logo-brand"}>
           {lines.map((line, i) => <span key={i} style={{ display: "block" }}>{line}</span>)}
         </span>
@@ -3847,6 +3847,11 @@ function HeroSlideshow({ data, navigateTo }) {
       <style>{`
         @keyframes heroTxtIn { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
         @keyframes heroDotPulse { 0%,100%{transform:scale(1);opacity:.8;} 50%{transform:scale(1.3);opacity:1;} }
+        @keyframes vertigoZoom { 0%{transform:scale(1.0);} 100%{transform:scale(1.08);} }
+        @keyframes vertigoZoomOut { 0%{transform:scale(1.08);} 100%{transform:scale(1.0);} }
+        .hero-slide-img-idle { animation: vertigoZoom 5s ease-in-out infinite alternate; transform-origin: center center; }
+        .hero-slide-img-exit { animation: vertigoZoomOut 0.7s cubic-bezier(.77,0,.18,1) forwards; }
+        .hero-slide-img-enter { animation: vertigoZoom 5s ease-in-out infinite alternate; }
         .hero-cta-btn { transition: all .22s !important; }
         .hero-cta-btn:hover { transform: translateY(-2px) !important; box-shadow: 0 8px 24px rgba(0,0,0,.35) !important; }
         .hero-dot { transition: all .3s; cursor: pointer; }
@@ -3860,36 +3865,36 @@ function HeroSlideshow({ data, navigateTo }) {
         {/* Prev slide (exit) */}
         {animating && prevSl && (
           <div style={getExitStyle(anim)}>
-            <img src={prevSl.src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(10,20,35,.85) 0%, rgba(10,20,35,.5) 50%, rgba(10,20,35,.25) 100%)" }} />
+            <img src={prevSl.src} alt="" className="hero-slide-img-exit" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.5) 0%, rgba(10,20,35,.75) 100%)" }} />
           </div>
         )}
         {/* Current slide (enter) */}
         <div style={getEnterStyle(anim)}>
-          <img src={sl.src} alt={sl.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(10,20,35,.88) 0%, rgba(10,20,35,.55) 55%, rgba(10,20,35,.2) 100%)" }} />
+          <img src={sl.src} alt={sl.title} className="hero-slide-img-idle" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.35) 0%, rgba(10,20,35,.78) 100%)" }} />
         </div>
       </div>
 
-      {/* CONTENT OVERLAY */}
-      <div style={{ position: "relative", zIndex: 10, height: "100%", display: "flex", alignItems: "center", padding: "0 6%" }}>
-        <div style={{ maxWidth: 580, animation: animating ? "none" : "heroTxtIn .6s ease both" }} key={current}>
+      {/* CONTENT OVERLAY — rata tengah */}
+      <div style={{ position: "relative", zIndex: 10, height: "100%", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 6%", textAlign: "center" }}>
+        <div style={{ maxWidth: 640, animation: animating ? "none" : "heroTxtIn .6s ease both" }} key={current}>
           {/* Label */}
           <div style={{ display: "inline-block", background: "#e8a020", color: "#fff", fontSize: "0.6875rem", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: 2, marginBottom: 18 }}>
             {SECTION_LABEL[sl.section] || "Arutala Organizer"}
           </div>
           {/* Title */}
-          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.9rem,5.5vw,3.5rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 18, textShadow: "0 2px 16px rgba(0,0,0,.4)" }}>
+          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.9rem,5.5vw,3.5rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 18, textShadow: "0 2px 16px rgba(0,0,0,.5)" }}>
             {sl.title}
           </h1>
           {/* Excerpt */}
           {sl.excerpt && (
-            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, marginBottom: 32, maxWidth: 440, whiteSpace: "pre-line" }}>
+            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.82)", lineHeight: 1.8, marginBottom: 32, whiteSpace: "pre-line" }}>
               {sl.excerpt.length > 120 ? sl.excerpt.slice(0, 120) + "…" : sl.excerpt}
             </p>
           )}
-          {/* CTA Buttons */}
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", width: "100%", maxWidth: 380 }}>
+          {/* CTA Buttons — centered */}
+          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
             <button className="hero-cta-btn" onClick={() => navigateTo("services")}
               style={{ padding: "13px 30px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>
               Read More →
@@ -4920,15 +4925,15 @@ export default function BricksyTravel() {
               <div className="hide-sm" style={{ display: "flex", gap: 10, alignItems: "center", flexShrink: 0 }}>
                 {user
                   ? <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2 }}>
-                      <span style={{ fontSize: "0.8125rem", color: "#0d3b66", fontWeight: 700, lineHeight: 1.2 }}>
+                      <span style={{ fontSize: "0.8125rem", color: "#fff", fontWeight: 700, lineHeight: 1.2 }}>
                         {user.name || user.username}
                       </span>
                       <button onClick={() => setShowAdmin(true)}
                         style={{ fontSize: "0.6875rem", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 700,
-                          color: "#0891b2", background: "none", border: "none", cursor: "pointer", padding: 0, lineHeight: 1.2,
+                          color: "rgba(255,255,255,.85)", background: "none", border: "none", cursor: "pointer", padding: 0, lineHeight: 1.2,
                           transition: "color .15s" }}
-                        onMouseEnter={e => e.currentTarget.style.color = "#0d3b66"}
-                        onMouseLeave={e => e.currentTarget.style.color = "#0891b2"}>
+                        onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+                        onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,.85)">
                         Control Panel →
                       </button>
                     </div>
@@ -4936,12 +4941,12 @@ export default function BricksyTravel() {
                     className="login-collapse-btn"
                     style={{
                       display: "flex", alignItems: "center", gap: 0, overflow: "hidden",
-                      width: 36, border: "1.5px solid #0d3b66", borderRadius: 6,
+                      width: 36, border: "1.5px solid rgba(255,255,255,.7)", borderRadius: 6,
                       fontSize: "0.75rem", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 700,
-                      background: "transparent", color: "#0d3b66", padding: "7px 9px",
+                      background: "transparent", color: "#fff", padding: "7px 9px",
                       cursor: "pointer", transition: "width .28s cubic-bezier(.4,0,.2,1), padding .28s, background .18s, color .18s", whiteSpace: "nowrap" }}
-                    onMouseEnter={e => { const b = e.currentTarget; b.style.width = "90px"; b.style.paddingRight = "14px"; b.style.gap = "7px"; b.style.background = "#0d3b66"; b.style.color = "#fff"; b.querySelector(".lcb-text").style.opacity = "1"; b.querySelector(".lcb-text").style.maxWidth = "80px"; }}
-                    onMouseLeave={e => { const b = e.currentTarget; b.style.width = "36px"; b.style.paddingRight = "9px"; b.style.gap = "0"; b.style.background = "transparent"; b.style.color = "#0d3b66"; b.querySelector(".lcb-text").style.opacity = "0"; b.querySelector(".lcb-text").style.maxWidth = "0"; }}>
+                    onMouseEnter={e => { const b = e.currentTarget; b.style.width = "90px"; b.style.paddingRight = "14px"; b.style.gap = "7px"; b.style.background = "rgba(255,255,255,.25)"; b.style.color = "#fff"; b.querySelector(".lcb-text").style.opacity = "1"; b.querySelector(".lcb-text").style.maxWidth = "80px"; }}
+                    onMouseLeave={e => { const b = e.currentTarget; b.style.width = "36px"; b.style.paddingRight = "9px"; b.style.gap = "0"; b.style.background = "transparent"; b.style.color = "#fff"; b.querySelector(".lcb-text").style.opacity = "0"; b.querySelector(".lcb-text").style.maxWidth = "0"; }}>
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" style={{ flexShrink: 0 }}>
                       <rect y="0" width="16" height="2" rx="1" fill="currentColor"/>
                       <rect y="5" width="16" height="2" rx="1" fill="currentColor"/>
@@ -4956,9 +4961,9 @@ export default function BricksyTravel() {
               <button className="show-sm" onClick={() => setMobileMenu(!mobileMenu)}
                 style={{ 
                   fontSize: 22, 
-                  color: "#0d4a6b", 
-                  background: "rgba(8,145,178,.12)",
-                  border: "1.5px solid rgba(8,145,178,.30)",
+                  color: "#fff", 
+                  background: "rgba(255,255,255,.18)",
+                  border: "1.5px solid rgba(255,255,255,.35)",
                   borderRadius: 8,
                   width: 40, height: 40,
                   display: "flex", alignItems: "center", justifyContent: "center",
@@ -5090,27 +5095,27 @@ export default function BricksyTravel() {
 
                   {/* ── HERO INTRO: Title + Subtitle + Gambar ── */}
                   <section className="hero-intro">
-                    {/* Blob background decorations */}
-                    <div className="hero-intro-blob1" />
-                    <div className="hero-intro-blob2" />
+                    {/* Light decorative blobs for white bg */}
+                    <div className="hero-intro-blob1" style={{ background: "radial-gradient(circle,rgba(8,145,178,.08) 0%,rgba(8,145,178,0) 70%)" }} />
+                    <div className="hero-intro-blob2" style={{ background: "radial-gradient(circle,rgba(56,197,216,.07) 0%,rgba(56,197,216,0) 70%)" }} />
                     <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "15%", right: "5%", width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle, rgba(30,216,232,.32) 0%, transparent 65%)", filter: "blur(20px)" }} />
-        <div style={{ position: "absolute", bottom: "20%", left: "35%", width: 240, height: 240, borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,197,.22) 0%, transparent 65%)", filter: "blur(24px)" }} />
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
+        <div style={{ position: "absolute", top: "15%", right: "5%", width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle, rgba(8,145,178,.06) 0%, transparent 65%)", filter: "blur(20px)" }} />
+        <div style={{ position: "absolute", bottom: "20%", left: "35%", width: 240, height: 240, borderRadius: "50%", background: "radial-gradient(circle, rgba(14,165,197,.05) 0%, transparent 65%)", filter: "blur(24px)" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(8,145,178,.04) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
       </div>
       <div className="hero-intro-inner">
-                      {/* KIRI: Gambar */}
+                      {/* KIRI: Gambar Candi Prambanan */}
                       <div className="hero-intro-img">
                         <img
-                          src={data.images.adv[0] || data.images.hero?.[0]}
-                          alt={data.content.heroTitle}
+                          src="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=900&q=85&auto=format&fit=crop"
+                          alt="Candi Prambanan"
                         />
-                        {/* Ornamen badge di atas gambar */}
-                        <div style={{ position: "absolute", top: 18, left: 18, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#38c5d8", fontSize: ".6rem", letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 800, padding: "5px 12px", borderRadius: 2, zIndex: 2 }}>
+                        {/* Badge */}
+                        <div style={{ position: "absolute", top: 18, left: 18, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", fontSize: ".6rem", letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 800, padding: "5px 12px", borderRadius: 2, zIndex: 2 }}>
                           Arutala Organizer
                         </div>
                         {/* Shadow overlay bawah */}
-                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(to top, rgba(13,59,102,.5), rgba(13,59,102,0))", pointerEvents: "none", zIndex: 1 }} />
+                        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "35%", background: "linear-gradient(to top, rgba(6,61,92,.45), rgba(6,61,92,0))", pointerEvents: "none", zIndex: 1 }} />
                       </div>
 
                       {/* KANAN: Teks */}
@@ -5119,7 +5124,7 @@ export default function BricksyTravel() {
                         <div className="hero-intro-deco-line" />
                         <div className="hero-intro-eyebrow">
                           <div className="line" />
-                          <span style={{ fontSize: ".65rem", letterSpacing: ".2em", textTransform: "uppercase", color: "#38c5d8", fontWeight: 700 }}>
+                          <span style={{ fontSize: ".65rem", letterSpacing: ".2em", textTransform: "uppercase", color: "#0891b2", fontWeight: 700 }}>
                             {data.content.advSub || "TRAVEL & OUTDOOR RECREATION"}
                           </span>
                         </div>
@@ -5140,23 +5145,23 @@ export default function BricksyTravel() {
                             { num: "10+", lbl: "Kota" },
                           ].map(s => (
                             <div key={s.lbl} style={{ textAlign: "center" }}>
-                              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#38c5d8", lineHeight: 1 }}>{s.num}</div>
-                              <div style={{ fontSize: ".6875rem", letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.65)", fontWeight: 600, marginTop: 3 }}>{s.lbl}</div>
+                              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#0891b2", lineHeight: 1 }}>{s.num}</div>
+                              <div style={{ fontSize: ".6875rem", letterSpacing: ".1em", textTransform: "uppercase", color: "#4a7f98", fontWeight: 600, marginTop: 3 }}>{s.lbl}</div>
                             </div>
                           ))}
                         </div>
 
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
                           <button onClick={() => navigateTo("services")}
-                            style={{ padding: "12px 26px", background: "rgba(255,255,255,.15)", backdropFilter: "blur(8px)", color: "#fff", border: "1.5px solid rgba(255,255,255,.4)", borderRadius: 6, fontSize: ".8125rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s" }}
-                            onMouseEnter={e => e.currentTarget.style.opacity = ".82"}
+                            style={{ padding: "12px 26px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 6, fontSize: ".8125rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".04em", transition: "opacity .2s" }}
+                            onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
                             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
                             Layanan Kami →
                           </button>
                           <button onClick={() => navigateTo("about")}
-                            style={{ padding: "12px 24px", background: "rgba(255,255,255,.08)", color: "rgba(255,255,255,.85)", border: "1.5px solid rgba(255,255,255,.2)", borderRadius: 6, fontSize: ".8125rem", fontWeight: 600, cursor: "pointer", transition: "all .2s" }}
-                            onMouseEnter={e => { e.currentTarget.style.background = "#c0e8f0"; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = "#edfafc"; }}>
+                            style={{ padding: "12px 24px", background: "#fff", color: "#0d3b66", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: ".8125rem", fontWeight: 600, cursor: "pointer", transition: "all .2s" }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "#edfafc"; e.currentTarget.style.borderColor = "#0891b2"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.borderColor = "#b0dce8"; }}>
                             Tentang Kami
                           </button>
                         </div>
@@ -5168,13 +5173,13 @@ export default function BricksyTravel() {
                   <AdvSection data={data} navigateTo={navigateTo} />
 
                   {/* Gallery */}
-                  <section className="section-md" style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", position: "relative", overflow: "hidden" }}>
+                  <section className="section-md" style={{ background: "#ffffff", position: "relative", overflow: "hidden", borderBottom: "1px solid #e8f5f8" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
-                      <div className="label-xs" style={{ color: "rgba(255,255,255,.65)", marginBottom: 14 }}>INTRODUCING</div>
-                      <h2 className="display" style={{ fontSize: "clamp(1.75rem,4.5vw,3rem)", fontWeight: 900, color: "#fff", marginBottom: 16 }}>
+                      <div className="label-xs" style={{ color: "#0891b2", marginBottom: 14 }}>INTRODUCING</div>
+                      <h2 className="display" style={{ fontSize: "clamp(1.75rem,4.5vw,3rem)", fontWeight: 900, color: "#0d3b66", marginBottom: 16 }}>
                         {data.content.newAdvTitle}
                       </h2>
-                      <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.78)", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px", whiteSpace: "pre-line" }}>{data.content.newAdvSub}</p>
+                      <p style={{ fontSize: "0.9375rem", color: "#4a7f98", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px", whiteSpace: "pre-line" }}>{data.content.newAdvSub}</p>
                       <div className="gal-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, marginBottom: 40 }}>
                         {(() => {
                           const allSecs = ["news","shop","destinations"];
@@ -5223,7 +5228,7 @@ export default function BricksyTravel() {
                   </section>
 
                   {/* Book */}
-                  <section className="section-md" style={{ background: "linear-gradient(130deg,#084060 0%,#0a6ea0 50%,#0cb5cc 100%)" }}>
+                  <section className="section-md" style={{ background: "#ffffff", borderBottom: "1px solid #e8f5f8" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="grid-2">
                       <div className="book-img-grid">
                         <div className="img-zoom" style={{ gridColumn: "span 2", borderRadius: 4, overflow: "hidden" }}>
@@ -5240,12 +5245,12 @@ export default function BricksyTravel() {
                         <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, lineHeight: 1.1, color: "#0d3b66", marginBottom: 18 }}>
                           {data.content.bookTitle}
                         </h2>
-                        <p style={{ fontSize: "0.9375rem", color: "#1a5a78", lineHeight: 1.85, marginBottom: 28, maxWidth: 340, whiteSpace: "pre-line" }}>{data.content.bookSub}</p>
+                        <p style={{ fontSize: "0.9375rem", color: "#4a7f98", lineHeight: 1.85, marginBottom: 28, maxWidth: 340, whiteSpace: "pre-line" }}>{data.content.bookSub}</p>
                         <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
-                          style={{ display: "inline-block", padding: "12px 30px", border: "1.5px solid #0d3b66", background: "#fff",
-                          fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700, color: "#0d3b66", transition: "all .2s", textDecoration: "none" }}
-                          onMouseEnter={e => { e.currentTarget.style.background = "#0d3b66"; e.currentTarget.style.color = "#fff"; }}
-                          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#0d3b66"; }}>
+                          style={{ display: "inline-block", padding: "12px 30px", border: "1.5px solid #0d3b66", background: "#0d3b66",
+                          fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700, color: "#fff", transition: "all .2s", textDecoration: "none", borderRadius: 4 }}
+                          onMouseEnter={e => { e.currentTarget.style.background = "linear-gradient(130deg,#063d5c,#0891b2)"; e.currentTarget.style.borderColor = "#0891b2"; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = "#0d3b66"; e.currentTarget.style.borderColor = "#0d3b66"; }}>
                           Book Now
                         </a>
                       </div>
