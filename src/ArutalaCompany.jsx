@@ -949,7 +949,7 @@ const GS = () => (
     .adv2-qdot.on{width:18px;border-radius:3px;background:#38c5d8}
     .adv2-stats{display:flex;gap:28px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.12)}
     .adv2-stat .num{font-family:"Playfair Display",serif;font-size:1.75rem;font-weight:900;color:#38c5d8;line-height:1;margin-bottom:3px}
-    .adv2-stat .lbl{font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:600}
+    .adv2-stat .lbl{font-size:.625rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:600}
     .adv2-btns{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
     .adv2-btn-pill{padding:8px 16px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.15);border-radius:20px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
     .adv2-btn-pill:hover{background:rgba(255,255,255,.16);color:#fff}
@@ -1081,7 +1081,7 @@ const GS = () => (
     /* 1. Navbar — compact on mobile, fully opaque */
     @media(max-width:640px){
       nav{background:linear-gradient(105deg,#ffffff 0%,#e8f9fb 30%,#a8dde8 62%,#0aa8bf 100%)!important;backdrop-filter:none!important;padding:0 4%!important;overflow:visible!important}
-      nav>div{height:60px!important;gap:10px!important}
+      nav>div:not(.mobile-dropdown){height:60px!important;gap:10px!important}
     }
 
     /* 2. Hero Slideshow — readable height, no side gradients overflow */
@@ -1288,7 +1288,7 @@ const GS = () => (
     /* ── Navbar mobile ── */
     @media(max-width:640px){
       nav{padding:0 4%!important}
-      nav>div{height:64px!important}
+      nav>div:not(.mobile-dropdown){height:64px!important}
       /* Mobile menu items: bigger tap targets */
       nav .mobile-nav-item{padding:12px 0;font-size:.9375rem}
     }
@@ -2601,13 +2601,13 @@ function ServicesPage({ content, services, navigateTo }) {
                 {/* Price inline */}
                 <div style={{ display: "flex", alignItems: "flex-end", gap: 16, flexWrap: "wrap" }}>
                   <div>
-                    <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: "rgba(255,255,255,.38)", fontWeight: 700, textTransform: "uppercase", marginBottom: 5 }}>Harga Mulai</div>
+                    <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: "rgba(255,255,255,.65)", fontWeight: 700, textTransform: "uppercase", marginBottom: 5 }}>Harga Mulai</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
                       <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{svc.price}</span>
-                      <span style={{ fontSize: "0.875rem", color: "rgba(255,255,255,.45)", fontWeight: 500 }}>{svc.priceNote}</span>
+                      <span style={{ fontSize: "0.875rem", color: "rgba(255,255,255,.68)", fontWeight: 500 }}>{svc.priceNote}</span>
                     </div>
                   </div>
-                  <div style={{ padding: "6px 14px", background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.14)", borderRadius: 20, fontSize: "0.75rem", color: "rgba(255,255,255,.55)", fontStyle: "italic", marginBottom: 4 }}>Nego &amp; Konsultasi</div>
+                  <div style={{ padding: "6px 14px", background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.14)", borderRadius: 20, fontSize: "0.75rem", color: "rgba(255,255,255,.72)", fontStyle: "italic", marginBottom: 4 }}>Nego &amp; Konsultasi</div>
                 </div>
               </div>
 
@@ -3269,12 +3269,12 @@ function AboutPage({ content, images, teamMembers }) {
         <div style={{ maxWidth: 1200, margin: "0 auto" }} className="about-hero-grid">
           <div style={{ position: "relative", zIndex: 1 }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(8,145,178,.15)", border: "1px solid rgba(8,145,178,.3)", borderRadius: 20, padding: "5px 16px", marginBottom: 24 }}>
-              <span style={{ fontSize: 10, letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700 }}>Tentang Kami</span>
+              <span style={{ fontSize: 10, letterSpacing: "2px", color: "rgba(255,255,255,.80)", textTransform: "uppercase", fontWeight: 700 }}>Tentang Kami</span>
             </div>
-            <h1 className="display" style={{ fontSize: "clamp(2.25rem,5vw,3.75rem)", fontWeight: 900, lineHeight: 1.06, color: "#0d3b66", marginBottom: 24 }}>
+            <h1 className="display" style={{ fontSize: "clamp(2.25rem,5vw,3.75rem)", fontWeight: 900, lineHeight: 1.06, color: "#fff", marginBottom: 24 }}>
               {content.aboutHeroTitle || "Arutala Travel & Organizer"}
             </h1>
-            <p style={{ fontSize: "1.0625rem", color: "#2d4f65", lineHeight: 1.9, maxWidth: 420, marginBottom: 32, whiteSpace: "pre-line" }}>
+            <p style={{ fontSize: "1.0625rem", color: "rgba(255,255,255,.85)", lineHeight: 1.9, maxWidth: 420, marginBottom: 32, whiteSpace: "pre-line" }}>
               {content.aboutHeroSub || content.aboutText || "Mitra terpercaya Anda untuk perjalanan wisata, pernikahan impian, dan event berkesan. Kami hadir untuk mewujudkan setiap momen menjadi kenangan tak terlupakan."}
             </p>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
@@ -3285,7 +3285,7 @@ function AboutPage({ content, images, teamMembers }) {
                 💬 Hubungi Kami
               </a>
               <a href={`tel:${content.phone}`}
-                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "transparent", color: "#0d3b66", border: "1.5px solid #0d3b66", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none" }}>
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "transparent", color: "#fff", border: "1.5px solid rgba(255,255,255,.55)", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none" }}>
                 📞 {content.phone || "Telepon"}
               </a>
             </div>
@@ -3346,8 +3346,8 @@ function AboutPage({ content, images, teamMembers }) {
       <div style={{ background: "linear-gradient(130deg,#084060 0%,#0a6ea0 50%,#0cb5cc 100%)", padding: "80px 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Keunggulan Kami</div>
-            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#0d3b66" }}>{content.aboutWhyTitle || "Mengapa Memilih Arutala?"}</h2>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "rgba(255,255,255,.75)", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Keunggulan Kami</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#fff" }}>{content.aboutWhyTitle || "Mengapa Memilih Arutala?"}</h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
             {values.map((v, i) => (
@@ -5315,7 +5315,7 @@ export default function BricksyTravel() {
                         <h2 className="display" style={{ fontSize: "clamp(1.75rem,3.5vw,2.75rem)", fontWeight: 900, color: "#fff", marginBottom: 10, lineHeight: 1.1 }}>
                           {data.content.newsletterTitle}
                         </h2>
-                        <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.55)", marginBottom: 28, lineHeight: 1.75 }}>
+                        <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.72)", marginBottom: 28, lineHeight: 1.75 }}>
                           Ketik nama kota atau destinasi untuk menjelajahinya di peta interaktif — langsung di sini.
                         </p>
                         <div style={{ display: "flex", gap: 0, maxWidth: 400 }}>
@@ -5448,7 +5448,7 @@ export default function BricksyTravel() {
                             </svg>
                             Power Developer
                           </button>
-                          <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.55)" }}>© 2026 Arutala All Rights Reserved</p>
+                          <p style={{ fontSize: "0.8125rem", color: "#5090aa" }}>© 2026 Arutala All Rights Reserved</p>
                         </div>
                         <LogoDisplay content={data.content} size="footer" />
                       </div>
