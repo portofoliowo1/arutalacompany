@@ -2468,6 +2468,7 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
   const [openIdx, setOpenIdx] = useState(null);
   const [hovered, setHovered] = useState(false);
   const [mpos, setMpos] = useState({ x: 0, y: 0 });
+  const [priceOpen, setPriceOpen] = useState(false);
   const ac = svc.accent || "#e8a020";
   const al = svc.accentLight || "#fff8e6";
   const fmt = n => {
@@ -2554,62 +2555,105 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
         </div>
       )}
 
-      {/* Price header block */}
-      <div style={{ position: "relative", background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 50%,${ac} 100%)`, padding: "16px 16px 26px", margin: "0 0 -16px", overflow: "hidden" }}>
-        <div style={{ position: "absolute", right: -20, top: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,.04)" }} />
-        <p style={{ color: "rgba(255,255,255,.6)", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 2 }}>Harga Mulai Dari</p>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-          {(() => {
-            const rawPrice = svc.prices?.[0]?.price ?? svc.price;
-            const isContact = String(rawPrice).toLowerCase().includes("hubungi");
-            return isContact ? (
-              <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.35rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>Hubungi Kami</span>
-            ) : (
-              <>
-                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.8125rem", color: "rgba(255,255,255,.7)" }}>Rp</span>
-                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>
-                  {fmt(rawPrice)}
-                </span>
-                <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>/ orang</span>
-              </>
-            );
-          })()}
+      {/* Price header block — clickable 3D button */}
+      <div
+        onClick={() => setPriceOpen(o => !o)}
+        style={{
+          position: "relative",
+          background: priceOpen
+            ? `linear-gradient(135deg,#0a2e52 0%,#1a5a78 50%,${ac} 100%)`
+            : `linear-gradient(135deg,#0d3b66 0%,#1a5a78 50%,${ac} 100%)`,
+          padding: "16px 16px 20px",
+          margin: "0",
+          overflow: "hidden",
+          cursor: "pointer",
+          borderTop: "3px solid rgba(255,255,255,.18)",
+          borderLeft: "1.5px solid rgba(255,255,255,.10)",
+          boxShadow: priceOpen
+            ? "inset 0 4px 16px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.08)"
+            : "0 6px 18px rgba(0,0,0,.35), 0 2px 4px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.22)",
+          transform: priceOpen ? "translateY(1px)" : "translateY(0)",
+          transition: "all .18s cubic-bezier(.22,1,.36,1)",
+          userSelect: "none",
+        }}>
+        {/* decorative circles */}
+        <div style={{ position: "absolute", right: -20, top: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,.06)" }} />
+        <div style={{ position: "absolute", right: 40, bottom: -30, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,.04)" }} />
+        {/* shimmer top edge */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent)", borderRadius: "2px 2px 0 0" }} />
+
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div>
+            <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Harga Mulai Dari</p>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+              {(() => {
+                const rawPrice = svc.prices?.[0]?.price ?? svc.price;
+                const isContact = String(rawPrice).toLowerCase().includes("hubungi");
+                return isContact ? (
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.35rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>Hubungi Kami</span>
+                ) : (
+                  <>
+                    <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.8125rem", color: "rgba(255,255,255,.7)" }}>Rp</span>
+                    <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 700, color: "#fff", lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>
+                      {fmt(rawPrice)}
+                    </span>
+                    <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>/ orang</span>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+          <div style={{
+            width: 32, height: 32, borderRadius: "50%",
+            background: "rgba(255,255,255,.15)",
+            border: "1.5px solid rgba(255,255,255,.25)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: "0.75rem", color: "#fff", fontWeight: 700,
+            transform: priceOpen ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform .3s ease",
+            flexShrink: 0,
+          }}>▼</div>
         </div>
+        <p style={{ color: "rgba(255,255,255,.45)", fontSize: "0.6rem", marginTop: 5, letterSpacing: ".04em" }}>
+          {priceOpen ? "Klik untuk tutup harga kendaraan" : "Klik untuk lihat harga per kendaraan"}
+        </p>
       </div>
 
-      {/* Price cards accordion */}
-      <div style={{ background: al, padding: "24px 12px 12px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25` }}>
-        <p style={{ fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8, paddingLeft: 4 }}>Harga per Kendaraan</p>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
-          {(svc.prices || []).map((p, i) => {
-            const isOpen = openIdx === i;
-            return (
-              <div key={i} style={{ background: "#fff", borderRadius: 9, border: `1px solid ${isOpen ? ac : ac + "20"}`, overflow: "hidden", transition: "border-color .2s, box-shadow .2s", boxShadow: isOpen ? `0 3px 12px ${ac}25` : "none" }}>
-                <div onClick={() => setOpenIdx(isOpen ? null : i)}
-                  style={{ padding: "9px 10px", cursor: "pointer" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                    <span style={{ fontSize: 15 }}>{p.icon}</span>
-                    <span style={{ fontWeight: 600, fontSize: "0.75rem", color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
-                    <span style={{ fontSize: "0.5625rem", color: ac, fontWeight: 700, display: "inline-block", transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+      {/* Price cards accordion — hidden until priceOpen */}
+      <div style={{ maxHeight: priceOpen ? "600px" : "0", overflow: "hidden", transition: "max-height .4s cubic-bezier(.22,1,.36,1)" }}>
+        <div style={{ background: al, padding: "16px 12px 12px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25` }}>
+          <p style={{ fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8, paddingLeft: 4 }}>Harga per Kendaraan</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+            {(svc.prices || []).map((p, i) => {
+              const isOpen = openIdx === i;
+              return (
+                <div key={i} style={{ background: "#fff", borderRadius: 9, border: `1px solid ${isOpen ? ac : ac + "20"}`, overflow: "hidden", transition: "border-color .2s, box-shadow .2s", boxShadow: isOpen ? `0 3px 12px ${ac}25` : "none" }}>
+                  <div onClick={e => { e.stopPropagation(); setOpenIdx(isOpen ? null : i); }}
+                    style={{ padding: "9px 10px", cursor: "pointer" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                      <span style={{ fontSize: 15 }}>{p.icon}</span>
+                      <span style={{ fontWeight: 600, fontSize: "0.75rem", color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
+                      <span style={{ fontSize: "0.5625rem", color: ac, fontWeight: 700, display: "inline-block", transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+                    </div>
+                    <div style={{ fontSize: "0.625rem", color: "#888", margin: "2px 0" }}>{p.capacity}</div>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 700, color: ac }}>
+                      {p.price === "Hubungi kami" ? p.price : `Rp ${fmt(p.price)}`}
+                    </div>
                   </div>
-                  <div style={{ fontSize: "0.625rem", color: "#888", margin: "2px 0" }}>{p.capacity}</div>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 700, color: ac }}>
-                    {p.price === "Hubungi kami" ? p.price : `Rp ${fmt(p.price)}`}
+                  <div style={{ maxHeight: isOpen ? "300px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
+                    <ul style={{ listStyle: "none", padding: "0 10px 9px", display: "flex", flexDirection: "column", gap: 3, borderTop: `1px solid ${ac}15` }}>
+                      {(p.points || []).map((pt, pi) => (
+                        <li key={pi} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.6875rem", color: "#3a5266", marginTop: pi === 0 ? 6 : 0 }}>
+                          <span style={{ width: 4, height: 4, borderRadius: "50%", background: ac, flexShrink: 0, display: "inline-block" }} />
+                          {pt}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
-                <div style={{ maxHeight: isOpen ? "300px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
-                  <ul style={{ listStyle: "none", padding: "0 10px 9px", display: "flex", flexDirection: "column", gap: 3, borderTop: `1px solid ${ac}15` }}>
-                    {(p.points || []).map((pt, pi) => (
-                      <li key={pi} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.6875rem", color: "#3a5266", marginTop: pi === 0 ? 6 : 0 }}>
-                        <span style={{ width: 4, height: 4, borderRadius: "50%", background: ac, flexShrink: 0, display: "inline-block" }} />
-                        {pt}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -2778,9 +2822,11 @@ function TravelPackageDetailModal({ svc, onClose, waLink }) {
               {dest && (
                 <div style={{ background: "#fff", borderRadius: 13, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 3px 16px ${ac}12` }}>
                   <div style={{ display: "flex", alignItems: "stretch", flexWrap: "wrap" }}>
-                    <div style={{ width: "clamp(110px,32%,200px)", minHeight: 155, flexShrink: 0, position: "relative", overflow: "hidden" }}>
-                      <img loading="lazy" src={dest.img} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} onError={e => { e.target.style.display = "none"; }} />
-                      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}88,transparent)` }} />
+                    <div style={{ width: "clamp(130px,34%,220px)", minHeight: 180, flexShrink: 0, position: "relative", overflow: "hidden", background: `linear-gradient(135deg,${ac}55,#c5e8f0)` }}>
+                      <img loading="lazy" src={dest.img} alt={dest.name}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0, display: "block" }}
+                        onError={e => { e.target.style.opacity = "0"; }} />
+                      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}55,transparent)` }} />
                       <div style={{ position: "absolute", top: 10, left: 10, background: ac, color: "#fff", borderRadius: "50%", width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.5625rem", fontWeight: 800 }}>{dest.no}</div>
                     </div>
                     <div style={{ flex: 1, padding: "16px 18px", minWidth: 180 }}>
@@ -2956,11 +3002,11 @@ function DestinationsSection({ svc, catInfo }) {
       <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
         <div style={{ display: "flex", alignItems: "stretch", flexWrap: "wrap" }}>
           {/* Image */}
-          <div style={{ width: "clamp(140px,36%,260px)", minHeight: 180, flexShrink: 0, position: "relative", overflow: "hidden" }}>
+          <div style={{ width: "clamp(140px,36%,260px)", minHeight: 180, flexShrink: 0, position: "relative", overflow: "hidden", background: `linear-gradient(135deg,${ac}55,#c5e8f0)` }}>
             <img loading="lazy" src={dest.img} alt={dest.name}
-              style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
-              onError={e => { e.target.style.display = "none"; }} />
-            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}99,transparent)` }} />
+              style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0, display: "block" }}
+              onError={e => { e.target.style.opacity = "0"; }} />
+            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}55,transparent)` }} />
             <div style={{ position: "absolute", top: 12, left: 12, background: ac, color: "#fff", borderRadius: "50%", width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.625rem", fontWeight: 800 }}>{dest.no}</div>
           </div>
           {/* Content */}
@@ -2979,6 +3025,195 @@ function DestinationsSection({ svc, catInfo }) {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ─────────────── HERO SLIDESHOW (panel kanan di atas) ─────────────── */
+function HeroSlideshow({ slides, catColor }) {
+  const [cur, setCur] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const timerRef = useRef(null);
+
+  const next = useCallback(() => setCur(c => (c + 1) % slides.length), [slides.length]);
+  const back = useCallback(() => setCur(c => (c - 1 + slides.length) % slides.length), [slides.length]);
+
+  useEffect(() => {
+    if (paused || slides.length <= 1) return;
+    timerRef.current = setInterval(next, 3500);
+    return () => clearInterval(timerRef.current);
+  }, [paused, next, slides.length]);
+
+  if (!slides.length) return null;
+  const slide = slides[cur];
+
+  return (
+    <div style={{ position: "relative", overflow: "hidden", display: "flex", alignItems: "stretch" }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}>
+      <style>{`
+        @keyframes heroFadeIn { from { opacity:0; transform:scale(1.04); } to { opacity:1; transform:scale(1); } }
+      `}</style>
+      {/* Deco corner frames */}
+      <div className="mg-deco-shape" style={{ position: "absolute", top: 20, right: 20, width: 70, height: 70, border: `1.5px solid ${catColor}`, borderRadius: 6, zIndex: 3, opacity: .55, pointerEvents: "none" }} />
+      <div className="mg-deco-shape" style={{ position: "absolute", top: 30, right: 30, width: 70, height: 70, border: "1.5px solid rgba(255,255,255,.12)", borderRadius: 6, zIndex: 3, pointerEvents: "none" }} />
+      <div className="mg-deco-shape" style={{ position: "absolute", bottom: 20, left: -8, width: 50, height: 50, border: "1.5px solid rgba(255,255,255,.15)", borderRadius: 4, zIndex: 3, pointerEvents: "none" }} />
+
+      <div style={{ flex: 1, position: "relative", minHeight: 400 }}>
+        {/* Slide image */}
+        <img key={cur} loading="lazy" src={slide.img} alt={slide.name}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", position: "absolute", inset: 0, animation: "heroFadeIn .6s ease both" }}
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&h=500&fit=crop"; }} />
+
+        {/* Bottom gradient */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 130, background: "linear-gradient(to top, rgba(5,20,45,.85), transparent)", pointerEvents: "none", zIndex: 2 }} />
+
+        {/* Info overlay */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 3, padding: "14px 18px" }}>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ fontSize: "0.5rem", color: "rgba(255,255,255,.5)", letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 3 }}>
+                {slide.no} / {String(slides.length).padStart(2,"0")}
+              </div>
+              <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#fff", textShadow: "0 2px 8px rgba(0,0,0,.6)", lineHeight: 1.25 }}>{slide.title || slide.name}</div>
+            </div>
+            {/* Prev / Next */}
+            {slides.length > 1 && (
+              <div style={{ display: "flex", gap: 6 }}>
+                <button onClick={e => { e.stopPropagation(); back(); }}
+                  style={{ width: 32, height: 32, borderRadius: "50%", background: "rgba(255,255,255,.15)", backdropFilter: "blur(6px)", border: "1px solid rgba(255,255,255,.25)", color: "#fff", fontSize: "1rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>‹</button>
+                <button onClick={e => { e.stopPropagation(); next(); }}
+                  style={{ width: 32, height: 32, borderRadius: "50%", background: "rgba(255,255,255,.15)", backdropFilter: "blur(6px)", border: "1px solid rgba(255,255,255,.25)", color: "#fff", fontSize: "1rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>›</button>
+              </div>
+            )}
+          </div>
+          {/* Dot indicator */}
+          {slides.length > 1 && (
+            <div style={{ display: "flex", gap: 4, marginTop: 8 }}>
+              {slides.map((_, i) => (
+                <div key={i} onClick={() => setCur(i)}
+                  style={{ height: 3, borderRadius: 2, background: i === cur ? catColor : "rgba(255,255,255,.3)", width: i === cur ? 20 : 6, transition: "all .3s ease", cursor: "pointer" }} />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── DESTINATION GALLERY SLIDESHOW ─────────────── */
+function DestGallerySlideshow({ slides, catColor, svcTitle }) {
+  const [cur, setCur] = useState(0);
+  const [prev, setPrev] = useState(null);
+  const [dir, setDir] = useState(1); // 1=next, -1=prev
+  const [paused, setPaused] = useState(false);
+  const timerRef = useRef(null);
+
+  const goTo = useCallback((idx, direction) => {
+    setPrev(cur);
+    setDir(direction);
+    setCur(idx);
+  }, [cur]);
+
+  const next = useCallback(() => goTo((cur + 1) % slides.length, 1), [cur, slides.length, goTo]);
+  const back = useCallback(() => goTo((cur - 1 + slides.length) % slides.length, -1), [cur, slides.length, goTo]);
+
+  useEffect(() => {
+    if (paused || slides.length <= 1) return;
+    timerRef.current = setInterval(next, 4000);
+    return () => clearInterval(timerRef.current);
+  }, [paused, next, slides.length]);
+
+  const slide = slides[cur];
+
+  return (
+    <div className="mg-fade-2" style={{ marginBottom: 52 }}>
+      {/* Heading */}
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+        <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catColor}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+        <div>
+          <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Dokumentasi</div>
+          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Fasilitas &amp; Suasana</div>
+        </div>
+        <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
+        <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
+          {slides.map((_, i) => (
+            <div key={i} onClick={() => goTo(i, i > cur ? 1 : -1)}
+              style={{ width: i === cur ? 18 : 6, height: 6, borderRadius: 3, background: i === cur ? catColor : "#c0e8f0", cursor: "pointer", transition: "all .35s ease" }} />
+          ))}
+        </div>
+      </div>
+
+      {/* Slideshow frame */}
+      <div
+        style={{ position: "relative", borderRadius: 14, overflow: "hidden", boxShadow: "0 8px 36px rgba(13,59,102,.16)", height: 420, background: "#0d3b66", cursor: "pointer" }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {/* Current slide */}
+        <img key={`cur-${cur}`} loading="lazy" src={slide.img} alt={slide.name}
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block",
+            animation: `slideIn${dir > 0 ? "R" : "L"} .55s cubic-bezier(.22,1,.36,1) both` }}
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1200&h=420&fit=crop"; }} />
+
+        {/* Gradient overlay */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,30,60,.72) 0%, rgba(10,30,60,.15) 55%, transparent 100%)", pointerEvents: "none" }} />
+
+        {/* Bottom info */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "18px 22px" }}>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ fontSize: "0.5625rem", color: "rgba(255,255,255,.55)", letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 4 }}>
+                Destinasi {slide.no} / {String(slides.length).padStart(2,"0")}
+              </div>
+              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#fff", textShadow: "0 2px 10px rgba(0,0,0,.5)", lineHeight: 1.2 }}>{slide.title || slide.name}</div>
+              {slide.name && slide.title && slide.name !== slide.title && (
+                <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,.6)", marginTop: 3 }}>📍 {slide.name}</div>
+              )}
+            </div>
+            {/* Nav buttons */}
+            {slides.length > 1 && (
+              <div style={{ display: "flex", gap: 8 }}>
+                <button onClick={e => { e.stopPropagation(); back(); }}
+                  style={{ width: 38, height: 38, borderRadius: "50%", background: "rgba(255,255,255,.15)", backdropFilter: "blur(8px)", border: "1.5px solid rgba(255,255,255,.25)", color: "#fff", fontSize: "0.875rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "background .2s" }}
+                  onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.3)"}
+                  onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.15)"}>‹</button>
+                <button onClick={e => { e.stopPropagation(); next(); }}
+                  style={{ width: 38, height: 38, borderRadius: "50%", background: "rgba(255,255,255,.15)", backdropFilter: "blur(8px)", border: "1.5px solid rgba(255,255,255,.25)", color: "#fff", fontSize: "0.875rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "background .2s" }}
+                  onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.3)"}
+                  onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.15)"}>›</button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Pause indicator */}
+        {paused && slides.length > 1 && (
+          <div style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,.4)", backdropFilter: "blur(6px)", borderRadius: 20, padding: "3px 10px", fontSize: "0.625rem", color: "rgba(255,255,255,.7)", fontWeight: 600, letterSpacing: ".08em" }}>⏸ PAUSE</div>
+        )}
+
+        {/* Slide animation keyframes */}
+        <style>{`
+          @keyframes slideInR { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:none; } }
+          @keyframes slideInL { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:none; } }
+        `}</style>
+      </div>
+
+      {/* Thumbnail strip */}
+      {slides.length > 1 && (
+        <div style={{ display: "flex", gap: 8, marginTop: 10, overflowX: "auto", paddingBottom: 2 }}>
+          {slides.map((s, i) => (
+            <div key={i} onClick={() => goTo(i, i > cur ? 1 : -1)}
+              style={{ flexShrink: 0, width: 72, height: 50, borderRadius: 7, overflow: "hidden", cursor: "pointer",
+                border: i === cur ? `2.5px solid ${catColor}` : "2.5px solid transparent",
+                opacity: i === cur ? 1 : 0.55, transition: "all .25s", boxShadow: i === cur ? `0 0 0 1px ${catColor}55` : "none" }}>
+              <img loading="lazy" src={s.img} alt={s.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                onError={e => e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=72&h=50&fit=crop"} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -3094,42 +3329,18 @@ function ServicesPage({ content, services, navigateTo }) {
                 </div>
               </div>
 
-              {/* Right: Main Hero Image */}
-              <div style={{ position: "relative", overflow: "hidden", display: "flex", alignItems: "stretch" }}>
-                {/* Deco corner frames */}
-                <div className="mg-deco-shape" style={{ position: "absolute", top: 20, right: 20, width: 70, height: 70, border: `1.5px solid ${catInfo.color || "#22d3ee"}`, borderRadius: 6, zIndex: 3, opacity: .55, pointerEvents: "none" }} />
-                <div className="mg-deco-shape" style={{ position: "absolute", top: 30, right: 30, width: 70, height: 70, border: "1.5px solid rgba(255,255,255,.12)", borderRadius: 6, zIndex: 3, pointerEvents: "none" }} />
-                <div className="mg-deco-shape" style={{ position: "absolute", bottom: 20, left: -8, width: 50, height: 50, border: "1.5px solid rgba(255,255,255,.15)", borderRadius: 4, zIndex: 3, pointerEvents: "none" }} />
-                <div style={{ flex: 1, position: "relative", minHeight: 400 }}>
-                  <img loading="lazy" src={imgs[activeImg] || "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg"} alt={svc.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity .4s" }}
-                    onError={e => { e.target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg"; }} />
-                  {/* Bottom fade */}
-                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 90, background: "linear-gradient(to top, rgba(13,59,102,.65), transparent)", pointerEvents: "none" }} />
-                  {imgs.length > 1 && (
-                    <div style={{ position: "absolute", bottom: 14, right: 14, background: "rgba(0,0,0,.5)", backdropFilter: "blur(4px)", borderRadius: 20, padding: "4px 12px", fontSize: "0.75rem", color: "#fff", fontWeight: 600 }}>
-                      {activeImg + 1} / {imgs.length}
-                    </div>
-                  )}
-                </div>
-              </div>
+              {/* Right: Hero Slideshow dari destinasi */}
+              {(() => {
+                const heroSlides = (svc.destinations || []).filter(d => d.img);
+                const fallbackSlides = imgs.filter(Boolean);
+                const allSlides = heroSlides.length > 0
+                  ? heroSlides
+                  : fallbackSlides.map((img, i) => ({ img, name: svc.title, no: String(i+1).padStart(2,"0"), title: svc.title }));
+                return <HeroSlideshow key={svc.id} slides={allSlides} catColor={catInfo.color || "#22d3ee"} />;
+              })()}
             </div>
           </div>
         </div>
-
-        {/* ── THUMBNAIL STRIP ── */}
-        {imgs.length > 1 && (
-          <div className="mg-fade-2" style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", borderTop: "1px solid rgba(255,255,255,.07)", padding: "12px 5%" }}>
-            <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", gap: 10, overflowX: "auto", paddingBottom: 2 }}>
-              {imgs.map((img, i) => (
-                <div key={i} className="mg-thumb" onClick={() => setActiveImg(i)}
-                  style={{ width: 80, height: 56, borderRadius: 6, overflow: "hidden", cursor: "pointer", flexShrink: 0, border: activeImg === i ? `2.5px solid ${catInfo.color || "#22d3ee"}` : "2.5px solid rgba(255,255,255,.12)", opacity: activeImg === i ? 1 : 0.5 }}>
-                  <img loading="lazy" src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=56&fit=crop"} />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* ── BODY ── */}
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "52px 5% 80px" }}>
@@ -3138,50 +3349,22 @@ function ServicesPage({ content, services, navigateTo }) {
             {/* ── LEFT COLUMN ── */}
             <div>
 
-              {/* FACILITY GALLERY — only shown if images > 1 */}
-              {facilityImgs.length > 0 && (
-                <div className="mg-fade-2" style={{ marginBottom: 52 }}>
-                  {/* Section heading with ornamental bar */}
-                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-                    <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || "#0891b2"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Dokumentasi</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Fasilitas &amp; Suasana</div>
-                    </div>
-                    <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
-                    {/* Decorative dot cluster */}
-                    <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
-                      {[1,2,3].map(d => <div key={d} style={{ width: 5, height: 5, borderRadius: "50%", background: d === 1 ? (catInfo.color || "#0891b2") : "#c0e8f0" }} />)}
-                    </div>
-                  </div>
-                  {/* Masonry grid */}
-                  <div style={{ display: "grid", gridTemplateColumns: facilityImgs.length >= 3 ? "1.4fr 1fr 1fr" : facilityImgs.length === 2 ? "1fr 1fr" : "1fr", gap: 10, gridAutoRows: facilityImgs.length >= 3 ? "200px" : "260px" }}>
-                    {facilityImgs.slice(0, 5).map((img, i) => (
-                      <div key={i}
-                        style={{ borderRadius: 10, overflow: "hidden", position: "relative", gridRow: i === 0 && facilityImgs.length >= 3 ? "span 2" : "auto", boxShadow: "0 4px 18px rgba(13,59,102,.1)", transition: "transform .25s, box-shadow .25s", cursor: "pointer" }}
-                        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.025)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(13,59,102,.2)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 18px rgba(13,59,102,.1)"; }}>
-                        <img loading="lazy" src={img} alt={`Fasilitas ${i + 1}`}
-                          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                          onError={e => e.target.src = `https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=700&fit=crop`} />
-                        {/* Gradient overlay */}
-                        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13,59,102,.45) 0%, transparent 50%)", pointerEvents: "none" }} />
-                        {/* Number badge */}
-                        <div style={{ position: "absolute", top: 10, left: 10, background: "rgba(0,0,0,.48)", backdropFilter: "blur(6px)", borderRadius: 4, padding: "3px 9px", fontSize: "0.625rem", color: "#fff", fontWeight: 800, letterSpacing: ".1em" }}>
-                          {String(i + 1).padStart(2, "0")}
-                        </div>
-                        {/* Bottom label for first image */}
-                        {i === 0 && (
-                          <div style={{ position: "absolute", bottom: 14, left: 14, right: 14 }}>
-                            <div style={{ fontSize: "0.6875rem", color: "rgba(255,255,255,.6)", letterSpacing: "2px", textTransform: "uppercase", marginBottom: 2 }}>Foto Utama</div>
-                            <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#fff", textShadow: "0 1px 6px rgba(0,0,0,.5)" }}>{svc.title}</div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {/* FACILITY GALLERY — slideshow dari gambar destinasi */}
+              {(() => {
+                const destImgs = (svc.destinations || [])
+                  .filter(d => d.img)
+                  .map(d => ({ img: d.img, name: d.name, no: d.no, title: d.title }));
+                const slideImgs = destImgs.length > 0 ? destImgs : (facilityImgs.length > 0 ? facilityImgs.map((img, i) => ({ img, name: `Foto ${i+1}`, no: String(i+1).padStart(2,"0"), title: svc.title })) : []);
+                if (slideImgs.length === 0) return null;
+                return (
+                  <DestGallerySlideshow
+                    key={svc.id}
+                    slides={slideImgs}
+                    catColor={catInfo.color || "#0891b2"}
+                    svcTitle={svc.title}
+                  />
+                );
+              })()}
 
               {/* FEATURES — 2-col magazine checklist */}
               <div className="mg-fade-3" style={{ marginBottom: 48 }}>
