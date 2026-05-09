@@ -57,7 +57,7 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
               ) : allPosts.slice(-5).reverse().map(p => (
                 <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid #edfafc" }}>
                   <div style={{ width: 42, height: 42, borderRadius: 6, overflow: "hidden", flexShrink: 0 }}>
-                    <img src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
+                    <img loading="lazy" src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.title}</p>
@@ -298,97 +298,96 @@ const DEFAULT_POSTS = {
   news: [
     {
       id: 1, section: "news", status: "published",
-      title: "Spa Time at Bali's Hidden Resorts",
+      title: "Spa & Wellness di Ubud: Surga Tersembunyi Bali",
       date: "2026-04-03", author: "writer1", category: "Lifestyle",
-      coverImage: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=900&fit=crop",
-      excerpt: "Relax and rejuvenate at world-class spas along pristine coastlines.",
+      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      excerpt: "Rasakan ketenangan sejati di resort spa premium Ubud yang menyatu dengan alam Bali.",
       content: [
-        { type: "paragraph", value: "Bali has long been a haven for those seeking peace and wellness. The island's lush landscape, spiritual ambiance, and world-class hospitality make it one of the top spa destinations in the world." },
-        { type: "paragraph", value: "From volcanic stone massages to traditional Balinese healing rituals, each treatment is carefully crafted to restore body and soul." },
-        { type: "image", value: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600&h=800&fit=crop", caption: "Serene poolside at a Bali resort" },
-        { type: "paragraph", value: "Whether you choose a clifftop retreat in Uluwatu or a rainforest sanctuary in Ubud, Bali delivers a spa experience unlike anywhere else on earth." },
+        { type: "paragraph", value: "Ubud, jantung seni dan budaya Bali, telah lama menjadi surga bagi mereka yang mencari kedamaian jiwa dan raga. Dikelilingi hamparan sawah terasering hijau dan hutan tropis yang rindang, Ubud menawarkan pengalaman spa yang benar-benar menyatu dengan alam." },
+        { type: "paragraph", value: "Dari pijat batu vulkanik khas Bali hingga ritual penyembuhan tradisional Melukat, setiap treatment dirancang untuk memulihkan tubuh dan menenangkan pikiran setelah perjalanan panjang." },
+        { type: "image", value: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Bali_Usaada_Bali_traditional_healing.jpg/1280px-Bali_Usaada_Bali_traditional_healing.jpg", caption: "Ritual penyembuhan tradisional Bali di Ubud" },
+        { type: "paragraph", value: "Nikmati sesi yoga di tepi sawah saat fajar, atau manjakan diri dengan lulur beras Bali yang legendaris. Ubud adalah pengalaman yang tidak akan terlupakan." },
       ],
-      tags: ["spa", "bali", "wellness"],
+      tags: ["spa", "bali", "wellness", "ubud"],
     },
     {
       id: 2, section: "news", status: "published",
-      title: "Beach Time: Discovering Hidden Coves",
+      title: "Pantai Tersembunyi di Raja Ampat yang Memukau",
       date: "2026-04-10", author: "writer1", category: "Beach",
-      coverImage: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=900&fit=crop",
-      excerpt: "Discover breathtaking beaches and hidden coves across the globe.",
+      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      excerpt: "Jelajahi pantai-pantai tersembunyi Raja Ampat dengan air sejernih kristal dan terumbu karang yang menakjubkan.",
       content: [
-        { type: "paragraph", value: "The world's most stunning beaches are often the ones hardest to reach. Hidden behind jungle trails or accessible only by boat, these secret coves reward the adventurous traveler." },
-        { type: "paragraph", value: "From the pink sand beaches of the Bahamas to the glittering black shores of Iceland, every coastline tells a story millions of years in the making." },
-        { type: "image", value: "https://images.unsplash.com/photo-1573790387438-4da905039392?w=1600&h=800&fit=crop", caption: "Crystal clear waters of a hidden cove" },
+        { type: "paragraph", value: "Raja Ampat, permata tersembunyi di ujung timur Indonesia, menyimpan ribuan pulau kecil dengan pantai berpasir putih yang belum banyak terjamah. Perjalanan menuju pantai-pantai ini memang membutuhkan usaha ekstra, namun hasilnya sebanding dengan setiap tetes keringat." },
+        { type: "paragraph", value: "Di bawah permukaan laut Raja Ampat, dunia yang sama mengagumkannya menanti. Keanekaragaman hayati laut di sini adalah yang tertinggi di dunia — ribuan spesies ikan, pari manta, dan terumbu karang warna-warni." },
+        { type: "image", value: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg", caption: "Gugusan pulau Raja Ampat dari ketinggian" },
       ],
-      tags: ["beach", "travel", "adventure"],
+      tags: ["raja ampat", "pantai", "diving", "papua"],
     },
     {
       id: 3, section: "news", status: "published",
-      title: "Happy Times: Creating Unforgettable Memories",
+      title: "Kenangan Tak Terlupakan Bersama Arutala Organizer",
       date: "2026-04-15", author: "writer1", category: "Experience",
-      coverImage: "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=900&fit=crop",
-      excerpt: "Create unforgettable memories on your next great adventure.",
+      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      excerpt: "Setiap perjalanan bersama Arutala adalah cerita yang akan selalu dikenang.",
       content: [
-        { type: "paragraph", value: "Travel is not just about the destination — it's about the moments that take your breath away. The surprise sunrise, the unexpected friendship, the meal that tastes like home even in a foreign land." },
-        { type: "paragraph", value: "Every journey has the potential to become a story you tell for the rest of your life. All it takes is the courage to step outside your comfort zone." },
+        { type: "paragraph", value: "Perjalanan bukan sekadar soal destinasi — melainkan tentang momen yang membuat hati terasa penuh. Saat matahari terbenam di Pura Tanah Lot, saat pertama kali menginjakkan kaki di hamparan sawah Tegalalang, atau saat tawa riang di tengah petualangan bersama orang-orang tersayang." },
+        { type: "paragraph", value: "Bersama Arutala Organizer, setiap detail perjalanan Anda direncanakan dengan penuh perhatian. Kami percaya bahwa kenangan terbaik lahir dari pengalaman yang dirancang dengan hati." },
       ],
-      tags: ["memories", "adventure", "travel"],
+      tags: ["kenangan", "arutala", "wisata", "bali"],
     },
   ],
   shop: [
     {
       id: 10, section: "shop", status: "published",
-      title: "Premium Travel Backpack — Explorer Series",
-      date: "2026-03-20", author: "writer1", category: "Gear",
-      coverImage: "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=900&fit=crop",
-      excerpt: "The ultimate companion for every adventure — waterproof, lightweight, and stylish.",
-      price: "$149", badge: "Best Seller",
+      title: "Paket Perlengkapan Wisata Nusantara — Seri Explorer",
+      date: "2026-03-20", author: "writer1", category: "Perlengkapan",
+      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      excerpt: "Perlengkapan wisata terbaik untuk menjelajahi keindahan nusantara dari Bromo hingga Raja Ampat.",
+      badge: "Terlaris",
       content: [
-        { type: "paragraph", value: "Designed for the modern explorer, the Explorer Series backpack combines durability with sleek design. Available in three colors." },
-        { type: "paragraph", value: "Features: 40L capacity, hidden laptop sleeve, TSA-approved lock compatibility, and 100% recycled materials." },
+        { type: "paragraph", value: "Dirancang khusus untuk petualang nusantara, paket perlengkapan Seri Explorer menghadirkan kenyamanan dan ketahanan dalam satu bundel praktis. Cocok untuk perjalanan ke pegunungan Bromo, pantai Raja Ampat, maupun hutan Kalimantan." },
+        { type: "paragraph", value: "Isi paket: tas ransel 40L waterproof, poncho hujan, sandal gunung, serta peta destinasi unggulan Indonesia. Semua dikemas dalam satu tas yang ringkas dan stylish." },
       ],
-      tags: ["gear", "backpack", "travel"],
+      tags: ["perlengkapan", "wisata", "nusantara", "hiking"],
     },
     {
       id: 11, section: "shop", status: "published",
-      title: "Adventure Camera Strap Pro",
-      date: "2026-03-25", author: "writer1", category: "Photography",
-      coverImage: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=900&fit=crop",
-      excerpt: "Never miss a shot. Ergonomic, adjustable, built for every terrain.",
-      price: "$49",
+      title: "Kamera Dokumentasi Perjalanan — Edisi Nusantara",
+      date: "2026-03-25", author: "writer1", category: "Fotografi",
+      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Borobudur_Temple_Compounds-en.svg/1280px-Borobudur_Temple_Compounds-en.svg.png",
+      excerpt: "Abadikan setiap momen perjalanan Anda dengan sempurna, dari puncak Rinjani hingga kedalaman laut Bunaken.",
       content: [
-        { type: "paragraph", value: "Built for adventurers and photographers who refuse to compromise. The Adventure Camera Strap Pro features military-grade nylon webbing and quick-release clips." },
+        { type: "paragraph", value: "Setiap sudut Indonesia layak diabadikan — dari kemegahan Candi Borobudur yang misterius hingga kecantikan bawah laut Bunaken yang tiada duanya. Dengan kamera yang tepat, setiap momen menjadi karya yang bisa dinikmati selamanya." },
       ],
-      tags: ["photography", "camera", "gear"],
+      tags: ["fotografi", "kamera", "wisata", "nusantara"],
     },
   ],
   destinations: [
     {
       id: 20, section: "destinations", status: "published",
-      title: "Komodo Island, Indonesia",
-      date: "2026-02-10", author: "writer1", category: "Asia",
-      coverImage: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=900&fit=crop",
-      excerpt: "Home to the legendary Komodo dragons and some of the world's best diving.",
+      title: "Taman Nasional Komodo — Warisan Dunia Indonesia",
+      date: "2026-02-10", author: "writer1", category: "Alam",
+      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Komodo_dragon_%28Varanus_komodoensis%29_2.jpg/1280px-Komodo_dragon_%28Varanus_komodoensis%29_2.jpg",
+      excerpt: "Rumah bagi komodo legendaris dan surga diving kelas dunia di jantung Nusa Tenggara Timur.",
       content: [
-        { type: "paragraph", value: "Komodo National Park is one of Indonesia's most dramatic and diverse destinations. The rugged, volcanic landscape is home to the world's largest lizard — the Komodo dragon." },
-        { type: "paragraph", value: "Beneath the surface, the waters around Komodo are equally spectacular. Divers encounter manta rays, sharks, and vibrant coral gardens." },
-        { type: "image", value: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=800&fit=crop", caption: "Pink Beach, Komodo" },
-        { type: "paragraph", value: "Best time to visit: April to December for calm seas. Liveaboard diving trips are highly recommended for the full experience." },
+        { type: "paragraph", value: "Taman Nasional Komodo adalah salah satu destinasi paling dramatis di Indonesia. Lanskap vulkanik yang kasar menjadi rumah bagi kadal terbesar di dunia — Komodo (Varanus komodoensis) — yang hanya bisa ditemukan di sini." },
+        { type: "paragraph", value: "Di bawah permukaannya, perairan Komodo tak kalah spektakuler. Para penyelam akan bertemu manta raya raksasa, hiu, dan taman karang warna-warni yang menjadi salah satu terbaik di dunia." },
+        { type: "image", value: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg", caption: "Pink Beach Komodo yang ikonik" },
+        { type: "paragraph", value: "Waktu terbaik berkunjung: April–Desember saat laut tenang. Paket liveaboard diving sangat direkomendasikan untuk pengalaman penuh." },
       ],
-      tags: ["indonesia", "diving", "wildlife"],
+      tags: ["komodo", "ntt", "diving", "alam"],
     },
     {
       id: 21, section: "destinations", status: "published",
-      title: "Swiss Alps: Winter Wonderland",
-      date: "2026-02-20", author: "writer1", category: "Europe",
-      coverImage: "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=900&fit=crop",
-      excerpt: "Pristine slopes, charming villages, and world-class ski resorts await you.",
+      title: "Gunung Bromo — Negeri di Atas Awan Jawa Timur",
+      date: "2026-02-20", author: "writer1", category: "Alam",
+      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      excerpt: "Saksikan keajaiban matahari terbit di Gunung Bromo — pengalaman paling ikonik di Jawa Timur.",
       content: [
-        { type: "paragraph", value: "Few landscapes in the world rival the Swiss Alps in winter. Snow-dusted peaks, frozen lakes, and cozy mountain chalets create a fairy-tale setting for skiers, snowboarders, and mountain lovers." },
-        { type: "paragraph", value: "Resorts like Zermatt, Verbier, and St. Moritz offer everything from family-friendly slopes to expert backcountry terrain." },
+        { type: "paragraph", value: "Tidak ada banyak pemandangan yang bisa menandingi keindahan matahari terbit di Gunung Bromo. Lautan pasir seluas 5.250 hektare, kepulan asap kawah, dan siluet Semeru di kejauhan menciptakan panorama yang terasa seperti dari planet lain." },
+        { type: "paragraph", value: "Taman Nasional Bromo Tengger Semeru menawarkan berbagai aktivitas: jeep tour melintasi lautan pasir, trekking ke bibir kawah, hingga menyaksikan upacara Yadnya Kasada yang sakral dari suku Tengger." },
       ],
-      tags: ["switzerland", "skiing", "winter"],
+      tags: ["bromo", "jawa timur", "gunung", "alam"],
     },
   ],
 };
@@ -396,22 +395,22 @@ const DEFAULT_POSTS = {
 const DEFAULT_DATA = {
   images: {
     hero: [
-      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=600&fit=crop",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
     ],
     adv: [
-      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1573790387438-4da905039392?w=1600&h=700&fit=crop",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
     ],
     gal: [
-      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?w=1600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=1600&h=400&fit=crop",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Komodo_dragon_%28Varanus_komodoensis%29_2.jpg/1280px-Komodo_dragon_%28Varanus_komodoensis%29_2.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
     ],
   },
   content: {
@@ -472,10 +471,10 @@ const DEFAULT_DATA = {
       price: "Rp 3.500.000",
       priceNote: "/ event",
       images: [
-        "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600&h=700&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Seminar_Nasional_Indonesia.jpg/1280px-Seminar_Nasional_Indonesia.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Gathering_event_Indonesia.jpg/1280px-Gathering_event_Indonesia.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&h=700&fit=crop",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Seminar_Nasional_Indonesia.jpg/1280px-Seminar_Nasional_Indonesia.jpg",
       description: "Paket event entry-level ideal untuk seminar, gathering kecil, atau peluncuran produk dengan kapasitas hingga 100 tamu. Semua kebutuhan dasar sudah tercakup.",
       features: [
         "Konsultasi event 1x pertemuan",
@@ -497,11 +496,11 @@ const DEFAULT_DATA = {
       price: "Rp 12.500.000",
       priceNote: "/ event",
       images: [
-        "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=1600&h=700&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Konser_Indonesia.jpg/1280px-Konser_Indonesia.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Corporate_event_Indonesia.jpg/1280px-Corporate_event_Indonesia.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Konser_Indonesia.jpg/1280px-Konser_Indonesia.jpg",
       description: "Paket lengkap untuk corporate event, seminar nasional, team building, dan peluncuran brand. Cocok untuk 100–300 tamu dengan layanan penuh hari H.",
       features: [
         "Konsultasi event tak terbatas",
@@ -524,11 +523,11 @@ const DEFAULT_DATA = {
       price: "Rp 35.000.000",
       priceNote: "/ event",
       images: [
-        "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=1600&h=700&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
       description: "Malam penghargaan perusahaan dengan nuansa ballroom mewah, red carpet, dan entertainment eksklusif. Dirancang untuk kesan tak terlupakan bagi 200–500 tamu undangan.",
       features: [
         "Dekorasi ballroom premium",
@@ -722,9 +721,9 @@ const DEFAULT_DATA = {
       price: "Hubungi Kami",
       priceNote: "harga transparan",
       images: [
-        "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1200",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1200",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
       description: "Paket wisata sepenuhnya dikustomisasi — tujuan bebas, durasi fleksibel, anggaran transparan. Jogja, Bali, Solo, Lombok, Bromo, dan lainnya.",
       features: ["Tujuan Bebas Seluruh Indonesia", "Durasi 1 Hari – 2 Minggu", "Konsultasi Gratis", "Survey Lokasi", "Itinerary Custom bersama Tim Sekolah", "Support 24 Jam Selama Perjalanan"],
       highlight: false,
@@ -748,7 +747,7 @@ const DEFAULT_DATA = {
         "Harga transparan tanpa biaya tersembunyi",
       ],
       destinations: [
-        { no: "✈", name: "Bebas Pilih Destinasi", sub: "Seluruh Indonesia", tag: "Custom · Fleksibel", title: "Pilih Destinasi Sesuai Keinginan", desc: "Tidak ada batasan! Pilih dari ratusan destinasi wisata di seluruh Indonesia. Tim kami siap merancang perjalanan terbaik untuk sekolah Anda — dari Sabang sampai Merauke.", points: ["Bali, Jogja, Solo, Lombok, Bromo", "Labuan Bajo, Raja Ampat, Belitung", "Destinasi lokal & regional Jawa Timur", "Rute kombinasi multi-kota tersedia"], duration: "Fleksibel", img: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=800" },
+        { no: "✈", name: "Bebas Pilih Destinasi", sub: "Seluruh Indonesia", tag: "Custom · Fleksibel", title: "Pilih Destinasi Sesuai Keinginan", desc: "Tidak ada batasan! Pilih dari ratusan destinasi wisata di seluruh Indonesia. Tim kami siap merancang perjalanan terbaik untuk sekolah Anda — dari Sabang sampai Merauke.", points: ["Bali, Jogja, Solo, Lombok, Bromo", "Labuan Bajo, Raja Ampat, Belitung", "Destinasi lokal & regional Jawa Timur", "Rute kombinasi multi-kota tersedia"], duration: "Fleksibel", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg" },
       ],
       prices: [
         { vehicle: "Bus Executive",  icon: "🚌", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Armada premium besar","Full AC & fasilitas lengkap","Cocok untuk grup 35–60 org","Harga terbaik grup besar"] },
@@ -768,11 +767,11 @@ const DEFAULT_DATA = {
       price: "Rp 18.000.000",
       priceNote: "/ wedding",
       images: [
-        "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
       description: "Pernikahan intim nan hangat di taman dengan dekorasi bohemian elegan. Ideal untuk 50–100 tamu dengan nuansa natural yang tetap mewah dan berkesan.",
       features: [
         "Dekorasi garden bohemian",
@@ -795,11 +794,11 @@ const DEFAULT_DATA = {
       price: "Rp 25.000.000",
       priceNote: "/ wedding",
       images: [
-        "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1600&h=700&fit=crop",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
       description: "Wujudkan pernikahan Islami yang penuh berkah dan elegan. Setiap detail prosesi dirancang sesuai nilai-nilai Islam dengan tampilan modern yang tetap menawan untuk 150–250 tamu.",
       features: [
         "Dekorasi Islami modern",
@@ -822,11 +821,11 @@ const DEFAULT_DATA = {
       price: "Rp 55.000.000",
       priceNote: "/ wedding",
       images: [
-        "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1600&h=700&fit=crop",
-        "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&h=700&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
       ],
-      image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=700&fit=crop",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
       description: "Pernikahan megah berkelas di ballroom hotel bintang 5 dengan dekorasi chandelier dan bunga segar premium. All-inclusive terbaik untuk 300–600 tamu undangan.",
       features: [
         "Ballroom hotel bintang 5",
@@ -1595,7 +1594,7 @@ function RichRenderer({ blocks }) {
         );
         if (b.type === "image") return (
           <figure key={i} style={{ margin: "10px 0" }}>
-            <img src={b.value} alt={b.caption || ""} style={{ width: "100%", maxHeight: 460, objectFit: "cover", borderRadius: 8 }} />
+            <img loading="lazy" src={b.value} alt={b.caption || ""} style={{ width: "100%", maxHeight: 460, objectFit: "cover", borderRadius: 8 }} />
             {b.caption && <figcaption style={{ fontSize: "0.8125rem", color: "#1a5a78", textAlign: "center", marginTop: 10, fontStyle: "italic", lineHeight: 1.5 }}>{b.caption}</figcaption>}
           </figure>
         );
@@ -2029,7 +2028,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
                 </div>
                 {b.type === "image" ? (
                   <div>
-                    <img src={b.value} alt="" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 6 }} onError={e => { e.target.style.display = "none"; }} />
+                    <img loading="lazy" src={b.value} alt="" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 6 }} onError={e => { e.target.style.display = "none"; }} />
                     {b.caption && <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4, fontStyle: "italic" }}>{b.caption}</p>}
                   </div>
                 ) : b.type === "divider" ? (
@@ -2083,7 +2082,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
                       padding: "10px 20px", border: "1.5px dashed #0ea5c5", borderRadius: 8,
                       color: "#0ea5c5", fontSize: 13, background: "#e8f9fc", width: "100%", marginBottom: 8
                     }}>📁 Click to Upload Image</button>
-                    {addVal && <img src={addVal} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 6, marginBottom: 8 }} />}
+                    {addVal && <img loading="lazy" src={addVal} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 6, marginBottom: 8 }} />}
                   </div>
                 ) : addType === "paragraph" ? (
                   <div style={{ marginBottom: 8 }}>
@@ -2220,7 +2219,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
               placeholder="https://..."
               style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none", marginBottom: 8 }} />
             {form.coverImage && (
-              <img src={form.coverImage} alt="" style={{ width: "100%", height: 100, objectFit: "cover", borderRadius: 6 }}
+              <img loading="lazy" src={form.coverImage} alt="" style={{ width: "100%", height: 100, objectFit: "cover", borderRadius: 6 }}
                 onError={e => e.target.style.display = "none"} />
             )}
           </div>
@@ -2242,7 +2241,7 @@ function PostCard({ post, onClick, view = "grid" }) {
       style={{ display: "flex", gap: 20, background: "#fff", borderRadius: 8, overflow: "hidden",
         cursor: "pointer", boxShadow: "0 2px 10px rgba(0,0,0,.06)", marginBottom: 16 }}>
       <div className="post-thumb" style={{ flexShrink: 0, width: 180, height: 130, overflow: "hidden" }}>
-        <img src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
+        <img loading="lazy" src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
           onError={e => { e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=400&fit=crop"; }} />
       </div>
       <div style={{ padding: "14px 16px 14px 0", flex: 1 }}>
@@ -2262,7 +2261,7 @@ function PostCard({ post, onClick, view = "grid" }) {
       style={{ background: "#fff", borderRadius: 8, overflow: "hidden", cursor: "pointer",
         boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
       <div className="img-zoom" style={{ height: 200, overflow: "hidden" }}>
-        <img src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        <img loading="lazy" src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}
           onError={e => { e.target.src = "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=400&fit=crop"; }} />
       </div>
       <div style={{ padding: "18px 20px" }}>
@@ -2306,7 +2305,7 @@ function ArticleDetail({ post, onBack }) {
       {/* Cover */}
       {post.coverImage && (
         <div style={{ height: "clamp(240px, 45vw, 520px)", overflow: "hidden" }}>
-          <img src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <img loading="lazy" src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </div>
       )}
 
@@ -2494,7 +2493,7 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
           overflow: "hidden", zIndex: 9999, pointerEvents: "none",
           animation: "fadeIn .15s ease"
         }}>
-          <img src={svc.images?.[1] || svc.images?.[0] || svc.image} alt=""
+          <img loading="lazy" src={svc.images?.[1] || svc.images?.[0] || svc.image} alt=""
             style={{ width: "100%", height: 120, objectFit: "cover", display: "block" }}
             onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400"; }} />
           <div style={{ padding: "10px 12px 12px" }}>
@@ -2512,7 +2511,7 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
 
       {/* Hero image */}
       <div style={{ position: "relative", height: 180, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
-        <img src={svc.images?.[0] || svc.image} alt={svc.title}
+        <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
           onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.55) 100%)" }} />
@@ -2723,7 +2722,7 @@ function TravelPackageDetailModal({ svc, onClose, waLink }) {
         {/* ── Header with hero image ── */}
         <div style={{ position: "relative", flexShrink: 0 }}>
           <div style={{ height: 200, position: "relative", overflow: "hidden" }}>
-            <img src={svc.images?.[0] || svc.image} alt={svc.title}
+            <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
               style={{ width: "100%", height: "100%", objectFit: "cover", opacity: .5 }}
               onError={e => { e.target.style.opacity = 0; }} />
             <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,#0d3b66ee,${ac}bb)` }} />
@@ -2738,7 +2737,7 @@ function TravelPackageDetailModal({ svc, onClose, waLink }) {
               <div style={{ position: "absolute", bottom: 12, left: 20, display: "flex", gap: 6 }}>
                 {svc.images.slice(0, 4).map((img, i) => (
                   <div key={i} style={{ width: 44, height: 32, borderRadius: 5, overflow: "hidden", border: `2px solid rgba(255,255,255,.4)`, flexShrink: 0, opacity: .85 }}>
-                    <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
+                    <img loading="lazy" src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
                   </div>
                 ))}
               </div>
@@ -2780,7 +2779,7 @@ function TravelPackageDetailModal({ svc, onClose, waLink }) {
                 <div style={{ background: "#fff", borderRadius: 13, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 3px 16px ${ac}12` }}>
                   <div style={{ display: "flex", alignItems: "stretch", flexWrap: "wrap" }}>
                     <div style={{ width: "clamp(110px,32%,200px)", minHeight: 155, flexShrink: 0, position: "relative", overflow: "hidden" }}>
-                      <img src={dest.img} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} onError={e => { e.target.style.display = "none"; }} />
+                      <img loading="lazy" src={dest.img} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} onError={e => { e.target.style.display = "none"; }} />
                       <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}88,transparent)` }} />
                       <div style={{ position: "absolute", top: 10, left: 10, background: ac, color: "#fff", borderRadius: "50%", width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.5625rem", fontWeight: 800 }}>{dest.no}</div>
                     </div>
@@ -2924,10 +2923,69 @@ function TravelPackageDetailModal({ svc, onClose, waLink }) {
   );
 }
 
+/* ─────────────── DESTINATIONS SECTION (full-page detail) ─────────────── */
+function DestinationsSection({ svc, catInfo }) {
+  const [destIdx, setDestIdx] = useState(0);
+  const ac = svc.accent || "#e8a020";
+  const dest = (svc.destinations || [])[destIdx];
+  if (!dest) return null;
+  return (
+    <div className="mg-fade-3" style={{ marginBottom: 48 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+        <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${ac}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+        <div>
+          <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: ac, fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Itinerary</div>
+          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Destinasi Wisata</div>
+        </div>
+        <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
+      </div>
+
+      {/* Tab selector */}
+      {svc.destinations.length > 1 && (
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
+          {svc.destinations.map((d, i) => (
+            <button key={i} onClick={() => setDestIdx(i)}
+              style={{ padding: "7px 16px", borderRadius: 20, border: `1.5px solid ${i === destIdx ? ac : ac + "30"}`, background: i === destIdx ? ac : "#fff", color: i === destIdx ? "#fff" : ac, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", transition: "all .2s", fontFamily: "'DM Sans',sans-serif" }}>
+              {d.no}. {d.name}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Destination card */}
+      <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
+        <div style={{ display: "flex", alignItems: "stretch", flexWrap: "wrap" }}>
+          {/* Image */}
+          <div style={{ width: "clamp(140px,36%,260px)", minHeight: 180, flexShrink: 0, position: "relative", overflow: "hidden" }}>
+            <img loading="lazy" src={dest.img} alt={dest.name}
+              style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
+              onError={e => { e.target.style.display = "none"; }} />
+            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}99,transparent)` }} />
+            <div style={{ position: "absolute", top: 12, left: 12, background: ac, color: "#fff", borderRadius: "50%", width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.625rem", fontWeight: 800 }}>{dest.no}</div>
+          </div>
+          {/* Content */}
+          <div style={{ flex: 1, padding: "20px 22px", minWidth: 200 }}>
+            <div style={{ fontSize: "0.5625rem", color: ac, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 4 }}>{dest.tag}</div>
+            <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.0625rem", fontWeight: 800, color: "#0d3b66", marginBottom: 5, lineHeight: 1.3 }}>{dest.title}</h3>
+            <div style={{ fontSize: "0.75rem", color: "#4a7f98", marginBottom: 10 }}>📍 {dest.sub} &nbsp;·&nbsp; ⏱ {dest.duration}</div>
+            <p style={{ fontSize: "0.8125rem", color: "#3a5266", lineHeight: 1.7, marginBottom: 12 }}>{dest.desc}</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "5px 16px" }}>
+              {(dest.points || []).map((pt, pi) => (
+                <div key={pi} style={{ display: "flex", gap: 6, alignItems: "center", fontSize: "0.75rem", color: "#1a5a78" }}>
+                  <span style={{ color: ac, fontWeight: 700, fontSize: "0.875rem" }}>✓</span> {pt}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─────────────── SERVICES PAGE ─────────────── */
 function ServicesPage({ content, services, navigateTo }) {
   const [selectedService, setSelectedService] = useState(null);
-  const [travelDetailSvc, setTravelDetailSvc] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [hoverPos, setHoverPos] = useState({});
   const [activeCategory, setActiveCategory] = useState(null);
@@ -2940,11 +2998,7 @@ function ServicesPage({ content, services, navigateTo }) {
   ];
 
   const openDetail = (svc) => {
-    if (svc.category === "traveling") {
-      setTravelDetailSvc(svc);
-    } else {
-      setSelectedService(svc); setActiveImg(0); window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    setSelectedService(svc); setActiveImg(0); window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const closeDetail = () => setSelectedService(null);
 
@@ -3047,9 +3101,9 @@ function ServicesPage({ content, services, navigateTo }) {
                 <div className="mg-deco-shape" style={{ position: "absolute", top: 30, right: 30, width: 70, height: 70, border: "1.5px solid rgba(255,255,255,.12)", borderRadius: 6, zIndex: 3, pointerEvents: "none" }} />
                 <div className="mg-deco-shape" style={{ position: "absolute", bottom: 20, left: -8, width: 50, height: 50, border: "1.5px solid rgba(255,255,255,.15)", borderRadius: 4, zIndex: 3, pointerEvents: "none" }} />
                 <div style={{ flex: 1, position: "relative", minHeight: 400 }}>
-                  <img src={imgs[activeImg] || "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=900&fit=crop"} alt={svc.title}
+                  <img loading="lazy" src={imgs[activeImg] || "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg"} alt={svc.title}
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity .4s" }}
-                    onError={e => { e.target.src = "https://images.unsplash.com/photo-1552641356-f51c88ca3e87?w=1600&h=900&fit=crop"; }} />
+                    onError={e => { e.target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg"; }} />
                   {/* Bottom fade */}
                   <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 90, background: "linear-gradient(to top, rgba(13,59,102,.65), transparent)", pointerEvents: "none" }} />
                   {imgs.length > 1 && (
@@ -3070,7 +3124,7 @@ function ServicesPage({ content, services, navigateTo }) {
               {imgs.map((img, i) => (
                 <div key={i} className="mg-thumb" onClick={() => setActiveImg(i)}
                   style={{ width: 80, height: 56, borderRadius: 6, overflow: "hidden", cursor: "pointer", flexShrink: 0, border: activeImg === i ? `2.5px solid ${catInfo.color || "#22d3ee"}` : "2.5px solid rgba(255,255,255,.12)", opacity: activeImg === i ? 1 : 0.5 }}>
-                  <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=56&fit=crop"} />
+                  <img loading="lazy" src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=56&fit=crop"} />
                 </div>
               ))}
             </div>
@@ -3107,7 +3161,7 @@ function ServicesPage({ content, services, navigateTo }) {
                         style={{ borderRadius: 10, overflow: "hidden", position: "relative", gridRow: i === 0 && facilityImgs.length >= 3 ? "span 2" : "auto", boxShadow: "0 4px 18px rgba(13,59,102,.1)", transition: "transform .25s, box-shadow .25s", cursor: "pointer" }}
                         onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.025)"; e.currentTarget.style.boxShadow = "0 14px 40px rgba(13,59,102,.2)"; }}
                         onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 18px rgba(13,59,102,.1)"; }}>
-                        <img src={img} alt={`Fasilitas ${i + 1}`}
+                        <img loading="lazy" src={img} alt={`Fasilitas ${i + 1}`}
                           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                           onError={e => e.target.src = `https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=700&fit=crop`} />
                         {/* Gradient overlay */}
@@ -3152,6 +3206,37 @@ function ServicesPage({ content, services, navigateTo }) {
                 </div>
               </div>
 
+              {/* DESTINATIONS — itinerary tabs, hanya untuk traveling */}
+              {svc.category === "traveling" && (svc.destinations || []).length > 0 && (
+                <DestinationsSection svc={svc} catInfo={catInfo} />
+              )}
+
+              {/* FACILITIES — hanya untuk traveling */}
+              {svc.category === "traveling" && (svc.facilities || []).length > 0 && (
+                <div className="mg-fade-3" style={{ marginBottom: 48 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+                    <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${svc.accent || "#e8a020"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+                    <div>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: svc.accent || "#e8a020", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Yang Sudah Termasuk</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Fasilitas Perjalanan</div>
+                    </div>
+                    <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }}>
+                    {(svc.facilities || []).map((f, i) => (
+                      <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px", border: "1px solid #c8eaf2", position: "relative", overflow: "hidden" }}>
+                        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: svc.accent || "#e8a020", borderRadius: "10px 0 0 10px" }} />
+                        <span style={{ fontSize: 20, flexShrink: 0 }}>{f.icon}</span>
+                        <div>
+                          <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{f.label}</div>
+                          {f.detail && <div style={{ fontSize: "0.75rem", color: "#4a7f98", lineHeight: 1.5 }}>{f.detail}</div>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* PRICE ACCORDION — only for traveling packages */}
               {svc.category === "traveling" && svc.prices?.length > 0 && (
                 <div className="mg-fade-3" style={{ marginBottom: 48 }}>
@@ -3183,7 +3268,7 @@ function ServicesPage({ content, services, navigateTo }) {
                         onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 28px rgba(13,59,102,.14)"}
                         onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(13,59,102,.07)"}>
                         <div style={{ width: 90, flexShrink: 0, overflow: "hidden", position: "relative" }}>
-                          <img src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
+                          <img loading="lazy" src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
                             onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=70&fit=crop"} />
                         </div>
                         <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#0891b2"}, transparent)` }} />
@@ -3368,7 +3453,7 @@ function ServicesPage({ content, services, navigateTo }) {
                           overflow: "hidden", zIndex: 9999, pointerEvents: "none",
                           animation: "fadeIn .15s ease"
                         }}>
-                          <img src={svc.images?.[1] || svc.images?.[0] || svc.image} alt=""
+                          <img loading="lazy" src={svc.images?.[1] || svc.images?.[0] || svc.image} alt=""
                             style={{ width: "100%", height: 110, objectFit: "cover", display: "block" }}
                             onError={e => { e.target.src = "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400"; }} />
                           <div style={{ padding: "8px 10px 10px" }}>
@@ -3388,7 +3473,7 @@ function ServicesPage({ content, services, navigateTo }) {
                         <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 20, padding: "4px 12px", fontSize: "0.6875rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
                       )}
                       <div style={{ height: 200, overflow: "hidden", borderRadius: "12px 12px 0 0" }}>
-                        <img src={(svc.images?.[0] || svc.image)} alt={svc.title}
+                        <img loading="lazy" src={(svc.images?.[0] || svc.image)} alt={svc.title}
                           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: isHov ? "scale(1.07)" : "scale(1)" }}
                           onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=600&fit=crop"; }} />
                       </div>
@@ -3452,14 +3537,6 @@ function ServicesPage({ content, services, navigateTo }) {
         </div>
       </section>
 
-      {/* Travel Package Detail Modal */}
-      {travelDetailSvc && (
-        <TravelPackageDetailModal
-          svc={travelDetailSvc}
-          waLink={content.waLink}
-          onClose={() => setTravelDetailSvc(null)}
-        />
-      )}
     </div>
   );
 }
@@ -3595,7 +3672,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
                 {(svcForm.images || []).map((img, i) => (
                   <div key={i} style={{ position: "relative" }}>
-                    <img src={img} alt="" style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, border: i === 0 ? "2px solid #0891b2" : "2px solid #c0e8f0" }} />
+                    <img loading="lazy" src={img} alt="" style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, border: i === 0 ? "2px solid #0891b2" : "2px solid #c0e8f0" }} />
                     {i === 0 && <div style={{ position: "absolute", bottom: 2, left: 2, fontSize: 8, background: "#0891b2", color: "#fff", borderRadius: 3, padding: "1px 4px", fontWeight: 700 }}>COVER</div>}
                     <button onClick={() => setSvcForm(p => ({ ...p, images: p.images.filter((_, j) => j !== i), image: i === 0 ? (p.images[1] || "") : p.image }))}
                       style={{ position: "absolute", top: -4, right: -4, width: 18, height: 18, borderRadius: "50%", background: "#e74c3c", color: "#fff", border: "none", cursor: "pointer", fontSize: 10, lineHeight: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
@@ -3654,7 +3731,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           {svcs.map(svc => (
             <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "18px 20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", gap: 16, alignItems: "flex-start", borderLeft: svc.highlight ? "4px solid #0ea5c5" : "4px solid #c0e8f0" }}>
               {svc.image && (
-                <img src={svc.image} alt={svc.title} style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
+                <img loading="lazy" src={svc.image} alt={svc.title} style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
               )}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 4 }}>
@@ -3758,7 +3835,7 @@ function AboutPage({ content, images, teamMembers }) {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             {images.hero.slice(0, 4).map((src, i) => (
               <div key={i} className="img-zoom" style={{ borderRadius: 8, overflow: "hidden", aspectRatio: "4/3", boxShadow: "0 8px 24px rgba(13,59,102,.15)" }}>
-                <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <img loading="lazy" src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             ))}
           </div>
@@ -3842,7 +3919,7 @@ function AboutPage({ content, images, teamMembers }) {
                   {/* Photo */}
                   <div style={{ height: 220, overflow: "hidden", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", position: "relative" }}>
                     {member.photo ? (
-                      <img src={member.photo} alt={member.name}
+                      <img loading="lazy" src={member.photo} alt={member.name}
                         style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block", transition: "transform .4s ease" }}
                         onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
                         onMouseLeave={e => e.target.style.transform = "scale(1)"}
@@ -4098,7 +4175,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
           </div>
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Foto</label>
-            {form.photo && <img src={form.photo} alt="preview" style={{ height: 80, width: 80, objectFit: "cover", borderRadius: "50%", marginBottom: 10, border: "2px solid #c0e8f0" }} />}
+            {form.photo && <img loading="lazy" src={form.photo} alt="preview" style={{ height: 80, width: 80, objectFit: "cover", borderRadius: "50%", marginBottom: 10, border: "2px solid #c0e8f0" }} />}
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <input type="file" accept="image/*" onChange={async e => {
                 const file = e.target.files?.[0]; if (!file) return;
@@ -4122,7 +4199,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
         {members.map(m => (
           <div key={m.id} style={{ background: "#fff", borderRadius: 12, padding: "20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center" }}>
             <div style={{ width: 72, height: 72, borderRadius: "50%", overflow: "hidden", background: "#edfafc", border: "2px solid #c0e8f0", flexShrink: 0 }}>
-              {m.photo ? <img src={m.photo} alt={m.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>👤</div>}
+              {m.photo ? <img loading="lazy" src={m.photo} alt={m.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>👤</div>}
             </div>
             <div>
               <div style={{ fontWeight: 700, color: "#0d3b66", fontSize: 14 }}>{m.name}</div>
@@ -4222,17 +4299,17 @@ function AdvSection({ data, navigateTo }) {
         {/* KANAN: Puzzle grid gambar */}
         <div className="adv2-puzzle">
           <div className="adv2-puzzle-a">
-            <img src={puzzleImgs[0]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+            <img loading="lazy" src={puzzleImgs[0]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
           </div>
           <div className="adv2-puzzle-b">
-            <img src={puzzleImgs[1]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+            <img loading="lazy" src={puzzleImgs[1]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
           </div>
           <div className="adv2-puzzle-c">
             <div className="adv2-puzzle-c-sm">
-              <img src={puzzleImgs[2]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+              <img loading="lazy" src={puzzleImgs[2]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
             </div>
             <div className="adv2-puzzle-c-sm">
-              <img src={puzzleImgs[3]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+              <img loading="lazy" src={puzzleImgs[3]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
             </div>
           </div>
         </div>
@@ -4345,13 +4422,13 @@ function HeroSlideshow({ data, navigateTo }) {
         {/* Prev slide (exit) */}
         {animating && prevSl && (
           <div style={getExitStyle(anim)}>
-            <img src={prevSl.src} alt="" className="hero-slide-img-exit" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            <img loading="lazy" src={prevSl.src} alt="" className="hero-slide-img-exit" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.5) 0%, rgba(10,20,35,.75) 100%)" }} />
           </div>
         )}
         {/* Current slide (enter) */}
         <div style={getEnterStyle(anim)}>
-          <img src={sl.src} alt={sl.title} className="hero-slide-img-idle" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          <img loading="lazy" src={sl.src} alt={sl.title} className="hero-slide-img-idle" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.35) 0%, rgba(10,20,35,.78) 100%)" }} />
         </div>
       </div>
@@ -4484,6 +4561,7 @@ function ReviewForm({ token, onSubmitDone, data, save, notify }) {
         content: form.content.trim(),
         date: new Date().toISOString().slice(0, 10),
         tokenLabel: tokenObj.label || "",
+        approved: false,
       };
       const updatedTokens = (data.reviewTokens || []).map(t =>
         t.token === token ? { ...t, used: true } : t
@@ -4513,7 +4591,7 @@ function ReviewForm({ token, onSubmitDone, data, save, notify }) {
             <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase" }}>Foto Profil (Opsional)</label>
             <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
               <div style={{ width: 60, height: 60, borderRadius: "50%", background: form.photo ? "transparent" : "linear-gradient(135deg,#c0e8f0,#c5dde9)", border: "2px solid #c0e8f0", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {form.photo ? <img src={form.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ fontSize: 24 }}>👤</span>}
+                {form.photo ? <img loading="lazy" src={form.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ fontSize: 24 }}>👤</span>}
               </div>
               <div style={{ flex: 1 }}>
                 <input type="file" accept="image/*" onChange={e => handlePhotoUpload(e.target.files?.[0])}
@@ -4755,7 +4833,7 @@ function ReviewCard({ review }) {
       <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 12, borderTop: "1px solid #f0f4f8" }}>
         <div style={{ width: 44, height: 44, borderRadius: "50%", overflow: "hidden", flexShrink: 0, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
           {review.photo
-            ? <img src={review.photo} alt={review.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            ? <img loading="lazy" src={review.photo} alt={review.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             : <span style={{ color: "#fff", fontWeight: 700, fontSize: "1rem" }}>{review.name?.charAt(0)?.toUpperCase() || "?"}</span>
           }
         </div>
@@ -4800,6 +4878,16 @@ function AdminReviews({ data, save, notify }) {
   const deleteReview = (id) => {
     save({ ...data, reviews: reviews.filter(r => r.id !== id) });
     notify("Ulasan dihapus.");
+  };
+
+  const approveReview = (id) => {
+    save({ ...data, reviews: reviews.map(r => r.id === id ? { ...r, approved: true } : r) });
+    notify("✅ Ulasan disetujui dan ditampilkan ke publik.");
+  };
+
+  const rejectReview = (id) => {
+    save({ ...data, reviews: reviews.map(r => r.id === id ? { ...r, approved: false } : r) });
+    notify("Ulasan disembunyikan dari publik.");
   };
 
   const startEditReview = (r) => {
@@ -4875,7 +4963,14 @@ function AdminReviews({ data, save, notify }) {
 
     {/* Reviews List */}
     <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
-      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#0d3b66", marginBottom: 14 }}>💬 Ulasan Masuk ({reviews.length})</h3>
+      <h3 style={{ fontSize: 14, fontWeight: 600, color: "#0d3b66", marginBottom: 14 }}>
+        💬 Ulasan Masuk ({reviews.length})
+        {reviews.filter(r => !r.approved).length > 0 && (
+          <span style={{ marginLeft: 8, background: "#e74c3c", color: "#fff", borderRadius: 10, padding: "2px 8px", fontSize: 11, fontWeight: 700 }}>
+            {reviews.filter(r => !r.approved).length} pending
+          </span>
+        )}
+      </h3>
       {reviews.length === 0 ? (
         <div style={{ textAlign: "center", padding: "32px", color: "#5090aa", fontSize: 13 }}>Belum ada ulasan masuk. Buat link dan kirimkan ke klien!</div>
       ) : (
@@ -4884,12 +4979,20 @@ function AdminReviews({ data, save, notify }) {
             <div key={r.id} style={{ border: "1px solid #e0f7fa", borderRadius: 10, overflow: "hidden" }}>
               <div style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "16px 20px" }}>
                 <div style={{ width: 48, height: 48, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18 }}>
-                  {r.photo ? <img src={r.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : r.name?.charAt(0)?.toUpperCase()}
+                  {r.photo ? <img loading="lazy" src={r.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : r.name?.charAt(0)?.toUpperCase()}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66" }}>{r.name}</span>
                     <span style={{ fontSize: 12, color: "#5090aa" }}>{r.email}</span>
+                    <span style={{
+                      fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 8,
+                      background: r.approved ? "#e8f8ef" : "#fff8e1",
+                      color: r.approved ? "#27ae60" : "#f39c12",
+                      border: `1px solid ${r.approved ? "#27ae60" : "#f39c12"}40`
+                    }}>
+                      {r.approved ? "✓ Tayang" : "⏳ Pending"}
+                    </span>
                     <span style={{ marginLeft: "auto", fontSize: 12, color: "#5090aa" }}>{r.date}</span>
                   </div>
                   <div style={{ display: "flex", gap: 2, marginBottom: 8 }}>
@@ -4919,7 +5022,12 @@ function AdminReviews({ data, save, notify }) {
                 </div>
               </div>
               {editReviewId !== r.id && (
-                <div style={{ padding: "10px 20px", background: "#f5fdff", borderTop: "1px solid #f0f4f8", display: "flex", gap: 8 }}>
+                <div style={{ padding: "10px 20px", background: "#f5fdff", borderTop: "1px solid #f0f4f8", display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  {r.approved ? (
+                    <button onClick={() => rejectReview(r.id)} style={{ padding: "5px 14px", background: "#fff8e1", color: "#f39c12", borderRadius: 5, fontSize: 12, border: "1px solid #f39c1240", fontWeight: 500 }}>👁 Sembunyikan</button>
+                  ) : (
+                    <button onClick={() => approveReview(r.id)} style={{ padding: "5px 14px", background: "#e8f8ef", color: "#27ae60", borderRadius: 5, fontSize: 12, border: "1px solid #27ae6040", fontWeight: 600 }}>✅ Setujui & Tayangkan</button>
+                  )}
                   <button onClick={() => startEditReview(r)} style={{ padding: "5px 14px", background: "#e8f4fd", color: "#0891b2", borderRadius: 5, fontSize: 12, border: "none", fontWeight: 500 }}>✏ Edit</button>
                   <button onClick={() => { if (window.confirm("Hapus ulasan ini?")) deleteReview(r.id); }} style={{ padding: "5px 14px", background: "#fee", color: "#e74c3c", borderRadius: 5, fontSize: 12, border: "none" }}>🗑 Hapus</button>
                 </div>
@@ -4935,6 +5043,7 @@ function AdminReviews({ data, save, notify }) {
 
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [page, setPage] = useState("home");   // home | about | news | shop | destinations | services
   const [readPost, setReadPost] = useState(null);
@@ -5072,7 +5181,8 @@ export default function BricksyTravel() {
         }
       } catch (e) {
         console.warn("[Arutala] Gagal load data, pakai default.", e);
-        // Biarkan DEFAULT_DATA — jangan setData agar tidak overwrite state yg mungkin sudah ada
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, []);
@@ -5286,6 +5396,37 @@ export default function BricksyTravel() {
     <div className="page-wrap" style={{ position: "relative", minHeight: "100vh" }}>
       <GS />
 
+      {/* ── LOADING SKELETON ── */}
+      {isLoading && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 9990, background: "#f0fbfd", display: "flex", flexDirection: "column" }}>
+          <style>{`
+            @keyframes shimmer { 0%{background-position:-800px 0} 100%{background-position:800px 0} }
+            .sk { background: linear-gradient(90deg,#dff0f5 25%,#edfafc 50%,#dff0f5 75%); background-size:800px 100%; animation: shimmer 1.5s infinite; border-radius:6px; }
+          `}</style>
+          {/* Navbar skeleton */}
+          <div style={{ height: 64, background: "#fff", borderBottom: "1px solid #c0e8f0", display: "flex", alignItems: "center", padding: "0 5%", gap: 24 }}>
+            <div className="sk" style={{ width: 120, height: 32 }} />
+            <div style={{ flex: 1 }} />
+            {[80,70,90,70,80].map((w,i) => <div key={i} className="sk" style={{ width: w, height: 14 }} />)}
+          </div>
+          {/* Hero skeleton */}
+          <div className="sk" style={{ height: 480, margin: "0", borderRadius: 0 }} />
+          {/* Cards skeleton */}
+          <div style={{ padding: "40px 5%", display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 24, maxWidth: 1200, margin: "0 auto", width: "100%" }}>
+            {[1,2,3].map(i => (
+              <div key={i} style={{ borderRadius: 12, overflow: "hidden", boxShadow: "0 2px 12px rgba(0,0,0,.06)" }}>
+                <div className="sk" style={{ height: 180, borderRadius: 0 }} />
+                <div style={{ padding: 16, background: "#fff", display: "flex", flexDirection: "column", gap: 10 }}>
+                  <div className="sk" style={{ height: 16, width: "80%" }} />
+                  <div className="sk" style={{ height: 12, width: "60%" }} />
+                  <div className="sk" style={{ height: 12, width: "70%" }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* DESKTOP CURSOR GLOW + SCROLL ANIMATIONS */}
       {typeof window !== "undefined" && (() => {
         // Only on pointer:fine (mouse/desktop)
@@ -5442,7 +5583,7 @@ export default function BricksyTravel() {
                         onMouseEnter={e => { e.currentTarget.style.borderRadius = "50%"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(34,211,238,.6), 0 6px 20px rgba(0,0,0,.3)"; }}
                         onMouseLeave={e => { e.currentTarget.style.borderRadius = "30% 70% 70% 30% / 30% 30% 70% 70%"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(8,145,178,.4), 0 4px 14px rgba(0,0,0,.22)"; }}>
                         {user.photo
-                          ? <img src={user.photo} alt={user.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                          ? <img loading="lazy" src={user.photo} alt={user.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                           : <span style={{ color: "#fff", fontWeight: 800, fontSize: "1rem" }}>{(user.name || user.username || "?")[0].toUpperCase()}</span>
                         }
                       </div>
@@ -5639,7 +5780,7 @@ export default function BricksyTravel() {
                       {/* KIRI: Gambar Candi Prambanan */}
                       <div className="hero-intro-img">
                         <img
-                          src="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=900&q=85&auto=format&fit=crop"
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg"
                           alt="Candi Prambanan"
                         />
                         {/* Badge */}
@@ -5726,7 +5867,7 @@ export default function BricksyTravel() {
                                 <div key={i} className="gal-ticker-item hover-lift"
                                   onClick={() => { if (!item._static) { setReadPost(item); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
                                   style={{ cursor: item._static ? "default" : "pointer" }}>
-                                  <img src={item.coverImage || item} alt={item.title || ""} />
+                                  <img loading="lazy" src={item.coverImage || item} alt={item.title || ""} />
                                 </div>
                               ))}
                             </div>
@@ -5772,13 +5913,13 @@ export default function BricksyTravel() {
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="grid-2">
                       <div className="book-img-grid">
                         <div className="img-zoom" style={{ gridColumn: "span 2", borderRadius: 4, overflow: "hidden" }}>
-                          <img src={data.images.adv[1]} alt="" style={{ width: "100%", height: 200, objectFit: "cover" }} />
+                          <img loading="lazy" src={data.images.adv[1]} alt="" style={{ width: "100%", height: 200, objectFit: "cover" }} />
                         </div>
                         <div className="img-zoom" style={{ borderRadius: 4, overflow: "hidden" }}>
-                          <img src={data.images.adv[0]} alt="" style={{ width: "100%", height: 150, objectFit: "cover" }} />
+                          <img loading="lazy" src={data.images.adv[0]} alt="" style={{ width: "100%", height: 150, objectFit: "cover" }} />
                         </div>
                         <div className="img-zoom" style={{ borderRadius: 4, overflow: "hidden" }}>
-                          <img src={data.images.gal[2]} alt="" style={{ width: "100%", height: 150, objectFit: "cover" }} />
+                          <img loading="lazy" src={data.images.gal[2]} alt="" style={{ width: "100%", height: 150, objectFit: "cover" }} />
                         </div>
                       </div>
                       <div>
@@ -5896,8 +6037,8 @@ export default function BricksyTravel() {
                   </section>
 
                   {/* Reviews Slideshow */}
-                  {(data.reviews || []).length > 0 && (
-                    <ReviewSlideshow reviews={data.reviews || []} />
+                  {(data.reviews || []).filter(r => r.approved).length > 0 && (
+                    <ReviewSlideshow reviews={(data.reviews || []).filter(r => r.approved)} />
                   )}
 
                   {/* Contact */}
@@ -5946,7 +6087,7 @@ export default function BricksyTravel() {
                           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                             {data.images.gal.slice(0, 6).map((src, i) => (
                               <div key={i} style={{ borderRadius: 4, overflow: "hidden" }}>
-                                <img src={src} alt="" style={{ width: "100%", height: 56, objectFit: "cover" }} />
+                                <img loading="lazy" src={src} alt="" style={{ width: "100%", height: 56, objectFit: "cover" }} />
                               </div>
                             ))}
                           </div>
@@ -6345,7 +6486,7 @@ export default function BricksyTravel() {
                     <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, color: "#fff", fontWeight: 700, fontFamily: "'Playfair Display',serif", border: "3px solid #c0e8f0", overflow: "hidden", cursor: "pointer" }}
                       onClick={() => setAdminTab("profile")} title="Edit Profil">
                       {user.photo
-                        ? <img src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        ? <img loading="lazy" src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         : (user.name || user.username).charAt(0).toUpperCase()}
                     </div>
                     {/* Info */}
@@ -6423,7 +6564,7 @@ export default function BricksyTravel() {
                     <div style={{ background: "#fff", borderRadius: 12, padding: "28px 24px", boxShadow: "0 2px 12px rgba(0,0,0,.07)", textAlign: "center" }}>
                       <div style={{ width: 100, height: 100, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", margin: "0 auto 16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, color: "#fff", fontWeight: 700, overflow: "hidden", border: "3px solid #c0e8f0" }}>
                         {user.photo
-                          ? <img src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                          ? <img loading="lazy" src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                           : (user.name || user.username).charAt(0).toUpperCase()}
                       </div>
                       <p style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{user.name || user.username}</p>
@@ -6664,7 +6805,7 @@ export default function BricksyTravel() {
                         <button onClick={() => setEditImg({ group: null, idx: null, url: "" })}
                           style={{ padding: "10px 20px", background: "#eee", borderRadius: 6, fontSize: 13, border: "none" }}>Cancel</button>
                       </div>
-                      {editImg.url && <img src={editImg.url} alt="" style={{ width: 200, height: 130, objectFit: "cover", borderRadius: 6, marginTop: 12 }} />}
+                      {editImg.url && <img loading="lazy" src={editImg.url} alt="" style={{ width: 200, height: 130, objectFit: "cover", borderRadius: 6, marginTop: 12 }} />}
                     </div>
                   )}
                   {[
@@ -6677,7 +6818,7 @@ export default function BricksyTravel() {
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                         {data.images[group.key].map((src, i) => (
                           <div key={i} style={{ position: "relative", width: 140 }}>
-                            <img src={src} alt="" style={{ width: 140, height: 95, objectFit: "cover", borderRadius: 6, display: "block" }} />
+                            <img loading="lazy" src={src} alt="" style={{ width: 140, height: 95, objectFit: "cover", borderRadius: 6, display: "block" }} />
                             <button onClick={() => setEditImg({ group: group.key, idx: i, url: src })} style={{
                               position: "absolute", bottom: 6, right: 6, background: "rgba(30,50,72,.8)", color: "#fff",
                               border: "none", borderRadius: 4, padding: "4px 8px", fontSize: 11 }}>Edit</button>
