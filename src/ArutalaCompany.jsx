@@ -3029,7 +3029,6 @@ function TravelPackageCardWide({ svc, onDetail, waLink }) {
 function TravelPackageCard({ svc, onDetail, waLink }) {
   const [openIdx, setOpenIdx] = useState(null);
   const [hovered, setHovered] = useState(false);
-  const [mpos, setMpos] = useState({ x: 0, y: 0 });
   const [priceOpen, setPriceOpen] = useState(false);
   const ac = svc.accent || "#e8a020";
   const al = svc.accentLight || "#fff8e6";
@@ -3041,36 +3040,7 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onMouseMove={e => { const r = e.currentTarget.getBoundingClientRect(); setMpos({ x: e.clientX - r.left, y: e.clientY - r.top }); }}
       style={{ background: "#fff", borderRadius: 16, overflow: "visible", boxShadow: hovered ? "0 16px 48px rgba(13,59,102,.18)" : "0 4px 20px rgba(13,59,102,.09)", border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "transparent"}`, fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)", transform: hovered ? "translateY(-5px)" : "none", position: "relative" }}>
-
-      {/* ── Floating hover popup ── */}
-      {hovered && (
-        <div style={{
-          position: "absolute",
-          left: mpos.x > 220 ? mpos.x - 230 : mpos.x + 18,
-          top: Math.max(0, mpos.y - 90),
-          width: 218, background: "#fff", borderRadius: 12,
-          boxShadow: "0 20px 60px rgba(0,0,0,.28), 0 4px 16px rgba(0,0,0,.16)",
-          border: `2px solid ${ac}45`,
-          overflow: "hidden", zIndex: 9999, pointerEvents: "none",
-          animation: "fadeIn .15s ease"
-        }}>
-          <img loading="lazy" src={svc.images?.[1] || svc.images?.[0] || svc.image} alt=""
-            style={{ width: "100%", height: 120, objectFit: "cover", display: "block" }}
-            onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400"; }} />
-          <div style={{ padding: "10px 12px 12px" }}>
-            <div style={{ fontSize: "0.5625rem", fontWeight: 800, color: ac, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{svc.badge || "Paket Wisata"}</div>
-            <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 5, lineHeight: 1.3 }}>{svc.title}</div>
-            {(svc.facilities || []).slice(0, 2).map((f, i) => (
-              <div key={i} style={{ fontSize: "0.6875rem", color: "#4a7f98", display: "flex", gap: 5, alignItems: "flex-start", marginBottom: 2 }}>
-                <span style={{ color: "#27ae60", fontWeight: 700, flexShrink: 0 }}>✓</span> {f.label || f}
-              </div>
-            ))}
-            <div style={{ marginTop: 6, fontSize: "0.6875rem", color: "#0891b2", fontWeight: 600, fontStyle: "italic" }}>Klik untuk detail lengkap →</div>
-          </div>
-        </div>
-      )}
 
       {/* Hero image */}
       <div style={{ position: "relative", height: 180, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
