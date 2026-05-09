@@ -1178,8 +1178,8 @@ const GS = () => (
 
     /* 12. Navbar mobile menu — tidak tumpang tindih konten */
     @media(max-width:640px){
-      /* Mobile menu dropdown: max-height + scroll kalau banyak item */
-      nav .mobile-dropdown{max-height:calc(100vh - 60px)!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;display:flex!important;flex-direction:column!important}
+      /* Mobile menu dropdown: posisi absolute ikut bawah nav, scroll kalau banyak item */
+      nav .mobile-dropdown{position:absolute!important;top:100%!important;left:0!important;right:0!important;max-height:calc(100vh - 64px)!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;display:flex!important;flex-direction:column!important}
     }
 
     /* 13. WhatsApp button — jangan tutupi konten penting */
@@ -4991,7 +4991,7 @@ export default function BricksyTravel() {
             </div>
             {mobileMenu && (
               <div className="mobile-dropdown" style={{
-                position: "fixed", top: "60px", left: 0, right: 0,
+                position: "absolute", top: "100%", left: 0, right: 0,
                 background: "linear-gradient(160deg, #063d5c 0%, #0875a8 70%, #0aa8bf 100%)",
                 borderTop: "1px solid rgba(56,197,216,.3)",
                 boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
@@ -4999,14 +4999,14 @@ export default function BricksyTravel() {
                 display: "flex", flexDirection: "column", gap: 6,
                 padding: "16px 5% 24px", zIndex: 9999,
                 animation: "fadeIn .25s ease",
-                maxHeight: "calc(100vh - 60px)",
+                maxHeight: "calc(100vh - 96px)",
                 overflowY: "auto",
                 WebkitOverflowScrolling: "touch"
               }}>
                 {/* Dot grid overlay */}
-                <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px)", backgroundSize: "22px 22px", pointerEvents: "none", borderRadius: "0 0 8px 8px" }} />
+                <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px)", backgroundSize: "22px 22px", pointerEvents: "none", borderRadius: "0 0 8px 8px", zIndex: 0 }} />
                 {navItems.map(item => (
-                  <button key={item.key} onClick={() => navigateTo(item.key)}
+                  <button key={item.key} onClick={() => { navigateTo(item.key); setMobileMenu(false); }}
                     className="mobile-nav-item"
                     style={{
                       fontSize: "1rem",
