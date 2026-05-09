@@ -2821,13 +2821,14 @@ function TravelPackageDetailModal({ svc, onClose, waLink }) {
 
               {dest && (
                 <div style={{ background: "#fff", borderRadius: 13, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 3px 16px ${ac}12` }}>
-                  <div style={{ display: "flex", alignItems: "stretch", flexWrap: "wrap" }}>
-                    <div style={{ width: "clamp(130px,34%,220px)", minHeight: 180, flexShrink: 0, position: "relative", overflow: "hidden", background: `linear-gradient(135deg,${ac}55,#c5e8f0)` }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", minHeight: 200 }}>
+                    <div style={{ width: "clamp(130px,34%,220px)", flexShrink: 0, position: "relative", overflow: "hidden", background: `linear-gradient(135deg,${ac}55,#c5e8f0)`, alignSelf: "stretch", minHeight: 200 }}>
                       <img loading="lazy" src={dest.img} alt={dest.name}
-                        style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0, display: "block" }}
+                        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                        onLoad={e => { e.target.style.opacity = "1"; }}
                         onError={e => { e.target.style.opacity = "0"; }} />
-                      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}55,transparent)` }} />
-                      <div style={{ position: "absolute", top: 10, left: 10, background: ac, color: "#fff", borderRadius: "50%", width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.5625rem", fontWeight: 800 }}>{dest.no}</div>
+                      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}44,transparent)`, pointerEvents: "none" }} />
+                      <div style={{ position: "absolute", top: 10, left: 10, background: ac, color: "#fff", borderRadius: "50%", width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.5625rem", fontWeight: 800, zIndex: 2 }}>{dest.no}</div>
                     </div>
                     <div style={{ flex: 1, padding: "16px 18px", minWidth: 180 }}>
                       <div style={{ fontSize: "0.5625rem", color: ac, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{dest.tag}</div>
@@ -3000,14 +3001,15 @@ function DestinationsSection({ svc, catInfo }) {
 
       {/* Destination card */}
       <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
-        <div style={{ display: "flex", alignItems: "stretch", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", minHeight: 220 }}>
           {/* Image */}
-          <div style={{ width: "clamp(140px,36%,260px)", minHeight: 180, flexShrink: 0, position: "relative", overflow: "hidden", background: `linear-gradient(135deg,${ac}55,#c5e8f0)` }}>
+          <div style={{ width: "clamp(140px,36%,260px)", flexShrink: 0, position: "relative", overflow: "hidden", background: `linear-gradient(135deg,${ac}55,#c5e8f0)`, alignSelf: "stretch", minHeight: 200 }}>
             <img loading="lazy" src={dest.img} alt={dest.name}
-              style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0, display: "block" }}
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              onLoad={e => { e.target.style.opacity = "1"; }}
               onError={e => { e.target.style.opacity = "0"; }} />
-            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}55,transparent)` }} />
-            <div style={{ position: "absolute", top: 12, left: 12, background: ac, color: "#fff", borderRadius: "50%", width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.625rem", fontWeight: 800 }}>{dest.no}</div>
+            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}44,transparent)`, pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: 12, left: 12, background: ac, color: "#fff", borderRadius: "50%", width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.625rem", fontWeight: 800, zIndex: 2 }}>{dest.no}</div>
           </div>
           {/* Content */}
           <div style={{ flex: 1, padding: "20px 22px", minWidth: 200 }}>
@@ -4501,6 +4503,56 @@ function AdvSection({ data, navigateTo }) {
   );
 }
 
+/* ─────────────── HOME INTRO SLIDESHOW (panel kiri beranda) ─────────────── */
+function HomeIntroSlideshow({ data }) {
+  // Kumpulkan semua dest.img dari semua paket traveling
+  const allImgs = [];
+  (data.services || []).forEach(svc => {
+    (svc.destinations || []).forEach(d => {
+      if (d.img) allImgs.push({ src: d.img, label: d.name });
+    });
+  });
+  // Fallback ke hero images
+  if (allImgs.length === 0) {
+    (data.images?.hero || []).forEach(src => allImgs.push({ src, label: "" }));
+  }
+  // Fallback terakhir
+  if (allImgs.length === 0) {
+    allImgs.push({ src: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg", label: "" });
+  }
+
+  const [cur, setCur] = useState(0);
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    if (allImgs.length <= 1) return;
+    timerRef.current = setInterval(() => setCur(c => (c + 1) % allImgs.length), 3800);
+    return () => clearInterval(timerRef.current);
+  }, [allImgs.length]);
+
+  return (
+    <div style={{ position: "relative", width: "100%", height: "100%", minHeight: 380, overflow: "hidden" }}>
+      <style>{`@keyframes introImgSlide { from { opacity:0; transform:scale(1.05); } to { opacity:1; transform:scale(1); } }`}</style>
+      {allImgs.map((img, i) => (
+        i === cur ? (
+          <img key={i} src={img.src} alt={img.label}
+            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", display: "block", animation: "introImgSlide .7s cubic-bezier(.22,1,.36,1) both", zIndex: 1 }}
+            onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&h=400&fit=crop"; }} />
+        ) : null
+      ))}
+      {/* Dot indicators */}
+      {allImgs.length > 1 && (
+        <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 5, zIndex: 3 }}>
+          {allImgs.map((_, i) => (
+            <div key={i} onClick={() => setCur(i)}
+              style={{ width: i === cur ? 16 : 5, height: 5, borderRadius: 3, background: i === cur ? "#10d0e0" : "rgba(255,255,255,.45)", cursor: "pointer", transition: "all .3s ease" }} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─────────────── HERO SLIDESHOW ─────────────── */
 function HeroSlideshow({ data, navigateTo }) {
   // Kumpulkan semua coverImage dari semua posts yang published
@@ -5960,12 +6012,9 @@ export default function BricksyTravel() {
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(8,145,178,.04) 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
       </div>
       <div className="hero-intro-inner">
-                      {/* KIRI: Gambar Candi Prambanan */}
-                      <div className="hero-intro-img">
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg"
-                          alt="Candi Prambanan"
-                        />
+                      {/* KIRI: Slideshow Destinasi */}
+                      <div className="hero-intro-img" style={{ overflow: "hidden", position: "relative" }}>
+                        <HomeIntroSlideshow data={data} />
                         {/* Badge */}
                         <div style={{ position: "absolute", top: 18, left: 18, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", fontSize: ".6rem", letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 800, padding: "5px 12px", borderRadius: 2, zIndex: 2 }}>
                           Arutala Organizer
