@@ -757,6 +757,313 @@ const DEFAULT_DATA = {
       ],
     },
 
+    /* ── TRAVELING TAMBAHAN: MALANG & BANDUNG ── */
+    {
+      id: 11,
+      category: "traveling",
+      pkgId: "malang",
+      title: "Paket Kota Malang",
+      tagline: "Kota Apel, Alam & Wisata Edukatif Jawa Timur",
+      badge: "REKOMENDASI",
+      badgeColor: "#16a34a",
+      accent: "#16a34a",
+      accentLight: "#f0fdf4",
+      duration: "3 Hari 2 Malam",
+      minPeserta: "20",
+      price: "Rp 245.000",
+      priceNote: "/ orang (mulai)",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      description: "Paket wisata Kota Malang & sekitarnya — Coban Rondo, Batu Secret Zoo, Museum Angkut, Pantai Balekambang & Jatim Park. Hotel bintang 2–3, konsumsi 3x sehari, tour leader berpengalaman.",
+      features: ["Hotel Bintang 2–3", "Konsumsi 3x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "ID Card & Buku Panduan"],
+      highlight: true,
+      facilities: [
+        { icon: "🏨", label: "Hotel Bintang 2–3", detail: "Kamar twin sharing ber-AC" },
+        { icon: "🍽", label: "Konsumsi 3x Sehari", detail: "Sarapan, makan siang, makan malam" },
+        { icon: "📸", label: "Dokumentasi Foto", detail: "Fotografer profesional sepanjang tour" },
+        { icon: "👨‍💼", label: "Tour Leader", detail: "Pendamping berpengalaman" },
+        { icon: "🎫", label: "Tiket Masuk", detail: "Semua destinasi dalam itinerary" },
+        { icon: "💊", label: "P3K Lengkap", detail: "Kotak P3K di setiap kendaraan" },
+        { icon: "🛡", label: "Asuransi Jiwa", detail: "Seluruh peserta tercover" },
+        { icon: "💧", label: "Air Mineral", detail: "Gratis sepanjang perjalanan" },
+      ],
+      services: [
+        "Koordinasi langsung dengan pihak sekolah / instansi",
+        "Itinerary edukatif khas Malang Raya",
+        "Pemandu lokal bersertifikat di tiap destinasi",
+        "ID card & buku panduan peserta",
+        "Laporan perjalanan & absensi harian",
+        "Snack 2x selama di kendaraan",
+        "Free program tambahan (opsional)",
+      ],
+      destinations: [
+        {
+          no: "01", name: "Jatim Park 1 & 2", sub: "Batu, Malang", tag: "Edukasi & Sains · Wisata Keluarga",
+          title: "Taman Edukasi Terlengkap Jawa Timur",
+          desc: "Jatim Park adalah kompleks wisata edukatif terbesar di Jawa Timur. Jatim Park 1 berfokus pada sains dan teknologi, sedangkan Jatim Park 2 menghadirkan Museum Satwa & Batu Secret Zoo bertaraf internasional.",
+          points: ["Batu Secret Zoo (kebun binatang bertaraf internasional)", "Museum Satwa interaktif", "Wahana sains dan teknologi", "Area bermain outdoor seluas 22 hektare"],
+          duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg"
+        },
+        {
+          no: "02", name: "Museum Angkut", sub: "Batu, Malang", tag: "Transportasi & Sejarah · Unik & Instagramable",
+          title: "Museum Transportasi Terbesar di Asia Tenggara",
+          desc: "Museum Angkut menyimpan koleksi kendaraan bersejarah dari seluruh penjuru dunia mulai dari dokar hingga pesawat terbang. Setiap zona memiliki tema berbeda: Batavia, Hollywood, Broadway, dan masih banyak lagi.",
+          points: ["Koleksi 300+ kendaraan bersejarah", "Zona tematik Batavia, Eropa & Amerika", "Wahana Flying Fox & Broadway Avenue", "Spot foto instagramable terbaik Malang"],
+          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/800px-Pink_Beach_Komodo.jpg"
+        },
+        {
+          no: "03", name: "Coban Rondo", sub: "Pujon, Malang", tag: "Alam & Air Terjun · Ekowisata",
+          title: "Air Terjun Legendaris Malang",
+          desc: "Coban Rondo adalah air terjun paling terkenal di Malang dengan ketinggian 84 meter. Dikelilingi hutan pinus yang sejuk, destinasi ini menawarkan pengalaman ekowisata yang menyegarkan dan penuh cerita rakyat lokal.",
+          points: ["Air terjun setinggi 84 meter", "Hutan pinus sejuk & fotogenik", "Camping ground tersedia", "Jalur trekking ringan cocok semua usia"],
+          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg"
+        },
+        {
+          no: "04", name: "Pantai Balekambang", sub: "Bantur, Malang Selatan", tag: "Pantai & Pura · Keindahan Alam",
+          title: "Bali-nya Malang Selatan",
+          desc: "Pantai Balekambang dijuluki 'Tanah Lot-nya Jawa' karena keindahan pura Hindu yang berdiri di atas batu karang di tengah laut. Ombak selatan yang megah dan sunset dramatis menjadikannya destinasi favorit.",
+          points: ["Pura Amerta Jati di atas batu karang", "Pantai pasir coklat ombak selatan", "Sunset spektakuler di pesisir selatan", "Taman wisata pantai bersih & terawat"],
+          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg"
+        },
+        {
+          no: "05", name: "Alun-alun Batu & Kota Wisata Batu", sub: "Batu, Malang", tag: "Kuliner & Belanja · Pusat Kota",
+          title: "Jantung Kota Batu yang Meriah",
+          desc: "Kota Batu adalah surganya wisata kuliner dan belanja oleh-oleh khas Malang. Alun-alun Kota Batu yang ramai menjadi tempat bersantai, menikmati jajanan khas, dan berbelanja buah apel langsung dari petani.",
+          points: ["Taman alun-alun dengan bianglala ikonik", "Pasar apel dan agrowisata kebun apel", "Kuliner khas Malang (bakso, cimol, tempe)", "Toko oleh-oleh terbesar di Malang Raya"],
+          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/800px-Pink_Beach_Komodo.jpg"
+        },
+      ],
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "245.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "285.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "360.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "125.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      ],
+    },
+    {
+      id: 12,
+      category: "traveling",
+      pkgId: "bandung",
+      title: "Paket Kota Bandung",
+      tagline: "Paris van Java — Mode, Alam & Kuliner",
+      badge: "TERBARU",
+      badgeColor: "#7c3aed",
+      accent: "#7c3aed",
+      accentLight: "#f5f3ff",
+      duration: "3 Hari 2 Malam",
+      minPeserta: "25",
+      price: "Rp 310.000",
+      priceNote: "/ orang (mulai)",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      description: "Paket wisata Kota Bandung — Kawah Putih, Tangkuban Perahu, Dusun Bambu, Farm House, Saung Angklung Udjo & Factory Outlet. Hotel bintang 3, konsumsi 3x sehari, dan pemandu lokal profesional.",
+      features: ["Hotel Bintang 3", "Konsumsi 3x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "Workshop Angklung Opsional"],
+      highlight: false,
+      facilities: [
+        { icon: "🏨", label: "Hotel Bintang 3", detail: "Kamar twin sharing ber-AC" },
+        { icon: "🍽", label: "Konsumsi 3x Sehari", detail: "Sarapan, makan siang, makan malam" },
+        { icon: "📸", label: "Dokumentasi Foto", detail: "Fotografer profesional" },
+        { icon: "👨‍💼", label: "Tour Leader", detail: "Pendamping berpengalaman" },
+        { icon: "🎫", label: "Tiket Masuk", detail: "Semua destinasi dalam itinerary" },
+        { icon: "💊", label: "P3K Lengkap", detail: "Kotak P3K di setiap kendaraan" },
+        { icon: "🛡", label: "Asuransi Jiwa", detail: "Seluruh peserta tercover" },
+        { icon: "💧", label: "Air Mineral", detail: "Gratis sepanjang perjalanan" },
+      ],
+      services: [
+        "Koordinasi langsung dengan pihak sekolah / instansi",
+        "Itinerary seni-budaya & alam Jawa Barat",
+        "Pemandu lokal bersertifikat di tiap destinasi",
+        "ID card & buku panduan peserta",
+        "Laporan perjalanan & absensi harian",
+        "Snack 2x selama di kendaraan",
+        "Workshop Angklung di Saung Udjo (opsional)",
+      ],
+      destinations: [
+        {
+          no: "01", name: "Kawah Putih", sub: "Ciwidey, Bandung Selatan", tag: "Geologi & Alam · Danau Vulkanik",
+          title: "Danau Vulkanik Paling Ikonik di Jawa Barat",
+          desc: "Kawah Putih adalah danau vulkanik berwarna toska kebiruan di ketinggian 2.430 mdpl. Bau belerang yang khas dan hamparan putih mineral membuat suasananya terasa mistis namun memukau — destinasi wajib di Bandung.",
+          points: ["Danau vulkanik toska di 2.430 mdpl", "Hamparan pasir & mineral putih belerang", "Udara dingin 8–22°C sepanjang tahun", "Spot foto terbaik Jawa Barat"],
+          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/800px-Raja_Ampat_regency_cover.jpg"
+        },
+        {
+          no: "02", name: "Tangkuban Perahu", sub: "Lembang, Bandung Barat", tag: "Gunung & Geologi · Legenda Sunda",
+          title: "Gunung Berapi Aktif dengan Legenda Sangkuriang",
+          desc: "Tangkuban Perahu adalah gunung berapi aktif berbentuk perahu terbalik yang menyimpan legenda Sangkuriang paling terkenal di tanah Sunda. Wisatawan bisa melihat kawah aktif dari jarak dekat dengan aman.",
+          points: ["Kawah Ratu, Kawah Upas & Kawah Domas", "Legenda Sangkuriang yang terkenal", "Uap belerang & aktivitas vulkanik aman", "Pasar oleh-oleh khas di puncak gunung"],
+          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg"
+        },
+        {
+          no: "03", name: "Saung Angklung Udjo", sub: "Padasuka, Kota Bandung", tag: "Seni Budaya · Warisan UNESCO",
+          title: "Pusat Angklung & Pertunjukan Budaya Sunda",
+          desc: "Saung Angklung Udjo adalah pusat kebudayaan Sunda yang terkenal di seluruh dunia. Di sini peserta dapat belajar memainkan angklung — alat musik bambu warisan UNESCO — langsung dari para seniman Sunda berpengalaman.",
+          points: ["Pertunjukan wayang golek & tari jaipong", "Workshop memainkan angklung bersama", "Angklung diakui UNESCO 2010", "Toko souvenir angklung asli Bandung"],
+          duration: "2 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg"
+        },
+        {
+          no: "04", name: "Dusun Bambu & Farm House", sub: "Lembang, Bandung Barat", tag: "Agrowisata · Alam & Keluarga",
+          title: "Wisata Agro Paling Instagramable di Bandung",
+          desc: "Dusun Bambu menawarkan konsep ekowisata dengan rumah makan di atas kolam dan hutan bambu yang asri. Sementara Farm House Lembang menghadirkan suasana Eropa dengan kebun bunga berwarna-warni dan hewan ternak.",
+          points: ["Rumah makan apung di tengah kolam", "Hutan bambu & taman bunga tropis", "Farm House bertema Eropa ala Swiss", "Interaksi langsung dengan hewan ternak"],
+          duration: "3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/800px-Raja_Ampat_regency_cover.jpg"
+        },
+        {
+          no: "05", name: "Factory Outlet & Cihampelas Walk", sub: "Kota Bandung", tag: "Belanja & Mode · Kuliner",
+          title: "Surga Belanja & Kuliner Khas Bandung",
+          desc: "Bandung adalah kota mode terbesar di Indonesia. Factory Outlet Jalan Riau dan Cihampelas menawarkan produk fashion berkualitas dengan harga terjangkau. Lengkapi perjalanan dengan kuliner khas Bandung seperti batagor, siomay, dan surabi.",
+          points: ["Factory outlet harga grosir terbaik", "Cihampelas Walk mal outdoor ikonik", "Kuliner khas: batagor, siomay, surabi", "Oleh-oleh khas Bandung terlengkap"],
+          duration: "3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg"
+        },
+      ],
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "310.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "360.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "440.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "165.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      ],
+    },
+
+    /* ── EVENT PLAN TAMBAHAN: TEDAK SINTEN, ANNIVERSARY, DIES NATALIS, UPACARA ADAT, REUNIAN ── */
+    {
+      id: 13,
+      category: "event",
+      title: "Paket Tedak Sinten",
+      badge: "Tradisi Jawa",
+      badgeColor: "#b45309",
+      price: "Rp 4.500.000",
+      priceNote: "/ acara",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      description: "Paket upacara Tedak Sinten (turun tanah) yang autentik dan penuh makna. Kami mengurus seluruh perlengkapan tradisi Jawa mulai dari jadah 7 warna, kurungan, tangga tebu, hingga dokumentasi profesional untuk kenangan tak ternilai.",
+      features: [
+        "Konsultasi prosesi adat Tedak Sinten",
+        "Pengadaan perlengkapan tradisi lengkap (jadah 7 warna, kurungan, tangga tebu, pasir, dll.)",
+        "Dekorasi tematik Jawa klasik",
+        "MC / Pranata Acara berbahasa Jawa",
+        "Dokumentasi foto & video (4 jam)",
+        "Catering snack & minuman tamu (50 pax)",
+        "Koordinasi sesepuh / dukun bayi (opsional)",
+        "Souvenir kenangan (opsional)",
+      ],
+      highlight: false,
+    },
+    {
+      id: 14,
+      category: "event",
+      title: "Paket Anniversary",
+      badge: "Populer",
+      badgeColor: "#db2777",
+      price: "Rp 6.500.000",
+      priceNote: "/ acara",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      description: "Rayakan momen ulang tahun pernikahan, ulang tahun perusahaan, atau anniversary spesial dengan nuansa romantis dan elegan. Dekorasi premium, hiburan live, dan dokumentasi sinematik untuk kenangan abadi.",
+      features: [
+        "Konsultasi tema & konsep acara",
+        "Dekorasi tematik romantis / elegan / custom",
+        "Backdrop & floral arrangement premium",
+        "MC profesional & entertainment (live music / band akustik)",
+        "Dokumentasi foto & video sinematik (full day)",
+        "Kue ulang tahun / anniversary custom",
+        "Catering prasmanan (100 pax)",
+        "Kapasitas 50–150 tamu",
+      ],
+      highlight: true,
+    },
+    {
+      id: 15,
+      category: "event",
+      title: "Paket Dies Natalis",
+      badge: "Instansi & Kampus",
+      badgeColor: "#1d4ed8",
+      price: "Rp 15.000.000",
+      priceNote: "/ event",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      description: "Paket perayaan Dies Natalis kampus, sekolah, atau organisasi yang profesional dan berkesan. Kami menangani seluruh rangkaian acara dari malam puncak, seminar, pentas seni, hingga penghargaan alumni.",
+      features: [
+        "Konsultasi & perencanaan rangkaian acara Dies Natalis",
+        "Dekorasi pentas & panggung instansi / kampus",
+        "Sound system & lighting profesional",
+        "MC bilingual (Indonesia / Jawa)",
+        "Pentas seni & hiburan (modern & tradisional)",
+        "Dokumentasi foto & video full event",
+        "Koordinasi 10+ vendor",
+        "Catering prasmanan 200 pax",
+        "Kapasitas 200–500 tamu undangan",
+      ],
+      highlight: false,
+    },
+    {
+      id: 16,
+      category: "event",
+      title: "Paket Upacara Adat",
+      badge: "Budaya Nusantara",
+      badgeColor: "#92400e",
+      price: "Rp 8.000.000",
+      priceNote: "/ acara",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      description: "Paket penyelenggaraan upacara adat Nusantara secara autentik dan khidmat. Meliputi berbagai adat Jawa, Sunda, Madura, Bali, dan adat daerah lainnya — ditangani oleh tim yang paham tradisi dan tata cara adat setempat.",
+      features: [
+        "Konsultasi prosesi & tata cara upacara adat",
+        "Pengadaan perlengkapan & sesaji adat lengkap",
+        "Dekorasi tradisional khas adat yang dipilih",
+        "Pranata Acara / MC berbahasa daerah",
+        "Koordinasi sesepuh / pemangku adat",
+        "Dokumentasi foto & video (6 jam)",
+        "Catering tradisional khas daerah (100 pax)",
+        "Pendampingan hari H penuh",
+      ],
+      highlight: false,
+    },
+    {
+      id: 17,
+      category: "event",
+      title: "Paket Reunian",
+      badge: "Hangat & Berkesan",
+      badgeColor: "#0891b2",
+      price: "Rp 5.500.000",
+      priceNote: "/ acara",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      description: "Wujudkan momen reuni alumni, keluarga besar, atau komunitas yang hangat dan tak terlupakan. Kami siap mengurus venue, hiburan nostalgia, games seru, konsumsi, hingga souvenir kenangan untuk seluruh peserta.",
+      features: [
+        "Konsultasi tema & konsep reuni",
+        "Dekorasi venue hangat & nostalgik",
+        "MC interaktif & games seru peserta",
+        "Slide show / video perjalanan kenangan",
+        "Dokumentasi foto & video (full event)",
+        "Catering prasmanan / buffet (100 pax)",
+        "Souvenir kenangan peserta",
+        "Kapasitas 50–200 orang",
+      ],
+      highlight: false,
+    },
+
     /* ── WEDDING ORGANIZER (3 paket) ── */
     {
       id: 8,
@@ -4505,20 +4812,41 @@ function AdvSection({ data, navigateTo }) {
 
 /* ─────────────── HOME INTRO SLIDESHOW (panel kiri beranda) ─────────────── */
 function HomeIntroSlideshow({ data }) {
-  // Kumpulkan semua dest.img dari semua paket traveling
+  // Kumpulkan SEMUA foto dari seluruh sumber di website
+  const seen = new Set();
   const allImgs = [];
-  (data.services || []).forEach(svc => {
-    (svc.destinations || []).forEach(d => {
-      if (d.img) allImgs.push({ src: d.img, label: d.name });
-    });
+  const add = (src, label = "") => {
+    if (src && typeof src === "string" && src.startsWith("http") && !seen.has(src)) {
+      seen.add(src);
+      allImgs.push({ src, label });
+    }
+  };
+
+  // 1. Hero images (galeri utama)
+  (data.images?.hero || []).forEach(src => add(src, "Hero"));
+
+  // 2. Gallery images lainnya
+  Object.entries(data.images || {}).forEach(([key, val]) => {
+    if (key !== "hero" && Array.isArray(val)) val.forEach(src => add(src, key));
+    else if (key !== "hero" && typeof val === "string") add(val, key);
   });
-  // Fallback ke hero images
+
+  // 3. Semua postingan (news, shop, destinations) — coverImage
+  ["news", "shop", "destinations"].forEach(sec => {
+    (data.posts?.[sec] || []).forEach(p => add(p.coverImage, p.title));
+  });
+
+  // 4. Semua paket layanan — images[] dan image
+  (data.services || []).forEach(svc => {
+    (svc.images || []).forEach(src => add(src, svc.title));
+    add(svc.image, svc.title);
+    // 5. Foto destinasi dalam tiap paket
+    (svc.destinations || []).forEach(d => add(d.img, d.name));
+  });
+
+  // Fallback
   if (allImgs.length === 0) {
-    (data.images?.hero || []).forEach(src => allImgs.push({ src, label: "" }));
-  }
-  // Fallback terakhir
-  if (allImgs.length === 0) {
-    allImgs.push({ src: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg", label: "" });
+    add("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg", "");
   }
 
   const [cur, setCur] = useState(0);
@@ -4526,26 +4854,30 @@ function HomeIntroSlideshow({ data }) {
 
   useEffect(() => {
     if (allImgs.length <= 1) return;
-    timerRef.current = setInterval(() => setCur(c => (c + 1) % allImgs.length), 3800);
+    timerRef.current = setInterval(() => setCur(c => (c + 1) % allImgs.length), 3500);
     return () => clearInterval(timerRef.current);
   }, [allImgs.length]);
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%", minHeight: 380, overflow: "hidden" }}>
+    <div style={{ position: "relative", width: "100%", height: "100%", minHeight: 380, overflow: "hidden", background: "#0d3b66" }}>
       <style>{`@keyframes introImgSlide { from { opacity:0; transform:scale(1.05); } to { opacity:1; transform:scale(1); } }`}</style>
       {allImgs.map((img, i) => (
         i === cur ? (
           <img key={i} src={img.src} alt={img.label}
             style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", display: "block", animation: "introImgSlide .7s cubic-bezier(.22,1,.36,1) both", zIndex: 1 }}
-            onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&h=400&fit=crop"; }} />
+            onError={e => { e.target.style.opacity = "0"; }} />
         ) : null
       ))}
+      {/* Counter */}
+      <div style={{ position: "absolute", top: 12, right: 16, zIndex: 4, background: "rgba(0,0,0,.38)", backdropFilter: "blur(6px)", borderRadius: 20, padding: "3px 10px", fontSize: "0.625rem", color: "rgba(255,255,255,.8)", fontWeight: 600, letterSpacing: ".06em" }}>
+        {String(cur + 1).padStart(2,"0")} / {String(allImgs.length).padStart(2,"0")}
+      </div>
       {/* Dot indicators */}
       {allImgs.length > 1 && (
-        <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 5, zIndex: 3 }}>
-          {allImgs.map((_, i) => (
+        <div style={{ position: "absolute", bottom: 48, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 5, zIndex: 3, flexWrap: "wrap", justifyContent: "center", maxWidth: "80%" }}>
+          {allImgs.slice(0, 12).map((_, i) => (
             <div key={i} onClick={() => setCur(i)}
-              style={{ width: i === cur ? 16 : 5, height: 5, borderRadius: 3, background: i === cur ? "#10d0e0" : "rgba(255,255,255,.45)", cursor: "pointer", transition: "all .3s ease" }} />
+              style={{ width: i === cur ? 16 : 5, height: 5, borderRadius: 3, background: i === cur ? "#10d0e0" : "rgba(255,255,255,.4)", cursor: "pointer", transition: "all .3s ease" }} />
           ))}
         </div>
       )}
