@@ -3786,7 +3786,7 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
 function ServicesPage({ content, services, navigateTo }) {
   const [selectedService, setSelectedService] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
-  const [hoverPos, setHoverPos] = useState({});
+
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeImg, setActiveImg] = useState(0);
 
@@ -4202,32 +4202,8 @@ function ServicesPage({ content, services, navigateTo }) {
                         return (
                           <div key={svc.id}
                             onMouseEnter={() => setHoveredCard(svc.id)}
-                            onMouseLeave={() => { setHoveredCard(null); setHoverPos(p => ({ ...p, [svc.id]: null })); }}
-                            onMouseMove={e => { const r = e.currentTarget.getBoundingClientRect(); setHoverPos(p => ({ ...p, [svc.id]: { x: e.clientX - r.left, y: e.clientY - r.top } })); }}
+                            onMouseLeave={() => setHoveredCard(null)}
                             style={{ background: "#fff", borderRadius: 14, overflow: "visible", boxShadow: isHov ? "0 20px 48px rgba(13,59,102,.18)" : "0 4px 16px rgba(13,59,102,.08)", transform: isHov ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #0891b2" : isHov ? "2px solid rgba(8,145,178,.4)" : "2px solid transparent", position: "relative" }}>
-
-                      {/* Floating popup */}
-                      {isHov && hoverPos[svc.id] && (
-                        <div style={{
-                          position: "absolute",
-                          left: (hoverPos[svc.id]?.x || 0) > 200 ? (hoverPos[svc.id]?.x || 0) - 215 : (hoverPos[svc.id]?.x || 0) + 18,
-                          top: Math.max(0, (hoverPos[svc.id]?.y || 0) - 80),
-                          width: 200, background: "#fff", borderRadius: 12,
-                          boxShadow: "0 20px 60px rgba(0,0,0,.26), 0 4px 16px rgba(0,0,0,.14)",
-                          border: `2px solid ${svc.badgeColor || "#0891b2"}40`,
-                          overflow: "hidden", zIndex: 9999, pointerEvents: "none",
-                          animation: "fadeIn .15s ease"
-                        }}>
-                          <img loading="lazy" src={svc.images?.[1] || svc.images?.[0] || svc.image} alt=""
-                            style={{ width: "100%", height: 110, objectFit: "cover", display: "block" }}
-                            onError={e => { e.target.src = "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400"; }} />
-                          <div style={{ padding: "8px 10px 10px" }}>
-                            <div style={{ fontSize: "0.5625rem", fontWeight: 800, color: svc.badgeColor || "#0891b2", letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 2 }}>{svc.badge || "Preview"}</div>
-                            <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", marginBottom: 3 }}>{svc.title}</div>
-                            <div style={{ fontSize: "0.6875rem", color: "#0891b2", fontStyle: "italic", fontWeight: 600 }}>Klik untuk detail →</div>
-                          </div>
-                        </div>
-                      )}
 
                       {svc.badge && (
                         <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2, background: svc.badgeColor || "#0891b2", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
@@ -4275,7 +4251,6 @@ function ServicesPage({ content, services, navigateTo }) {
                   );
                         })}
                       </div>
-                    </div>
                     {customPkg && (
                       <div style={{ marginTop: 28 }}>
                         <EventWeddingCustomCardWide svc={customPkg} onDetail={() => openDetail(customPkg)} waLink={content.waLink} />
