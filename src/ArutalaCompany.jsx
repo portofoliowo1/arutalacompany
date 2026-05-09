@@ -835,7 +835,7 @@ const GS = () => (
     }
 
     .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#111;text-shadow:0 1px 6px rgba(0,0,0,.35),0 2px 14px rgba(0,0,0,.18)}
-    .logo-brand-footer{font-family:'Playfair Display',serif;font-weight:800;font-size:.95rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+    .logo-brand-footer{font-family:'Playfair Display',serif;font-weight:900;font-size:1.15rem;line-height:1.15;letter-spacing:.06em;text-transform:uppercase;color:#111;text-shadow:0 1px 3px rgba(0,0,0,.12)}
     .logo-brand-admin{font-family:'Playfair Display',serif;font-weight:800;font-size:.9rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.3)}
     .label-xs{font-size:.6875rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.65)}
     .card-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;line-height:1.3;color:#0d3b66}
@@ -1096,6 +1096,8 @@ const GS = () => (
     @media(max-width:640px){
       nav{background:linear-gradient(105deg,#ffffff 0%,#e8f9fb 30%,#a8dde8 62%,#0aa8bf 100%)!important;backdrop-filter:none!important;padding:0 4%!important;overflow:visible!important}
       nav>div:not(.mobile-dropdown){height:60px!important;gap:10px!important}
+      /* Fix 10: logo lebih kecil di mobile */
+      nav img{height:42px!important;max-width:86px!important;width:auto!important}
     }
 
     /* 2. Hero Slideshow — readable height, no side gradients overflow */
@@ -1430,7 +1432,7 @@ function LogoDisplay({ content, size = "nav" }) {
   const rawText = content.logoText || "";
   const singleLine = content.logoSingleLine;
   const lines = singleLine ? [rawText.replace(/\n/g, " ")] : rawText.split("\n");
-  const iconSz = size === "nav" ? 72 : 34;
+  const iconSz = size === "nav" ? 72 : size === "footer" ? 52 : 34;
 
   // Styling dinamis — hanya berlaku di nav (bukan footer/admin)
   const isNav = size === "nav";
@@ -1446,7 +1448,7 @@ function LogoDisplay({ content, size = "nav" }) {
     return (
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <img src={content.logoImage} alt={content.logoText}
-          style={{ height: size === "nav" ? 88 : iconSz, maxWidth: size === "nav" ? 180 : 120, objectFit: "contain", display: "block" }} />
+          style={{ height: size === "nav" ? 88 : size === "footer" ? 64 : iconSz, maxWidth: size === "nav" ? 180 : size === "footer" ? 140 : 120, objectFit: "contain", display: "block" }} />
         <span className={brandClass} style={dynStyle}>
           {lines.map((line, i) => <span key={i} style={{ display: singleLine ? "inline" : "block" }}>{line}</span>)}
         </span>
@@ -2370,6 +2372,8 @@ function SectionPage({ section, posts, onReadPost }) {
 /* ─────────────── TRAVEL PACKAGE CARD (accordion price) ─────────────── */
 function TravelPackageCard({ svc, onDetail }) {
   const [openIdx, setOpenIdx] = useState(null);
+  const [hovered, setHovered] = useState(false);
+  const [mpos, setMpos] = useState({ x: 0, y: 0 });
   const ac = svc.accent || "#e8a020";
   const al = svc.accentLight || "#fff8e6";
   const fmt = n => {
@@ -2377,13 +2381,44 @@ function TravelPackageCard({ svc, onDetail }) {
     return Number(String(n).replace(/\./g, "")).toLocaleString("id-ID");
   };
   return (
-    <div style={{ background: "#fff", borderRadius: 16, overflow: "hidden", boxShadow: "0 4px 20px rgba(13,59,102,.09)", border: `2px solid ${svc.highlight ? ac : "transparent"}`, fontFamily: "'DM Sans',sans-serif" }}>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onMouseMove={e => { const r = e.currentTarget.getBoundingClientRect(); setMpos({ x: e.clientX - r.left, y: e.clientY - r.top }); }}
+      style={{ background: "#fff", borderRadius: 16, overflow: "visible", boxShadow: hovered ? "0 16px 48px rgba(13,59,102,.18)" : "0 4px 20px rgba(13,59,102,.09)", border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "transparent"}`, fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)", transform: hovered ? "translateY(-5px)" : "none", position: "relative" }}>
+
+      {/* ── Floating hover popup ── */}
+      {hovered && (
+        <div style={{
+          position: "absolute",
+          left: mpos.x > 220 ? mpos.x - 230 : mpos.x + 18,
+          top: Math.max(0, mpos.y - 90),
+          width: 218, background: "#fff", borderRadius: 12,
+          boxShadow: "0 20px 60px rgba(0,0,0,.28), 0 4px 16px rgba(0,0,0,.16)",
+          border: `2px solid ${ac}45`,
+          overflow: "hidden", zIndex: 9999, pointerEvents: "none",
+          animation: "fadeIn .15s ease"
+        }}>
+          <img src={svc.images?.[1] || svc.images?.[0] || svc.image} alt=""
+            style={{ width: "100%", height: 120, objectFit: "cover", display: "block" }}
+            onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=400"; }} />
+          <div style={{ padding: "10px 12px 12px" }}>
+            <div style={{ fontSize: "0.5625rem", fontWeight: 800, color: ac, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{svc.badge || "Paket Wisata"}</div>
+            <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 5, lineHeight: 1.3 }}>{svc.title}</div>
+            {(svc.features || []).slice(0, 2).map((f, i) => (
+              <div key={i} style={{ fontSize: "0.6875rem", color: "#4a7f98", display: "flex", gap: 5, alignItems: "flex-start", marginBottom: 2 }}>
+                <span style={{ color: "#27ae60", fontWeight: 700, flexShrink: 0 }}>✓</span> {f}
+              </div>
+            ))}
+            <div style={{ marginTop: 6, fontSize: "0.6875rem", color: "#0891b2", fontWeight: 600, fontStyle: "italic" }}>Klik untuk detail lengkap →</div>
+          </div>
+        </div>
+      )}
+
       {/* Hero image */}
-      <div style={{ position: "relative", height: 180, overflow: "hidden" }}>
+      <div style={{ position: "relative", height: 180, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
         <img src={svc.images?.[0] || svc.image} alt={svc.title}
-          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
-          onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
-          onMouseLeave={e => e.target.style.transform = "scale(1)"}
+          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
           onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.55) 100%)" }} />
         {svc.badge && (
@@ -2521,6 +2556,7 @@ function TravelDetailPriceBlock({ svc }) {
 function ServicesPage({ content, services, navigateTo }) {
   const [selectedService, setSelectedService] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [hoverPos, setHoverPos] = useState({});
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeImg, setActiveImg] = useState(0);
 
@@ -2930,58 +2966,85 @@ function ServicesPage({ content, services, navigateTo }) {
                 ))}
               </div>
             ) : (
-              /* ── EVENT / WEDDING: original card style ── */
+              /* ── EVENT / WEDDING: card style dengan hover popup ── */
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 28 }}>
-                {filteredServices.map(svc => (
-                  <div key={svc.id}
-                    onMouseEnter={() => setHoveredCard(svc.id)}
-                    onMouseLeave={() => setHoveredCard(null)}
-                    style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: hoveredCard === svc.id ? "0 20px 48px rgba(13,59,102,.16)" : "0 4px 16px rgba(13,59,102,.08)", transform: hoveredCard === svc.id ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #0891b2" : "2px solid transparent", position: "relative" }}>
-                    {svc.badge && (
-                      <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2, background: svc.badgeColor || "#0891b2", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
-                        {svc.badge}
-                      </div>
-                    )}
-                    {svc.highlight && (
-                      <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 20, padding: "4px 12px", fontSize: "0.6875rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
-                    )}
-                    <div style={{ height: 200, overflow: "hidden" }}>
-                      <img src={(svc.images?.[0] || svc.image)} alt={svc.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
-                        onMouseEnter={e => e.target.style.transform = "scale(1.06)"}
-                        onMouseLeave={e => e.target.style.transform = "scale(1)"}
-                        onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=600&fit=crop"; }} />
-                    </div>
-                    <div style={{ padding: "22px 22px 20px" }}>
-                      <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
-                      <p style={{ fontSize: "0.875rem", color: "#4a7f98", lineHeight: 1.7, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
-                      <div style={{ marginBottom: 16 }}>
-                        {(svc.features || []).slice(0, 3).map((feat, i) => (
-                          <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
-                            <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem" }}>✓</span>
-                            <span style={{ fontSize: "0.8125rem", color: "#1a5a78" }}>{feat}</span>
+                {filteredServices.map(svc => {
+                  const isHov = hoveredCard === svc.id;
+                  return (
+                    <div key={svc.id}
+                      onMouseEnter={() => setHoveredCard(svc.id)}
+                      onMouseLeave={() => { setHoveredCard(null); setHoverPos(p => ({ ...p, [svc.id]: null })); }}
+                      onMouseMove={e => { const r = e.currentTarget.getBoundingClientRect(); setHoverPos(p => ({ ...p, [svc.id]: { x: e.clientX - r.left, y: e.clientY - r.top } })); }}
+                      style={{ background: "#fff", borderRadius: 14, overflow: "visible", boxShadow: isHov ? "0 20px 48px rgba(13,59,102,.18)" : "0 4px 16px rgba(13,59,102,.08)", transform: isHov ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #0891b2" : isHov ? "2px solid rgba(8,145,178,.4)" : "2px solid transparent", position: "relative" }}>
+
+                      {/* Floating popup */}
+                      {isHov && hoverPos[svc.id] && (
+                        <div style={{
+                          position: "absolute",
+                          left: (hoverPos[svc.id]?.x || 0) > 200 ? (hoverPos[svc.id]?.x || 0) - 215 : (hoverPos[svc.id]?.x || 0) + 18,
+                          top: Math.max(0, (hoverPos[svc.id]?.y || 0) - 80),
+                          width: 200, background: "#fff", borderRadius: 12,
+                          boxShadow: "0 20px 60px rgba(0,0,0,.26), 0 4px 16px rgba(0,0,0,.14)",
+                          border: `2px solid ${svc.badgeColor || "#0891b2"}40`,
+                          overflow: "hidden", zIndex: 9999, pointerEvents: "none",
+                          animation: "fadeIn .15s ease"
+                        }}>
+                          <img src={svc.images?.[1] || svc.images?.[0] || svc.image} alt=""
+                            style={{ width: "100%", height: 110, objectFit: "cover", display: "block" }}
+                            onError={e => { e.target.src = "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=400"; }} />
+                          <div style={{ padding: "8px 10px 10px" }}>
+                            <div style={{ fontSize: "0.5625rem", fontWeight: 800, color: svc.badgeColor || "#0891b2", letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 2 }}>{svc.badge || "Preview"}</div>
+                            <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", marginBottom: 3 }}>{svc.title}</div>
+                            <div style={{ fontSize: "0.6875rem", color: "#0891b2", fontStyle: "italic", fontWeight: 600 }}>Klik untuk detail →</div>
                           </div>
-                        ))}
-                        {(svc.features || []).length > 3 && (
-                          <div style={{ fontSize: "0.75rem", color: "#0891b2", fontWeight: 600, marginTop: 4 }}>+{svc.features.length - 3} fitur lainnya</div>
-                        )}
-                      </div>
-                      <div style={{ borderTop: "1px solid #f0f7fb", paddingTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-                        <div>
-                          <div style={{ fontSize: "0.65rem", color: "#5090aa", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 2 }}>Mulai Dari</div>
-                          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.375rem", fontWeight: 900, color: "#0d3b66", lineHeight: 1 }}>{svc.price}</div>
-                          <div style={{ fontSize: "0.6875rem", color: "#4a7f98" }}>{svc.priceNote}</div>
-                          <div style={{ fontSize: "0.6875rem", color: "#0891b2", fontWeight: 600, fontStyle: "italic", marginTop: 2 }}>Nego / Konsultasi dulu</div>
                         </div>
-                        <button onClick={() => openDetail(svc)}
-                          style={{ padding: "10px 18px", background: svc.highlight ? "linear-gradient(135deg,#0d3b66,#0891b2)" : "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s", letterSpacing: ".03em", whiteSpace: "nowrap" }}
-                          onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
-                          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-                          Lihat Detail
-                        </button>
+                      )}
+
+                      {svc.badge && (
+                        <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2, background: svc.badgeColor || "#0891b2", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
+                          {svc.badge}
+                        </div>
+                      )}
+                      {svc.highlight && (
+                        <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 20, padding: "4px 12px", fontSize: "0.6875rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
+                      )}
+                      <div style={{ height: 200, overflow: "hidden", borderRadius: "12px 12px 0 0" }}>
+                        <img src={(svc.images?.[0] || svc.image)} alt={svc.title}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: isHov ? "scale(1.07)" : "scale(1)" }}
+                          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=600&fit=crop"; }} />
+                      </div>
+                      <div style={{ padding: "22px 22px 20px" }}>
+                        <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
+                        <p style={{ fontSize: "0.875rem", color: "#4a7f98", lineHeight: 1.7, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
+                        <div style={{ marginBottom: 16 }}>
+                          {(svc.features || []).slice(0, 3).map((feat, i) => (
+                            <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
+                              <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem" }}>✓</span>
+                              <span style={{ fontSize: "0.8125rem", color: "#1a5a78" }}>{feat}</span>
+                            </div>
+                          ))}
+                          {(svc.features || []).length > 3 && (
+                            <div style={{ fontSize: "0.75rem", color: "#0891b2", fontWeight: 600, marginTop: 4 }}>+{svc.features.length - 3} fitur lainnya</div>
+                          )}
+                        </div>
+                        <div style={{ borderTop: "1px solid #f0f7fb", paddingTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+                          <div>
+                            <div style={{ fontSize: "0.65rem", color: "#5090aa", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 2 }}>Mulai Dari</div>
+                            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.375rem", fontWeight: 900, color: "#0d3b66", lineHeight: 1 }}>{svc.price}</div>
+                            <div style={{ fontSize: "0.6875rem", color: "#4a7f98" }}>{svc.priceNote}</div>
+                            <div style={{ fontSize: "0.6875rem", color: "#0891b2", fontWeight: 600, fontStyle: "italic", marginTop: 2 }}>Nego / Konsultasi dulu</div>
+                          </div>
+                          <button onClick={() => openDetail(svc)}
+                            style={{ padding: "10px 18px", background: svc.highlight ? "linear-gradient(135deg,#0d3b66,#0891b2)" : "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s", letterSpacing: ".03em", whiteSpace: "nowrap" }}
+                            onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                            Lihat Detail
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -4953,18 +5016,46 @@ export default function BricksyTravel() {
               {/* ── LOGIN / USER (desktop) ── */}
               <div className="hide-sm" style={{ display: "flex", gap: 10, alignItems: "center", flexShrink: 0 }}>
                 {user
-                  ? <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2 }}>
-                      <span style={{ fontSize: "0.8125rem", color: "#fff", fontWeight: 700, lineHeight: 1.2 }}>
-                        {user.name || user.username}
-                      </span>
-                      <button onClick={() => setShowAdmin(true)}
-                        style={{ fontSize: "0.6875rem", letterSpacing: ".08em", textTransform: "uppercase", fontWeight: 700,
-                          color: "rgba(255,255,255,.85)", background: "none", border: "none", cursor: "pointer", padding: 0, lineHeight: 1.2,
-                          transition: "color .15s" }}
-                        onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-                        onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,.85)"}>
-                        Control Panel →
-                      </button>
+                  ? <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      {/* Avatar dengan organic border shape */}
+                      <div style={{
+                        width: 38, height: 38, flexShrink: 0,
+                        background: user.photo ? "transparent" : "linear-gradient(135deg,#0891b2,#22d3ee)",
+                        borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
+                        border: "2.5px solid rgba(255,255,255,.75)",
+                        boxShadow: "0 0 0 3px rgba(8,145,178,.4), 0 4px 14px rgba(0,0,0,.22)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        overflow: "hidden", transition: "border-radius .4s ease, box-shadow .3s"
+                      }}
+                        onMouseEnter={e => { e.currentTarget.style.borderRadius = "50%"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(34,211,238,.6), 0 6px 20px rgba(0,0,0,.3)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderRadius = "30% 70% 70% 30% / 30% 30% 70% 70%"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(8,145,178,.4), 0 4px 14px rgba(0,0,0,.22)"; }}>
+                        {user.photo
+                          ? <img src={user.photo} alt={user.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                          : <span style={{ color: "#fff", fontWeight: 800, fontSize: "1rem" }}>{(user.name || user.username || "?")[0].toUpperCase()}</span>
+                        }
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 3 }}>
+                        <span style={{ fontSize: "0.8125rem", color: "#fff", fontWeight: 700, lineHeight: 1.2 }}>
+                          {user.name || user.username}
+                        </span>
+                        {/* CP button dengan border shape asimetris */}
+                        <button onClick={() => setShowAdmin(true)}
+                          style={{
+                            fontSize: "0.6rem", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 800,
+                            color: "#fff",
+                            background: "linear-gradient(130deg,rgba(8,145,178,.65),rgba(10,168,191,.45))",
+                            border: "1px solid rgba(255,255,255,.6)",
+                            cursor: "pointer", lineHeight: 1.3,
+                            padding: "2px 10px",
+                            borderRadius: "14px 4px 14px 4px",
+                            boxShadow: "0 2px 8px rgba(0,0,0,.18)",
+                            transition: "all .25s"
+                          }}
+                          onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,.28)"; e.currentTarget.style.borderRadius = "4px 14px 4px 14px"; e.currentTarget.style.boxShadow = "0 4px 14px rgba(0,0,0,.28)"; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = "linear-gradient(130deg,rgba(8,145,178,.65),rgba(10,168,191,.45))"; e.currentTarget.style.borderRadius = "14px 4px 14px 4px"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,.18)"; }}>
+                          ⚙ Control Panel
+                        </button>
+                      </div>
                     </div>
                   : <button onClick={() => setShowLogin(true)}
                     className="login-collapse-btn"
