@@ -564,9 +564,35 @@ const DEFAULT_DATA = {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg/800px-Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg",
       ],
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1200px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-      description: "Paket karyawisata ke Bali — Tanah Lot, Ubud, GWK, dan Pantai Kuta. Hotel bintang 3–4, konsumsi 3x sehari, tour leader & dokumentasi profesional.",
+      description: "Paket karyawisata ke Bali — Tanah Lot, Ubud, GWK, Uluwatu & Bedugul. Hotel bintang 3–4, konsumsi 3x sehari, tour leader & dokumentasi profesional.",
       features: ["Hotel Bintang 3–4", "Konsumsi 3x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "ID Card & Buku Panduan"],
       highlight: true,
+      facilities: [
+        { icon: "🏨", label: "Hotel Bintang 3–4", detail: "Kamar twin sharing ber-AC" },
+        { icon: "🍽", label: "Konsumsi 3x Sehari", detail: "Sarapan, makan siang, makan malam" },
+        { icon: "📸", label: "Dokumentasi Foto", detail: "Fotografer profesional sepanjang tour" },
+        { icon: "👨‍💼", label: "Tour Leader", detail: "Pendamping berpengalaman" },
+        { icon: "🎫", label: "Tiket Masuk", detail: "Semua destinasi dalam itinerary" },
+        { icon: "💊", label: "P3K Lengkap", detail: "Kotak P3K di setiap kendaraan" },
+        { icon: "🛡", label: "Asuransi Jiwa", detail: "Seluruh peserta tercover" },
+        { icon: "💧", label: "Air Mineral", detail: "Gratis sepanjang perjalanan" },
+      ],
+      services: [
+        "Koordinasi langsung dengan pihak sekolah",
+        "Itinerary custom sesuai kurikulum sekolah",
+        "Pemandu lokal bersertifikat di tiap destinasi",
+        "ID card & buku panduan peserta",
+        "Laporan perjalanan & absensi harian",
+        "Snack 2x selama di kendaraan",
+        "Free program tambahan (opsional)",
+      ],
+      destinations: [
+        { no: "01", name: "Tanah Lot", sub: "Tabanan, Bali", tag: "Pura Hindu · Keindahan Alam", title: "Pura Megah di Atas Batu Karang Laut", desc: "Tanah Lot adalah ikon Bali yang paling terkenal. Pura Hindu ini berdiri kokoh di atas batu karang di tengah laut. Saat sunset, pemandangannya luar biasa indah dan menjadi momen yang tidak terlupakan.", points: ["Pura ikonik di atas batu karang", "Sunset paling populer di Bali", "Pertunjukan Tari Kecak (opsional)", "Pasar seni & kerajinan khas Bali"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/800px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg" },
+        { no: "02", name: "Ubud & Tegalalang", sub: "Gianyar, Bali", tag: "Alam & Seni · Pusat Budaya Bali", title: "Jantung Seni dan Alam Bali", desc: "Ubud adalah jantung seni Bali — dari sawah terasering Tegalalang yang memukau hingga Monkey Forest yang seru. Siswa bisa belajar tentang ekosistem pertanian tradisional Bali.", points: ["Tegalalang Rice Terrace ikonik", "Sacred Monkey Forest Sanctuary", "Museum Puri Lukisan", "Belanja di Pasar Ubud & workshop ukiran"], duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/800px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg" },
+        { no: "03", name: "GWK & Pantai Kuta", sub: "Badung, Bali", tag: "Budaya Hindu · Pantai Ikonik", title: "Garuda Wisnu Kencana & Pasir Putih Kuta", desc: "Garuda Wisnu Kencana (GWK) adalah taman budaya megah dengan patung setinggi 121 meter. Dilanjutkan ke Pantai Kuta yang legendaris untuk kegiatan bebas dan foto bersama.", points: ["Patung GWK tertinggi di Indonesia", "Pertunjukan tari budaya Bali", "Pantai Kuta pasir putih ikonik", "Free time foto & bermain di tepi pantai"], duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg/800px-Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg" },
+        { no: "04", name: "Uluwatu", sub: "Badung, Bali", tag: "Spiritual · Tebing & Samudra", title: "Pura Tebing Karang Selatan Bali", desc: "Pura Luhur Uluwatu berdiri megah di tepi tebing karang setinggi 70 meter di atas Samudra Hindia. Salah satu pura sad kahyangan di Bali yang wajib dikunjungi.", points: ["Pura di tepi tebing 70 meter", "Pemandangan Samudra Hindia", "Kecak Fire Dance saat sunset", "Konservasi monyet ekor panjang"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Uluwatu_Temple_Bali_Indonesia.jpg/800px-Uluwatu_Temple_Bali_Indonesia.jpg" },
+        { no: "05", name: "Bedugul & Danau Beratan", sub: "Tabanan, Bali", tag: "Alam Pegunungan · Danau Vulkanik", title: "Pura Ulun Danu di Tengah Danau", desc: "Bedugul menawarkan udara sejuk pegunungan dengan pemandangan Danau Beratan yang menakjubkan. Pura Ulun Danu Beratan yang mengapung di atas danau adalah ikon paling ikonik Bali.", points: ["Pura Ulun Danu Beratan ikonik", "Kebun Raya Bedugul 157 ha", "Strawberry farm & pasar buah lokal", "Udara sejuk 18–22°C, 1.239 mdpl"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Ulun_Danu_Temple_Bedugul_Bali.jpg/800px-Ulun_Danu_Temple_Bedugul_Bali.jpg" },
+      ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "520.000", points: ["Full AC Double Blower","Sleeper / Reclining seat","TV LCD + Audio System","Toilet dalam bus","USB charging per kursi","Snack 2x perjalanan"] },
         { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "590.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk & nyaman","Power inverter 12V","Air mineral gratis","Bagasi atas & bawah"] },
@@ -597,6 +623,30 @@ const DEFAULT_DATA = {
       description: "Paket karyawisata edukatif ke Yogyakarta — Borobudur, Prambanan, Malioboro & Keraton. Hotel bintang 2–3, konsumsi 3x, pemandu lokal bersertifikat.",
       features: ["Hotel Bintang 2–3", "Konsumsi 3x Sehari (incl. Gudeg)", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "Workshop Batik Opsional"],
       highlight: false,
+      facilities: [
+        { icon: "🏨", label: "Hotel Bintang 2–3", detail: "Kamar twin sharing ber-AC" },
+        { icon: "🍽", label: "Konsumsi 3x Sehari", detail: "Termasuk gudeg khas Jogja" },
+        { icon: "📸", label: "Dokumentasi Foto", detail: "Fotografer profesional" },
+        { icon: "👨‍💼", label: "Tour Leader", detail: "Pendamping berpengalaman" },
+        { icon: "🎫", label: "Tiket Masuk", detail: "Semua destinasi dalam itinerary" },
+        { icon: "💊", label: "P3K Lengkap", detail: "Kotak P3K di kendaraan" },
+        { icon: "🛡", label: "Asuransi Jiwa", detail: "Seluruh peserta tercover" },
+        { icon: "💧", label: "Air Mineral", detail: "Gratis sepanjang perjalanan" },
+      ],
+      services: [
+        "Koordinasi langsung dengan pihak sekolah",
+        "Itinerary edukatif sesuai kurikulum",
+        "Pemandu lokal bersertifikat",
+        "ID card & buku panduan peserta",
+        "Laporan perjalanan & absensi harian",
+        "Snack 1x di kendaraan",
+        "Workshop batik opsional",
+      ],
+      destinations: [
+        { no: "01", name: "Candi Borobudur", sub: "Magelang, Jawa Tengah", tag: "Warisan Dunia UNESCO · Sejarah & Budaya", title: "Candi Buddha Terbesar di Dunia", desc: "Candi Borobudur merupakan monumen Buddha terbesar yang diakui UNESCO sebagai warisan dunia. Siswa dapat mempelajari arsitektur kuno, relief cerita Buddha, dan filosofi hidup dari ukiran batu yang menakjubkan.", points: ["Relief 2.672 panel bercerita Buddha", "Pemandangan matahari terbit spektakuler", "Museum interaktif di kompleks candi", "Sarung batik gratis untuk kunjungan"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/800px-Borobudur_ship.jpg" },
+        { no: "02", name: "Candi Prambanan", sub: "Sleman, Yogyakarta", tag: "Warisan Dunia UNESCO · Hindu Kuno", title: "Kompleks Candi Hindu Termegah", desc: "Prambanan adalah kompleks candi Hindu terbesar di Indonesia. Arsitekturnya yang menjulang mencerminkan kejayaan Kerajaan Mataram Kuno. Cerita Ramayana terukir indah di setiap dindingnya.", points: ["Tiga candi utama: Siwa, Brahma & Wisnu", "Sendratari Ramayana (opsional malam)", "Area taman luas untuk diskusi", "Pemandu khusus pelajar bersertifikat"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Prambanan.jpg/800px-Prambanan.jpg" },
+        { no: "03", name: "Malioboro & Keraton", sub: "Kota Yogyakarta", tag: "Budaya Lokal · Pusat Kota Jogja", title: "Jantung Budaya Yogyakarta", desc: "Jalan Malioboro adalah ikon paling terkenal Yogyakarta. Di sini siswa belajar tentang kerajinan batik, kuliner khas Jogja, dan sistem pemerintahan Kesultanan Ngayogyakarta Hadiningrat.", points: ["Kunjungan Keraton Ngayogyakarta", "Belanja oleh-oleh khas Jogja", "Naik andong & becak tradisional", "Workshop membatik bersama pengrajin"], duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Malioboro_yogyakarta.jpg/800px-Malioboro_yogyakarta.jpg" },
+      ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "285.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 1x perjalanan","USB charging per kursi","Reclining seat"] },
         { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "320.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
@@ -627,6 +677,29 @@ const DEFAULT_DATA = {
       description: "Paket karyawisata ke Solo — Keraton Surakarta, Kampung Batik Laweyan, dan Pasar Gede. Paket paling terjangkau dengan nuansa seni & budaya Jawa.",
       features: ["Hotel Bintang 2", "Konsumsi 2x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "Workshop Membatik"],
       highlight: false,
+      facilities: [
+        { icon: "🏨", label: "Hotel Bintang 2", detail: "Kamar twin sharing ber-AC" },
+        { icon: "🍽", label: "Konsumsi 2x Sehari", detail: "Sarapan & makan siang" },
+        { icon: "📸", label: "Dokumentasi Foto", detail: "Tim fotografer" },
+        { icon: "👨‍💼", label: "Tour Leader", detail: "Pendamping berpengalaman" },
+        { icon: "🎫", label: "Tiket Masuk", detail: "Semua destinasi paket" },
+        { icon: "💊", label: "P3K Lengkap", detail: "Kotak P3K di kendaraan" },
+        { icon: "🛡", label: "Asuransi Jiwa", detail: "Seluruh peserta" },
+        { icon: "💧", label: "Air Mineral", detail: "Gratis di kendaraan" },
+      ],
+      services: [
+        "Koordinasi langsung dengan guru pendamping",
+        "Itinerary berbasis seni dan budaya Jawa",
+        "Pemandu lokal berpengalaman",
+        "ID card peserta",
+        "Laporan perjalanan harian",
+        "Snack 1x di kendaraan",
+      ],
+      destinations: [
+        { no: "01", name: "Keraton Surakarta", sub: "Surakarta, Jawa Tengah", tag: "Sejarah & Budaya · Istana Kerajaan", title: "Pusat Kebudayaan Jawa di Solo", desc: "Keraton Surakarta Hadiningrat adalah istana resmi Kasunanan Surakarta. Siswa bisa melihat langsung koleksi pusaka, busana adat kerajaan, dan mempelajari sejarah Kerajaan Mataram yang kaya.", points: ["Koleksi pusaka benda bersejarah kerajaan", "Pemandu khusus sejarah Mataram", "Pertunjukan wayang dan gamelan", "Galeri batik keraton asli"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Kraton_Surakarta.jpg/800px-Kraton_Surakarta.jpg" },
+        { no: "02", name: "Kampung Batik Laweyan", sub: "Laweyan, Surakarta", tag: "Industri Kreatif · Warisan Budaya", title: "Sentra Batik Tertua di Indonesia", desc: "Laweyan adalah kampung batik tertua di Indonesia yang sudah ada sejak abad ke-16. Siswa bisa belajar langsung proses membatik dari pengrajin berpengalaman dan membawa pulang karya mereka sendiri.", points: ["Workshop membatik langsung dengan pengrajin", "Galeri batik tulis asli", "Sejarah batik warisan UNESCO", "Oleh-oleh langsung dari pengrajin"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Batik_Laweyan_Solo.jpg/800px-Batik_Laweyan_Solo.jpg" },
+        { no: "03", name: "Pasar Gede & Kuliner Solo", sub: "Pusat Kota Solo", tag: "Kuliner & Budaya Lokal", title: "Surga Kuliner Otentik Kota Solo", desc: "Pasar Gede adalah pasar tradisional terbesar dan tertua di Solo. Siswa bisa mencicipi kuliner khas Solo seperti nasi liwet, serabi, timlo, dan brambang asem.", points: ["Arsitektur pasar kolonial Belanda bersejarah", "Kuliner: nasi liwet, serabi, timlo", "Interaksi langsung dengan pedagang lokal", "Sistem jual-beli tradisional Jawa"], duration: "1–2 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pasar_Gede_Surakarta.jpg/800px-Pasar_Gede_Surakarta.jpg" },
+      ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "195.000", points: ["Full AC Double Blower","TV LCD + Audio System","Reclining seat","Snack 1x perjalanan","USB charging per kursi","Toilet dalam bus"] },
         { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "235.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
@@ -655,6 +728,28 @@ const DEFAULT_DATA = {
       description: "Paket wisata sepenuhnya dikustomisasi — tujuan bebas, durasi fleksibel, anggaran transparan. Jogja, Bali, Solo, Lombok, Bromo, dan lainnya.",
       features: ["Tujuan Bebas Seluruh Indonesia", "Durasi 1 Hari – 2 Minggu", "Konsultasi Gratis", "Survey Lokasi", "Itinerary Custom bersama Tim Sekolah", "Support 24 Jam Selama Perjalanan"],
       highlight: false,
+      facilities: [
+        { icon: "🗺", label: "Tujuan Bebas", detail: "Seluruh Indonesia tersedia" },
+        { icon: "📅", label: "Durasi Fleksibel", detail: "1 hari hingga 2 minggu" },
+        { icon: "💬", label: "Konsultasi Gratis", detail: "Diskusi bersama tim kami" },
+        { icon: "🔍", label: "Survey Lokasi", detail: "Tim survei terlebih dahulu" },
+        { icon: "📋", label: "Itinerary Custom", detail: "Bersama tim sekolah" },
+        { icon: "📞", label: "Support 24 Jam", detail: "Selama perjalanan berlangsung" },
+        { icon: "🛡", label: "Asuransi Jiwa", detail: "Seluruh peserta tercover" },
+        { icon: "💧", label: "Air Mineral", detail: "Gratis sepanjang perjalanan" },
+      ],
+      services: [
+        "Tujuan bebas seluruh Indonesia",
+        "Durasi 1 hari – 2 minggu fleksibel",
+        "Konsultasi gratis bersama tim kami",
+        "Survey lokasi sebelum keberangkatan",
+        "Itinerary custom bersama tim sekolah",
+        "Support 24 jam selama perjalanan",
+        "Harga transparan tanpa biaya tersembunyi",
+      ],
+      destinations: [
+        { no: "✈", name: "Bebas Pilih Destinasi", sub: "Seluruh Indonesia", tag: "Custom · Fleksibel", title: "Pilih Destinasi Sesuai Keinginan", desc: "Tidak ada batasan! Pilih dari ratusan destinasi wisata di seluruh Indonesia. Tim kami siap merancang perjalanan terbaik untuk sekolah Anda — dari Sabang sampai Merauke.", points: ["Bali, Jogja, Solo, Lombok, Bromo", "Labuan Bajo, Raja Ampat, Belitung", "Destinasi lokal & regional Jawa Timur", "Rute kombinasi multi-kota tersedia"], duration: "Fleksibel", img: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=800" },
+      ],
       prices: [
         { vehicle: "Bus Executive",  icon: "🚌", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Armada premium besar","Full AC & fasilitas lengkap","Cocok untuk grup 35–60 org","Harga terbaik grup besar"] },
         { vehicle: "Elf / Hiace",    icon: "🚐", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Fleksibel grup kecil","AC nyaman","Cocok 12–20 org","Mudah akses lokasi kecil"] },
@@ -2370,7 +2465,7 @@ function SectionPage({ section, posts, onReadPost }) {
 }
 
 /* ─────────────── TRAVEL PACKAGE CARD (accordion price) ─────────────── */
-function TravelPackageCard({ svc, onDetail }) {
+function TravelPackageCard({ svc, onDetail, waLink }) {
   const [openIdx, setOpenIdx] = useState(null);
   const [hovered, setHovered] = useState(false);
   const [mpos, setMpos] = useState({ x: 0, y: 0 });
@@ -2405,9 +2500,9 @@ function TravelPackageCard({ svc, onDetail }) {
           <div style={{ padding: "10px 12px 12px" }}>
             <div style={{ fontSize: "0.5625rem", fontWeight: 800, color: ac, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{svc.badge || "Paket Wisata"}</div>
             <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 5, lineHeight: 1.3 }}>{svc.title}</div>
-            {(svc.features || []).slice(0, 2).map((f, i) => (
+            {(svc.facilities || []).slice(0, 2).map((f, i) => (
               <div key={i} style={{ fontSize: "0.6875rem", color: "#4a7f98", display: "flex", gap: 5, alignItems: "flex-start", marginBottom: 2 }}>
-                <span style={{ color: "#27ae60", fontWeight: 700, flexShrink: 0 }}>✓</span> {f}
+                <span style={{ color: "#27ae60", fontWeight: 700, flexShrink: 0 }}>✓</span> {f.label || f}
               </div>
             ))}
             <div style={{ marginTop: 6, fontSize: "0.6875rem", color: "#0891b2", fontWeight: 600, fontStyle: "italic" }}>Klik untuk detail lengkap →</div>
@@ -2437,7 +2532,7 @@ function TravelPackageCard({ svc, onDetail }) {
 
       {/* Info row */}
       <div style={{ padding: "12px 16px 0", display: "flex", gap: 14, flexWrap: "wrap" }}>
-        {[`⏱ ${svc.duration}`, `👥 Min. ${svc.minPeserta} peserta`].map(m => (
+        {[`⏱ ${svc.duration}`, `👥 Min. ${svc.minPeserta} peserta`, ...(svc.destinations?.length ? [`🗺 ${svc.destinations.length} Destinasi`] : [])].map(m => (
           <span key={m} style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{m}</span>
         ))}
       </div>
@@ -2445,16 +2540,41 @@ function TravelPackageCard({ svc, onDetail }) {
       {/* Description */}
       <p style={{ fontSize: "0.8125rem", color: "#4a7f98", lineHeight: 1.6, padding: "8px 16px 10px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
 
+      {/* Top facilities with icons */}
+      {(svc.facilities || []).length > 0 && (
+        <div style={{ padding: "0 16px 12px" }}>
+          {(svc.facilities || []).slice(0, 3).map((f, i) => (
+            <div key={i} style={{ display: "flex", gap: 7, alignItems: "center", marginBottom: 5 }}>
+              <span style={{ fontSize: 13 }}>{f.icon}</span>
+              <span style={{ fontSize: "0.75rem", color: "#1a5a78", fontWeight: 500 }}>{f.label}</span>
+            </div>
+          ))}
+          {(svc.facilities || []).length > 3 && (
+            <div style={{ fontSize: "0.6875rem", color: "#0891b2", fontWeight: 600, marginTop: 2 }}>+{svc.facilities.length - 3} fasilitas lainnya</div>
+          )}
+        </div>
+      )}
+
       {/* Price header block */}
       <div style={{ position: "relative", background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 50%,${ac} 100%)`, padding: "16px 16px 26px", margin: "0 0 -16px", overflow: "hidden" }}>
         <div style={{ position: "absolute", right: -20, top: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,.04)" }} />
         <p style={{ color: "rgba(255,255,255,.6)", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 2 }}>Harga Mulai Dari</p>
         <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.8125rem", color: "rgba(255,255,255,.7)" }}>Rp</span>
-          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>
-            {fmt(svc.prices?.[0]?.price) || svc.price}
-          </span>
-          <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>/ orang</span>
+          {(() => {
+            const rawPrice = svc.prices?.[0]?.price ?? svc.price;
+            const isContact = String(rawPrice).toLowerCase().includes("hubungi");
+            return isContact ? (
+              <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.35rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>Hubungi Kami</span>
+            ) : (
+              <>
+                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.8125rem", color: "rgba(255,255,255,.7)" }}>Rp</span>
+                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>
+                  {fmt(rawPrice)}
+                </span>
+                <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>/ orang</span>
+              </>
+            );
+          })()}
         </div>
       </div>
 
@@ -2495,9 +2615,14 @@ function TravelPackageCard({ svc, onDetail }) {
       </div>
 
       {/* Footer CTA */}
-      <div style={{ padding: "12px 14px 14px", background: al, borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderBottom: `1px solid ${ac}25`, borderRadius: "0 0 14px 14px", display: "flex", justifyContent: "flex-end" }}>
+      <div style={{ padding: "12px 14px 14px", background: al, borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderBottom: `1px solid ${ac}25`, borderRadius: "0 0 14px 14px", display: "flex", gap: 8 }}>
+        <button
+          onClick={() => window.open(`${waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(`Halo, saya tertarik dengan ${svc.title}`)}`, "_blank")}
+          style={{ flex: 1, padding: "9px 0", background: "#25D366", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
+          💬 WA
+        </button>
         <button onClick={onDetail}
-          style={{ padding: "9px 18px", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s" }}
+          style={{ flex: 3, padding: "9px 0", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s" }}
           onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
           onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
           Lihat Detail →
@@ -2552,9 +2677,257 @@ function TravelDetailPriceBlock({ svc }) {
   );
 }
 
+/* ─────────────── TRAVEL PACKAGE DETAIL MODAL ─────────────── */
+function TravelPackageDetailModal({ svc, onClose, waLink }) {
+  const [priceIdx, setPriceIdx] = useState(null);
+  const [destIdx, setDestIdx] = useState(0);
+  const ac = svc.accent || "#e8a020";
+  const al = svc.accentLight || "#fff8e6";
+  const fmtP = n => { if (!n || isNaN(String(n).replace(/\./g, ""))) return n; return Number(String(n).replace(/\./g, "")).toLocaleString("id-ID"); };
+  const dest = (svc.destinations || [])[destIdx];
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleKey = e => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handleKey);
+    return () => { document.body.style.overflow = prev; window.removeEventListener("keydown", handleKey); };
+  }, [onClose]);
+
+  const SectionHead = ({ label, title }) => (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+      <div style={{ width: 4, height: 26, background: `linear-gradient(to bottom,${ac},transparent)`, borderRadius: 2, flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: ac, fontWeight: 700, textTransform: "uppercase", marginBottom: 1 }}>{label}</div>
+        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.0625rem", fontWeight: 800, color: "#0d3b66" }}>{title}</div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 9500, display: "flex", alignItems: "flex-end", justifyContent: "center" }}
+      onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+      {/* Backdrop */}
+      <div style={{ position: "absolute", inset: 0, background: "rgba(6,20,40,.72)", backdropFilter: "blur(5px)", animation: "tdFadeIn .2s ease" }} onClick={onClose} />
+
+      {/* Modal Sheet */}
+      <div style={{
+        position: "relative", width: "100%", maxWidth: 900, maxHeight: "93vh",
+        background: "#f4fbfd", borderRadius: "20px 20px 0 0",
+        boxShadow: "0 -16px 80px rgba(6,20,40,.35)",
+        display: "flex", flexDirection: "column",
+        animation: "tdSlideUp .35s cubic-bezier(.22,1,.36,1)",
+        overflow: "hidden",
+      }}>
+
+        {/* ── Header with hero image ── */}
+        <div style={{ position: "relative", flexShrink: 0 }}>
+          <div style={{ height: 200, position: "relative", overflow: "hidden" }}>
+            <img src={svc.images?.[0] || svc.image} alt={svc.title}
+              style={{ width: "100%", height: "100%", objectFit: "cover", opacity: .5 }}
+              onError={e => { e.target.style.opacity = 0; }} />
+            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,#0d3b66ee,${ac}bb)` }} />
+
+            {/* Close */}
+            <button onClick={onClose} style={{ position: "absolute", top: 14, right: 14, width: 34, height: 34, borderRadius: "50%", background: "rgba(255,255,255,.18)", border: "1px solid rgba(255,255,255,.3)", color: "#fff", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", zIndex: 2 }}>✕</button>
+
+            {svc.badge && <div style={{ position: "absolute", top: 14, left: 14, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.5625rem", fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase" }}>★ {svc.badge}</div>}
+
+            {/* Thumb strip */}
+            {(svc.images?.length > 1) && (
+              <div style={{ position: "absolute", bottom: 12, left: 20, display: "flex", gap: 6 }}>
+                {svc.images.slice(0, 4).map((img, i) => (
+                  <div key={i} style={{ width: 44, height: 32, borderRadius: 5, overflow: "hidden", border: `2px solid rgba(255,255,255,.4)`, flexShrink: 0, opacity: .85 }}>
+                    <img src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 24px 18px" }}>
+              {svc.tagline && <div style={{ fontSize: "0.5625rem", color: "rgba(255,255,255,.72)", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 4 }}>{svc.tagline}</div>}
+              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.3rem,3vw,1.875rem)", fontWeight: 900, color: "#fff", marginBottom: 8, lineHeight: 1.1 }}>{svc.title}</h2>
+              <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
+                {[`⏱ ${svc.duration}`, `👥 Min. ${svc.minPeserta} peserta`, svc.destinations?.length && `🗺 ${svc.destinations.length} Destinasi`, `💰 Mulai ${svc.price}`].filter(Boolean).map(m => (
+                  <span key={m} style={{ fontSize: "0.6875rem", color: "rgba(255,255,255,.85)", fontWeight: 500 }}>{m}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Scrollable body ── */}
+        <div style={{ flex: 1, overflowY: "auto", padding: "26px 24px 40px" }}>
+          <p style={{ fontSize: "0.875rem", color: "#2a4a5e", lineHeight: 1.75, marginBottom: 28 }}>{svc.description}</p>
+
+          {/* ─ Destinations ─ */}
+          {(svc.destinations || []).length > 0 && (
+            <section style={{ marginBottom: 30 }}>
+              <SectionHead label="Destinasi Wisata" title="Itinerary Perjalanan" />
+
+              {svc.destinations.length > 1 && (
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
+                  {svc.destinations.map((d, i) => (
+                    <button key={i} onClick={() => setDestIdx(i)}
+                      style={{ padding: "6px 14px", borderRadius: 20, border: `1.5px solid ${i === destIdx ? ac : ac + "30"}`, background: i === destIdx ? ac : "#fff", color: i === destIdx ? "#fff" : ac, fontSize: "0.6875rem", fontWeight: 600, cursor: "pointer", transition: "all .2s", fontFamily: "'DM Sans',sans-serif" }}>
+                      {d.no}. {d.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {dest && (
+                <div style={{ background: "#fff", borderRadius: 13, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 3px 16px ${ac}12` }}>
+                  <div style={{ display: "flex", alignItems: "stretch", flexWrap: "wrap" }}>
+                    <div style={{ width: "clamp(110px,32%,200px)", minHeight: 155, flexShrink: 0, position: "relative", overflow: "hidden" }}>
+                      <img src={dest.img} alt={dest.name} style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }} onError={e => { e.target.style.display = "none"; }} />
+                      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}88,transparent)` }} />
+                      <div style={{ position: "absolute", top: 10, left: 10, background: ac, color: "#fff", borderRadius: "50%", width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.5625rem", fontWeight: 800 }}>{dest.no}</div>
+                    </div>
+                    <div style={{ flex: 1, padding: "16px 18px", minWidth: 180 }}>
+                      <div style={{ fontSize: "0.5625rem", color: ac, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{dest.tag}</div>
+                      <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 800, color: "#0d3b66", marginBottom: 4, lineHeight: 1.3 }}>{dest.title}</h3>
+                      <div style={{ fontSize: "0.6875rem", color: "#4a7f98", marginBottom: 7 }}>📍 {dest.sub} &nbsp;·&nbsp; ⏱ {dest.duration}</div>
+                      <p style={{ fontSize: "0.78125rem", color: "#3a5266", lineHeight: 1.65, marginBottom: 9 }}>{dest.desc}</p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px" }}>
+                        {(dest.points || []).map((pt, pi) => (
+                          <div key={pi} style={{ display: "flex", gap: 5, alignItems: "center", fontSize: "0.6875rem", color: "#2a4a5e" }}>
+                            <span style={{ width: 4, height: 4, borderRadius: "50%", background: ac, flexShrink: 0, display: "inline-block" }} />
+                            {pt}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* ─ Facilities ─ */}
+          {(svc.facilities || []).length > 0 && (
+            <section style={{ marginBottom: 30 }}>
+              <SectionHead label="Yang Sudah Termasuk" title="Fasilitas Paket" />
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(185px, 1fr))", gap: 9 }}>
+                {(svc.facilities || []).map((f, i) => (
+                  <div key={i} style={{ background: "#fff", borderRadius: 10, padding: "13px 15px", border: `1px solid ${ac}18`, display: "flex", gap: 9, alignItems: "flex-start", position: "relative", overflow: "hidden" }}>
+                    <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: ac, borderRadius: "10px 0 0 10px" }} />
+                    <span style={{ fontSize: 18, flexShrink: 0 }}>{f.icon}</span>
+                    <div>
+                      <div style={{ fontSize: "0.78125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 1 }}>{f.label}</div>
+                      <div style={{ fontSize: "0.625rem", color: "#5090aa", lineHeight: 1.4 }}>{f.detail}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* ─ Services ─ */}
+          {(svc.services || []).length > 0 && (
+            <section style={{ marginBottom: 30 }}>
+              <SectionHead label="Sudah Termasuk" title="Layanan Kami" />
+              <div style={{ background: al, borderRadius: 12, padding: "16px 18px", border: `1px solid ${ac}18` }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "7px 18px" }}>
+                  {(svc.services || []).map((s, i) => (
+                    <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", fontSize: "0.78125rem", color: "#1a3a50" }}>
+                      <span style={{ color: "#27ae60", fontWeight: 800, fontSize: "0.875rem", flexShrink: 0, marginTop: 1 }}>✓</span>
+                      <span style={{ lineHeight: 1.5 }}>{s}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* ─ Vehicle Prices ─ */}
+          {(svc.prices || []).length > 0 && (
+            <section style={{ marginBottom: 30 }}>
+              <SectionHead label="Pilihan Armada" title="Harga per Kendaraan" />
+
+              {/* Price banner */}
+              <div style={{ position: "relative", background: `linear-gradient(135deg,#0d3b66,#1a5a78 45%,${ac})`, borderRadius: 14, padding: "20px 24px 16px", marginBottom: 12, overflow: "hidden" }}>
+                <div style={{ position: "absolute", right: -24, top: -24, width: 150, height: 150, borderRadius: "50%", background: "rgba(255,255,255,.04)" }} />
+                <p style={{ color: "rgba(255,255,255,.6)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>Harga Mulai Dari</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 5 }}>
+                  {svc.prices[0]?.price !== "Hubungi kami" && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.8125rem", color: "rgba(255,255,255,.7)" }}>Rp</span>}
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.25rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>
+                    {svc.prices[0]?.price === "Hubungi kami" ? "Hubungi Kami" : fmtP(svc.prices[0]?.price)}
+                  </span>
+                  {svc.prices[0]?.price !== "Hubungi kami" && <span style={{ color: "rgba(255,255,255,.6)", fontSize: "0.75rem" }}>/ orang</span>}
+                </div>
+                <p style={{ color: "rgba(255,255,255,.55)", fontSize: "0.6875rem", marginTop: 3 }}>⏱ {svc.duration} &nbsp;·&nbsp; 👥 Min. {svc.minPeserta} peserta &nbsp;·&nbsp; 💬 Harga dapat disesuaikan</p>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {(svc.prices || []).map((p, i) => {
+                  const isOpen = priceIdx === i;
+                  return (
+                    <div key={i} style={{ background: "#fff", borderRadius: 10, border: `1.5px solid ${isOpen ? ac : ac + "22"}`, overflow: "hidden", transition: "border-color .2s, box-shadow .2s", boxShadow: isOpen ? `0 4px 16px ${ac}22` : "none" }}>
+                      <button onClick={() => setPriceIdx(isOpen ? null : i)}
+                        style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "13px 18px", background: "none", border: "none", cursor: "pointer", textAlign: "left", fontFamily: "'DM Sans',sans-serif" }}>
+                        <span style={{ fontSize: 22 }}>{p.icon}</span>
+                        <div style={{ flex: 1 }}>
+                          <span style={{ fontWeight: 700, fontSize: "0.875rem", color: "#0d3b66", display: "block" }}>{p.vehicle}</span>
+                          <span style={{ fontSize: "0.6875rem", color: "#888" }}>{p.capacity}</span>
+                        </div>
+                        <div style={{ textAlign: "right", marginRight: 8 }}>
+                          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.0625rem", fontWeight: 700, color: ac }}>
+                            {p.price === "Hubungi kami" ? p.price : `Rp ${fmtP(p.price)}`}
+                          </span>
+                          {p.price !== "Hubungi kami" && <span style={{ display: "block", fontSize: "0.625rem", color: "#888" }}>/ orang</span>}
+                        </div>
+                        <span style={{ fontSize: "0.5625rem", color: ac, fontWeight: 700, display: "inline-block", transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", flexShrink: 0 }}>▼</span>
+                      </button>
+                      <div style={{ maxHeight: isOpen ? "260px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
+                        <div style={{ borderTop: `1px solid ${ac}15`, padding: "11px 18px 13px", background: al }}>
+                          <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5px 14px" }}>
+                            {(p.points || []).map((pt, pi) => (
+                              <li key={pi} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "0.75rem", color: "#3a5266" }}>
+                                <span style={{ width: 4, height: 4, borderRadius: "50%", background: ac, flexShrink: 0, display: "inline-block" }} />
+                                {pt}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* ─ CTA ─ */}
+          <div style={{ background: `linear-gradient(135deg,#0d3b66,#1a5a78 40%,${ac})`, borderRadius: 14, padding: "22px 24px", textAlign: "center" }}>
+            <p style={{ color: "rgba(255,255,255,.8)", fontSize: "0.875rem", marginBottom: 16, lineHeight: 1.65 }}>Tertarik dengan paket ini? Hubungi kami untuk konsultasi gratis dan penawaran terbaik!</p>
+            <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+              <button
+                onClick={() => window.open(`${waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(`Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut. Terima kasih!`)}`, "_blank")}
+                style={{ padding: "11px 28px", background: "#25D366", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
+                💬 WhatsApp Sekarang
+              </button>
+              <button onClick={onClose}
+                style={{ padding: "11px 22px", background: "rgba(255,255,255,.14)", color: "#fff", border: "1.5px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: "0.875rem", fontWeight: 600, cursor: "pointer" }}>
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes tdFadeIn { from { opacity: 0 } to { opacity: 1 } }
+        @keyframes tdSlideUp { from { transform: translateY(100%) } to { transform: translateY(0) } }
+      `}</style>
+    </div>
+  );
+}
+
 /* ─────────────── SERVICES PAGE ─────────────── */
 function ServicesPage({ content, services, navigateTo }) {
   const [selectedService, setSelectedService] = useState(null);
+  const [travelDetailSvc, setTravelDetailSvc] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [hoverPos, setHoverPos] = useState({});
   const [activeCategory, setActiveCategory] = useState(null);
@@ -2566,7 +2939,13 @@ function ServicesPage({ content, services, navigateTo }) {
     { key: "wedding",   label: "💍 Wedding Organizer", color: "#8e44ad" },
   ];
 
-  const openDetail = (svc) => { setSelectedService(svc); setActiveImg(0); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const openDetail = (svc) => {
+    if (svc.category === "traveling") {
+      setTravelDetailSvc(svc);
+    } else {
+      setSelectedService(svc); setActiveImg(0); window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
   const closeDetail = () => setSelectedService(null);
 
   const handleBook = (svc) => {
@@ -2962,7 +3341,7 @@ function ServicesPage({ content, services, navigateTo }) {
               /* ── TRAVELING: 2-col grid with price accordion cards ── */
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 28 }}>
                 {filteredServices.map(svc => (
-                  <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} />
+                  <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} waLink={content.waLink} />
                 ))}
               </div>
             ) : (
@@ -3072,6 +3451,15 @@ function ServicesPage({ content, services, navigateTo }) {
           </div>
         </div>
       </section>
+
+      {/* Travel Package Detail Modal */}
+      {travelDetailSvc && (
+        <TravelPackageDetailModal
+          svc={travelDetailSvc}
+          waLink={content.waLink}
+          onClose={() => setTravelDetailSvc(null)}
+        />
+      )}
     </div>
   );
 }
@@ -4635,14 +5023,27 @@ export default function BricksyTravel() {
         result[key] = mergeWithDefaults(sv, dv);
       } else if (key === "services" && Array.isArray(sv) && Array.isArray(dv)) {
         // Array services: gabungkan data Firebase + item DEFAULT yang id-nya belum ada.
-        // Ini memastikan paket baru (traveling id 4–7, dsb.) muncul meski Firebase
-        // menyimpan versi lama yang belum punya paket tersebut.
+        // JUGA: merge field baru (facilities, destinations, services) ke tiap item lama
+        // yang tersimpan di Firebase namun belum punya field tersebut.
         if (sv.length === 0) {
           result[key] = dv; // Firebase kosong → seed penuh dari DEFAULT
         } else {
+          const defaultById = Object.fromEntries(dv.map(s => [s.id, s]));
+          const merged = sv.map(savedItem => {
+            const def = defaultById[savedItem.id];
+            if (!def) return savedItem; // item custom user, tidak ada di DEFAULT → biarkan
+            // Inject field baru dari DEFAULT jika belum ada di item tersimpan
+            const patched = { ...savedItem };
+            for (const field of ["facilities", "destinations", "services", "images", "prices"]) {
+              if (patched[field] === undefined || patched[field] === null) {
+                patched[field] = def[field];
+              }
+            }
+            return patched;
+          });
           const existingIds = new Set(sv.map(s => s.id));
           const missing = dv.filter(s => !existingIds.has(s.id));
-          result[key] = [...sv, ...missing];
+          result[key] = [...merged, ...missing];
         }
       } else {
         // Primitif atau array lain → pakai nilai yang disimpan
