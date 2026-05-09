@@ -775,6 +775,20 @@ const GS = () => (
     .fade-in{animation:fadeIn .4s ease}
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
     @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    @keyframes galScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* Gallery ticker — desktop only */
+    .gal-ticker{overflow:hidden;margin-bottom:40px;mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%)}
+    .gal-ticker-track{display:flex;gap:10px;width:max-content;animation:galScroll 22s linear infinite}
+    .gal-ticker-track:hover{animation-play-state:paused}
+    .gal-ticker-item{width:220px;height:148px;border-radius:6px;overflow:hidden;flex-shrink:0}
+    .gal-ticker-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+    .gal-ticker-item:hover img{transform:scale(1.06)}
+    @media(max-width:900px){
+      .gal-ticker{mask-image:none;-webkit-mask-image:none}
+      .gal-ticker-track{animation:none;flex-wrap:wrap;justify-content:center;width:100%}
+      .gal-ticker-item{width:calc(50% - 6px);height:120px}
+    }
 
     h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;color:#fff;line-height:1.15;font-weight:800;letter-spacing:-.01em}
     h1{font-size:clamp(2rem,5vw,3.5rem)}
@@ -5188,27 +5202,35 @@ export default function BricksyTravel() {
                   <AdvSection data={data} navigateTo={navigateTo} />
 
                   {/* Gallery */}
-                  <section className="section-md" style={{ background: "#ffffff", position: "relative", overflow: "hidden", borderBottom: "1px solid #e8f5f8" }}>
+                  <section className="section-md" style={{ background: "#ffffff", position: "relative", overflow: "visible", borderBottom: "1px solid #e8f5f8" }}>
                     <div style={{ maxWidth: 1200, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
                       <div className="label-xs" style={{ color: "#0891b2", marginBottom: 14 }}>INTRODUCING</div>
                       <h2 className="display" style={{ fontSize: "clamp(1.75rem,4.5vw,3rem)", fontWeight: 900, color: "#0d3b66", marginBottom: 16 }}>
                         {data.content.newAdvTitle}
                       </h2>
                       <p style={{ fontSize: "0.9375rem", color: "#4a7f98", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px", whiteSpace: "pre-line" }}>{data.content.newAdvSub}</p>
-                      <div className="gal-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10, marginBottom: 40 }}>
-                        {(() => {
-                          const allSecs = ["news","shop","destinations"];
-                          const publishedPosts = allSecs.flatMap(sec => (data.posts?.[sec] || []).filter(p => p.status === "published" && p.coverImage));
-                          const galItems = publishedPosts.length > 0 ? publishedPosts.slice(0, 6) : data.images.gal.map(src => ({ coverImage: src, _static: true }));
-                          return galItems.map((item, i) => (
-                            <div key={i} className="img-zoom hover-lift"
-                              onClick={() => { if (!item._static) { setReadPost(item); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
-                              style={{ borderRadius: 4, overflow: "hidden", aspectRatio: "3/2", cursor: item._static ? "default" : "pointer" }}>
-                              <img src={item.coverImage || item} alt={item.title || ""} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+
+                      {/* Gallery Ticker — scroll kiri di desktop, grid di mobile */}
+                      {(() => {
+                        const allSecs = ["news","shop","destinations"];
+                        const publishedPosts = allSecs.flatMap(sec => (data.posts?.[sec] || []).filter(p => p.status === "published" && p.coverImage));
+                        const galItems = publishedPosts.length > 0 ? publishedPosts.slice(0, 6) : data.images.gal.map(src => ({ coverImage: src, _static: true }));
+                        const doubled = [...galItems, ...galItems];
+                        return (
+                          <div className="gal-ticker">
+                            <div className="gal-ticker-track">
+                              {doubled.map((item, i) => (
+                                <div key={i} className="gal-ticker-item hover-lift"
+                                  onClick={() => { if (!item._static) { setReadPost(item); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
+                                  style={{ cursor: item._static ? "default" : "pointer" }}>
+                                  <img src={item.coverImage || item} alt={item.title || ""} />
+                                </div>
+                              ))}
                             </div>
-                          ));
-                        })()}
-                      </div>
+                          </div>
+                        );
+                      })()}
+
                       <div style={{ position: "relative", display: "inline-block" }}>
                         <button onClick={() => setExploreOpen(v => !v)} className="btn-outline-solid"
                           style={{ padding: "12px 30px", border: "1.5px solid #0d3b66", background: exploreOpen ? "#0d3b66" : "#fff",
@@ -5220,7 +5242,7 @@ export default function BricksyTravel() {
                         </button>
                         {exploreOpen && (
                           <div style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, background: "#fff",
-                            border: "1.5px solid #0d3b66", borderRadius: 4, minWidth: 200, zIndex: 50,
+                            border: "1.5px solid #0d3b66", borderRadius: 4, minWidth: 200, zIndex: 200,
                             boxShadow: "0 8px 32px rgba(13,59,102,.15)", overflow: "hidden" }}>
                             {[
                               { label: "🎉 Event Plan", key: "destinations" },
