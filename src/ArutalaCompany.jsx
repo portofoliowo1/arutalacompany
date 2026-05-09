@@ -1148,6 +1148,124 @@ const DEFAULT_DATA = {
       ],
       highlight: false,
     },
+
+    /* ── EVENT PLAN TAMBAHAN: KONSER MUSIK & PEMERINTAH ── */
+    {
+      id: 20,
+      category: "event",
+      title: "Paket Konser Musik",
+      badge: "Hiburan",
+      badgeColor: "#dc2626",
+      price: "Rp 25.000.000",
+      priceNote: "/ event (mulai)",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      description: "Paket penyelenggaraan konser musik profesional dari skala intimate hingga open-air besar. Kami menangani seluruh produksi — panggung, sound system, lighting, artist management, keamanan, tiket, hingga dokumentasi — agar konser berjalan lancar dan berkesan.",
+      features: [
+        "Konsultasi konsep & rundown konser",
+        "Desain & pemasangan panggung profesional",
+        "Sound system line array & FOH engineer",
+        "Lighting show full rig (moving head, laser, LED)",
+        "Artist management & rider teknis",
+        "Manajemen tiket & registrasi tamu",
+        "Keamanan & crowd management",
+        "Dokumentasi foto & video sinematik",
+        "Publikasi & promosi event (media sosial, poster)",
+        "Kapasitas 500 – 10.000 penonton",
+      ],
+      highlight: true,
+    },
+    {
+      id: 21,
+      category: "event",
+      title: "Paket Pemerintah Kota / Kabupaten",
+      badge: "Resmi & Protokol",
+      badgeColor: "#1d4ed8",
+      price: "Rp 20.000.000",
+      priceNote: "/ event (mulai)",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      description: "Paket penyelenggaraan event resmi instansi pemerintah daerah — Kota maupun Kabupaten — yang memenuhi standar protokoler kenegaraan. Meliputi hari jadi kota, upacara kenegaraan, festival daerah, musrenbang, pelantikan pejabat, hingga expo potensi daerah.",
+      features: [
+        "Konsultasi konsep & protokol acara pemerintah",
+        "Dekorasi resmi bernuansa merah-putih & lambang daerah",
+        "Panggung, podium, & backdrop resmi instansi",
+        "Sound system & tata suara gedung / outdoor",
+        "MC protokoler berbahasa Indonesia formal",
+        "Koordinasi paspampres / keamanan setempat",
+        "Dokumentasi foto & video resmi berita",
+        "Perlengkapan administrasi & atribut acara",
+        "Live streaming & siaran pers (opsional)",
+        "Kapasitas 200 – 5.000 tamu undangan",
+      ],
+      highlight: false,
+    },
+
+    /* ── EVENT PLAN CUSTOM ── */
+    {
+      id: 18,
+      category: "event",
+      pkgId: "custom",
+      title: "Paket Event Custom",
+      tagline: "Rancang Event Sesuai Visi & Kebutuhan Anda",
+      badge: "BISA CUSTOM",
+      badgeColor: "#7c3aed",
+      price: "Hubungi Kami",
+      priceNote: "harga transparan & negosiasi",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      description: "Tidak menemukan paket yang cocok? Kami merancang event 100% sesuai kebutuhan Anda — dari konsep, tema, vendor, hingga hari H. Seminar, gathering, launching produk, pameran, konser mini, atau apapun yang Anda bayangkan, kami wujudkan.",
+      features: [
+        "Konsultasi tema & konsep event gratis",
+        "Skala acara bebas: 20 – 5.000 tamu",
+        "Pilihan venue indoor & outdoor",
+        "Koordinasi vendor sesuai budget",
+        "Rundown & timeline custom",
+        "Dekorasi & branding event penuh",
+        "Dokumentasi foto & video profesional",
+        "Support penuh hari H on-site",
+      ],
+      highlight: false,
+    },
+
+    /* ── WEDDING ORGANIZER CUSTOM ── */
+    {
+      id: 19,
+      category: "wedding",
+      pkgId: "custom",
+      title: "Paket Wedding Custom",
+      tagline: "Wujudkan Pernikahan Impian Tanpa Batas",
+      badge: "BISA CUSTOM",
+      badgeColor: "#7c3aed",
+      price: "Hubungi Kami",
+      priceNote: "konsultasi gratis, harga transparan",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      description: "Pernikahan adalah momen seumur hidup. Kami merancang setiap detailnya bersama Anda — dari akad hingga resepsi, dari dekorasi hingga catering, dari dokumentasi hingga hiburan. Tidak ada paket yang terlalu besar atau terlalu kecil bagi kami.",
+      features: [
+        "Konsultasi pernikahan gratis & tanpa batas",
+        "Pilihan tema bebas: modern, tradisional, outdoor, ballroom, garden, dll.",
+        "Wedding planner dedicated full-time",
+        "Koordinasi semua vendor (foto, video, katering, dekorasi, make-up, dll.)",
+        "Pelaminan & dekorasi 100% custom",
+        "Gladi resik & pendampingan hari H penuh",
+        "Kapasitas fleksibel: 30 – 1.000+ tamu",
+        "Harga transparan, cicilan tersedia",
+      ],
+      highlight: false,
+    },
   ],
   teamMembers: [
     { id: 1, name: "Budi Santoso", role: "CEO & Founder", quotes: "Setiap momen spesial layak dirayakan dengan sempurna.", photo: "https://ui-avatars.com/api/?name=Budi+Santoso&size=300&background=2d2d2d&color=fff&bold=true" },
@@ -2771,6 +2889,143 @@ function SectionPage({ section, posts, onReadPost }) {
 }
 
 /* ─────────────── TRAVEL PACKAGE CARD (accordion price) ─────────────── */
+/* ── WIDE CARD for Custom Event / Wedding Package — full width horizontal layout ── */
+function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
+  const [hovered, setHovered] = useState(false);
+  const ac = svc.badgeColor || "#7c3aed";
+  const isWedding = svc.category === "wedding";
+  const gradientBg = isWedding
+    ? `linear-gradient(135deg, #2d1b4e 0%, #5b2d8e 50%, ${ac} 100%)`
+    : `linear-gradient(135deg, #0a2e52 0%, #1a5a78 50%, ${ac} 100%)`;
+  const icon = isWedding ? "💍" : "🎉";
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        borderRadius: 18,
+        boxShadow: hovered ? "0 24px 64px rgba(13,59,102,.22)" : "0 6px 28px rgba(13,59,102,.13)",
+        border: `2px solid ${hovered ? ac : ac + "60"}`,
+        transition: "all .3s cubic-bezier(.22,1,.36,1)",
+        transform: hovered ? "translateY(-4px)" : "none",
+        background: gradientBg,
+        display: "flex", flexDirection: "row", minHeight: 280,
+        fontFamily: "'DM Sans',sans-serif", position: "relative", overflow: "hidden",
+      }}>
+      <div style={{ position: "absolute", right: -60, top: -60, width: 240, height: 240, borderRadius: "50%", background: "rgba(255,255,255,.06)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", right: 100, bottom: -80, width: 180, height: 180, borderRadius: "50%", background: "rgba(255,255,255,.04)", pointerEvents: "none" }} />
+      <div style={{ position: "relative", width: 320, flexShrink: 0, overflow: "hidden" }}>
+        <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
+          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.07)" : "scale(1)", opacity: 0.75 }}
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,transparent 50%, rgba(0,0,0,.4) 100%)" }} />
+        <div style={{ position: "absolute", top: 16, left: 16, background: ac, color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" }}>{svc.badge}</div>
+      </div>
+      <div style={{ flex: 1, padding: "32px 40px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", zIndex: 1 }}>
+        <div style={{ fontSize: "2rem", marginBottom: 8 }}>{icon}</div>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.4rem,2.5vw,2rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: 6 }}>{svc.title}</h2>
+        {svc.tagline && <div style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.65)", fontWeight: 600, letterSpacing: ".04em", marginBottom: 14, fontStyle: "italic" }}>{svc.tagline}</div>}
+        <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.80)", lineHeight: 1.75, marginBottom: 20, maxWidth: 580 }}>{svc.description}</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24 }}>
+          {(svc.features || []).map((feat, i) => (
+            <div key={i} style={{ display: "flex", gap: 6, alignItems: "center", background: "rgba(255,255,255,.12)", borderRadius: 8, padding: "5px 12px", backdropFilter: "blur(4px)" }}>
+              <span style={{ color: "#4ade80", fontWeight: 700, fontSize: "0.875rem" }}>&#10003;</span>
+              <span style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.9)", fontWeight: 500 }}>{feat}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+          <div>
+            <div style={{ fontSize: "0.625rem", color: "rgba(255,255,255,.55)", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 2 }}>Harga</div>
+            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff" }}>{svc.price}</div>
+            <div style={{ fontSize: "0.6875rem", color: "rgba(255,255,255,.6)", fontStyle: "italic" }}>{svc.priceNote}</div>
+          </div>
+          <button onClick={onDetail}
+            style={{ padding: "12px 28px", background: "#fff", color: ac, border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 800, cursor: "pointer", letterSpacing: ".02em", transition: "all .2s", boxShadow: "0 4px 16px rgba(0,0,0,.25)" }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = ".9"; e.currentTarget.style.transform = "scale(1.04)"; }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}>
+            Lihat Detail &amp; Konsultasi
+          </button>
+          <a href={waLink || "https://wa.me/6285745571442"} target="_blank" rel="noreferrer"
+            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 8, textDecoration: "none", transition: "opacity .2s" }}
+            onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+            &#128172; WhatsApp Sekarang
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── WIDE CARD for Custom Package — full width horizontal layout ── */
+function TravelPackageCardWide({ svc, onDetail, waLink }) {
+  const [hovered, setHovered] = useState(false);
+  const ac = svc.accent || "#7c3aed";
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: "#fff", borderRadius: 18, overflow: "hidden",
+        boxShadow: hovered ? "0 20px 60px rgba(13,59,102,.18)" : "0 4px 24px rgba(13,59,102,.10)",
+        border: `2px solid ${hovered ? ac : ac + "50"}`,
+        transition: "all .3s cubic-bezier(.22,1,.36,1)",
+        transform: hovered ? "translateY(-4px)" : "none",
+        display: "flex", flexDirection: "row", minHeight: 260,
+        fontFamily: "'DM Sans',sans-serif",
+      }}>
+      {/* Left: image */}
+      <div style={{ position: "relative", width: 340, flexShrink: 0, overflow: "hidden" }}>
+        <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
+          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.07)" : "scale(1)" }}
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,transparent 60%,rgba(0,0,0,.35) 100%)" }} />
+        {svc.badge && (
+          <div style={{ position: "absolute", top: 14, left: 14, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
+            {svc.badge}
+          </div>
+        )}
+      </div>
+      {/* Right: content */}
+      <div style={{ flex: 1, padding: "28px 36px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 10 }}>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#0d3b66", lineHeight: 1.1, margin: 0 }}>{svc.title}</h2>
+          <span style={{ fontSize: "0.75rem", background: ac + "18", color: ac, borderRadius: 20, padding: "4px 14px", fontWeight: 700, letterSpacing: ".05em", whiteSpace: "nowrap" }}>{svc.tagline}</span>
+        </div>
+        <p style={{ fontSize: "1rem", color: "#4a7f98", lineHeight: 1.75, marginBottom: 18, maxWidth: 620 }}>{svc.description}</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 20 }}>
+          {(svc.features || []).map((feat, i) => (
+            <div key={i} style={{ display: "flex", gap: 6, alignItems: "center", background: "#f0f7fb", borderRadius: 8, padding: "5px 12px" }}>
+              <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem" }}>✓</span>
+              <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 500 }}>{feat}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+          <div>
+            <div style={{ fontSize: "0.625rem", color: "#5090aa", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 2 }}>Harga</div>
+            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66" }}>{svc.price}</div>
+            <div style={{ fontSize: "0.6875rem", color: "#4a7f98", fontStyle: "italic" }}>{svc.priceNote}</div>
+          </div>
+          <button onClick={onDetail}
+            style={{ padding: "12px 28px", background: `linear-gradient(135deg,${ac},#0891b2)`, color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".03em", transition: "opacity .2s" }}
+            onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+            Lihat Detail & Konsultasi
+          </button>
+          <a href={svc.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noreferrer"
+            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 8, textDecoration: "none", transition: "opacity .2s" }}
+            onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+            💬 WhatsApp Sekarang
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TravelPackageCard({ svc, onDetail, waLink }) {
   const [openIdx, setOpenIdx] = useState(null);
   const [hovered, setHovered] = useState(false);
@@ -3916,22 +4171,40 @@ function ServicesPage({ content, services, navigateTo }) {
               <div style={{ textAlign: "center", padding: "60px 0", color: "#5090aa" }}>Belum ada paket untuk kategori ini.</div>
             ) : activeCategory === "traveling" ? (
               /* ── TRAVELING: 2-col grid with price accordion cards ── */
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 28 }}>
-                {filteredServices.map(svc => (
-                  <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} waLink={content.waLink} />
-                ))}
-              </div>
+              (() => {
+                const customPkg = filteredServices.find(s => s.pkgId === "custom");
+                const regularPkgs = filteredServices.filter(s => s.pkgId !== "custom");
+                return (
+                  <div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 28 }}>
+                      {regularPkgs.map(svc => (
+                        <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} waLink={content.waLink} />
+                      ))}
+                    </div>
+                    {customPkg && (
+                      <div style={{ marginTop: 28 }}>
+                        <TravelPackageCardWide svc={customPkg} onDetail={() => openDetail(customPkg)} waLink={content.waLink} />
+                      </div>
+                    )}
+                  </div>
+                );
+              })()
             ) : (
-              /* ── EVENT / WEDDING: card style dengan hover popup ── */
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 28 }}>
-                {filteredServices.map(svc => {
-                  const isHov = hoveredCard === svc.id;
-                  return (
-                    <div key={svc.id}
-                      onMouseEnter={() => setHoveredCard(svc.id)}
-                      onMouseLeave={() => { setHoveredCard(null); setHoverPos(p => ({ ...p, [svc.id]: null })); }}
-                      onMouseMove={e => { const r = e.currentTarget.getBoundingClientRect(); setHoverPos(p => ({ ...p, [svc.id]: { x: e.clientX - r.left, y: e.clientY - r.top } })); }}
-                      style={{ background: "#fff", borderRadius: 14, overflow: "visible", boxShadow: isHov ? "0 20px 48px rgba(13,59,102,.18)" : "0 4px 16px rgba(13,59,102,.08)", transform: isHov ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #0891b2" : isHov ? "2px solid rgba(8,145,178,.4)" : "2px solid transparent", position: "relative" }}>
+              /* ── EVENT / WEDDING: card style dengan hover popup + Custom full-width di bawah ── */
+              (() => {
+                const customPkg = filteredServices.find(s => s.pkgId === "custom");
+                const regularSvcs = filteredServices.filter(s => s.pkgId !== "custom");
+                return (
+                  <div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 28 }}>
+                      {regularSvcs.map(svc => {
+                        const isHov = hoveredCard === svc.id;
+                        return (
+                          <div key={svc.id}
+                            onMouseEnter={() => setHoveredCard(svc.id)}
+                            onMouseLeave={() => { setHoveredCard(null); setHoverPos(p => ({ ...p, [svc.id]: null })); }}
+                            onMouseMove={e => { const r = e.currentTarget.getBoundingClientRect(); setHoverPos(p => ({ ...p, [svc.id]: { x: e.clientX - r.left, y: e.clientY - r.top } })); }}
+                            style={{ background: "#fff", borderRadius: 14, overflow: "visible", boxShadow: isHov ? "0 20px 48px rgba(13,59,102,.18)" : "0 4px 16px rgba(13,59,102,.08)", transform: isHov ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #0891b2" : isHov ? "2px solid rgba(8,145,178,.4)" : "2px solid transparent", position: "relative" }}>
 
                       {/* Floating popup */}
                       {isHov && hoverPos[svc.id] && (
@@ -4000,8 +4273,17 @@ function ServicesPage({ content, services, navigateTo }) {
                       </div>
                     </div>
                   );
-                })}
-              </div>
+                        })}
+                      </div>
+                    </div>
+                    {customPkg && (
+                      <div style={{ marginTop: 28 }}>
+                        <EventWeddingCustomCardWide svc={customPkg} onDetail={() => openDetail(customPkg)} waLink={content.waLink} />
+                      </div>
+                    )}
+                  </div>
+                );
+              })()
             )}
           </div>
         )}
@@ -5710,9 +5992,17 @@ export default function BricksyTravel() {
             if (!def) return savedItem; // item custom user, tidak ada di DEFAULT → biarkan
             // Inject field baru dari DEFAULT jika belum ada di item tersimpan
             const patched = { ...savedItem };
-            for (const field of ["facilities", "destinations", "services", "images", "prices"]) {
-              if (patched[field] === undefined || patched[field] === null) {
-                patched[field] = def[field];
+            // Untuk paket traveling: selalu sync destinations, facilities, prices dari DEFAULT
+            // (agar update konten di code langsung terefleksi)
+            if (def.category === "traveling") {
+              if (def.destinations) patched.destinations = def.destinations;
+              if (def.facilities) patched.facilities = def.facilities;
+              if (def.prices) patched.prices = def.prices;
+              if (def.services) patched.services = def.services;
+            }
+            for (const field of ["facilities", "destinations", "services", "images", "prices", "pkgId", "tagline", "accent", "accentLight", "duration", "minPeserta", "description", "features", "highlight", "badge", "badgeColor", "priceNote"]) {
+              if (patched[field] === undefined || patched[field] === null || patched[field] === "") {
+                if (def[field] !== undefined) patched[field] = def[field];
               }
             }
             return patched;
