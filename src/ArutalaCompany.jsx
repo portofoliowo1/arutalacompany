@@ -4297,6 +4297,7 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
                 ) : (
                   <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.35rem", fontWeight: 700, color: "rgba(255,255,255,.6)", lineHeight: 1 }}>Rp 0</span>
                 );
+              })()}
             </div>
           </div>
           <div style={{
