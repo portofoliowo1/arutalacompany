@@ -2084,7 +2084,7 @@ const GS = () => (
     .art-content-inner{ padding:24px 28px 32px; }
     .art-breadcrumb{ font-size:11px; color:#888; margin-bottom:10px; }
     .art-breadcrumb span{ color:#0891b2; }
-    .art-h1{ font-size:clamp(1.5rem,3.2vw,2rem); font-weight:700; color:#111; line-height:1.25; margin-bottom:16px; font-family:'Playfair Display',serif; }
+    .art-h1{ font-size:clamp(1.25rem,2vw,1.6rem); font-weight:700; color:#111; line-height:1.35; margin-bottom:16px; font-family:'Playfair Display',serif; }
     .art-meta-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; padding-bottom:16px; border-bottom:1px solid #eee; flex-wrap:wrap; gap:10px; }
     .art-author{ display:flex; align-items:center; gap:10px; }
     .art-avatar{ width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#0875a8,#10d0e0); display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; flex-shrink:0; }
@@ -2127,7 +2127,7 @@ const GS = () => (
       .art-share-bar{ top:58px!important; }
       .art-body-wrap{ padding:12px 3% 40px!important; gap:16px!important; }
       .art-content-inner{ padding:16px 16px 24px!important; }
-      .art-h1{ font-size:clamp(1.3rem,6vw,1.7rem)!important; }
+      .art-h1{ font-size:clamp(1.1rem,5vw,1.35rem)!important; }
       .art-pilihan-grid{ grid-template-columns:1fr!important; }
     }
 
@@ -3128,7 +3128,8 @@ function PostCard({ post, onClick, view = "grid" }) {
       <div style={{ padding: "14px 16px 14px 0", flex: 1 }}>
         {post.category && <span className="label-xs" style={{ color: "#0891b2" }}>{post.category}</span>}
         <h3 className="post-card-title" style={{ fontFamily: "'Playfair Display',serif", fontWeight: 700,
-          fontSize: "1.1rem", color: "#0d3b66", margin: "6px 0 8px", lineHeight: 1.3, transition: "color .2s" }}>{post.title}</h3>
+          fontSize: "1.1rem", color: "#0d3b66", margin: "6px 0 8px", lineHeight: 1.35, transition: "color .2s",
+          display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{post.title}</h3>
         <p style={{ fontSize: "0.875rem", color: "#1a5a78", lineHeight: 1.65, marginBottom: 10 }}>
           {post.excerpt?.length > 100 ? post.excerpt.slice(0, 100) + "…" : post.excerpt}
         </p>
@@ -3152,7 +3153,8 @@ function PostCard({ post, onClick, view = "grid" }) {
           <span style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{formatDate(post.date)}</span>
         </div>
         <h3 className="post-card-title" style={{ fontFamily: "'Playfair Display',serif", fontWeight: 700,
-          fontSize: "1.15rem", color: "#0d3b66", marginBottom: 10, lineHeight: 1.3, transition: "color .2s" }}>{post.title}</h3>
+          fontSize: "1.15rem", color: "#0d3b66", marginBottom: 10, lineHeight: 1.35, transition: "color .2s",
+          display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{post.title}</h3>
         <p style={{ fontSize: "0.875rem", color: "#1a5a78", lineHeight: 1.7 }}>
           {post.excerpt?.length > 110 ? post.excerpt.slice(0, 110) + "…" : post.excerpt}
         </p>
@@ -3246,14 +3248,6 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
           {/* ── Article Card ── */}
           <div className="art-content-card" style={{ marginBottom: 20 }}>
 
-            {/* Cover Image */}
-            {post.coverImage && (
-              <div className="art-cover-wrap">
-                <img loading="lazy" src={post.coverImage} alt={post.title} />
-                <div className="art-lihat-foto">👁 Lihat Foto</div>
-              </div>
-            )}
-
             <div className="art-content-inner">
               {/* Breadcrumb */}
               <div className="art-breadcrumb">
@@ -3289,6 +3283,18 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                   ))}
                 </div>
               </div>
+
+              {/* Cover Image — in-content, proportional */}
+              {post.coverImage && (
+                <div style={{ borderRadius: 6, overflow: "hidden", marginBottom: 24, position: "relative" }}>
+                  <img loading="lazy" src={post.coverImage} alt={post.title}
+                    style={{ width: "100%", maxHeight: 420, objectFit: "cover", display: "block" }} />
+                  <div style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,.5)", color: "#fff",
+                    fontSize: 11, padding: "4px 11px", borderRadius: 4, display: "flex", alignItems: "center", gap: 5, fontWeight: 500 }}>
+                    👁 Lihat Foto
+                  </div>
+                </div>
+              )}
 
               {/* Excerpt */}
               {post.excerpt && (
