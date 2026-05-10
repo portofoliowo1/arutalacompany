@@ -2314,6 +2314,15 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
     if (editorRef.current) { onChange(editorRef.current.innerHTML); setIsEmpty(!editorRef.current.textContent.trim()); }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      // Insert non-breaking spaces as indent (2em = ~4 chars)
+      document.execCommand("insertHTML", false, "\u00a0\u00a0\u00a0\u00a0");
+      if (editorRef.current) { onChange(editorRef.current.innerHTML); }
+    }
+  };
+
   useEffect(() => {
     const close = (e) => { if (!e.target.closest?.("[data-richpicker]")) { setColorMenuOpen(false); setHighlightMenuOpen(false); } };
     document.addEventListener("mousedown", close);
@@ -2441,6 +2450,7 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
           contentEditable
           suppressContentEditableWarning
           onInput={handleInput}
+          onKeyDown={handleKeyDown}
           onFocus={() => setIsEmpty(false)}
           onBlur={() => setIsEmpty(!editorRef.current?.textContent?.trim())}
           style={{
