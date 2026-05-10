@@ -56,7 +56,9 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
                 <p style={{ fontSize: "0.875rem", color: "#4a7f98" }}>Belum ada artikel.</p>
               ) : allPosts.slice(-5).reverse().map(p => (
                 <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid #edfafc" }}>
-                  <div style={{ width: 42, height: 42, borderRadius: 6, background: "#edfafc", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>📄</div>
+                  <div style={{ width: 42, height: 42, borderRadius: 6, overflow: "hidden", flexShrink: 0, background: "#edfafc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
+                    {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img ? <img loading="lazy" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} onError={e=>e.target.style.display="none"} /> : "📄"; })()}
+                  </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.title}</p>
                     <span style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{p.section} · {formatDate(p.date)}</span>
@@ -3114,10 +3116,18 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
 
 /* ─────────────── POST CARD ─────────────── */
 function PostCard({ post, onClick, view = "grid" }) {
+  const firstImg = (post.content || []).find(b => b.type === "image")?.value;
+
   if (view === "list") return (
     <article className="post-card hover-lift post-card-list" onClick={onClick}
       style={{ display: "flex", gap: 20, background: "#fff", borderRadius: 8, overflow: "hidden",
         cursor: "pointer", boxShadow: "0 2px 10px rgba(0,0,0,.06)", marginBottom: 16 }}>
+      {firstImg && (
+        <div className="post-thumb" style={{ flexShrink: 0, width: 180, height: 130, overflow: "hidden" }}>
+          <img loading="lazy" src={firstImg} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
+            onError={e => e.target.style.display = "none"} />
+        </div>
+      )}
       <div style={{ padding: "14px 16px 14px 0", flex: 1 }}>
         {post.category && <span className="label-xs" style={{ color: "#0891b2" }}>{post.category}</span>}
         <h3 className="post-card-title" style={{ fontFamily: "'Playfair Display',serif", fontWeight: 700,
@@ -3135,6 +3145,12 @@ function PostCard({ post, onClick, view = "grid" }) {
     <article className="post-card hover-lift" onClick={onClick}
       style={{ background: "#fff", borderRadius: 8, overflow: "hidden", cursor: "pointer",
         boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
+      {firstImg && (
+        <div className="img-zoom" style={{ height: 200, overflow: "hidden" }}>
+          <img loading="lazy" src={firstImg} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            onError={e => e.target.style.display = "none"} />
+        </div>
+      )}
       <div style={{ padding: "18px 20px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
           {post.category && <span className="label-xs" style={{ color: "#0891b2" }}>{post.category}</span>}
@@ -3326,7 +3342,10 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
               <div className="art-terkait-scroll">
                 {artikelTerkait.map(p => (
                   <div key={p.id} className="art-terkait-card" onClick={() => handlePost(p)}>
-                    <div style={{ height: 120, background: "linear-gradient(135deg,#edfafc,#c0e8f0)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>📄</div>
+                    {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img
+                      ? <div style={{ height: 120, overflow: "hidden" }}><img loading="lazy" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform .3s" }} onMouseEnter={e=>e.target.style.transform="scale(1.05)"} onMouseLeave={e=>e.target.style.transform="scale(1)"} onError={e=>e.target.style.display="none"} /></div>
+                      : <div style={{ height: 120, background: "linear-gradient(135deg,#edfafc,#c0e8f0)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>📄</div>;
+                    })()}
                     <div style={{ padding: "10px 12px 14px" }}>
                       {p.category && <div style={{ fontSize: 10, color: "#0891b2", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 5 }}>{p.category}</div>}
                       <p style={{ fontSize: 12.5, fontWeight: 600, color: "#222", lineHeight: 1.45,
@@ -3349,7 +3368,10 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
               <div className="art-pilihan-grid">
                 {pilihanUntukmu.map(p => (
                   <div key={p.id} className="art-pilihan-card" onClick={() => handlePost(p)}>
-                    <div style={{ height: 140, background: "linear-gradient(135deg,#f5fdff,#edfafc)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}>🌟</div>
+                    {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img
+                      ? <div style={{ height: 140, overflow: "hidden" }}><img loading="lazy" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform .3s" }} onMouseEnter={e=>e.target.style.transform="scale(1.05)"} onMouseLeave={e=>e.target.style.transform="scale(1)"} onError={e=>e.target.style.display="none"} /></div>
+                      : <div style={{ height: 140, background: "linear-gradient(135deg,#f5fdff,#edfafc)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}>🌟</div>;
+                    })()}
                     <div style={{ padding: "12px 14px 16px" }}>
                       {p.category && <div style={{ fontSize: 10, color: "#0891b2", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 5 }}>{p.category}</div>}
                       <p style={{ fontSize: 13, fontWeight: 600, color: "#222", lineHeight: 1.45,
@@ -3393,7 +3415,10 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                 {sidebarCards.map(p => (
                   <div key={p.id} className="art-sb-card" onClick={() => handlePost(p)}>
                     <div className="art-sb-thumb">
-                      <div style={{ width: "100%", height: "100%", background: "#edfafc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>📄</div>
+                      {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img
+                        ? <img loading="lazy" src={img} alt="" onError={e=>e.target.style.display="none"} />
+                        : <div style={{ width:"100%", height:"100%", background:"#edfafc", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>📄</div>;
+                      })()}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p style={{ fontSize: 12, fontWeight: 600, color: "#222", lineHeight: 1.45,
@@ -3448,7 +3473,10 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                     style={{ display: "flex", gap: 10, cursor: "pointer", padding: "6px 0", borderBottom: "1px solid #f0f9fb" }}
                     onMouseEnter={e => e.currentTarget.style.background = "#f5fdff"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                    <div style={{ width: 36, height: 36, borderRadius: 6, background: "#edfafc", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>📄</div>
+                    {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img
+                      ? <div style={{ width:36, height:36, borderRadius:6, overflow:"hidden", flexShrink:0 }}><img loading="lazy" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} onError={e=>e.target.style.display="none"} /></div>
+                      : <div style={{ width:36, height:36, borderRadius:6, background:"#edfafc", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>📄</div>;
+                    })()}
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p style={{ fontSize: 12, fontWeight: 600, color: "#1a2e3b", lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", marginBottom: 4 }}>{p.title}</p>
                       <span style={{ fontSize: 10, color: "#0891b2", fontWeight: 600 }}>{p.category || (p.section === "news" ? "Event Plan" : p.section === "shop" ? "Traveling" : "Wedding")}</span>
