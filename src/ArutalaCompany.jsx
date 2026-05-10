@@ -491,6 +491,27 @@ async function sendOTPEmail(toEmail, passcode) {
 
 const SECTIONS = ["news", "shop", "destinations"];
 
+// ─── URL Routing ────────────────────────────────────────────────────
+// home=Beranda | about=About | news=Event Plan | shop=Traveling
+// destinations=Wedding Organizer | services=Layanan Kami
+const PAGE_TO_PATH = {
+  home:         "/",
+  about:        "/about",
+  news:         "/event",
+  shop:         "/traveling",
+  destinations: "/wedding",
+  services:     "/services",
+};
+const PATH_TO_PAGE = Object.fromEntries(
+  Object.entries(PAGE_TO_PATH).map(([k, v]) => [v, k])
+);
+const getInitialPage = () => {
+  try {
+    const path = window.location.pathname.replace(/\/$/, "") || "/";
+    return PATH_TO_PAGE[path] || "home";
+  } catch { return "home"; }
+};
+
 const SECTION_LABELS = {
   news: "Event Plan",
   shop: "Traveling",
@@ -7168,9 +7189,7 @@ export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [page, setPage] = useState("home");   // home | about | news | shop | destinations | services
-  const [historyStack, setHistoryStack] = useState(["home"]); // SPA history
-  const [historyIdx, setHistoryIdx] = useState(0);            // current position in stack
+  const [page, setPage] = useState(() => getInitialPage());
   const [readPost, setReadPost] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [comingSoon, setComingSoon] = useState(null); // null | "google" | "apple"
@@ -7432,33 +7451,31 @@ export default function BricksyTravel() {
   const canEdit = user?.role === "admin" || user?.role === "content_writer";
   const canCS = user?.role === "admin" || user?.role === "customer_services";
 
+  // ─── Sync browser back/forward ke page state ───────────────────
+  useEffect(() => {
+    const handlePop = () => {
+      const path = window.location.pathname.replace(/\/$/, "") || "/";
+      setPage(PATH_TO_PAGE[path] || "home");
+      setReadPost(null);
+      setMobileMenu(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    window.addEventListener("popstate", handlePop);
+    return () => window.removeEventListener("popstate", handlePop);
+  }, []);
+
   const navigateTo = (p) => {
-    setPage(p); setReadPost(null); setMobileMenu(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setHistoryStack(prev => {
-      const trimmed = prev.slice(0, historyIdx + 1); // buang forward history
-      return [...trimmed, p];
-    });
-    setHistoryIdx(prev => prev + 1);
-  };
-
-  const spaBack = () => {
-    if (historyIdx <= 0) return;
-    const newIdx = historyIdx - 1;
-    setHistoryIdx(newIdx);
-    const target = historyStack[newIdx];
-    setPage(target); setReadPost(null); setMobileMenu(false);
+    const path = PAGE_TO_PATH[p] || "/";
+    window.history.pushState({ page: p }, "", path);
+    setPage(p);
+    setReadPost(null);
+    setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const spaForward = () => {
-    if (historyIdx >= historyStack.length - 1) return;
-    const newIdx = historyIdx + 1;
-    setHistoryIdx(newIdx);
-    const target = historyStack[newIdx];
-    setPage(target); setReadPost(null); setMobileMenu(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  // Back & Forward kini pakai native browser history
+  const spaBack    = () => window.history.back();
+  const spaForward = () => window.history.forward();
 
   // Post operations
   // silent=true → auto-save, tetap di editor, tanpa notif
@@ -7869,10 +7886,10 @@ export default function BricksyTravel() {
           {/* ── NAVIGASI MAJU / MUNDUR ── */}
           {(() => {
             const isMobileNav = window.innerWidth <= 768;
-            const canBack = historyIdx > 0;
-            const canFwd = historyIdx < historyStack.length - 1;
-            const PAGE_LABELS = { home: "Beranda", about: "Tentang Kami", services: "Layanan", destinations: "Destinasi", news: "Berita", shop: "Toko" };
-            const currentLabel = PAGE_LABELS[historyStack[historyIdx]] || historyStack[historyIdx] || "Halaman";
+            const canBack = window.history.length > 1;
+            const canFwd = false; // browser tidak expose ini secara native
+            const PAGE_LABELS = { home: "Beranda", about: "About", services: "Layanan Kami", destinations: "Wedding Organizer", news: "Event Plan", shop: "Traveling" };
+            const currentLabel = PAGE_LABELS[page] || page || "Halaman";
             if (isMobileNav) {
               /* ── MOBILE: bold rectangle pill di kiri bawah ── */
               return (
