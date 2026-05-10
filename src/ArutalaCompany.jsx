@@ -2070,30 +2070,65 @@ const GS = () => (
       .post-card-list .post-thumb{width:100%!important;height:160px!important}
     }
 
-    /* ── Article Detail 3-Column Layout ── */
-    .article-detail-layout{
-      display:grid;
-      grid-template-columns:280px 1fr 260px;
-      grid-template-areas:"left main right";
-      gap:28px;
-      align-items:start;
-    }
-    .article-sidebar-left{ grid-area:left; position:sticky; top:160px; }
-    .article-body{ grid-area:main; }
-    .article-sidebar-right{ grid-area:right; position:sticky; top:160px; }
+    /* ── Article Detail — Kompas-style 2-column ── */
+    .art-page{ background:#f2f2f2; min-height:100vh; }
+    .art-share-bar{ background:#fff; border-bottom:1px solid #e8e8e8; padding:10px 5%; display:flex; align-items:center; gap:14px; position:sticky; top:96px; z-index:88; }
+    .art-share-bar .art-share-title{ flex:1; font-size:12px; color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .art-body-wrap{ max-width:1200px; margin:0 auto; padding:24px 3% 60px; display:grid; grid-template-columns:1fr 300px; gap:28px; align-items:start; }
+    .art-main{ min-width:0; }
+    .art-sidebar{ position:sticky; top:168px; }
+    .art-cover-wrap{ position:relative; border-radius:6px; overflow:hidden; margin-bottom:0; }
+    .art-cover-wrap img{ width:100%; display:block; max-height:500px; object-fit:cover; }
+    .art-lihat-foto{ position:absolute; top:14px; right:14px; background:rgba(0,0,0,.55); color:#fff; font-size:11px; padding:5px 12px; border-radius:4px; display:flex; align-items:center; gap:5px; font-weight:500; }
+    .art-content-card{ background:#fff; border-radius:6px; overflow:hidden; }
+    .art-content-inner{ padding:24px 28px 32px; }
+    .art-breadcrumb{ font-size:11px; color:#888; margin-bottom:10px; }
+    .art-breadcrumb span{ color:#0891b2; }
+    .art-h1{ font-size:clamp(1.5rem,3.2vw,2rem); font-weight:700; color:#111; line-height:1.25; margin-bottom:16px; font-family:'Playfair Display',serif; }
+    .art-meta-row{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; padding-bottom:16px; border-bottom:1px solid #eee; flex-wrap:wrap; gap:10px; }
+    .art-author{ display:flex; align-items:center; gap:10px; }
+    .art-avatar{ width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#0875a8,#10d0e0); display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; font-weight:700; flex-shrink:0; }
+    .art-actions{ display:flex; gap:6px; }
+    .art-action-btn{ width:32px; height:32px; border-radius:50%; border:1px solid #ddd; background:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:background .15s; }
+    .art-action-btn:hover{ background:#f0f0f0; }
+    .art-excerpt{ font-size:1.0625rem; color:#333; line-height:1.85; margin-bottom:24px; font-style:italic; font-family:'Cormorant Garamond',serif; padding:14px 18px; background:#f8fafc; border-left:3px solid #0891b2; border-radius:0 6px 6px 0; }
+    .art-divider{ border:none; border-top:1px solid #eee; margin:28px 0; }
 
-    @media(max-width:1200px){
-      .article-detail-layout{grid-template-columns:240px 1fr 220px;gap:20px;}
-    }
-    @media(max-width:960px){
-      .article-detail-layout{grid-template-columns:1fr!important;grid-template-areas:"main" "left" "right"!important;gap:20px!important;}
-      .article-sidebar-left,.article-sidebar-right{position:static!important;}
+    /* Artikel Terkait */
+    .art-terkait-scroll{ display:flex; gap:14px; overflow-x:auto; padding-bottom:8px; -webkit-overflow-scrolling:touch; scrollbar-width:thin; }
+    .art-terkait-scroll::-webkit-scrollbar{ height:4px; }
+    .art-terkait-scroll::-webkit-scrollbar-thumb{ background:#c0e8f0; border-radius:2px; }
+    .art-terkait-card{ flex-shrink:0; width:220px; cursor:pointer; border-radius:6px; overflow:hidden; background:#fff; border:1px solid #eee; transition:box-shadow .15s; }
+    .art-terkait-card:hover{ box-shadow:0 4px 14px rgba(0,0,0,.1); }
+
+    /* Pilihan Untukmu */
+    .art-pilihan-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .art-pilihan-card{ cursor:pointer; border-radius:6px; overflow:hidden; background:#fff; border:1px solid #eee; transition:box-shadow .15s; }
+    .art-pilihan-card:hover{ box-shadow:0 4px 14px rgba(0,0,0,.1); }
+
+    /* Sidebar article cards */
+    .art-sb-card{ display:flex; gap:10px; padding:12px 0; border-bottom:1px solid #eee; cursor:pointer; }
+    .art-sb-card:last-child{ border-bottom:none; }
+    .art-sb-thumb{ width:80px; height:60px; border-radius:4px; overflow:hidden; flex-shrink:0; }
+    .art-sb-thumb img{ width:100%; height:100%; object-fit:cover; }
+
+    /* Tags */
+    .art-tags{ display:flex; gap:7px; flex-wrap:wrap; margin-top:24px; padding-top:20px; border-top:1px solid #eee; }
+
+    /* Share bar share btns */
+    .art-share-icon{ width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:13px; cursor:pointer; flex-shrink:0; }
+
+    @media(max-width:900px){
+      .art-body-wrap{ grid-template-columns:1fr!important; }
+      .art-sidebar{ position:static!important; }
+      .art-pilihan-grid{ grid-template-columns:1fr 1fr; }
     }
     @media(max-width:640px){
-      .article-body{padding:28px 4% 60px!important}
-      .article-body h1{font-size:clamp(1.5rem,7vw,2.25rem)!important}
-      .article-back-bar{top:58px!important}
-      .article-sidebar-right{display:none!important;}
+      .art-share-bar{ top:58px!important; }
+      .art-body-wrap{ padding:12px 3% 40px!important; gap:16px!important; }
+      .art-content-inner{ padding:16px 16px 24px!important; }
+      .art-h1{ font-size:clamp(1.3rem,6vw,1.7rem)!important; }
+      .art-pilihan-grid{ grid-template-columns:1fr!important; }
     }
 
     /* ── Contact grid mobile ── */
@@ -3138,282 +3173,304 @@ function PostCard({ post, onClick, view = "grid" }) {
 
 /* ─────────────── ARTICLE DETAIL VIEW ─────────────── */
 function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
-  /* Related posts: same category or section, exclude current */
+  const [copied, setCopied] = useState(false);
+
+  /* Related: same category/section */
   const related = allPosts
     .filter(p => p.status === "published" && p.id !== post.id &&
       (p.category === post.category || p.section === post.section))
-    .slice(0, 5);
+    .slice(0, 8);
 
-  /* Fallback: latest published posts if no related */
-  const morePosts = allPosts
+  /* All other published posts excluding current */
+  const others = allPosts
     .filter(p => p.status === "published" && p.id !== post.id)
-    .slice(-6).reverse();
+    .slice(-16).reverse();
 
-  const suggested = related.length >= 2 ? related : morePosts.slice(0, 5);
-  const readAlso  = morePosts.filter(p => !suggested.find(s => s.id === p.id)).slice(0, 4);
+  /* "Artikel Terkait" — prefer related, fallback to others */
+  const artikelTerkait = related.length >= 2 ? related : others.slice(0, 6);
 
-  /* Collect all tags from published posts */
-  const allTags = [...new Set(allPosts.flatMap(p => p.tags || []))].slice(0, 18);
+  /* "Pilihan Untukmu" — grid below article */
+  const pilihanUntukmu = others
+    .filter(p => !artikelTerkait.find(r => r.id === p.id))
+    .slice(0, 6);
 
-  const travelTips = [
-    { icon: "🌤", tip: "Periksa cuaca setempat sebelum berangkat." },
-    { icon: "🎒", tip: "Bawa asuransi perjalanan untuk ketenangan pikiran." },
-    { icon: "📸", tip: "Simpan foto offline sebagai kenang-kenangan." },
-    { icon: "🤝", tip: "Hormati budaya & adat istiadat setempat." },
-    { icon: "💧", tip: "Selalu bawa air minum yang cukup." },
-  ];
+  /* Sidebar right — stacked cards */
+  const sidebarCards = others
+    .filter(p => !artikelTerkait.find(r => r.id === p.id) && !pilihanUntukmu.find(r => r.id === p.id))
+    .slice(0, 6);
 
   const handlePost = (p) => {
     if (onReadPost) { onReadPost(p); window.scrollTo({ top: 0, behavior: "smooth" }); }
   };
 
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+
+  const copyLink = () => {
+    navigator.clipboard?.writeText(shareUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+  };
+
+  const sectionLabel = { news: "Event Plan", shop: "Traveling", destinations: "Wedding Organizer" };
+  const breadSection = sectionLabel[post.section] || post.section || "Artikel";
+
   return (
-    <div className="fade-in" style={{ minHeight: "100vh", background: "#f5fbfd" }}>
-      {/* ── Back Bar ── */}
-      <div className="article-back-bar" style={{ background: "rgba(250,252,253,.97)", backdropFilter: "blur(10px)", borderBottom: "1px solid #c0e8f0",
-        padding: "12px 5%", position: "sticky", top: 96, zIndex: 90 }}>
-        <button onClick={onBack} style={{ fontSize: 13, color: "#0ea5c5", display: "flex", alignItems: "center", gap: 6, fontWeight: 500 }}>
+    <div className="fade-in art-page">
+
+      {/* ══ SHARE BAR (sticky) ══ */}
+      <div className="art-share-bar">
+        <button onClick={onBack} style={{ fontSize: 12, color: "#0891b2", fontWeight: 600, background: "none", border: "none", cursor: "pointer", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 4 }}>
           ← Kembali
         </button>
+        <span style={{ color: "#ddd" }}>|</span>
+        <span style={{ fontSize: 11, color: "#666", fontWeight: 600, letterSpacing: ".5px" }}>BAGIKAN:</span>
+        {[
+          { bg: "#1877f2", label: "f", url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}` },
+          { bg: "#1da1f2", label: "𝕏", url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(shareUrl)}` },
+          { bg: "#25d366", label: "💬", url: `https://wa.me/?text=${encodeURIComponent(post.title + " " + shareUrl)}` },
+          { bg: "#0088cc", label: "✈", url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(post.title)}` },
+        ].map(s => (
+          <div key={s.label} className="art-share-icon" style={{ background: s.bg }}
+            onClick={() => window.open(s.url, "_blank")}>{s.label}</div>
+        ))}
+        <span className="art-share-title">{post.title}</span>
+        <span style={{ fontSize: 11, color: "#666", fontWeight: 600, letterSpacing: ".5px", whiteSpace: "nowrap" }}>KOMENTAR: 💬</span>
       </div>
 
-      {/* ── Hero Cover ── */}
-      {post.coverImage && (
-        <div style={{ height: "clamp(220px, 40vw, 480px)", overflow: "hidden", position: "relative" }}>
-          <img loading="lazy" src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(5,40,70,.45) 100%)" }} />
-        </div>
-      )}
+      {/* ══ BODY WRAPPER: main + right sidebar ══ */}
+      <div className="art-body-wrap">
 
-      {/* ── Wide 3-Column Layout ── */}
-      <div style={{ maxWidth: 1360, margin: "0 auto", padding: "40px 3% 80px" }}>
-        <div className="article-detail-layout">
+        {/* ════ MAIN COLUMN ════ */}
+        <main className="art-main">
 
-          {/* ════════ LEFT SIDEBAR ════════ */}
-          <aside className="article-sidebar-left">
+          {/* ── Article Card ── */}
+          <div className="art-content-card" style={{ marginBottom: 20 }}>
 
-            {/* ── Saran Postingan ── */}
-            <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 14px rgba(0,0,0,.07)", marginBottom: 20 }}>
-              <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", padding: "14px 18px", display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 16 }}>✨</span>
-                <span style={{ fontSize: 11, fontWeight: 700, color: "#fff", letterSpacing: "1.2px", textTransform: "uppercase" }}>Saran Postingan</span>
-              </div>
-              <div>
-                {suggested.length === 0 ? (
-                  <p style={{ padding: "20px", fontSize: 13, color: "#5090aa" }}>Belum ada saran postingan.</p>
-                ) : suggested.map(p => (
-                  <div key={p.id} onClick={() => handlePost(p)}
-                    style={{ display: "flex", gap: 10, padding: "12px 16px", cursor: "pointer", borderBottom: "1px solid #edfafc", transition: "background .15s" }}
-                    onMouseEnter={e => e.currentTarget.style.background = "#f0fafd"}
-                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                    {p.coverImage && (
-                      <div style={{ width: 58, height: 54, borderRadius: 8, overflow: "hidden", flexShrink: 0 }}>
-                        <img loading="lazy" src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display="none"} />
-                      </div>
-                    )}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <p style={{ fontSize: 12.5, fontWeight: 600, color: "#0d3b66", lineHeight: 1.4, marginBottom: 4,
-                        display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                        {p.title}
-                      </p>
-                      <span style={{ fontSize: 11, color: "#86cad8" }}>{p.category || p.section}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* ── Topik / Tag Cloud ── */}
-            {allTags.length > 0 && (
-              <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 14px rgba(0,0,0,.07)", marginBottom: 20 }}>
-                <div style={{ background: "#edfafc", padding: "13px 18px", borderBottom: "1px solid #d4f0f8" }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#0d3b66", letterSpacing: "1.2px", textTransform: "uppercase" }}>🏷 Topik</span>
-                </div>
-                <div style={{ padding: "14px 16px", display: "flex", flexWrap: "wrap", gap: 7 }}>
-                  {allTags.map(t => (
-                    <span key={t} style={{ fontSize: 11.5, padding: "4px 12px", background: "#edfafc", border: "1px solid #c0e8f0",
-                      borderRadius: 20, color: "#0875a8", fontWeight: 500, cursor: "default" }}>#{t}</span>
-                  ))}
-                </div>
+            {/* Cover Image */}
+            {post.coverImage && (
+              <div className="art-cover-wrap">
+                <img loading="lazy" src={post.coverImage} alt={post.title} />
+                <div className="art-lihat-foto">👁 Lihat Foto</div>
               </div>
             )}
 
-            {/* ── Tips Perjalanan (Decorative) ── */}
-            <div style={{ background: "linear-gradient(135deg,#0d3b66 0%,#1a5a78 50%,#0891b2 100%)", borderRadius: 14, overflow: "hidden", boxShadow: "0 4px 20px rgba(13,59,102,.18)", marginBottom: 20, position: "relative" }}>
-              <div style={{ position: "absolute", top: -30, right: -30, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,.07)" }} />
-              <div style={{ position: "absolute", bottom: -20, left: -20, width: 90, height: 90, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
-              <div style={{ padding: "18px 18px 6px", position: "relative", zIndex: 1 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,.7)", letterSpacing: "1.2px", textTransform: "uppercase", marginBottom: 10 }}>
-                  🌍 Tips Perjalanan
-                </div>
-                {travelTips.map((t, i) => (
-                  <div key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 11 }}>
-                    <span style={{ fontSize: 16, flexShrink: 0, lineHeight: 1.4 }}>{t.icon}</span>
-                    <span style={{ fontSize: 12, color: "rgba(255,255,255,.85)", lineHeight: 1.55 }}>{t.tip}</span>
+            <div className="art-content-inner">
+              {/* Breadcrumb */}
+              <div className="art-breadcrumb">
+                Arutala Organizer / <span>{breadSection}</span>
+              </div>
+
+              {/* Title */}
+              <h1 className="art-h1">{post.title}</h1>
+
+              {/* Meta Row */}
+              <div className="art-meta-row">
+                <div className="art-author">
+                  <div className="art-avatar">
+                    {(post.author || "A")[0].toUpperCase()}
                   </div>
-                ))}
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: "#222" }}>{post.author || "Penulis"}</div>
+                    <div style={{ fontSize: 11, color: "#888" }}>Penulis · {formatDate(post.date)}</div>
+                  </div>
+                </div>
+                <div className="art-actions">
+                  {[
+                    { icon: "👍", title: "Suka" },
+                    { icon: "G", title: "Google", style: { fontSize: 11, fontWeight: 700, color: "#4285f4" } },
+                    { icon: "🔖", title: "Simpan" },
+                    { icon: "↗", title: "Bagikan" },
+                    { icon: "💬", title: "Komentar" },
+                    { icon: "🔔", title: "Ikuti" },
+                  ].map(a => (
+                    <button key={a.title} className="art-action-btn" title={a.title}>
+                      <span style={a.style}>{a.icon}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* ── Quote Dekoratif ── */}
-            <div style={{ background: "#fff", borderRadius: 14, padding: "20px 18px", boxShadow: "0 2px 14px rgba(0,0,0,.07)", borderLeft: "4px solid #0891b2", position: "relative" }}>
-              <div style={{ fontSize: 48, color: "#c0e8f0", lineHeight: 1, fontFamily: "'Playfair Display',serif", position: "absolute", top: 8, left: 14, pointerEvents: "none" }}>"</div>
-              <p style={{ fontSize: 13.5, color: "#1a4a72", lineHeight: 1.75, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", paddingTop: 18, fontWeight: 500 }}>
-                Setiap perjalanan adalah cerita baru yang menunggu untuk ditulis.
-              </p>
-              <div style={{ marginTop: 10, fontSize: 11, color: "#86cad8", fontWeight: 600 }}>— Arutala Organizer</div>
-            </div>
-          </aside>
-
-          {/* ════════ MAIN ARTICLE ════════ */}
-          <main className="article-body" style={{ minWidth: 0, background: "#fff", borderRadius: 16, boxShadow: "0 2px 20px rgba(0,0,0,.07)", overflow: "hidden" }}>
-            <div style={{ padding: "44px 6% 72px" }}>
-              {post.category && (
-                <div className="label-xs" style={{ color: "#0891b2", marginBottom: 14, fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase" }}>
-                  {post.category}
-                </div>
-              )}
-              <h1 className="display" style={{ fontSize: "clamp(1.875rem, 4vw, 3rem)", fontWeight: 800, lineHeight: 1.12, color: "#0d3b66", marginBottom: 20 }}>
-                {post.title}
-              </h1>
-              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32, paddingBottom: 24, borderBottom: "1px solid #c0e8f0", flexWrap: "wrap" }}>
-                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#0875a8,#10d0e0)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 13, flexShrink: 0 }}>
-                  {(post.author || "A")[0].toUpperCase()}
-                </div>
-                <div>
-                  <span style={{ fontSize: "0.875rem", color: "#1a5a78", fontWeight: 600, display: "block" }}>By {post.author}</span>
-                  <span style={{ fontSize: "0.8125rem", color: "#86cad8" }}>{formatDate(post.date)}</span>
-                </div>
-                {post.price && <span style={{ fontSize: "1.375rem", fontWeight: 700, color: "#0891b2", fontFamily: "'Playfair Display',serif", marginLeft: "auto" }}>{post.price}</span>}
-              </div>
+              {/* Excerpt */}
               {post.excerpt && (
-                <p style={{ fontSize: "1.125rem", color: "#1a4a72", lineHeight: 1.9, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400, whiteSpace: "pre-line", paddingLeft: 16, borderLeft: "3px solid #c0e8f0" }}>
-                  {post.excerpt}
-                </p>
+                <p className="art-excerpt">{post.excerpt}</p>
               )}
+
+              {/* Article Body */}
               <RichRenderer blocks={post.content} />
+
+              {/* Tags */}
               {post.tags?.length > 0 && (
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 40, paddingTop: 24, borderTop: "1px solid #c0e8f0" }}>
-                  <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 600 }}>Tags:</span>
+                <div className="art-tags">
+                  <span style={{ fontSize: 12, color: "#888", fontWeight: 600 }}>Tags:</span>
                   {post.tags.map(t => (
-                    <span key={t} style={{ fontSize: "0.8125rem", padding: "3px 14px", background: "#edfafc", border: "1px solid #c0e8f0", borderRadius: 20, color: "#1a4a72", fontWeight: 500 }}>#{t}</span>
+                    <span key={t} style={{ fontSize: 12, padding: "3px 12px", background: "#edfafc", border: "1px solid #c0e8f0", borderRadius: 20, color: "#0875a8", fontWeight: 500 }}>#{t}</span>
                   ))}
                 </div>
               )}
 
-              {/* ── Share Bar ── */}
-              <div style={{ marginTop: 40, paddingTop: 28, borderTop: "2px dashed #c0e8f0", display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-                <span style={{ fontSize: 12, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Bagikan:</span>
+              {/* Share Bottom */}
+              <div style={{ marginTop: 28, padding: "18px 0 0", borderTop: "2px solid #f0f0f0", display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#555", letterSpacing: ".5px" }}>Bagikan:</span>
                 {[
-                  { label: "WhatsApp", color: "#25d366", icon: "💬", url: `https://wa.me/?text=${encodeURIComponent(post.title)}` },
-                  { label: "Facebook", color: "#1877f2", icon: "f", url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}` },
-                  { label: "Twitter/X", color: "#1da1f2", icon: "𝕏", url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}` },
-                  { label: "Copy Link", color: "#0891b2", icon: "🔗", url: null },
+                  { label: "Facebook", bg: "#1877f2", icon: "f", url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}` },
+                  { label: "Twitter/X", bg: "#000", icon: "𝕏", url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}` },
+                  { label: "WhatsApp", bg: "#25d366", icon: "💬", url: `https://wa.me/?text=${encodeURIComponent(post.title + " " + shareUrl)}` },
+                  { label: "Telegram", bg: "#0088cc", icon: "✈", url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}` },
                 ].map(s => (
-                  <button key={s.label}
-                    onClick={() => s.url ? window.open(s.url, "_blank") : (navigator.clipboard?.writeText(window.location.href))}
-                    style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 20, background: s.color + "15",
-                      border: `1px solid ${s.color}40`, color: s.color, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+                  <button key={s.label} onClick={() => window.open(s.url, "_blank")}
+                    style={{ display: "flex", alignItems: "center", gap: 7, padding: "7px 16px", borderRadius: 4, background: s.bg,
+                      border: "none", color: "#fff", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
                     <span>{s.icon}</span> {s.label}
                   </button>
                 ))}
+                <button onClick={copyLink}
+                  style={{ display: "flex", alignItems: "center", gap: 7, padding: "7px 16px", borderRadius: 4,
+                    background: copied ? "#27ae60" : "#f0f0f0", border: "1px solid #ddd",
+                    color: copied ? "#fff" : "#555", fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+                  🔗 {copied ? "Tersalin!" : "Salin Link"}
+                </button>
               </div>
             </div>
-          </main>
+          </div>
 
-          {/* ════════ RIGHT SIDEBAR ════════ */}
-          <aside className="article-sidebar-right">
-
-            {/* ── Baca Juga ── */}
-            <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 14px rgba(0,0,0,.07)", marginBottom: 20 }}>
-              <div style={{ background: "#edfafc", padding: "13px 18px", borderBottom: "1px solid #d4f0f8" }}>
-                <span style={{ fontSize: 11, fontWeight: 700, color: "#0d3b66", letterSpacing: "1.2px", textTransform: "uppercase" }}>📖 Baca Juga</span>
-              </div>
-              <div>
-                {readAlso.length === 0 ? (
-                  <p style={{ padding: "20px", fontSize: 13, color: "#5090aa" }}>Belum ada artikel lain.</p>
-                ) : readAlso.map((p, i) => (
-                  <div key={p.id} onClick={() => handlePost(p)}
-                    style={{ padding: "13px 16px", cursor: "pointer", borderBottom: "1px solid #edfafc", transition: "background .15s" }}
-                    onMouseEnter={e => e.currentTarget.style.background = "#f0fafd"}
-                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                    <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                      <span style={{ fontSize: 18, fontWeight: 900, color: i < 2 ? "#0891b2" : "#c0e8f0", fontFamily: "'Playfair Display',serif", lineHeight: 1, minWidth: 20 }}>{i + 1}</span>
-                      <p style={{ fontSize: 12.5, color: "#0d3b66", lineHeight: 1.45, fontWeight: 500,
-                        display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+          {/* ── Artikel Terkait (horizontal scroll) ── */}
+          {artikelTerkait.length > 0 && (
+            <div className="art-content-card" style={{ marginBottom: 20, padding: "20px 24px" }}>
+              <h3 style={{ fontSize: 15, fontWeight: 700, color: "#111", marginBottom: 16, paddingBottom: 10, borderBottom: "2px solid #0891b2", display: "inline-block" }}>
+                Artikel Terkait
+              </h3>
+              <div className="art-terkait-scroll">
+                {artikelTerkait.map(p => (
+                  <div key={p.id} className="art-terkait-card" onClick={() => handlePost(p)}>
+                    {p.coverImage ? (
+                      <div style={{ height: 120, overflow: "hidden" }}>
+                        <img loading="lazy" src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
+                          onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
+                          onMouseLeave={e => e.target.style.transform = "scale(1)"} />
+                      </div>
+                    ) : (
+                      <div style={{ height: 120, background: "linear-gradient(135deg,#edfafc,#c0e8f0)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>📄</div>
+                    )}
+                    <div style={{ padding: "10px 12px 14px" }}>
+                      {p.category && <div style={{ fontSize: 10, color: "#0891b2", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 5 }}>{p.category}</div>}
+                      <p style={{ fontSize: 12.5, fontWeight: 600, color: "#222", lineHeight: 1.45,
+                        display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                         {p.title}
                       </p>
                     </div>
-                    {p.category && <div style={{ fontSize: 11, color: "#86cad8", marginTop: 5, paddingLeft: 28 }}>{p.category}</div>}
                   </div>
                 ))}
               </div>
             </div>
+          )}
 
-            {/* ── Tentang Arutala (Decorative) ── */}
-            <div style={{ background: "linear-gradient(135deg,#052240 0%,#0875a8 60%,#10d0e0 100%)", borderRadius: 14, padding: "22px 18px", boxShadow: "0 4px 20px rgba(8,117,168,.22)", marginBottom: 20, position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: -30, right: -25, width: 110, height: 110, borderRadius: "50%", background: "rgba(255,255,255,.08)" }} />
-              <div style={{ position: "absolute", bottom: -25, left: -15, width: 85, height: 85, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
-              <div style={{ position: "relative", zIndex: 1 }}>
-                <div style={{ fontSize: 24, marginBottom: 8 }}>🏔</div>
-                <h3 style={{ fontSize: 15, fontWeight: 800, color: "#fff", fontFamily: "'Playfair Display',serif", lineHeight: 1.2, marginBottom: 8 }}>
-                  Arutala Organizer
-                </h3>
-                <p style={{ fontSize: 12, color: "rgba(255,255,255,.8)", lineHeight: 1.65, marginBottom: 16 }}>
-                  Spesialis perjalanan & wedding organizer terpercaya. Kami wujudkan setiap momen menjadi kenangan tak terlupakan.
-                </p>
-                <a href="https://wa.me/6285234567890" target="_blank" rel="noreferrer"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px",
-                    background: "rgba(255,255,255,.18)", border: "1px solid rgba(255,255,255,.35)",
-                    borderRadius: 20, color: "#fff", fontSize: 12, fontWeight: 600, textDecoration: "none" }}>
-                  💬 Hubungi Kami
-                </a>
-              </div>
-            </div>
-
-            {/* ── Layanan Kami ── */}
-            <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 14px rgba(0,0,0,.07)", marginBottom: 20 }}>
-              <div style={{ background: "#edfafc", padding: "13px 18px", borderBottom: "1px solid #d4f0f8" }}>
-                <span style={{ fontSize: 11, fontWeight: 700, color: "#0d3b66", letterSpacing: "1.2px", textTransform: "uppercase" }}>🌟 Layanan Kami</span>
-              </div>
-              <div style={{ padding: "10px 0" }}>
-                {[
-                  { icon: "✈", label: "Traveling & Tour", desc: "Paket wisata dalam & luar negeri" },
-                  { icon: "💍", label: "Wedding Organizer", desc: "Dekorasi & koordinasi penuh" },
-                  { icon: "🎉", label: "Event Planning", desc: "Konser, seminar, gathering" },
-                  { icon: "🏨", label: "Akomodasi", desc: "Hotel & villa pilihan terbaik" },
-                ].map(s => (
-                  <div key={s.label} style={{ display: "flex", gap: 12, padding: "11px 16px", borderBottom: "1px solid #edfafc" }}>
-                    <span style={{ fontSize: 20, flexShrink: 0 }}>{s.icon}</span>
-                    <div>
-                      <div style={{ fontSize: 12.5, fontWeight: 600, color: "#0d3b66" }}>{s.label}</div>
-                      <div style={{ fontSize: 11, color: "#5090aa", marginTop: 2 }}>{s.desc}</div>
+          {/* ── Pilihan Untukmu (grid) ── */}
+          {pilihanUntukmu.length > 0 && (
+            <div className="art-content-card" style={{ padding: "20px 24px" }}>
+              <h3 style={{ fontSize: 15, fontWeight: 700, color: "#111", marginBottom: 16, paddingBottom: 10, borderBottom: "2px solid #f39c12", display: "inline-block" }}>
+                Pilihan Untukmu
+              </h3>
+              <div className="art-pilihan-grid">
+                {pilihanUntukmu.map(p => (
+                  <div key={p.id} className="art-pilihan-card" onClick={() => handlePost(p)}>
+                    {p.coverImage ? (
+                      <div style={{ height: 140, overflow: "hidden" }}>
+                        <img loading="lazy" src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
+                          onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
+                          onMouseLeave={e => e.target.style.transform = "scale(1)"} />
+                      </div>
+                    ) : (
+                      <div style={{ height: 140, background: "linear-gradient(135deg,#f5fdff,#edfafc)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}>🌟</div>
+                    )}
+                    <div style={{ padding: "12px 14px 16px" }}>
+                      {p.category && <div style={{ fontSize: 10, color: "#0891b2", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 5 }}>{p.category}</div>}
+                      <p style={{ fontSize: 13, fontWeight: 600, color: "#222", lineHeight: 1.45,
+                        display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                        {p.title}
+                      </p>
+                      <div style={{ fontSize: 11, color: "#aaa", marginTop: 8 }}>
+                        {breadSection} · · ·
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
+          )}
 
-            {/* ── Dekorasi Statistik ── */}
-            <div style={{ background: "#fff", borderRadius: 14, padding: "18px 16px", boxShadow: "0 2px 14px rgba(0,0,0,.07)" }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1.2px", textTransform: "uppercase", marginBottom: 14 }}>📊 Fakta Singkat</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                {[
-                  { val: "200+", label: "Destinasi", color: "#0891b2" },
-                  { val: "5★", label: "Rating", color: "#f39c12" },
-                  { val: "1000+", label: "Klien Puas", color: "#27ae60" },
-                  { val: "10+", label: "Tahun Pengalaman", color: "#8e44ad" },
-                ].map(s => (
-                  <div key={s.label} style={{ background: "#f5fdff", borderRadius: 10, padding: "12px 10px", textAlign: "center", borderBottom: `3px solid ${s.color}` }}>
-                    <div style={{ fontSize: 18, fontWeight: 900, color: s.color, fontFamily: "'Playfair Display',serif" }}>{s.val}</div>
-                    <div style={{ fontSize: 10.5, color: "#5090aa", marginTop: 3, fontWeight: 500 }}>{s.label}</div>
+        </main>
+
+        {/* ════ RIGHT SIDEBAR ════ */}
+        <aside className="art-sidebar">
+
+          {/* ── Ad Placeholder ── */}
+          <div style={{ background: "#fff", borderRadius: 6, border: "1px dashed #ddd", marginBottom: 20, height: 240, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#bbb", gap: 8 }}>
+            <div style={{ fontSize: 28 }}>🏔</div>
+            <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>Arutala Organizer</div>
+            <div style={{ fontSize: 11, color: "#ccc", textAlign: "center", padding: "0 20px", lineHeight: 1.6 }}>
+              Wujudkan perjalanan impian & momen spesialmu bersama kami
+            </div>
+            <a href="#" style={{ marginTop: 6, fontSize: 11, padding: "6px 16px", background: "#0891b2", color: "#fff", borderRadius: 4, fontWeight: 600, textDecoration: "none" }}>
+              Hubungi Kami
+            </a>
+          </div>
+
+          {/* ── Berita Populer sidebar cards ── */}
+          {sidebarCards.length > 0 && (
+            <div style={{ background: "#fff", borderRadius: 6, overflow: "hidden", marginBottom: 20 }}>
+              <div style={{ padding: "12px 16px", borderBottom: "2px solid #0891b2" }}>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#111" }}>Berita Terpopuler</span>
+              </div>
+              <div style={{ padding: "8px 16px" }}>
+                {sidebarCards.map(p => (
+                  <div key={p.id} className="art-sb-card" onClick={() => handlePost(p)}>
+                    <div className="art-sb-thumb">
+                      {p.coverImage
+                        ? <img loading="lazy" src={p.coverImage} alt="" onError={e => e.target.style.display="none"} />
+                        : <div style={{ width: "100%", height: "100%", background: "#edfafc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>📄</div>
+                      }
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: 12, fontWeight: 600, color: "#222", lineHeight: 1.45,
+                        display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                        {p.title}
+                      </p>
+                      {p.category && <div style={{ fontSize: 10, color: "#0891b2", marginTop: 5, fontWeight: 600 }}>{p.category}</div>}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-          </aside>
+          )}
 
-        </div>{/* end article-detail-layout */}
+          {/* ── Layanan Unggulan sidebar ── */}
+          <div style={{ background: "linear-gradient(135deg,#063d5c 0%,#0875a8 55%,#10d0e0 100%)", borderRadius: 6, padding: "20px 18px", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: -20, right: -20, width: 90, height: 90, borderRadius: "50%", background: "rgba(255,255,255,.08)" }} />
+            <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,.7)", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 12 }}>🌟 Layanan Kami</div>
+            {[
+              { icon: "✈", txt: "Traveling & Tour" },
+              { icon: "💍", txt: "Wedding Organizer" },
+              { icon: "🎉", txt: "Event Planning" },
+              { icon: "🏨", txt: "Hotel & Villa" },
+            ].map(s => (
+              <div key={s.txt} style={{ display: "flex", alignItems: "center", gap: 9, marginBottom: 10 }}>
+                <span style={{ fontSize: 16 }}>{s.icon}</span>
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,.9)", fontWeight: 500 }}>{s.txt}</span>
+              </div>
+            ))}
+            <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,.2)" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                {[{ v: "200+", l: "Destinasi" }, { v: "5★", l: "Rating" }, { v: "1000+", l: "Klien" }, { v: "10+", l: "Tahun" }].map(s => (
+                  <div key={s.l} style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", fontFamily: "'Playfair Display',serif" }}>{s.v}</div>
+                    <div style={{ fontSize: 10, color: "rgba(255,255,255,.65)" }}>{s.l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+        </aside>
       </div>
     </div>
   );
