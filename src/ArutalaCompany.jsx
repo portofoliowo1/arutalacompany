@@ -2273,6 +2273,16 @@ function RichRenderer({ blocks }) {
           </div>
         );
         if (b.type === "divider") return <hr key={i} style={{ border: "none", borderTop: "1px solid #c0e8f0" }} />;
+        if (b.type === "baca_juga") return (
+          <div key={i} style={{ borderLeft: "4px solid #0891b2", background: "linear-gradient(90deg,#edfafc 0%,#f8fdff 100%)", borderRadius: "0 10px 10px 0", padding: "14px 18px", display: "flex", alignItems: "center", gap: 14 }}>
+            <span style={{ fontSize: 18 }}>📖</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#0891b2", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 4 }}>Baca Juga</div>
+              <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#0d3b66", lineHeight: 1.4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.title}</div>
+            </div>
+            {b.coverImage && <img loading="lazy" src={b.coverImage} alt="" style={{ width: 64, height: 48, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
+          </div>
+        );
         return null;
       })}
     </div>
@@ -2446,7 +2456,7 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
 }
 
 /* ─────────────── CMS EDITOR ─────────────── */
-function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, notify: notifyFn }) {
+function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, notify: notifyFn, allPosts = [] }) {
   const notify = typeof notifyFn === "function" ? notifyFn : (msg) => alert(msg);
   const authorDefault = post?.author || user?.name || user?.username || "";
   const [form, setForm] = useState(post || {
@@ -2463,6 +2473,8 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
   const [coverUploadMode, setCoverUploadMode] = useState("url");
   const [coverUploading, setCoverUploading] = useState(false);
   const [publishModal, setPublishModal] = useState(false);
+  const [bacaJugaSearch, setBacaJugaSearch] = useState("");
+  const [bacaJugaSelected, setBacaJugaSelected] = useState(null); // { id, title, coverImage, section }
   const coverFileRef = useRef();
   const [autoSaveStatus, setAutoSaveStatus] = useState(""); // "", "saving…", "tersimpan ✓"
   const fileRef = useRef();
@@ -2511,6 +2523,12 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
   }, [form.title, form.excerpt, form.author, form.category, form.date, form.coverImage, form.tags, blocks]);
 
   const addBlock = () => {
+    if (addType === "baca_juga") {
+      if (!bacaJugaSelected) return;
+      setBlocks(p => [...p, { type: "baca_juga", postId: bacaJugaSelected.id, title: bacaJugaSelected.title, coverImage: bacaJugaSelected.coverImage || "", section: bacaJugaSelected.section || "" }]);
+      setBacaJugaSelected(null); setBacaJugaSearch("");
+      return;
+    }
     const val = (addType === "paragraph" ? addVal : addVal).trim?.() ?? addVal;
     if (addType !== "divider" && !val) return;
     const block = { type: addType, value: val };
@@ -2585,9 +2603,10 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
   const blockLabels = {
     paragraph: "📝 Paragraph", heading: "📌 Heading", image: "🖼 Image",
     quote: "💬 Quote", embed_instagram: "📸 Instagram Embed", embed_tiktok: "🎵 TikTok Embed", divider: "⸻ Divider",
+    baca_juga: "🔗 Baca Juga",
   };
 
-  const needsValue = addType !== "divider";
+  const needsValue = addType !== "divider" && addType !== "baca_juga";
 
   return (
     <div className="fade-in" style={{ background: "#fff", borderRadius: 12, overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,.1)" }}>
@@ -2702,7 +2721,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                   <div style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
                     <button onClick={() => moveBlock(i, -1)} title="Naik" style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #b0dce8", borderRadius: 4, color: "#5090aa", background: "#fff" }}>↑</button>
                     <button onClick={() => moveBlock(i, 1)} title="Turun" style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #b0dce8", borderRadius: 4, color: "#5090aa", background: "#fff" }}>↓</button>
-                    {b.type !== "divider" && b.type !== "image" && (
+                    {b.type !== "divider" && b.type !== "image" && b.type !== "baca_juga" && (
                       <button onClick={() => { setEditBlockIdx(i); setEditBlockVal(b.value || ""); }} title="Edit" style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #0ea5c5", background: "#e8f9fc", color: "#0ea5c5", borderRadius: 4 }}>✏</button>
                     )}
                     <button onClick={() => { if (editBlockIdx === i) { setEditBlockIdx(null); setEditBlockVal(""); } removeBlock(i); }} title="Hapus" style={{ padding: "3px 8px", fontSize: 11, border: "none", background: "#fee", color: "#e74c3c", borderRadius: 4 }}>✕</button>
@@ -2732,6 +2751,15 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                   </div>
                 ) : b.type === "divider" ? (
                   <hr style={{ border: "none", borderTop: "2px solid #b0dce8" }} />
+                ) : b.type === "baca_juga" ? (
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, background: "#edfafc", borderLeft: "3px solid #0891b2", borderRadius: "0 6px 6px 0", padding: "8px 12px" }}>
+                    <span style={{ fontSize: 15 }}>📖</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 10, fontWeight: 700, color: "#0891b2", textTransform: "uppercase", letterSpacing: ".06em" }}>Baca Juga</div>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.title}</div>
+                    </div>
+                    {b.coverImage && <img loading="lazy" src={b.coverImage} alt="" style={{ width: 40, height: 30, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
+                  </div>
                 ) : b.type === "paragraph" ? (
                   <div style={{ fontSize: 13, color: "#4a6680", lineHeight: 1.6, wordBreak: "break-word" }}
                     dangerouslySetInnerHTML={{ __html: b.value?.length > 200 ? b.value.slice(0, 200) + "…" : b.value }} />
@@ -2817,6 +2845,49 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                 )}
               </>
             )}
+
+            {addType === "baca_juga" && (() => {
+              const otherPosts = allPosts.filter(p => p.id !== post?.id && p.status === "published");
+              const filtered = bacaJugaSearch.trim()
+                ? otherPosts.filter(p => p.title?.toLowerCase().includes(bacaJugaSearch.toLowerCase()))
+                : otherPosts;
+              return (
+                <div style={{ marginBottom: 8 }}>
+                  <input
+                    value={bacaJugaSearch}
+                    onChange={e => { setBacaJugaSearch(e.target.value); setBacaJugaSelected(null); }}
+                    placeholder="🔍 Cari judul artikel..."
+                    style={{ width: "100%", padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", marginBottom: 8, boxSizing: "border-box" }}
+                  />
+                  {bacaJugaSelected ? (
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", background: "#e8f9fc", borderRadius: 8, border: "1.5px solid #0ea5c5" }}>
+                      {bacaJugaSelected.coverImage && <img loading="lazy" src={bacaJugaSelected.coverImage} alt="" style={{ width: 48, height: 36, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
+                      <span style={{ fontSize: 13, fontWeight: 600, color: "#0d3b66", flex: 1 }}>{bacaJugaSelected.title}</span>
+                      <button onClick={() => setBacaJugaSelected(null)} style={{ fontSize: 11, color: "#e74c3c", background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>✕</button>
+                    </div>
+                  ) : (
+                    <div style={{ maxHeight: 180, overflowY: "auto", border: "1px solid #c0e8f0", borderRadius: 8, background: "#fff" }}>
+                      {filtered.length === 0 ? (
+                        <div style={{ padding: "14px 12px", fontSize: 12, color: "#4a7f98", textAlign: "center" }}>
+                          {otherPosts.length === 0 ? "Belum ada artikel published lain." : "Artikel tidak ditemukan."}
+                        </div>
+                      ) : filtered.map(p => (
+                        <div key={p.id} onClick={() => { setBacaJugaSelected(p); setBacaJugaSearch(""); }}
+                          style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", cursor: "pointer", borderBottom: "1px solid #edfafc", transition: "background .12s" }}
+                          onMouseEnter={e => e.currentTarget.style.background = "#edfafc"}
+                          onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                          {p.coverImage && <img loading="lazy" src={p.coverImage} alt="" style={{ width: 40, height: 30, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: 13, fontWeight: 600, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.title}</div>
+                            <div style={{ fontSize: 11, color: "#4a7f98" }}>{p.section}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
 
             <button onClick={addBlock} style={{
               padding: "9px 22px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff",
@@ -8020,6 +8091,7 @@ export default function BricksyTravel() {
                       onSectionChange={(s) => setAdminSection(s)}
                       user={user}
                       notify={notify}
+                      allPosts={allPosts}
                     />
                   ) : (
                     <>
