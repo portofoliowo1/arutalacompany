@@ -2791,10 +2791,10 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                   </div>
                 ) : b.type === "paragraph" ? (
                   <div style={{ fontSize: 13, color: "#4a6680", lineHeight: 1.6, wordBreak: "break-word" }}
-                    dangerouslySetInnerHTML={{ __html: b.value?.length > 200 ? b.value.slice(0, 200) + "…" : b.value }} />
+                    dangerouslySetInnerHTML={{ __html: b.value }} />
                 ) : (
                   <p style={{ fontSize: 13, color: "#4a6680", lineHeight: 1.6, wordBreak: "break-word" }}>
-                    {b.value.length > 160 ? b.value.slice(0, 160) + "…" : b.value}
+                    {b.value}
                   </p>
                 )}
               </div>
