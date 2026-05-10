@@ -492,8 +492,6 @@ async function sendOTPEmail(toEmail, passcode) {
 const SECTIONS = ["news", "shop", "destinations"];
 
 // ─── URL Routing ────────────────────────────────────────────────────
-// home=Beranda | about=About | news=Event Plan | shop=Traveling
-// destinations=Wedding Organizer | services=Layanan Kami
 const PAGE_TO_PATH = {
   home:         "/",
   about:        "/about",
@@ -505,11 +503,27 @@ const PAGE_TO_PATH = {
 const PATH_TO_PAGE = Object.fromEntries(
   Object.entries(PAGE_TO_PATH).map(([k, v]) => [v, k])
 );
+
+// Baca service id dari URL: /paket/{category}/{id}
+const getInitialServiceId = () => {
+  try {
+    const m = window.location.pathname.match(/^\/paket\/[^/]+\/(\d+)$/);
+    return m ? parseInt(m[1]) : null;
+  } catch { return null; }
+};
+
 const getInitialPage = () => {
   try {
     const path = window.location.pathname.replace(/\/$/, "") || "/";
+    if (path === "/control-panel") return "home"; // admin overlay
+    if (path.startsWith("/paket/"))     return "services";
     return PATH_TO_PAGE[path] || "home";
   } catch { return "home"; }
+};
+
+const getInitialShowAdmin = () => {
+  try { return window.location.pathname === "/control-panel"; }
+  catch { return false; }
 };
 
 const SECTION_LABELS = {
@@ -4916,12 +4930,25 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
 }
 
 /* ─────────────── SERVICES PAGE ─────────────── */
-function ServicesPage({ content, services, navigateTo }) {
-  const [selectedService, setSelectedService] = useState(null);
+function ServicesPage({ content, services, navigateTo, initialServiceId, onOpenService, onCloseService }) {
+  const [selectedService, setSelectedService] = useState(() =>
+    initialServiceId ? (services || []).find(s => s.id === initialServiceId) || null : null
+  );
   const [hoveredCard, setHoveredCard] = useState(null);
 
   const [activeCategory, setActiveCategory] = useState("traveling"); // Default: tab Traveling langsung aktif
   const [activeImg, setActiveImg] = useState(0);
+
+  // Sync saat initialServiceId berubah (deep link / popstate)
+  useEffect(() => {
+    if (initialServiceId) {
+      const svc = (services || []).find(s => s.id === initialServiceId) || null;
+      setSelectedService(svc);
+      if (svc) setActiveImg(0);
+    } else {
+      setSelectedService(null);
+    }
+  }, [initialServiceId, services]);
 
   const CATEGORIES = [
     { key: "traveling", label: "✈️ Traveling", color: "#27ae60" },
@@ -4930,9 +4957,14 @@ function ServicesPage({ content, services, navigateTo }) {
   ];
 
   const openDetail = (svc) => {
-    setSelectedService(svc); setActiveImg(0); window.scrollTo({ top: 0, behavior: "smooth" });
+    setSelectedService(svc); setActiveImg(0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (onOpenService) onOpenService(svc);
   };
-  const closeDetail = () => setSelectedService(null);
+  const closeDetail = () => {
+    setSelectedService(null);
+    if (onCloseService) onCloseService();
+  };
 
   const handleBook = (svc) => {
     const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
@@ -4973,6 +5005,13 @@ function ServicesPage({ content, services, navigateTo }) {
         <div style={{ background: "linear-gradient(90deg,#063d5c,#0891b2)", padding: "0 5%", position: "sticky", top: 96, zIndex: 90, borderBottom: "1px solid #c0e8f0" }}>
           <button onClick={closeDetail} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#7ab8d0", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer", padding: "13px 0", letterSpacing: ".04em", textTransform: "uppercase" }}>
             <span style={{ fontSize: 18, lineHeight: 1 }}>←</span> Kembali ke Layanan
+          </button>
+          {/* Tombol Share Link */}
+          <button onClick={() => {
+            const url = `${window.location.origin}/paket/${svc.category}/${svc.id}`;
+            navigator.clipboard?.writeText(url).then(() => alert("✅ Link paket disalin!\n" + url)).catch(() => alert("Link: " + url));
+          }} style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.25)", color: "#fff", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer", padding: "8px 14px", borderRadius: 8, letterSpacing: ".04em", marginLeft: "auto" }}>
+            🔗 Salin Link Paket
           </button>
         </div>
 
@@ -7190,10 +7229,11 @@ export default function BricksyTravel() {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [page, setPage] = useState(() => getInitialPage());
+  const [deepLinkServiceId, setDeepLinkServiceId] = useState(() => getInitialServiceId());
   const [readPost, setReadPost] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [comingSoon, setComingSoon] = useState(null); // null | "google" | "apple"
-  const [showAdmin, setShowAdmin] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(() => getInitialShowAdmin());
   const [adminTab, setAdminTab] = useState("dashboard");
   const [adminSection, setAdminSection] = useState("news");
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
@@ -7444,7 +7484,11 @@ export default function BricksyTravel() {
     setForgotNewPass({ val: "", confirm: "" }); setForgotErr("");
   };
 
-  const logout = () => { setUser(null); setShowAdmin(false); notify("Logged out."); };
+  const logout = () => {
+    setUser(null);
+    closeControlPanel();
+    notify("Logged out.");
+  };
 
   const content = data.content; // shorthand alias
   const isAdmin = user?.role === "admin";
@@ -7455,7 +7499,18 @@ export default function BricksyTravel() {
   useEffect(() => {
     const handlePop = () => {
       const path = window.location.pathname.replace(/\/$/, "") || "/";
-      setPage(PATH_TO_PAGE[path] || "home");
+      if (path === "/control-panel") {
+        setShowAdmin(true);
+      } else if (path.startsWith("/paket/")) {
+        const m = path.match(/^\/paket\/[^/]+\/(\d+)$/);
+        setPage("services");
+        setDeepLinkServiceId(m ? parseInt(m[1]) : null);
+        setShowAdmin(false);
+      } else {
+        setPage(PATH_TO_PAGE[path] || "home");
+        setDeepLinkServiceId(null);
+        setShowAdmin(false);
+      }
       setReadPost(null);
       setMobileMenu(false);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -7464,16 +7519,48 @@ export default function BricksyTravel() {
     return () => window.removeEventListener("popstate", handlePop);
   }, []);
 
+  // Navigasi halaman biasa
   const navigateTo = (p) => {
     const path = PAGE_TO_PATH[p] || "/";
     window.history.pushState({ page: p }, "", path);
     setPage(p);
+    setDeepLinkServiceId(null);
+    setShowAdmin(false);
     setReadPost(null);
     setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Back & Forward kini pakai native browser history
+  // Navigasi ke detail satu paket layanan → /paket/{category}/{id}
+  const navigateToService = (svc) => {
+    const path = `/paket/${svc.category}/${svc.id}`;
+    window.history.pushState({ page: "services", serviceId: svc.id }, "", path);
+    setPage("services");
+    setDeepLinkServiceId(svc.id);
+    setShowAdmin(false);
+    setReadPost(null);
+    setMobileMenu(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Tutup detail paket → kembali ke /services
+  const closeServiceDetail = () => {
+    window.history.pushState({ page: "services" }, "", "/services");
+    setDeepLinkServiceId(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Buka / tutup control panel dengan URL
+  const openControlPanel = () => {
+    window.history.pushState({ page: "control-panel" }, "", "/control-panel");
+    setShowAdmin(true);
+  };
+  const closeControlPanel = () => {
+    window.history.pushState({ page: "home" }, "", "/");
+    setShowAdmin(false);
+  };
+
+  // Back & Forward pakai native browser
   const spaBack    = () => window.history.back();
   const spaForward = () => window.history.forward();
 
@@ -7758,7 +7845,7 @@ export default function BricksyTravel() {
                           {user.name || user.username}
                         </span>
                         {/* CP button dengan border shape asimetris */}
-                        <button onClick={() => setShowAdmin(true)}
+                        <button onClick={() => openControlPanel()}
                           style={{
                             fontSize: "0.6rem", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 800,
                             color: "#fff",
@@ -7860,7 +7947,7 @@ export default function BricksyTravel() {
                     <div style={{ fontSize: ".8125rem", color: "rgba(255,255,255,.6)", marginBottom: 10, padding: "0 12px" }}>
                       Login sebagai <strong style={{ color: "#38c5d8" }}>{user.name || user.username}</strong>
                     </div>
-                    <button onClick={() => { setShowAdmin(true); setMobileMenu(false); }}
+                    <button onClick={() => { openControlPanel(); setMobileMenu(false); }}
                       style={{ fontSize: ".875rem", color: "#fff", background: "linear-gradient(135deg,#0891b2,#22d3ee)", border: "none", borderRadius: 10, padding: "11px 16px", fontWeight: 700, width: "100%", marginBottom: 8 }}>
                       🛠 Admin Panel
                     </button>
@@ -7887,7 +7974,7 @@ export default function BricksyTravel() {
           {(() => {
             const isMobileNav = window.innerWidth <= 768;
             const canBack = window.history.length > 1;
-            const canFwd = false; // browser tidak expose ini secara native
+            const canFwd = false;
             const PAGE_LABELS = { home: "Beranda", about: "About", services: "Layanan Kami", destinations: "Wedding Organizer", news: "Event Plan", shop: "Traveling" };
             const currentLabel = PAGE_LABELS[page] || page || "Halaman";
             if (isMobileNav) {
@@ -8413,7 +8500,7 @@ export default function BricksyTravel() {
               {page === "about" && <AboutPage content={data.content} images={data.images} teamMembers={data.teamMembers || []} />}
 
               {/* SERVICES PAGE */}
-              {page === "services" && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} />}
+              {page === "services" && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} initialServiceId={deepLinkServiceId} onOpenService={navigateToService} onCloseService={closeServiceDetail} />}
 
               {/* NEWS / SHOP / DESTINATIONS */}
               {["news", "shop", "destinations"].includes(page) && (
@@ -8695,7 +8782,7 @@ export default function BricksyTravel() {
             </div>
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
               <span style={{ fontSize: 12, color: "rgba(255,255,255,.6)" }} className="hide-sm">{user.username}</span>
-              <button onClick={() => setShowAdmin(false)} style={{ padding: "6px 14px", border: "1px solid rgba(255,255,255,.3)", borderRadius: 4, color: "rgba(255,255,255,.8)", fontSize: 12, background: "none" }}>← Website</button>
+              <button onClick={() => closeControlPanel()} style={{ padding: "6px 14px", border: "1px solid rgba(255,255,255,.3)", borderRadius: 4, color: "rgba(255,255,255,.8)", fontSize: 12, background: "none" }}>← Website</button>
             </div>
           </div>
 
@@ -9127,7 +9214,7 @@ export default function BricksyTravel() {
                       <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 4 }}>Setting About Us</h1>
                       <p style={{ fontSize: 12, color: "#5090aa" }}>Kelola semua konten halaman About Us yang tampil di website.</p>
                     </div>
-                    <button onClick={() => { navigateTo("about"); setShowAdmin(false); }}
+                    <button onClick={() => { navigateTo("about"); closeControlPanel(); }}
                       style={{ padding: "8px 16px", background: "#edfafc", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, color: "#0ea5c5", cursor: "pointer", fontWeight: 600 }}>
                       👁 Lihat Halaman →
                     </button>
