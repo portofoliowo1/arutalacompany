@@ -7180,12 +7180,25 @@ const sessionClear = () => {
   try { sessionStorage.removeItem(SESSION_KEY); } catch {}
 };
 
+/* ── Mapping URL pathname ↔ page key ─────────────────────────────────────── */
+const PAGE_TO_PATH = {
+  home: "/", about: "/about", news: "/news", shop: "/shop",
+  destinations: "/destinations", services: "/services",
+};
+const PATH_TO_PAGE = Object.fromEntries(Object.entries(PAGE_TO_PATH).map(([k, v]) => [v, k]));
+
+/** Baca halaman awal dari URL saat render — bukan saat module load.
+ *  Dipanggil sebagai lazy initializer useState(() => getInitialPage())
+ *  sehingga window.location selalu dibaca pada saat komponen di-mount. */
+const getInitialPage = () => PATH_TO_PAGE[window.location.pathname] || "home";
+
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(() => sessionLoad()); // ← restore session saat reload
-  const [page, setPage] = useState("home");   // home | about | news | shop | destinations | services
-  const [historyStack, setHistoryStack] = useState(["home"]); // SPA history
+  // Fix #3: gunakan lazy initializer agar window.location dibaca saat render, bukan module load
+  const [page, setPage] = useState(() => getInitialPage()); // home | about | news | shop | destinations | services
+  const [historyStack, setHistoryStack] = useState(() => [getInitialPage()]); // SPA history
   const [historyIdx, setHistoryIdx] = useState(0);            // current position in stack
   const [readPost, setReadPost] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
@@ -7245,6 +7258,20 @@ export default function BricksyTravel() {
       observer.disconnect();
     };
   }, []);
+
+  /* ── Fix #2: popstate listener — sync React state saat user tekan Back/Forward browser ── */
+  useEffect(() => {
+    const onPopState = (e) => {
+      // Baca page dari history state (jika ada) atau dari pathname
+      const p = e.state?.page || PATH_TO_PAGE[window.location.pathname] || "home";
+      setPage(p);
+      setReadPost(null);
+      setMobileMenu(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   /* ─── Deep-merge helper ──────────────────────────────────────────────────
      Menggabungkan data yang disimpan (saved) dengan DEFAULT_DATA sehingga:
@@ -7457,6 +7484,9 @@ export default function BricksyTravel() {
   const canCS = user?.role === "admin" || user?.role === "customer_services";
 
   const navigateTo = (p) => {
+    // Fix #1: pushState agar URL sync dengan page state
+    const navPath = PAGE_TO_PATH[p] || "/";
+    window.history.pushState({ page: p }, "", navPath);
     setPage(p); setReadPost(null); setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
     setHistoryStack(prev => {
@@ -7471,6 +7501,7 @@ export default function BricksyTravel() {
     const newIdx = historyIdx - 1;
     setHistoryIdx(newIdx);
     const target = historyStack[newIdx];
+    window.history.pushState({ page: target }, "", PAGE_TO_PATH[target] || "/");
     setPage(target); setReadPost(null); setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -7480,6 +7511,7 @@ export default function BricksyTravel() {
     const newIdx = historyIdx + 1;
     setHistoryIdx(newIdx);
     const target = historyStack[newIdx];
+    window.history.pushState({ page: target }, "", PAGE_TO_PATH[target] || "/");
     setPage(target); setReadPost(null); setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
