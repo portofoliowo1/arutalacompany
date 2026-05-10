@@ -6755,8 +6755,8 @@ export default function BricksyTravel() {
     { key: "home", label: data.content.nav1 },
     { key: "about", label: data.content.nav2 },
     { key: "news", label: data.content.nav3 },
-    { key: "services", label: data.content.nav4 }, // Traveling → langsung ke halaman paket
-    { key: "destinations", label: data.content.nav5 },
+    { key: "shop", label: data.content.nav4 },         // Traveling → halaman artikel Traveling
+    { key: "destinations", label: data.content.nav5 }, // Wedding Organizer → halaman artikel WO
     { key: "services", label: data.content.nav6 || "Layanan Kami" },
   ];
 
