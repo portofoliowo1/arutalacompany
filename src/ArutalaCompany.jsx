@@ -2547,10 +2547,10 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
   };
 
   const saveEditBlock = (i) => {
-    if (editBlockVal.trim() === "") return;
+    const stripped = editBlockVal.replace(/<[^>]*>/g, "").trim();
+    if (!stripped && editBlockVal.trim() === "") return;
     setBlocks(p => p.map((b, idx) => idx === i ? { ...b, value: editBlockVal } : b));
-    setEditBlockIdx(null);
-    setEditBlockVal("");
+    setEditBlockIdx(null); setEditBlockVal("");
   };
 
   const handleImageUpload = async (e) => {
@@ -2731,9 +2731,11 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                 {editBlockIdx === i ? (
                   <div>
                     {b.type === "paragraph" ? (
-                      <textarea value={editBlockVal} onChange={e => setEditBlockVal(e.target.value)}
-                        rows={5} autoFocus
-                        style={{ width: "100%", padding: "10px 12px", border: "1px solid #0ea5c5", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.6, boxSizing: "border-box" }} />
+                      <RichParagraphEditor
+                        value={editBlockVal}
+                        onChange={setEditBlockVal}
+                        placeholder="Tulis konten paragraf di sini..."
+                      />
                     ) : (
                       <input value={editBlockVal} onChange={e => setEditBlockVal(e.target.value)}
                         autoFocus
