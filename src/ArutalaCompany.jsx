@@ -2889,9 +2889,22 @@ function SectionPage({ section, posts, onReadPost }) {
 }
 
 /* ─────────────── TRAVEL PACKAGE CARD (accordion price) ─────────────── */
+
+/* Shared hook: returns true when viewport width ≤ 640px */
+function useIsMobile() {
+  const [mobile, setMobile] = useState(() => window.innerWidth <= 640);
+  useEffect(() => {
+    const handler = () => setMobile(window.innerWidth <= 640);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+  return mobile;
+}
+
 /* ── WIDE CARD for Custom Event / Wedding Package — full width horizontal layout ── */
 function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
   const [hovered, setHovered] = useState(false);
+  const isMobile = useIsMobile();
   const ac = svc.badgeColor || "#7c3aed";
   const isWedding = svc.category === "wedding";
   const gradientBg = isWedding
@@ -2909,23 +2922,26 @@ function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
         transition: "all .3s cubic-bezier(.22,1,.36,1)",
         transform: hovered ? "translateY(-4px)" : "none",
         background: gradientBg,
-        display: "flex", flexDirection: "row", minHeight: 280,
+        display: "flex", flexDirection: isMobile ? "column" : "row",
+        minHeight: isMobile ? "auto" : 280,
         fontFamily: "'DM Sans',sans-serif", position: "relative", overflow: "hidden",
       }}>
       <div style={{ position: "absolute", right: -60, top: -60, width: 240, height: 240, borderRadius: "50%", background: "rgba(255,255,255,.06)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", right: 100, bottom: -80, width: 180, height: 180, borderRadius: "50%", background: "rgba(255,255,255,.04)", pointerEvents: "none" }} />
-      <div style={{ position: "relative", width: 320, flexShrink: 0, overflow: "hidden" }}>
+      {/* Image */}
+      <div style={{ position: "relative", width: isMobile ? "100%" : 320, height: isMobile ? 200 : "auto", flexShrink: 0, overflow: "hidden", borderRadius: isMobile ? "16px 16px 0 0" : "16px 0 0 16px" }}>
         <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.07)" : "scale(1)", opacity: 0.75 }}
           onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,transparent 50%, rgba(0,0,0,.4) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: isMobile ? "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.5) 100%)" : "linear-gradient(90deg,transparent 50%, rgba(0,0,0,.4) 100%)" }} />
         <div style={{ position: "absolute", top: 16, left: 16, background: ac, color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" }}>{svc.badge}</div>
       </div>
-      <div style={{ flex: 1, padding: "32px 40px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", zIndex: 1 }}>
+      {/* Content */}
+      <div style={{ flex: 1, padding: isMobile ? "22px 20px 24px" : "32px 40px", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", zIndex: 1 }}>
         <div style={{ fontSize: "2rem", marginBottom: 8 }}>{icon}</div>
-        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.4rem,2.5vw,2rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: 6 }}>{svc.title}</h2>
+        <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: isMobile ? "1.4rem" : "clamp(1.4rem,2.5vw,2rem)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: 6 }}>{svc.title}</h2>
         {svc.tagline && <div style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.65)", fontWeight: 600, letterSpacing: ".04em", marginBottom: 14, fontStyle: "italic" }}>{svc.tagline}</div>}
-        <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.80)", lineHeight: 1.75, marginBottom: 20, maxWidth: 580 }}>{svc.description}</p>
+        <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.80)", lineHeight: 1.75, marginBottom: 20 }}>{svc.description}</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 24 }}>
           {(svc.features || []).map((feat, i) => (
             <div key={i} style={{ display: "flex", gap: 6, alignItems: "center", background: "rgba(255,255,255,.12)", borderRadius: 8, padding: "5px 12px", backdropFilter: "blur(4px)" }}>
@@ -2934,20 +2950,20 @@ function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-          <div>
+        <div style={{ display: "flex", alignItems: isMobile ? "stretch" : "center", gap: 12, flexDirection: isMobile ? "column" : "row", flexWrap: "wrap" }}>
+          <div style={{ marginBottom: isMobile ? 4 : 0 }}>
             <div style={{ fontSize: "0.625rem", color: "rgba(255,255,255,.55)", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 2 }}>Harga</div>
             <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff" }}>{svc.price}</div>
             <div style={{ fontSize: "0.6875rem", color: "rgba(255,255,255,.6)", fontStyle: "italic" }}>{svc.priceNote}</div>
           </div>
           <button onClick={onDetail}
-            style={{ padding: "12px 28px", background: "#fff", color: ac, border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 800, cursor: "pointer", letterSpacing: ".02em", transition: "all .2s", boxShadow: "0 4px 16px rgba(0,0,0,.25)" }}
+            style={{ padding: "12px 28px", background: "#fff", color: ac, border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 800, cursor: "pointer", letterSpacing: ".02em", transition: "all .2s", boxShadow: "0 4px 16px rgba(0,0,0,.25)", width: isMobile ? "100%" : "auto" }}
             onMouseEnter={e => { e.currentTarget.style.opacity = ".9"; e.currentTarget.style.transform = "scale(1.04)"; }}
             onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}>
             Lihat Detail &amp; Konsultasi
           </button>
           <a href={waLink || "https://wa.me/6285745571442"} target="_blank" rel="noreferrer"
-            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 8, textDecoration: "none", transition: "opacity .2s" }}
+            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, textDecoration: "none", transition: "opacity .2s", width: isMobile ? "100%" : "auto" }}
             onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
             &#128172; WhatsApp Sekarang
@@ -2961,39 +2977,42 @@ function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
 /* ── WIDE CARD for Custom Package — full width horizontal layout ── */
 function TravelPackageCardWide({ svc, onDetail, waLink }) {
   const [hovered, setHovered] = useState(false);
+  const isMobile = useIsMobile();
   const ac = svc.accent || "#7c3aed";
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: "#fff", borderRadius: 18, overflow: "hidden",
+        background: "#fff", borderRadius: 18,
+        overflow: "hidden",
         boxShadow: hovered ? "0 20px 60px rgba(13,59,102,.18)" : "0 4px 24px rgba(13,59,102,.10)",
         border: `2px solid ${hovered ? ac : ac + "50"}`,
         transition: "all .3s cubic-bezier(.22,1,.36,1)",
         transform: hovered ? "translateY(-4px)" : "none",
-        display: "flex", flexDirection: "row", minHeight: 260,
+        display: "flex", flexDirection: isMobile ? "column" : "row",
+        minHeight: isMobile ? "auto" : 260,
         fontFamily: "'DM Sans',sans-serif",
       }}>
-      {/* Left: image */}
-      <div style={{ position: "relative", width: 340, flexShrink: 0, overflow: "hidden" }}>
+      {/* Image */}
+      <div style={{ position: "relative", width: isMobile ? "100%" : 340, height: isMobile ? 210 : "auto", flexShrink: 0, overflow: "hidden" }}>
         <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.07)" : "scale(1)" }}
           onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg,transparent 60%,rgba(0,0,0,.35) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: isMobile ? "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.4) 100%)" : "linear-gradient(90deg,transparent 60%,rgba(0,0,0,.35) 100%)" }} />
         {svc.badge && (
           <div style={{ position: "absolute", top: 14, left: 14, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
             {svc.badge}
           </div>
         )}
       </div>
-      {/* Right: content */}
-      <div style={{ flex: 1, padding: "28px 36px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 10 }}>
-          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#0d3b66", lineHeight: 1.1, margin: 0 }}>{svc.title}</h2>
-          <span style={{ fontSize: "0.75rem", background: ac + "18", color: ac, borderRadius: 20, padding: "4px 14px", fontWeight: 700, letterSpacing: ".05em", whiteSpace: "nowrap" }}>{svc.tagline}</span>
+      {/* Content */}
+      <div style={{ flex: 1, padding: isMobile ? "20px 18px 24px" : "28px 36px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 0 }}>
+        <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 6 : 14, marginBottom: 10 }}>
+          <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: isMobile ? "1.4rem" : "1.75rem", fontWeight: 900, color: "#0d3b66", lineHeight: 1.1, margin: 0 }}>{svc.title}</h2>
+          <span style={{ fontSize: "0.75rem", background: ac + "18", color: ac, borderRadius: 20, padding: "4px 14px", fontWeight: 700, letterSpacing: ".05em" }}>{svc.tagline}</span>
         </div>
-        <p style={{ fontSize: "1rem", color: "#4a7f98", lineHeight: 1.75, marginBottom: 18, maxWidth: 620 }}>{svc.description}</p>
+        <p style={{ fontSize: "0.9375rem", color: "#4a7f98", lineHeight: 1.75, marginBottom: 18 }}>{svc.description}</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 20 }}>
           {(svc.features || []).map((feat, i) => (
             <div key={i} style={{ display: "flex", gap: 6, alignItems: "center", background: "#f0f7fb", borderRadius: 8, padding: "5px 12px" }}>
@@ -3002,20 +3021,20 @@ function TravelPackageCardWide({ svc, onDetail, waLink }) {
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-          <div>
+        <div style={{ display: "flex", alignItems: isMobile ? "stretch" : "center", flexDirection: isMobile ? "column" : "row", gap: 12, flexWrap: "wrap" }}>
+          <div style={{ marginBottom: isMobile ? 4 : 0 }}>
             <div style={{ fontSize: "0.625rem", color: "#5090aa", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 2 }}>Harga</div>
             <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66" }}>{svc.price}</div>
             <div style={{ fontSize: "0.6875rem", color: "#4a7f98", fontStyle: "italic" }}>{svc.priceNote}</div>
           </div>
           <button onClick={onDetail}
-            style={{ padding: "12px 28px", background: `linear-gradient(135deg,${ac},#0891b2)`, color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".03em", transition: "opacity .2s" }}
+            style={{ padding: "12px 28px", background: `linear-gradient(135deg,${ac},#0891b2)`, color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", letterSpacing: ".03em", transition: "opacity .2s", width: isMobile ? "100%" : "auto" }}
             onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-            Lihat Detail & Konsultasi
+            Lihat Detail &amp; Konsultasi
           </button>
           <a href={svc.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noreferrer"
-            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 8, textDecoration: "none", transition: "opacity .2s" }}
+            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, textDecoration: "none", transition: "opacity .2s", width: isMobile ? "100%" : "auto" }}
             onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
             💬 WhatsApp Sekarang
@@ -5840,6 +5859,8 @@ export default function BricksyTravel() {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [page, setPage] = useState("home");   // home | about | news | shop | destinations | services
+  const [historyStack, setHistoryStack] = useState(["home"]); // SPA history
+  const [historyIdx, setHistoryIdx] = useState(0);            // current position in stack
   const [readPost, setReadPost] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [comingSoon, setComingSoon] = useState(null); // null | "google" | "apple"
@@ -6110,6 +6131,29 @@ export default function BricksyTravel() {
 
   const navigateTo = (p) => {
     setPage(p); setReadPost(null); setMobileMenu(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setHistoryStack(prev => {
+      const trimmed = prev.slice(0, historyIdx + 1); // buang forward history
+      return [...trimmed, p];
+    });
+    setHistoryIdx(prev => prev + 1);
+  };
+
+  const spaBack = () => {
+    if (historyIdx <= 0) return;
+    const newIdx = historyIdx - 1;
+    setHistoryIdx(newIdx);
+    const target = historyStack[newIdx];
+    setPage(target); setReadPost(null); setMobileMenu(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const spaForward = () => {
+    if (historyIdx >= historyStack.length - 1) return;
+    const newIdx = historyIdx + 1;
+    setHistoryIdx(newIdx);
+    const target = historyStack[newIdx];
+    setPage(target); setReadPost(null); setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -6518,6 +6562,112 @@ export default function BricksyTravel() {
 
           {/* Spacer to push content below fixed navbar */}
           <div style={{ height: "clamp(60px,10vw,96px)" }} />
+
+          {/* ── NAVIGASI MAJU / MUNDUR ── */}
+          {(() => {
+            const isMobileNav = window.innerWidth <= 768;
+            const canBack = historyIdx > 0;
+            const canFwd = historyIdx < historyStack.length - 1;
+            const PAGE_LABELS = { home: "Beranda", about: "Tentang Kami", services: "Layanan", destinations: "Destinasi", news: "Berita", shop: "Toko" };
+            const currentLabel = PAGE_LABELS[historyStack[historyIdx]] || historyStack[historyIdx] || "Halaman";
+            if (isMobileNav) {
+              /* ── MOBILE: pill horizontal di kiri bawah ── */
+              return (
+                <div style={{
+                  position: "fixed", bottom: 24, left: 16, zIndex: 9989,
+                  display: "flex", alignItems: "center",
+                  background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)",
+                  borderRadius: 40, boxShadow: "0 4px 20px rgba(0,0,0,.18), 0 1px 4px rgba(0,0,0,.10)",
+                  border: "1px solid rgba(13,59,102,.10)", overflow: "hidden",
+                }}>
+                  {/* Tombol Mundur */}
+                  <button onClick={spaBack} disabled={!canBack} aria-label="Halaman sebelumnya"
+                    style={{
+                      width: 54, height: 54, border: "none", background: "transparent",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      cursor: canBack ? "pointer" : "default",
+                      opacity: canBack ? 1 : 0.3,
+                      WebkitTapHighlightColor: "transparent",
+                      transition: "background .15s",
+                    }}
+                    onPointerDown={e => { if (canBack) e.currentTarget.style.background = "rgba(13,59,102,.08)"; }}
+                    onPointerUp={e => { e.currentTarget.style.background = "transparent"; }}
+                    onPointerLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                  >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={canBack ? "#0d3b66" : "#aaa"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+                  {/* Label halaman aktif */}
+                  <div style={{
+                    padding: "0 6px", fontSize: "0.6875rem", fontWeight: 700,
+                    color: "#0d3b66", letterSpacing: ".02em", whiteSpace: "nowrap",
+                    maxWidth: 90, overflow: "hidden", textOverflow: "ellipsis",
+                    fontFamily: "'DM Sans',sans-serif", lineHeight: 1,
+                    borderLeft: "1px solid rgba(13,59,102,.1)", borderRight: "1px solid rgba(13,59,102,.1)",
+                    height: 54, display: "flex", alignItems: "center",
+                  }}>
+                    {currentLabel}
+                  </div>
+                  {/* Tombol Maju */}
+                  <button onClick={spaForward} disabled={!canFwd} aria-label="Halaman berikutnya"
+                    style={{
+                      width: 54, height: 54, border: "none", background: "transparent",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      cursor: canFwd ? "pointer" : "default",
+                      opacity: canFwd ? 1 : 0.3,
+                      WebkitTapHighlightColor: "transparent",
+                      transition: "background .15s",
+                    }}
+                    onPointerDown={e => { if (canFwd) e.currentTarget.style.background = "rgba(13,59,102,.08)"; }}
+                    onPointerUp={e => { e.currentTarget.style.background = "transparent"; }}
+                    onPointerLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                  >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={canFwd ? "#0d3b66" : "#aaa"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </button>
+                </div>
+              );
+            }
+            /* ── DESKTOP: dua tombol bulat vertikal di kanan ── */
+            return (
+              <div style={{ position: "fixed", bottom: 100, right: 20, zIndex: 9989, display: "flex", flexDirection: "column", gap: 8 }}>
+                <button onClick={spaForward} disabled={!canFwd} title="Maju"
+                  style={{
+                    width: 44, height: 44, borderRadius: "50%", border: "none",
+                    background: canFwd ? "#fff" : "rgba(255,255,255,.5)",
+                    boxShadow: "0 2px 10px rgba(0,0,0,.16)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    cursor: canFwd ? "pointer" : "default", opacity: canFwd ? 1 : 0.4,
+                    transition: "transform .2s, box-shadow .2s",
+                  }}
+                  onMouseEnter={e => { if (canFwd) { e.currentTarget.style.transform = "scale(1.12)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,.22)"; }}}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,.16)"; }}
+                >
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke={canFwd ? "#0d3b66" : "#aaa"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
+                <button onClick={spaBack} disabled={!canBack} title="Mundur"
+                  style={{
+                    width: 44, height: 44, borderRadius: "50%", border: "none",
+                    background: canBack ? "#fff" : "rgba(255,255,255,.5)",
+                    boxShadow: "0 2px 10px rgba(0,0,0,.16)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    cursor: canBack ? "pointer" : "default", opacity: canBack ? 1 : 0.4,
+                    transition: "transform .2s, box-shadow .2s",
+                  }}
+                  onMouseEnter={e => { if (canBack) { e.currentTarget.style.transform = "scale(1.12)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,.22)"; }}}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,.16)"; }}
+                >
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke={canBack ? "#0d3b66" : "#aaa"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </button>
+              </div>
+            );
+          })()}
 
           {/* ── WHATSAPP FLOATING BUTTON ── */}
           <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
