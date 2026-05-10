@@ -5676,7 +5676,7 @@ function HeroSlideshow({ data, navigateTo }) {
   const prevSl = prev !== null ? slides[prev] : null;
 
   return (
-    <section style={{ position: "relative", width: "100%", height: "clamp(480px,80vh,700px)", overflow: "hidden", background: "#04080f" }}>
+    <section style={{ position: "relative", width: "100%", height: "clamp(560px,88vh,800px)", overflow: "hidden", background: "#04080f" }}>
       <style>{`
         @keyframes heroTxtIn { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:none; } }
         @keyframes heroDotPulse { 0%,100%{transform:scale(1);opacity:.8;} 50%{transform:scale(1.3);opacity:1;} }
@@ -5711,13 +5711,25 @@ function HeroSlideshow({ data, navigateTo }) {
 
       {/* CONTENT OVERLAY — rata tengah */}
       <div style={{ position: "relative", zIndex: 10, height: "100%", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 6%", textAlign: "center" }}>
-        <div style={{ maxWidth: 640, animation: animating ? "none" : "heroTxtIn .6s ease both" }} key={current}>
+        <div style={{ maxWidth: 780, animation: animating ? "none" : "heroTxtIn .6s ease both" }} key={current}>
           {/* Label */}
           <div style={{ display: "inline-block", background: "#e8a020", color: "#fff", fontSize: "0.6875rem", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: 2, marginBottom: 18 }}>
             {SECTION_LABEL[sl.section] || "Arutala Organizer"}
           </div>
-          {/* Title */}
-          <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.9rem,5.5vw,3.5rem)", fontWeight: 900, color: "#fff", lineHeight: 1.08, marginBottom: 18, textShadow: "0 2px 16px rgba(0,0,0,.5)" }}>
+          {/* Title — max 2 baris, potong sisanya */}
+          <h1 style={{
+            fontFamily: "'Playfair Display',serif",
+            fontSize: "clamp(1.75rem,4.2vw,2.8rem)",
+            fontWeight: 900,
+            color: "#fff",
+            lineHeight: 1.18,
+            marginBottom: 18,
+            textShadow: "0 2px 16px rgba(0,0,0,.5)",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}>
             {sl.title}
           </h1>
           {/* Excerpt */}
