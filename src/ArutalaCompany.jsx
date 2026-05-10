@@ -518,12 +518,12 @@ const DEFAULT_POSTS = {
       id: 1, section: "news", status: "published",
       title: "Spa & Wellness di Ubud: Surga Tersembunyi Bali",
       date: "2026-04-03", author: "writer1", category: "Lifestyle",
-      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      coverImage: "",
       excerpt: "Rasakan ketenangan sejati di resort spa premium Ubud yang menyatu dengan alam Bali.",
       content: [
         { type: "paragraph", value: "Ubud, jantung seni dan budaya Bali, telah lama menjadi surga bagi mereka yang mencari kedamaian jiwa dan raga. Dikelilingi hamparan sawah terasering hijau dan hutan tropis yang rindang, Ubud menawarkan pengalaman spa yang benar-benar menyatu dengan alam." },
         { type: "paragraph", value: "Dari pijat batu vulkanik khas Bali hingga ritual penyembuhan tradisional Melukat, setiap treatment dirancang untuk memulihkan tubuh dan menenangkan pikiran setelah perjalanan panjang." },
-        { type: "image", value: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Bali_Usaada_Bali_traditional_healing.jpg/1280px-Bali_Usaada_Bali_traditional_healing.jpg", caption: "Ritual penyembuhan tradisional Bali di Ubud" },
+        { type: "image", value: "", caption: "Ritual penyembuhan tradisional Bali di Ubud" },
         { type: "paragraph", value: "Nikmati sesi yoga di tepi sawah saat fajar, atau manjakan diri dengan lulur beras Bali yang legendaris. Ubud adalah pengalaman yang tidak akan terlupakan." },
       ],
       tags: ["spa", "bali", "wellness", "ubud"],
@@ -532,12 +532,12 @@ const DEFAULT_POSTS = {
       id: 2, section: "news", status: "published",
       title: "Pantai Tersembunyi di Raja Ampat yang Memukau",
       date: "2026-04-10", author: "writer1", category: "Beach",
-      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      coverImage: "",
       excerpt: "Jelajahi pantai-pantai tersembunyi Raja Ampat dengan air sejernih kristal dan terumbu karang yang menakjubkan.",
       content: [
         { type: "paragraph", value: "Raja Ampat, permata tersembunyi di ujung timur Indonesia, menyimpan ribuan pulau kecil dengan pantai berpasir putih yang belum banyak terjamah. Perjalanan menuju pantai-pantai ini memang membutuhkan usaha ekstra, namun hasilnya sebanding dengan setiap tetes keringat." },
         { type: "paragraph", value: "Di bawah permukaan laut Raja Ampat, dunia yang sama mengagumkannya menanti. Keanekaragaman hayati laut di sini adalah yang tertinggi di dunia — ribuan spesies ikan, pari manta, dan terumbu karang warna-warni." },
-        { type: "image", value: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg", caption: "Gugusan pulau Raja Ampat dari ketinggian" },
+        { type: "image", value: "", caption: "Gugusan pulau Raja Ampat dari ketinggian" },
       ],
       tags: ["raja ampat", "pantai", "diving", "papua"],
     },
@@ -545,7 +545,7 @@ const DEFAULT_POSTS = {
       id: 3, section: "news", status: "published",
       title: "Kenangan Tak Terlupakan Bersama Arutala Organizer",
       date: "2026-04-15", author: "writer1", category: "Experience",
-      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      coverImage: "",
       excerpt: "Setiap perjalanan bersama Arutala adalah cerita yang akan selalu dikenang.",
       content: [
         { type: "paragraph", value: "Perjalanan bukan sekadar soal destinasi — melainkan tentang momen yang membuat hati terasa penuh. Saat matahari terbenam di Pura Tanah Lot, saat pertama kali menginjakkan kaki di hamparan sawah Tegalalang, atau saat tawa riang di tengah petualangan bersama orang-orang tersayang." },
@@ -559,7 +559,7 @@ const DEFAULT_POSTS = {
       id: 10, section: "shop", status: "published",
       title: "Paket Perlengkapan Wisata Nusantara — Seri Explorer",
       date: "2026-03-20", author: "writer1", category: "Perlengkapan",
-      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      coverImage: "",
       excerpt: "Perlengkapan wisata terbaik untuk menjelajahi keindahan nusantara dari Bromo hingga Raja Ampat.",
       badge: "Terlaris",
       content: [
@@ -572,7 +572,7 @@ const DEFAULT_POSTS = {
       id: 11, section: "shop", status: "published",
       title: "Kamera Dokumentasi Perjalanan — Edisi Nusantara",
       date: "2026-03-25", author: "writer1", category: "Fotografi",
-      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Borobudur_Temple_Compounds-en.svg/1280px-Borobudur_Temple_Compounds-en.svg.png",
+      coverImage: "",
       excerpt: "Abadikan setiap momen perjalanan Anda dengan sempurna, dari puncak Rinjani hingga kedalaman laut Bunaken.",
       content: [
         { type: "paragraph", value: "Setiap sudut Indonesia layak diabadikan — dari kemegahan Candi Borobudur yang misterius hingga kecantikan bawah laut Bunaken yang tiada duanya. Dengan kamera yang tepat, setiap momen menjadi karya yang bisa dinikmati selamanya." },
@@ -585,12 +585,12 @@ const DEFAULT_POSTS = {
       id: 20, section: "destinations", status: "published",
       title: "Taman Nasional Komodo — Warisan Dunia Indonesia",
       date: "2026-02-10", author: "writer1", category: "Alam",
-      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Komodo_dragon_%28Varanus_komodoensis%29_2.jpg/1280px-Komodo_dragon_%28Varanus_komodoensis%29_2.jpg",
+      coverImage: "",
       excerpt: "Rumah bagi komodo legendaris dan surga diving kelas dunia di jantung Nusa Tenggara Timur.",
       content: [
         { type: "paragraph", value: "Taman Nasional Komodo adalah salah satu destinasi paling dramatis di Indonesia. Lanskap vulkanik yang kasar menjadi rumah bagi kadal terbesar di dunia — Komodo (Varanus komodoensis) — yang hanya bisa ditemukan di sini." },
         { type: "paragraph", value: "Di bawah permukaannya, perairan Komodo tak kalah spektakuler. Para penyelam akan bertemu manta raya raksasa, hiu, dan taman karang warna-warni yang menjadi salah satu terbaik di dunia." },
-        { type: "image", value: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg", caption: "Pink Beach Komodo yang ikonik" },
+        { type: "image", value: "", caption: "Pink Beach Komodo yang ikonik" },
         { type: "paragraph", value: "Waktu terbaik berkunjung: April–Desember saat laut tenang. Paket liveaboard diving sangat direkomendasikan untuk pengalaman penuh." },
       ],
       tags: ["komodo", "ntt", "diving", "alam"],
@@ -599,7 +599,7 @@ const DEFAULT_POSTS = {
       id: 21, section: "destinations", status: "published",
       title: "Gunung Bromo — Negeri di Atas Awan Jawa Timur",
       date: "2026-02-20", author: "writer1", category: "Alam",
-      coverImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      coverImage: "",
       excerpt: "Saksikan keajaiban matahari terbit di Gunung Bromo — pengalaman paling ikonik di Jawa Timur.",
       content: [
         { type: "paragraph", value: "Tidak ada banyak pemandangan yang bisa menandingi keindahan matahari terbit di Gunung Bromo. Lautan pasir seluas 5.250 hektare, kepulan asap kawah, dan siluet Semeru di kejauhan menciptakan panorama yang terasa seperti dari planet lain." },
@@ -613,22 +613,22 @@ const DEFAULT_POSTS = {
 const DEFAULT_DATA = {
   images: {
     hero: [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      "",
+      "",
+      "",
+      "",
     ],
     adv: [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
+      "",
+      "",
     ],
     gal: [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Komodo_dragon_%28Varanus_komodoensis%29_2.jpg/1280px-Komodo_dragon_%28Varanus_komodoensis%29_2.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
     ],
   },
   content: {
@@ -688,11 +688,8 @@ const DEFAULT_DATA = {
       badgeColor: "#27ae60",
       price: "Rp 3.500.000",
       priceNote: "/ event",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Seminar_Nasional_Indonesia.jpg/1280px-Seminar_Nasional_Indonesia.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Gathering_event_Indonesia.jpg/1280px-Gathering_event_Indonesia.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Seminar_Nasional_Indonesia.jpg/1280px-Seminar_Nasional_Indonesia.jpg",
+      images: [],
+      image: "",
       description: "Paket event entry-level ideal untuk seminar, gathering kecil, atau peluncuran produk dengan kapasitas hingga 100 tamu. Semua kebutuhan dasar sudah tercakup.",
       features: [
         "Konsultasi event 1x pertemuan",
@@ -713,12 +710,8 @@ const DEFAULT_DATA = {
       badgeColor: "#0891b2",
       price: "Rp 12.500.000",
       priceNote: "/ event",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Konser_Indonesia.jpg/1280px-Konser_Indonesia.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Corporate_event_Indonesia.jpg/1280px-Corporate_event_Indonesia.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Konser_Indonesia.jpg/1280px-Konser_Indonesia.jpg",
+      images: [],
+      image: "",
       description: "Paket lengkap untuk corporate event, seminar nasional, team building, dan peluncuran brand. Cocok untuk 100–300 tamu dengan layanan penuh hari H.",
       features: [
         "Konsultasi event tak terbatas",
@@ -740,12 +733,8 @@ const DEFAULT_DATA = {
       badgeColor: "#c0392b",
       price: "Rp 35.000.000",
       priceNote: "/ event",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      images: [],
+      image: "",
       description: "Malam penghargaan perusahaan dengan nuansa ballroom mewah, red carpet, dan entertainment eksklusif. Dirancang untuk kesan tak terlupakan bagi 200–500 tamu undangan.",
       features: [
         "Dekorasi ballroom premium",
@@ -775,12 +764,8 @@ const DEFAULT_DATA = {
       minPeserta: "30",
       price: "520000",
       priceNote: "/ orang (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1200px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/800px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg/800px-Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1200px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      images: [],
+      image: "",
       description: "Paket karyawisata ke Bali — Tanah Lot, Ubud, GWK, Uluwatu & Bedugul. Hotel bintang 3–4, konsumsi 3x sehari, tour leader & dokumentasi profesional.",
       features: ["Hotel Bintang 3–4", "Konsumsi 3x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "ID Card & Buku Panduan"],
       highlight: true,
@@ -804,11 +789,11 @@ const DEFAULT_DATA = {
         "Free program tambahan (opsional)",
       ],
       destinations: [
-        { no: "01", name: "Tanah Lot", sub: "Tabanan, Bali", tag: "Pura Hindu · Keindahan Alam", title: "Pura Megah di Atas Batu Karang Laut", desc: "Tanah Lot adalah ikon Bali yang paling terkenal. Pura Hindu ini berdiri kokoh di atas batu karang di tengah laut. Saat sunset, pemandangannya luar biasa indah dan menjadi momen yang tidak terlupakan.", points: ["Pura ikonik di atas batu karang", "Sunset paling populer di Bali", "Pertunjukan Tari Kecak (opsional)", "Pasar seni & kerajinan khas Bali"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/800px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg" },
-        { no: "02", name: "Ubud & Tegalalang", sub: "Gianyar, Bali", tag: "Alam & Seni · Pusat Budaya Bali", title: "Jantung Seni dan Alam Bali", desc: "Ubud adalah jantung seni Bali — dari sawah terasering Tegalalang yang memukau hingga Monkey Forest yang seru. Siswa bisa belajar tentang ekosistem pertanian tradisional Bali.", points: ["Tegalalang Rice Terrace ikonik", "Sacred Monkey Forest Sanctuary", "Museum Puri Lukisan", "Belanja di Pasar Ubud & workshop ukiran"], duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/800px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg" },
-        { no: "03", name: "GWK & Pantai Kuta", sub: "Badung, Bali", tag: "Budaya Hindu · Pantai Ikonik", title: "Garuda Wisnu Kencana & Pasir Putih Kuta", desc: "Garuda Wisnu Kencana (GWK) adalah taman budaya megah dengan patung setinggi 121 meter. Dilanjutkan ke Pantai Kuta yang legendaris untuk kegiatan bebas dan foto bersama.", points: ["Patung GWK tertinggi di Indonesia", "Pertunjukan tari budaya Bali", "Pantai Kuta pasir putih ikonik", "Free time foto & bermain di tepi pantai"], duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg/800px-Garuda_Wisnu_Kencana_Cultural_Park_Bali.jpg" },
-        { no: "04", name: "Uluwatu", sub: "Badung, Bali", tag: "Spiritual · Tebing & Samudra", title: "Pura Tebing Karang Selatan Bali", desc: "Pura Luhur Uluwatu berdiri megah di tepi tebing karang setinggi 70 meter di atas Samudra Hindia. Salah satu pura sad kahyangan di Bali yang wajib dikunjungi.", points: ["Pura di tepi tebing 70 meter", "Pemandangan Samudra Hindia", "Kecak Fire Dance saat sunset", "Konservasi monyet ekor panjang"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Uluwatu_Temple_Bali_Indonesia.jpg/800px-Uluwatu_Temple_Bali_Indonesia.jpg" },
-        { no: "05", name: "Bedugul & Danau Beratan", sub: "Tabanan, Bali", tag: "Alam Pegunungan · Danau Vulkanik", title: "Pura Ulun Danu di Tengah Danau", desc: "Bedugul menawarkan udara sejuk pegunungan dengan pemandangan Danau Beratan yang menakjubkan. Pura Ulun Danu Beratan yang mengapung di atas danau adalah ikon paling ikonik Bali.", points: ["Pura Ulun Danu Beratan ikonik", "Kebun Raya Bedugul 157 ha", "Strawberry farm & pasar buah lokal", "Udara sejuk 18–22°C, 1.239 mdpl"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Ulun_Danu_Temple_Bedugul_Bali.jpg/800px-Ulun_Danu_Temple_Bedugul_Bali.jpg" },
+        { no: "01", name: "Tanah Lot", sub: "Tabanan, Bali", tag: "Pura Hindu · Keindahan Alam", title: "Pura Megah di Atas Batu Karang Laut", desc: "Tanah Lot adalah ikon Bali yang paling terkenal. Pura Hindu ini berdiri kokoh di atas batu karang di tengah laut. Saat sunset, pemandangannya luar biasa indah dan menjadi momen yang tidak terlupakan.", points: ["Pura ikonik di atas batu karang", "Sunset paling populer di Bali", "Pertunjukan Tari Kecak (opsional)", "Pasar seni & kerajinan khas Bali"], duration: "2–3 jam", img: "" },
+        { no: "02", name: "Ubud & Tegalalang", sub: "Gianyar, Bali", tag: "Alam & Seni · Pusat Budaya Bali", title: "Jantung Seni dan Alam Bali", desc: "Ubud adalah jantung seni Bali — dari sawah terasering Tegalalang yang memukau hingga Monkey Forest yang seru. Siswa bisa belajar tentang ekosistem pertanian tradisional Bali.", points: ["Tegalalang Rice Terrace ikonik", "Sacred Monkey Forest Sanctuary", "Museum Puri Lukisan", "Belanja di Pasar Ubud & workshop ukiran"], duration: "3–4 jam", img: "" },
+        { no: "03", name: "GWK & Pantai Kuta", sub: "Badung, Bali", tag: "Budaya Hindu · Pantai Ikonik", title: "Garuda Wisnu Kencana & Pasir Putih Kuta", desc: "Garuda Wisnu Kencana (GWK) adalah taman budaya megah dengan patung setinggi 121 meter. Dilanjutkan ke Pantai Kuta yang legendaris untuk kegiatan bebas dan foto bersama.", points: ["Patung GWK tertinggi di Indonesia", "Pertunjukan tari budaya Bali", "Pantai Kuta pasir putih ikonik", "Free time foto & bermain di tepi pantai"], duration: "3–4 jam", img: "" },
+        { no: "04", name: "Uluwatu", sub: "Badung, Bali", tag: "Spiritual · Tebing & Samudra", title: "Pura Tebing Karang Selatan Bali", desc: "Pura Luhur Uluwatu berdiri megah di tepi tebing karang setinggi 70 meter di atas Samudra Hindia. Salah satu pura sad kahyangan di Bali yang wajib dikunjungi.", points: ["Pura di tepi tebing 70 meter", "Pemandangan Samudra Hindia", "Kecak Fire Dance saat sunset", "Konservasi monyet ekor panjang"], duration: "2–3 jam", img: "" },
+        { no: "05", name: "Bedugul & Danau Beratan", sub: "Tabanan, Bali", tag: "Alam Pegunungan · Danau Vulkanik", title: "Pura Ulun Danu di Tengah Danau", desc: "Bedugul menawarkan udara sejuk pegunungan dengan pemandangan Danau Beratan yang menakjubkan. Pura Ulun Danu Beratan yang mengapung di atas danau adalah ikon paling ikonik Bali.", points: ["Pura Ulun Danu Beratan ikonik", "Kebun Raya Bedugul 157 ha", "Strawberry farm & pasar buah lokal", "Udara sejuk 18–22°C, 1.239 mdpl"], duration: "2–3 jam", img: "" },
       ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "520.000", points: ["Full AC Double Blower","Sleeper / Reclining seat","TV LCD + Audio System","Toilet dalam bus","USB charging per kursi","Snack 2x perjalanan"] },
@@ -831,12 +816,8 @@ const DEFAULT_DATA = {
       minPeserta: "25",
       price: "Rp 285.000",
       priceNote: "/ orang (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Prambanan.jpg/800px-Prambanan.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Malioboro_yogyakarta.jpg/800px-Malioboro_yogyakarta.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+      images: [],
+      image: "",
       description: "Paket karyawisata edukatif ke Yogyakarta — Borobudur, Prambanan, Malioboro & Keraton. Hotel bintang 2–3, konsumsi 3x, pemandu lokal bersertifikat.",
       features: ["Hotel Bintang 2–3", "Konsumsi 3x Sehari (incl. Gudeg)", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "Workshop Batik Opsional"],
       highlight: false,
@@ -860,9 +841,9 @@ const DEFAULT_DATA = {
         "Workshop batik opsional",
       ],
       destinations: [
-        { no: "01", name: "Candi Borobudur", sub: "Magelang, Jawa Tengah", tag: "Warisan Dunia UNESCO · Sejarah & Budaya", title: "Candi Buddha Terbesar di Dunia", desc: "Candi Borobudur merupakan monumen Buddha terbesar yang diakui UNESCO sebagai warisan dunia. Siswa dapat mempelajari arsitektur kuno, relief cerita Buddha, dan filosofi hidup dari ukiran batu yang menakjubkan.", points: ["Relief 2.672 panel bercerita Buddha", "Pemandangan matahari terbit spektakuler", "Museum interaktif di kompleks candi", "Sarung batik gratis untuk kunjungan"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/800px-Borobudur_ship.jpg" },
-        { no: "02", name: "Candi Prambanan", sub: "Sleman, Yogyakarta", tag: "Warisan Dunia UNESCO · Hindu Kuno", title: "Kompleks Candi Hindu Termegah", desc: "Prambanan adalah kompleks candi Hindu terbesar di Indonesia. Arsitekturnya yang menjulang mencerminkan kejayaan Kerajaan Mataram Kuno. Cerita Ramayana terukir indah di setiap dindingnya.", points: ["Tiga candi utama: Siwa, Brahma & Wisnu", "Sendratari Ramayana (opsional malam)", "Area taman luas untuk diskusi", "Pemandu khusus pelajar bersertifikat"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Prambanan.jpg/800px-Prambanan.jpg" },
-        { no: "03", name: "Malioboro & Keraton", sub: "Kota Yogyakarta", tag: "Budaya Lokal · Pusat Kota Jogja", title: "Jantung Budaya Yogyakarta", desc: "Jalan Malioboro adalah ikon paling terkenal Yogyakarta. Di sini siswa belajar tentang kerajinan batik, kuliner khas Jogja, dan sistem pemerintahan Kesultanan Ngayogyakarta Hadiningrat.", points: ["Kunjungan Keraton Ngayogyakarta", "Belanja oleh-oleh khas Jogja", "Naik andong & becak tradisional", "Workshop membatik bersama pengrajin"], duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Malioboro_yogyakarta.jpg/800px-Malioboro_yogyakarta.jpg" },
+        { no: "01", name: "Candi Borobudur", sub: "Magelang, Jawa Tengah", tag: "Warisan Dunia UNESCO · Sejarah & Budaya", title: "Candi Buddha Terbesar di Dunia", desc: "Candi Borobudur merupakan monumen Buddha terbesar yang diakui UNESCO sebagai warisan dunia. Siswa dapat mempelajari arsitektur kuno, relief cerita Buddha, dan filosofi hidup dari ukiran batu yang menakjubkan.", points: ["Relief 2.672 panel bercerita Buddha", "Pemandangan matahari terbit spektakuler", "Museum interaktif di kompleks candi", "Sarung batik gratis untuk kunjungan"], duration: "2–3 jam", img: "" },
+        { no: "02", name: "Candi Prambanan", sub: "Sleman, Yogyakarta", tag: "Warisan Dunia UNESCO · Hindu Kuno", title: "Kompleks Candi Hindu Termegah", desc: "Prambanan adalah kompleks candi Hindu terbesar di Indonesia. Arsitekturnya yang menjulang mencerminkan kejayaan Kerajaan Mataram Kuno. Cerita Ramayana terukir indah di setiap dindingnya.", points: ["Tiga candi utama: Siwa, Brahma & Wisnu", "Sendratari Ramayana (opsional malam)", "Area taman luas untuk diskusi", "Pemandu khusus pelajar bersertifikat"], duration: "2–3 jam", img: "" },
+        { no: "03", name: "Malioboro & Keraton", sub: "Kota Yogyakarta", tag: "Budaya Lokal · Pusat Kota Jogja", title: "Jantung Budaya Yogyakarta", desc: "Jalan Malioboro adalah ikon paling terkenal Yogyakarta. Di sini siswa belajar tentang kerajinan batik, kuliner khas Jogja, dan sistem pemerintahan Kesultanan Ngayogyakarta Hadiningrat.", points: ["Kunjungan Keraton Ngayogyakarta", "Belanja oleh-oleh khas Jogja", "Naik andong & becak tradisional", "Workshop membatik bersama pengrajin"], duration: "3–4 jam", img: "" },
       ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "285.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 1x perjalanan","USB charging per kursi","Reclining seat"] },
@@ -885,12 +866,8 @@ const DEFAULT_DATA = {
       minPeserta: "20",
       price: "Rp 195.000",
       priceNote: "/ orang (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Kraton_Surakarta.jpg/1200px-Kraton_Surakarta.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Batik_Laweyan_Solo.jpg/800px-Batik_Laweyan_Solo.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pasar_Gede_Surakarta.jpg/800px-Pasar_Gede_Surakarta.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Kraton_Surakarta.jpg/1200px-Kraton_Surakarta.jpg",
+      images: [],
+      image: "",
       description: "Paket karyawisata ke Solo — Keraton Surakarta, Kampung Batik Laweyan, dan Pasar Gede. Paket paling terjangkau dengan nuansa seni & budaya Jawa.",
       features: ["Hotel Bintang 2", "Konsumsi 2x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "Workshop Membatik"],
       highlight: false,
@@ -913,9 +890,9 @@ const DEFAULT_DATA = {
         "Snack 1x di kendaraan",
       ],
       destinations: [
-        { no: "01", name: "Keraton Surakarta", sub: "Surakarta, Jawa Tengah", tag: "Sejarah & Budaya · Istana Kerajaan", title: "Pusat Kebudayaan Jawa di Solo", desc: "Keraton Surakarta Hadiningrat adalah istana resmi Kasunanan Surakarta. Siswa bisa melihat langsung koleksi pusaka, busana adat kerajaan, dan mempelajari sejarah Kerajaan Mataram yang kaya.", points: ["Koleksi pusaka benda bersejarah kerajaan", "Pemandu khusus sejarah Mataram", "Pertunjukan wayang dan gamelan", "Galeri batik keraton asli"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Kraton_Surakarta.jpg/800px-Kraton_Surakarta.jpg" },
-        { no: "02", name: "Kampung Batik Laweyan", sub: "Laweyan, Surakarta", tag: "Industri Kreatif · Warisan Budaya", title: "Sentra Batik Tertua di Indonesia", desc: "Laweyan adalah kampung batik tertua di Indonesia yang sudah ada sejak abad ke-16. Siswa bisa belajar langsung proses membatik dari pengrajin berpengalaman dan membawa pulang karya mereka sendiri.", points: ["Workshop membatik langsung dengan pengrajin", "Galeri batik tulis asli", "Sejarah batik warisan UNESCO", "Oleh-oleh langsung dari pengrajin"], duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Batik_Laweyan_Solo.jpg/800px-Batik_Laweyan_Solo.jpg" },
-        { no: "03", name: "Pasar Gede & Kuliner Solo", sub: "Pusat Kota Solo", tag: "Kuliner & Budaya Lokal", title: "Surga Kuliner Otentik Kota Solo", desc: "Pasar Gede adalah pasar tradisional terbesar dan tertua di Solo. Siswa bisa mencicipi kuliner khas Solo seperti nasi liwet, serabi, timlo, dan brambang asem.", points: ["Arsitektur pasar kolonial Belanda bersejarah", "Kuliner: nasi liwet, serabi, timlo", "Interaksi langsung dengan pedagang lokal", "Sistem jual-beli tradisional Jawa"], duration: "1–2 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pasar_Gede_Surakarta.jpg/800px-Pasar_Gede_Surakarta.jpg" },
+        { no: "01", name: "Keraton Surakarta", sub: "Surakarta, Jawa Tengah", tag: "Sejarah & Budaya · Istana Kerajaan", title: "Pusat Kebudayaan Jawa di Solo", desc: "Keraton Surakarta Hadiningrat adalah istana resmi Kasunanan Surakarta. Siswa bisa melihat langsung koleksi pusaka, busana adat kerajaan, dan mempelajari sejarah Kerajaan Mataram yang kaya.", points: ["Koleksi pusaka benda bersejarah kerajaan", "Pemandu khusus sejarah Mataram", "Pertunjukan wayang dan gamelan", "Galeri batik keraton asli"], duration: "2–3 jam", img: "" },
+        { no: "02", name: "Kampung Batik Laweyan", sub: "Laweyan, Surakarta", tag: "Industri Kreatif · Warisan Budaya", title: "Sentra Batik Tertua di Indonesia", desc: "Laweyan adalah kampung batik tertua di Indonesia yang sudah ada sejak abad ke-16. Siswa bisa belajar langsung proses membatik dari pengrajin berpengalaman dan membawa pulang karya mereka sendiri.", points: ["Workshop membatik langsung dengan pengrajin", "Galeri batik tulis asli", "Sejarah batik warisan UNESCO", "Oleh-oleh langsung dari pengrajin"], duration: "2–3 jam", img: "" },
+        { no: "03", name: "Pasar Gede & Kuliner Solo", sub: "Pusat Kota Solo", tag: "Kuliner & Budaya Lokal", title: "Surga Kuliner Otentik Kota Solo", desc: "Pasar Gede adalah pasar tradisional terbesar dan tertua di Solo. Siswa bisa mencicipi kuliner khas Solo seperti nasi liwet, serabi, timlo, dan brambang asem.", points: ["Arsitektur pasar kolonial Belanda bersejarah", "Kuliner: nasi liwet, serabi, timlo", "Interaksi langsung dengan pedagang lokal", "Sistem jual-beli tradisional Jawa"], duration: "1–2 jam", img: "" },
       ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "195.000", points: ["Full AC Double Blower","TV LCD + Audio System","Reclining seat","Snack 1x perjalanan","USB charging per kursi","Toilet dalam bus"] },
@@ -938,10 +915,8 @@ const DEFAULT_DATA = {
       minPeserta: "10",
       price: "Hubungi Kami",
       priceNote: "harga transparan",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      images: [],
+      image: "",
       description: "Paket wisata sepenuhnya dikustomisasi — tujuan bebas, durasi fleksibel, anggaran transparan. Jogja, Bali, Solo, Lombok, Bromo, dan lainnya.",
       features: ["Tujuan Bebas Seluruh Indonesia", "Durasi 1 Hari – 2 Minggu", "Konsultasi Gratis", "Survey Lokasi", "Itinerary Custom bersama Tim Sekolah", "Support 24 Jam Selama Perjalanan"],
       highlight: false,
@@ -965,7 +940,7 @@ const DEFAULT_DATA = {
         "Harga transparan tanpa biaya tersembunyi",
       ],
       destinations: [
-        { no: "✈", name: "Bebas Pilih Destinasi", sub: "Seluruh Indonesia", tag: "Custom · Fleksibel", title: "Pilih Destinasi Sesuai Keinginan", desc: "Tidak ada batasan! Pilih dari ratusan destinasi wisata di seluruh Indonesia. Tim kami siap merancang perjalanan terbaik untuk sekolah Anda — dari Sabang sampai Merauke.", points: ["Bali, Jogja, Solo, Lombok, Bromo", "Labuan Bajo, Raja Ampat, Belitung", "Destinasi lokal & regional Jawa Timur", "Rute kombinasi multi-kota tersedia"], duration: "Fleksibel", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg" },
+        { no: "✈", name: "Bebas Pilih Destinasi", sub: "Seluruh Indonesia", tag: "Custom · Fleksibel", title: "Pilih Destinasi Sesuai Keinginan", desc: "Tidak ada batasan! Pilih dari ratusan destinasi wisata di seluruh Indonesia. Tim kami siap merancang perjalanan terbaik untuk sekolah Anda — dari Sabang sampai Merauke.", points: ["Bali, Jogja, Solo, Lombok, Bromo", "Labuan Bajo, Raja Ampat, Belitung", "Destinasi lokal & regional Jawa Timur", "Rute kombinasi multi-kota tersedia"], duration: "Fleksibel", img: "" },
       ],
       prices: [
         { vehicle: "Bus Executive",  icon: "🚌", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Armada premium besar","Full AC & fasilitas lengkap","Cocok untuk grup 35–60 org","Harga terbaik grup besar"] },
@@ -990,12 +965,8 @@ const DEFAULT_DATA = {
       minPeserta: "20",
       price: "Rp 245.000",
       priceNote: "/ orang (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      images: [],
+      image: "",
       description: "Paket wisata Kota Malang & sekitarnya — Coban Rondo, Batu Secret Zoo, Museum Angkut, Pantai Balekambang & Jatim Park. Hotel bintang 2–3, konsumsi 3x sehari, tour leader berpengalaman.",
       features: ["Hotel Bintang 2–3", "Konsumsi 3x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "ID Card & Buku Panduan"],
       highlight: true,
@@ -1024,35 +995,35 @@ const DEFAULT_DATA = {
           title: "Taman Edukasi Terlengkap Jawa Timur",
           desc: "Jatim Park adalah kompleks wisata edukatif terbesar di Jawa Timur. Jatim Park 1 berfokus pada sains dan teknologi, sedangkan Jatim Park 2 menghadirkan Museum Satwa & Batu Secret Zoo bertaraf internasional.",
           points: ["Batu Secret Zoo (kebun binatang bertaraf internasional)", "Museum Satwa interaktif", "Wahana sains dan teknologi", "Area bermain outdoor seluas 22 hektare"],
-          duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg"
+          duration: "3–4 jam", img: ""
         },
         {
           no: "02", name: "Museum Angkut", sub: "Batu, Malang", tag: "Transportasi & Sejarah · Unik & Instagramable",
           title: "Museum Transportasi Terbesar di Asia Tenggara",
           desc: "Museum Angkut menyimpan koleksi kendaraan bersejarah dari seluruh penjuru dunia mulai dari dokar hingga pesawat terbang. Setiap zona memiliki tema berbeda: Batavia, Hollywood, Broadway, dan masih banyak lagi.",
           points: ["Koleksi 300+ kendaraan bersejarah", "Zona tematik Batavia, Eropa & Amerika", "Wahana Flying Fox & Broadway Avenue", "Spot foto instagramable terbaik Malang"],
-          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/800px-Pink_Beach_Komodo.jpg"
+          duration: "2–3 jam", img: ""
         },
         {
           no: "03", name: "Coban Rondo", sub: "Pujon, Malang", tag: "Alam & Air Terjun · Ekowisata",
           title: "Air Terjun Legendaris Malang",
           desc: "Coban Rondo adalah air terjun paling terkenal di Malang dengan ketinggian 84 meter. Dikelilingi hutan pinus yang sejuk, destinasi ini menawarkan pengalaman ekowisata yang menyegarkan dan penuh cerita rakyat lokal.",
           points: ["Air terjun setinggi 84 meter", "Hutan pinus sejuk & fotogenik", "Camping ground tersedia", "Jalur trekking ringan cocok semua usia"],
-          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg"
+          duration: "2–3 jam", img: ""
         },
         {
           no: "04", name: "Pantai Balekambang", sub: "Bantur, Malang Selatan", tag: "Pantai & Pura · Keindahan Alam",
           title: "Bali-nya Malang Selatan",
           desc: "Pantai Balekambang dijuluki 'Tanah Lot-nya Jawa' karena keindahan pura Hindu yang berdiri di atas batu karang di tengah laut. Ombak selatan yang megah dan sunset dramatis menjadikannya destinasi favorit.",
           points: ["Pura Amerta Jati di atas batu karang", "Pantai pasir coklat ombak selatan", "Sunset spektakuler di pesisir selatan", "Taman wisata pantai bersih & terawat"],
-          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg"
+          duration: "2–3 jam", img: ""
         },
         {
           no: "05", name: "Alun-alun Batu & Kota Wisata Batu", sub: "Batu, Malang", tag: "Kuliner & Belanja · Pusat Kota",
           title: "Jantung Kota Batu yang Meriah",
           desc: "Kota Batu adalah surganya wisata kuliner dan belanja oleh-oleh khas Malang. Alun-alun Kota Batu yang ramai menjadi tempat bersantai, menikmati jajanan khas, dan berbelanja buah apel langsung dari petani.",
           points: ["Taman alun-alun dengan bianglala ikonik", "Pasar apel dan agrowisata kebun apel", "Kuliner khas Malang (bakso, cimol, tempe)", "Toko oleh-oleh terbesar di Malang Raya"],
-          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/800px-Pink_Beach_Komodo.jpg"
+          duration: "2–3 jam", img: ""
         },
       ],
       prices: [
@@ -1076,12 +1047,8 @@ const DEFAULT_DATA = {
       minPeserta: "25",
       price: "Rp 310.000",
       priceNote: "/ orang (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      images: [],
+      image: "",
       description: "Paket wisata Kota Bandung — Kawah Putih, Tangkuban Perahu, Dusun Bambu, Farm House, Saung Angklung Udjo & Factory Outlet. Hotel bintang 3, konsumsi 3x sehari, dan pemandu lokal profesional.",
       features: ["Hotel Bintang 3", "Konsumsi 3x Sehari", "Dokumentasi Foto", "Tour Leader", "Tiket Masuk Destinasi", "Asuransi Jiwa", "Workshop Angklung Opsional"],
       highlight: false,
@@ -1110,35 +1077,35 @@ const DEFAULT_DATA = {
           title: "Danau Vulkanik Paling Ikonik di Jawa Barat",
           desc: "Kawah Putih adalah danau vulkanik berwarna toska kebiruan di ketinggian 2.430 mdpl. Bau belerang yang khas dan hamparan putih mineral membuat suasananya terasa mistis namun memukau — destinasi wajib di Bandung.",
           points: ["Danau vulkanik toska di 2.430 mdpl", "Hamparan pasir & mineral putih belerang", "Udara dingin 8–22°C sepanjang tahun", "Spot foto terbaik Jawa Barat"],
-          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/800px-Raja_Ampat_regency_cover.jpg"
+          duration: "2–3 jam", img: ""
         },
         {
           no: "02", name: "Tangkuban Perahu", sub: "Lembang, Bandung Barat", tag: "Gunung & Geologi · Legenda Sunda",
           title: "Gunung Berapi Aktif dengan Legenda Sangkuriang",
           desc: "Tangkuban Perahu adalah gunung berapi aktif berbentuk perahu terbalik yang menyimpan legenda Sangkuriang paling terkenal di tanah Sunda. Wisatawan bisa melihat kawah aktif dari jarak dekat dengan aman.",
           points: ["Kawah Ratu, Kawah Upas & Kawah Domas", "Legenda Sangkuriang yang terkenal", "Uap belerang & aktivitas vulkanik aman", "Pasar oleh-oleh khas di puncak gunung"],
-          duration: "2–3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg"
+          duration: "2–3 jam", img: ""
         },
         {
           no: "03", name: "Saung Angklung Udjo", sub: "Padasuka, Kota Bandung", tag: "Seni Budaya · Warisan UNESCO",
           title: "Pusat Angklung & Pertunjukan Budaya Sunda",
           desc: "Saung Angklung Udjo adalah pusat kebudayaan Sunda yang terkenal di seluruh dunia. Di sini peserta dapat belajar memainkan angklung — alat musik bambu warisan UNESCO — langsung dari para seniman Sunda berpengalaman.",
           points: ["Pertunjukan wayang golek & tari jaipong", "Workshop memainkan angklung bersama", "Angklung diakui UNESCO 2010", "Toko souvenir angklung asli Bandung"],
-          duration: "2 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg"
+          duration: "2 jam", img: ""
         },
         {
           no: "04", name: "Dusun Bambu & Farm House", sub: "Lembang, Bandung Barat", tag: "Agrowisata · Alam & Keluarga",
           title: "Wisata Agro Paling Instagramable di Bandung",
           desc: "Dusun Bambu menawarkan konsep ekowisata dengan rumah makan di atas kolam dan hutan bambu yang asri. Sementara Farm House Lembang menghadirkan suasana Eropa dengan kebun bunga berwarna-warni dan hewan ternak.",
           points: ["Rumah makan apung di tengah kolam", "Hutan bambu & taman bunga tropis", "Farm House bertema Eropa ala Swiss", "Interaksi langsung dengan hewan ternak"],
-          duration: "3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/800px-Raja_Ampat_regency_cover.jpg"
+          duration: "3 jam", img: ""
         },
         {
           no: "05", name: "Factory Outlet & Cihampelas Walk", sub: "Kota Bandung", tag: "Belanja & Mode · Kuliner",
           title: "Surga Belanja & Kuliner Khas Bandung",
           desc: "Bandung adalah kota mode terbesar di Indonesia. Factory Outlet Jalan Riau dan Cihampelas menawarkan produk fashion berkualitas dengan harga terjangkau. Lengkapi perjalanan dengan kuliner khas Bandung seperti batagor, siomay, dan surabi.",
           points: ["Factory outlet harga grosir terbaik", "Cihampelas Walk mal outdoor ikonik", "Kuliner khas: batagor, siomay, surabi", "Oleh-oleh khas Bandung terlengkap"],
-          duration: "3 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg"
+          duration: "3 jam", img: ""
         },
       ],
       prices: [
@@ -1164,12 +1131,8 @@ const DEFAULT_DATA = {
       minPeserta: "20",
       price: "Rp 175.000",
       priceNote: "/ orang (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      images: [],
+      image: "",
       description: "Paket outbound seru untuk membangun kekompakan tim, jiwa kepemimpinan, dan semangat kerjasama. Cocok untuk pelajar, mahasiswa, karyawan, dan komunitas. Tersedia area hijau & wahana petualangan.",
       features: ["Fasilitator Outbound Berpengalaman", "Games & Simulasi Team Building", "Flying Fox & High Rope Course", "Konsumsi & Snack", "Dokumentasi Foto & Video", "Sertifikat Peserta", "P3K & Asuransi Kegiatan"],
       highlight: false,
@@ -1193,10 +1156,10 @@ const DEFAULT_DATA = {
         "Free program tambahan (opsional)",
       ],
       destinations: [
-        { no: "01", name: "Ice Breaking & Warming Up", sub: "Area Utama", tag: "Pembukaan · Energizer", title: "Sesi Pembuka & Penghangatan Tim", desc: "Dimulai dengan ice breaking kreatif untuk memecah kekakuan dan membangun suasana ceria. Berbagai permainan energizer dirancang agar seluruh peserta langsung aktif dan bersemangat sejak awal.", points: ["Permainan energizer kreatif", "Pembagian tim & yel-yel", "Orientasi area & safety briefing", "Foto bersama pembukaan"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg" },
-        { no: "02", name: "Low Rope & Ground Games", sub: "Area Permainan", tag: "Team Building · Strategi", title: "Permainan Strategi & Kerjasama Tim", desc: "Sesi ini menguji kemampuan komunikasi, strategi, dan koordinasi tim melalui serangkaian permainan low rope dan ground games yang dirancang untuk meningkatkan sinergi antar anggota.", points: ["Spider Web & Trust Fall", "Tongkat Pipa & Bola Koordinasi", "Jembatan Bambu", "Blindfold Challenge"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg" },
-        { no: "03", name: "High Rope & Flying Fox", sub: "Area Petualangan", tag: "Adrenalin · Keberanian", title: "Tantangan Ketinggian & Flying Fox", desc: "Puncak adrenalin di wahana high rope dan flying fox yang memacu keberanian peserta. Semua wahana dilengkapi harness dan safety equipment standar internasional, didampingi instruktur bersertifikat.", points: ["Flying fox 50–200 meter", "Jembatan gantung & panjat dinding", "Safety harness & helmet lengkap", "Instruktur bersertifikat"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/800px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg" },
-        { no: "04", name: "Refleksi & Penutupan", sub: "Area Aula / Terbuka", tag: "Evaluasi · Closing Ceremony", title: "Sesi Refleksi & Pemberian Award", desc: "Sesi penutup yang bermakna — setiap tim berbagi pembelajaran, dilanjutkan pemberian penghargaan untuk tim terbaik, foto bersama, dan penyerahan sertifikat peserta.", points: ["Sharing & refleksi kelompok", "Pemberian penghargaan tim terbaik", "Penyerahan sertifikat peserta", "Foto bersama penutupan"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/800px-Raja_Ampat_regency_cover.jpg" },
+        { no: "01", name: "Ice Breaking & Warming Up", sub: "Area Utama", tag: "Pembukaan · Energizer", title: "Sesi Pembuka & Penghangatan Tim", desc: "Dimulai dengan ice breaking kreatif untuk memecah kekakuan dan membangun suasana ceria. Berbagai permainan energizer dirancang agar seluruh peserta langsung aktif dan bersemangat sejak awal.", points: ["Permainan energizer kreatif", "Pembagian tim & yel-yel", "Orientasi area & safety briefing", "Foto bersama pembukaan"], duration: "60 menit", img: "" },
+        { no: "02", name: "Low Rope & Ground Games", sub: "Area Permainan", tag: "Team Building · Strategi", title: "Permainan Strategi & Kerjasama Tim", desc: "Sesi ini menguji kemampuan komunikasi, strategi, dan koordinasi tim melalui serangkaian permainan low rope dan ground games yang dirancang untuk meningkatkan sinergi antar anggota.", points: ["Spider Web & Trust Fall", "Tongkat Pipa & Bola Koordinasi", "Jembatan Bambu", "Blindfold Challenge"], duration: "90 menit", img: "" },
+        { no: "03", name: "High Rope & Flying Fox", sub: "Area Petualangan", tag: "Adrenalin · Keberanian", title: "Tantangan Ketinggian & Flying Fox", desc: "Puncak adrenalin di wahana high rope dan flying fox yang memacu keberanian peserta. Semua wahana dilengkapi harness dan safety equipment standar internasional, didampingi instruktur bersertifikat.", points: ["Flying fox 50–200 meter", "Jembatan gantung & panjat dinding", "Safety harness & helmet lengkap", "Instruktur bersertifikat"], duration: "90 menit", img: "" },
+        { no: "04", name: "Refleksi & Penutupan", sub: "Area Aula / Terbuka", tag: "Evaluasi · Closing Ceremony", title: "Sesi Refleksi & Pemberian Award", desc: "Sesi penutup yang bermakna — setiap tim berbagi pembelajaran, dilanjutkan pemberian penghargaan untuk tim terbaik, foto bersama, dan penyerahan sertifikat peserta.", points: ["Sharing & refleksi kelompok", "Pemberian penghargaan tim terbaik", "Penyerahan sertifikat peserta", "Foto bersama penutupan"], duration: "60 menit", img: "" },
       ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "175.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
@@ -1219,12 +1182,8 @@ const DEFAULT_DATA = {
       minPeserta: "20",
       price: "Rp 220.000",
       priceNote: "/ orang (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Prambanan.jpg/800px-Prambanan.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Malioboro_yogyakarta.jpg/800px-Malioboro_yogyakarta.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+      images: [],
+      image: "",
       description: "Paket study banding ke instansi, lembaga pemerintah, BUMN, perusahaan unggulan, atau sekolah/universitas terbaik. Dirancang untuk memperluas wawasan, benchmarking, dan adopsi praktik terbaik secara langsung.",
       features: ["Koordinasi dengan Instansi Tujuan", "Konsumsi 3x Sehari", "Dokumentasi Foto & Video", "Tour Leader Berpengalaman", "Laporan Kunjungan Resmi", "Sertifikat Peserta", "Asuransi Perjalanan"],
       highlight: false,
@@ -1248,10 +1207,10 @@ const DEFAULT_DATA = {
         "Konsultasi pra-keberangkatan gratis",
       ],
       destinations: [
-        { no: "01", name: "Briefing & Persiapan", sub: "Titik Kumpul", tag: "Pra-Keberangkatan · Administrasi", title: "Briefing Pra-Kunjungan & Pembagian Kelompok", desc: "Sebelum berangkat, seluruh peserta mendapat briefing lengkap — tujuan kunjungan, agenda, tata tertib, dan pembagian kelompok diskusi. Surat pengantar resmi dan ID card kunjungan dibagikan.", points: ["Pembagian ID card & name tag", "Briefing agenda & tata tertib", "Pembagian kelompok diskusi", "Penyiapan bahan pertanyaan"], duration: "30 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/800px-Borobudur_ship.jpg" },
-        { no: "02", name: "Kunjungan Instansi Utama", sub: "Instansi / Lembaga Tujuan", tag: "Inti Kunjungan · Observasi", title: "Kunjungan & Observasi Langsung ke Instansi", desc: "Peserta berkunjung langsung ke instansi tujuan, mengikuti sesi presentasi dari tuan rumah, observasi lapangan/operasional, dan sesi diskusi interaktif. Semua sesi didokumentasikan secara profesional.", points: ["Sesi presentasi dari instansi tujuan", "Tour & observasi area kerja/produksi", "Sesi diskusi & tanya jawab", "Foto bersama dengan tim tuan rumah"], duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Prambanan.jpg/800px-Prambanan.jpg" },
-        { no: "03", name: "FGD & Evaluasi", sub: "Ruang Diskusi", tag: "Analisis · Focus Group Discussion", title: "Focus Group Discussion & Analisis Hasil", desc: "Setelah kunjungan, setiap kelompok melakukan FGD untuk menganalisis temuan, membandingkan dengan kondisi di instansi asal, dan merumuskan rekomendasi yang dapat diterapkan.", points: ["Diskusi antar kelompok", "Analisis perbandingan (benchmarking)", "Perumusan rekomendasi", "Presentasi hasil tiap kelompok"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Malioboro_yogyakarta.jpg/800px-Malioboro_yogyakarta.jpg" },
-        { no: "04", name: "Penyusunan Laporan & Penutupan", sub: "Area Akomodasi / Hotel", tag: "Dokumentasi · Closing", title: "Penyusunan Laporan Kunjungan Resmi", desc: "Tim kami membantu penyusunan laporan kunjungan resmi yang komprehensif, siap digunakan untuk keperluan administrasi, pelaporan ke pimpinan, atau publikasi internal organisasi.", points: ["Draft laporan kunjungan tertulis", "Kompilasi dokumentasi foto & video", "Sertifikat peserta study banding", "Serah terima laporan digital & cetak"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg" },
+        { no: "01", name: "Briefing & Persiapan", sub: "Titik Kumpul", tag: "Pra-Keberangkatan · Administrasi", title: "Briefing Pra-Kunjungan & Pembagian Kelompok", desc: "Sebelum berangkat, seluruh peserta mendapat briefing lengkap — tujuan kunjungan, agenda, tata tertib, dan pembagian kelompok diskusi. Surat pengantar resmi dan ID card kunjungan dibagikan.", points: ["Pembagian ID card & name tag", "Briefing agenda & tata tertib", "Pembagian kelompok diskusi", "Penyiapan bahan pertanyaan"], duration: "30 menit", img: "" },
+        { no: "02", name: "Kunjungan Instansi Utama", sub: "Instansi / Lembaga Tujuan", tag: "Inti Kunjungan · Observasi", title: "Kunjungan & Observasi Langsung ke Instansi", desc: "Peserta berkunjung langsung ke instansi tujuan, mengikuti sesi presentasi dari tuan rumah, observasi lapangan/operasional, dan sesi diskusi interaktif. Semua sesi didokumentasikan secara profesional.", points: ["Sesi presentasi dari instansi tujuan", "Tour & observasi area kerja/produksi", "Sesi diskusi & tanya jawab", "Foto bersama dengan tim tuan rumah"], duration: "3–4 jam", img: "" },
+        { no: "03", name: "FGD & Evaluasi", sub: "Ruang Diskusi", tag: "Analisis · Focus Group Discussion", title: "Focus Group Discussion & Analisis Hasil", desc: "Setelah kunjungan, setiap kelompok melakukan FGD untuk menganalisis temuan, membandingkan dengan kondisi di instansi asal, dan merumuskan rekomendasi yang dapat diterapkan.", points: ["Diskusi antar kelompok", "Analisis perbandingan (benchmarking)", "Perumusan rekomendasi", "Presentasi hasil tiap kelompok"], duration: "90 menit", img: "" },
+        { no: "04", name: "Penyusunan Laporan & Penutupan", sub: "Area Akomodasi / Hotel", tag: "Dokumentasi · Closing", title: "Penyusunan Laporan Kunjungan Resmi", desc: "Tim kami membantu penyusunan laporan kunjungan resmi yang komprehensif, siap digunakan untuk keperluan administrasi, pelaporan ke pimpinan, atau publikasi internal organisasi.", points: ["Draft laporan kunjungan tertulis", "Kompilasi dokumentasi foto & video", "Sertifikat peserta study banding", "Serah terima laporan digital & cetak"], duration: "60 menit", img: "" },
       ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "220.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
@@ -1274,12 +1233,8 @@ const DEFAULT_DATA = {
       minPeserta: "20",
       price: "Rp 195.000",
       priceNote: "/ orang (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      images: [],
+      image: "",
       description: "Paket kunjungan industri untuk siswa SMK, mahasiswa vokasi, dan instansi yang ingin mengenal proses produksi, manajemen operasional, dan dunia kerja nyata secara langsung di pabrik atau perusahaan terkemuka.",
       features: ["Koordinasi dengan Perusahaan Tujuan", "Konsumsi 2–3x Sehari", "Dokumentasi Foto & Video", "Tour Leader & Pemandu Industri", "Sertifikat Kunjungan Industri", "Laporan Kunjungan Resmi", "Asuransi Perjalanan"],
       highlight: false,
@@ -1303,10 +1258,10 @@ const DEFAULT_DATA = {
         "Penyusunan laporan kunjungan industri lengkap",
       ],
       destinations: [
-        { no: "01", name: "Penerimaan & Pengarahan", sub: "Aula / Ruang Meeting Perusahaan", tag: "Opening · Company Profile", title: "Sambutan & Presentasi Profil Perusahaan", desc: "Peserta diterima oleh tim perusahaan dan mendapatkan presentasi company profile — sejarah, visi misi, produk/layanan, skala bisnis, dan posisi perusahaan di industri nasional.", points: ["Sambutan resmi dari manajemen", "Presentasi company profile", "Sesi pengenalan produk & layanan", "Pembagian helm & APD kunjungan"], duration: "45 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg" },
-        { no: "02", name: "Tour Area Produksi", sub: "Lantai Produksi / Workshop", tag: "Observasi · Proses Industri", title: "Observasi Langsung Proses Produksi", desc: "Dipandu oleh staf ahli, peserta berkeliling area produksi dan menyaksikan langsung proses manufacturing, quality control, pergudangan, hingga distribusi. Pengalaman yang tidak bisa didapat dari buku.", points: ["Tour area produksi & gudang", "Penjelasan proses manufaktur langsung", "Melihat mesin & teknologi industri", "Observasi quality control"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/800px-Raja_Ampat_regency_cover.jpg" },
-        { no: "03", name: "Sesi Tanya Jawab Praktisi", sub: "Aula / Ruang Meeting", tag: "Interaktif · Career Talk", title: "Dialog Interaktif dengan Praktisi Industri", desc: "Sesi diskusi langsung dengan praktisi — manajer produksi, HRD, atau direktur operasional. Peserta bisa bertanya soal karier, tantangan industri, kebutuhan kompetensi, hingga peluang magang/kerja.", points: ["Sesi QnA dengan praktisi senior", "Career talk & tips memasuki dunia kerja", "Informasi peluang magang & rekrutmen", "Motivasi dari profesional industri"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/800px-Borobudur_ship.jpg" },
-        { no: "04", name: "Penutupan & Sertifikasi", sub: "Aula Perusahaan", tag: "Closing · Sertifikat Resmi", title: "Penyerahan Sertifikat & Foto Bersama", desc: "Sesi penutupan diakhiri dengan penyerahan sertifikat kunjungan industri resmi yang dapat digunakan untuk portofolio, laporan sekolah, atau persyaratan program studi.", points: ["Penyerahan sertifikat kunjungan industri", "Foto bersama dengan tim perusahaan", "Souvenir dari perusahaan (jika ada)", "Evaluasi & kesan-pesan peserta"], duration: "30 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg" },
+        { no: "01", name: "Penerimaan & Pengarahan", sub: "Aula / Ruang Meeting Perusahaan", tag: "Opening · Company Profile", title: "Sambutan & Presentasi Profil Perusahaan", desc: "Peserta diterima oleh tim perusahaan dan mendapatkan presentasi company profile — sejarah, visi misi, produk/layanan, skala bisnis, dan posisi perusahaan di industri nasional.", points: ["Sambutan resmi dari manajemen", "Presentasi company profile", "Sesi pengenalan produk & layanan", "Pembagian helm & APD kunjungan"], duration: "45 menit", img: "" },
+        { no: "02", name: "Tour Area Produksi", sub: "Lantai Produksi / Workshop", tag: "Observasi · Proses Industri", title: "Observasi Langsung Proses Produksi", desc: "Dipandu oleh staf ahli, peserta berkeliling area produksi dan menyaksikan langsung proses manufacturing, quality control, pergudangan, hingga distribusi. Pengalaman yang tidak bisa didapat dari buku.", points: ["Tour area produksi & gudang", "Penjelasan proses manufaktur langsung", "Melihat mesin & teknologi industri", "Observasi quality control"], duration: "90 menit", img: "" },
+        { no: "03", name: "Sesi Tanya Jawab Praktisi", sub: "Aula / Ruang Meeting", tag: "Interaktif · Career Talk", title: "Dialog Interaktif dengan Praktisi Industri", desc: "Sesi diskusi langsung dengan praktisi — manajer produksi, HRD, atau direktur operasional. Peserta bisa bertanya soal karier, tantangan industri, kebutuhan kompetensi, hingga peluang magang/kerja.", points: ["Sesi QnA dengan praktisi senior", "Career talk & tips memasuki dunia kerja", "Informasi peluang magang & rekrutmen", "Motivasi dari profesional industri"], duration: "60 menit", img: "" },
+        { no: "04", name: "Penutupan & Sertifikasi", sub: "Aula Perusahaan", tag: "Closing · Sertifikat Resmi", title: "Penyerahan Sertifikat & Foto Bersama", desc: "Sesi penutupan diakhiri dengan penyerahan sertifikat kunjungan industri resmi yang dapat digunakan untuk portofolio, laporan sekolah, atau persyaratan program studi.", points: ["Penyerahan sertifikat kunjungan industri", "Foto bersama dengan tim perusahaan", "Souvenir dari perusahaan (jika ada)", "Evaluasi & kesan-pesan peserta"], duration: "30 menit", img: "" },
       ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "195.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
@@ -1329,12 +1284,8 @@ const DEFAULT_DATA = {
       minPeserta: "20",
       price: "Rp 185.000",
       priceNote: "/ orang (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+      images: [],
+      image: "",
       description: "Paket kunjungan kampus untuk siswa SMA/SMK yang ingin mengenal dunia perguruan tinggi secara langsung — fasilitas, jurusan, beasiswa, kehidupan mahasiswa, hingga prospek karir. Kunjungi universitas negeri & swasta terkemuka.",
       features: ["Koordinasi dengan Pihak Kampus", "Konsumsi 2–3x Sehari", "Dokumentasi Foto & Video", "Tour Leader Berpengalaman", "Campus Tour Terpandu", "Sertifikat Kunjungan", "Asuransi Perjalanan"],
       highlight: false,
@@ -1358,10 +1309,10 @@ const DEFAULT_DATA = {
         "Dokumentasi lengkap & sertifikat kunjungan resmi",
       ],
       destinations: [
-        { no: "01", name: "Sambutan & Info Kampus", sub: "Aula / Auditorium Kampus", tag: "Opening · Informasi Umum", title: "Presentasi Kampus & Pengenalan Jurusan", desc: "Tim humas atau perwakilan rektorat menyambut rombongan dan mempresentasikan profil kampus secara menyeluruh — akreditasi, jurusan unggulan, prestasi, fasilitas, jalur masuk, dan program beasiswa.", points: ["Presentasi profil & akreditasi kampus", "Informasi jurusan & program studi", "Jalur masuk: SNBP, SNBT, Mandiri", "Program beasiswa tersedia"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/800px-Borobudur_ship.jpg" },
-        { no: "02", name: "Campus Tour Fasilitas", sub: "Seluruh Area Kampus", tag: "Observasi · Fasilitas Kampus", title: "Tur Fasilitas Kampus Bersama Mahasiswa Guide", desc: "Dipandu mahasiswa aktif, peserta berkeliling kampus — laboratorium, studio, perpustakaan, pusat olahraga, kantin, asrama, dan UKM. Melihat langsung suasana kehidupan kampus yang sesungguhnya.", points: ["Laboratorium & studio praktikum", "Perpustakaan & pusat riset", "Fasilitas olahraga & kesehatan", "Area UKM & organisasi mahasiswa"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg" },
-        { no: "03", name: "Diskusi dengan Mahasiswa", sub: "Ruang Diskusi / Taman Kampus", tag: "Interaktif · Sharing Session", title: "Sesi Sharing & Tanya Jawab Mahasiswa Aktif", desc: "Peserta berdiskusi langsung dengan mahasiswa aktif berbagai jurusan. Sharing kehidupan kampus, tips lolos seleksi, cara adaptasi, manajemen waktu kuliah, hingga pengalaman magang dan organisasi.", points: ["Sharing pengalaman kuliah", "Tips lolos seleksi & adaptasi kampus", "Diskusi minat jurusan", "Motivasi dari kakak tingkat"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/800px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg" },
-        { no: "04", name: "Penutupan & Sertifikasi", sub: "Aula / Area Terbuka Kampus", tag: "Closing · Sertifikat", title: "Sertifikat & Foto Bersama di Kampus", desc: "Kunjungan ditutup dengan penyerahan sertifikat resmi, pembagian brosur jurusan & beasiswa, foto bersama di landmark kampus, dan sesi motivasi singkat dari dosen atau alumni berprestasi.", points: ["Penyerahan sertifikat kunjungan kampus", "Pembagian brosur jurusan & beasiswa", "Foto bersama di landmark kampus", "Motivasi dari dosen / alumni"], duration: "30 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg" },
+        { no: "01", name: "Sambutan & Info Kampus", sub: "Aula / Auditorium Kampus", tag: "Opening · Informasi Umum", title: "Presentasi Kampus & Pengenalan Jurusan", desc: "Tim humas atau perwakilan rektorat menyambut rombongan dan mempresentasikan profil kampus secara menyeluruh — akreditasi, jurusan unggulan, prestasi, fasilitas, jalur masuk, dan program beasiswa.", points: ["Presentasi profil & akreditasi kampus", "Informasi jurusan & program studi", "Jalur masuk: SNBP, SNBT, Mandiri", "Program beasiswa tersedia"], duration: "60 menit", img: "" },
+        { no: "02", name: "Campus Tour Fasilitas", sub: "Seluruh Area Kampus", tag: "Observasi · Fasilitas Kampus", title: "Tur Fasilitas Kampus Bersama Mahasiswa Guide", desc: "Dipandu mahasiswa aktif, peserta berkeliling kampus — laboratorium, studio, perpustakaan, pusat olahraga, kantin, asrama, dan UKM. Melihat langsung suasana kehidupan kampus yang sesungguhnya.", points: ["Laboratorium & studio praktikum", "Perpustakaan & pusat riset", "Fasilitas olahraga & kesehatan", "Area UKM & organisasi mahasiswa"], duration: "90 menit", img: "" },
+        { no: "03", name: "Diskusi dengan Mahasiswa", sub: "Ruang Diskusi / Taman Kampus", tag: "Interaktif · Sharing Session", title: "Sesi Sharing & Tanya Jawab Mahasiswa Aktif", desc: "Peserta berdiskusi langsung dengan mahasiswa aktif berbagai jurusan. Sharing kehidupan kampus, tips lolos seleksi, cara adaptasi, manajemen waktu kuliah, hingga pengalaman magang dan organisasi.", points: ["Sharing pengalaman kuliah", "Tips lolos seleksi & adaptasi kampus", "Diskusi minat jurusan", "Motivasi dari kakak tingkat"], duration: "60 menit", img: "" },
+        { no: "04", name: "Penutupan & Sertifikasi", sub: "Aula / Area Terbuka Kampus", tag: "Closing · Sertifikat", title: "Sertifikat & Foto Bersama di Kampus", desc: "Kunjungan ditutup dengan penyerahan sertifikat resmi, pembagian brosur jurusan & beasiswa, foto bersama di landmark kampus, dan sesi motivasi singkat dari dosen atau alumni berprestasi.", points: ["Penyerahan sertifikat kunjungan kampus", "Pembagian brosur jurusan & beasiswa", "Foto bersama di landmark kampus", "Motivasi dari dosen / alumni"], duration: "30 menit", img: "" },
       ],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "185.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
@@ -1380,11 +1331,8 @@ const DEFAULT_DATA = {
       badgeColor: "#b45309",
       price: "Rp 4.500.000",
       priceNote: "/ acara",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      images: [],
+      image: "",
       description: "Paket upacara Tedak Sinten (turun tanah) yang autentik dan penuh makna. Kami mengurus seluruh perlengkapan tradisi Jawa mulai dari jadah 7 warna, kurungan, tangga tebu, hingga dokumentasi profesional untuk kenangan tak ternilai.",
       features: [
         "Konsultasi prosesi adat Tedak Sinten",
@@ -1406,11 +1354,8 @@ const DEFAULT_DATA = {
       badgeColor: "#db2777",
       price: "Rp 6.500.000",
       priceNote: "/ acara",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      images: [],
+      image: "",
       description: "Rayakan momen ulang tahun pernikahan, ulang tahun perusahaan, atau anniversary spesial dengan nuansa romantis dan elegan. Dekorasi premium, hiburan live, dan dokumentasi sinematik untuk kenangan abadi.",
       features: [
         "Konsultasi tema & konsep acara",
@@ -1432,11 +1377,8 @@ const DEFAULT_DATA = {
       badgeColor: "#1d4ed8",
       price: "Rp 15.000.000",
       priceNote: "/ event",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      images: [],
+      image: "",
       description: "Paket perayaan Dies Natalis kampus, sekolah, atau organisasi yang profesional dan berkesan. Kami menangani seluruh rangkaian acara dari malam puncak, seminar, pentas seni, hingga penghargaan alumni.",
       features: [
         "Konsultasi & perencanaan rangkaian acara Dies Natalis",
@@ -1459,11 +1401,8 @@ const DEFAULT_DATA = {
       badgeColor: "#92400e",
       price: "Rp 8.000.000",
       priceNote: "/ acara",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      images: [],
+      image: "",
       description: "Paket penyelenggaraan upacara adat Nusantara secara autentik dan khidmat. Meliputi berbagai adat Jawa, Sunda, Madura, Bali, dan adat daerah lainnya — ditangani oleh tim yang paham tradisi dan tata cara adat setempat.",
       features: [
         "Konsultasi prosesi & tata cara upacara adat",
@@ -1485,11 +1424,8 @@ const DEFAULT_DATA = {
       badgeColor: "#0891b2",
       price: "Rp 5.500.000",
       priceNote: "/ acara",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      images: [],
+      image: "",
       description: "Wujudkan momen reuni alumni, keluarga besar, atau komunitas yang hangat dan tak terlupakan. Kami siap mengurus venue, hiburan nostalgia, games seru, konsumsi, hingga souvenir kenangan untuk seluruh peserta.",
       features: [
         "Konsultasi tema & konsep reuni",
@@ -1513,12 +1449,8 @@ const DEFAULT_DATA = {
       badgeColor: "#e67e22",
       price: "Rp 18.000.000",
       priceNote: "/ wedding",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      images: [],
+      image: "",
       description: "Pernikahan intim nan hangat di taman dengan dekorasi bohemian elegan. Ideal untuk 50–100 tamu dengan nuansa natural yang tetap mewah dan berkesan.",
       features: [
         "Dekorasi garden bohemian",
@@ -1540,12 +1472,8 @@ const DEFAULT_DATA = {
       badgeColor: "#1abc9c",
       price: "Rp 25.000.000",
       priceNote: "/ wedding",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      images: [],
+      image: "",
       description: "Wujudkan pernikahan Islami yang penuh berkah dan elegan. Setiap detail prosesi dirancang sesuai nilai-nilai Islam dengan tampilan modern yang tetap menawan untuk 150–250 tamu.",
       features: [
         "Dekorasi Islami modern",
@@ -1567,12 +1495,8 @@ const DEFAULT_DATA = {
       badgeColor: "#8e44ad",
       price: "Rp 55.000.000",
       priceNote: "/ wedding",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Pink_Beach_Komodo.jpg/1280px-Pink_Beach_Komodo.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      images: [],
+      image: "",
       description: "Pernikahan megah berkelas di ballroom hotel bintang 5 dengan dekorasi chandelier dan bunga segar premium. All-inclusive terbaik untuk 300–600 tamu undangan.",
       features: [
         "Ballroom hotel bintang 5",
@@ -1598,11 +1522,8 @@ const DEFAULT_DATA = {
       badgeColor: "#dc2626",
       price: "Rp 25.000.000",
       priceNote: "/ event (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      images: [],
+      image: "",
       description: "Paket penyelenggaraan konser musik profesional dari skala intimate hingga open-air besar. Kami menangani seluruh produksi — panggung, sound system, lighting, artist management, keamanan, tiket, hingga dokumentasi — agar konser berjalan lancar dan berkesan.",
       features: [
         "Konsultasi konsep & rundown konser",
@@ -1626,11 +1547,8 @@ const DEFAULT_DATA = {
       badgeColor: "#1d4ed8",
       price: "Rp 20.000.000",
       priceNote: "/ event (mulai)",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+      images: [],
+      image: "",
       description: "Paket penyelenggaraan event resmi instansi pemerintah daerah — Kota maupun Kabupaten — yang memenuhi standar protokoler kenegaraan. Meliputi hari jadi kota, upacara kenegaraan, festival daerah, musrenbang, pelantikan pejabat, hingga expo potensi daerah.",
       features: [
         "Konsultasi konsep & protokol acara pemerintah",
@@ -1658,11 +1576,8 @@ const DEFAULT_DATA = {
       badgeColor: "#7c3aed",
       price: "Hubungi Kami",
       priceNote: "harga transparan & negosiasi",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+      images: [],
+      image: "",
       description: "Tidak menemukan paket yang cocok? Kami merancang event 100% sesuai kebutuhan Anda — dari konsep, tema, vendor, hingga hari H. Seminar, gathering, launching produk, pameran, konser mini, atau apapun yang Anda bayangkan, kami wujudkan.",
       features: [
         "Konsultasi tema & konsep event gratis",
@@ -1688,11 +1603,8 @@ const DEFAULT_DATA = {
       badgeColor: "#7c3aed",
       price: "Hubungi Kami",
       priceNote: "konsultasi gratis, harga transparan",
-      images: [
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
-      ],
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg/1280px-Ubud_Monkey_Forest%2C_Bali%2C_Indonesia.jpg",
+      images: [],
+      image: "",
       description: "Pernikahan adalah momen seumur hidup. Kami merancang setiap detailnya bersama Anda — dari akad hingga resepsi, dari dekorasi hingga catering, dari dokumentasi hingga hiburan. Tidak ada paket yang terlalu besar atau terlalu kecil bagi kami.",
       features: [
         "Konsultasi pernikahan gratis & tanpa batas",
@@ -3967,7 +3879,7 @@ function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
       <div style={{ position: "relative", width: isMobile ? "100%" : 320, height: isMobile ? 200 : "auto", flexShrink: 0, overflow: "hidden", borderRadius: isMobile ? "16px 16px 0 0" : "16px 0 0 16px" }}>
         <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.07)" : "scale(1)", opacity: 0.75 }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
+          onError={e => { e.target.src = ""; }} />
         <div style={{ position: "absolute", inset: 0, background: isMobile ? "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.5) 100%)" : "linear-gradient(90deg,transparent 50%, rgba(0,0,0,.4) 100%)" }} />
         <div style={{ position: "absolute", top: 16, left: 16, background: ac, color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase" }}>{svc.badge}</div>
       </div>
@@ -4034,7 +3946,7 @@ function EventWeddingPackageCard({ svc, onDetail, waLink }) {
       <div style={{ position: "relative", height: 190, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
         <img loading="lazy" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800"; }} />
+          onError={e => { e.target.src = ""; }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 35%,rgba(0,0,0,.65) 100%)" }} />
         {svc.badge && (
           <div style={{ position: "absolute", top: 12, left: 12, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "3px 12px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
@@ -4141,7 +4053,7 @@ function TravelPackageCardWide({ svc, onDetail, waLink }) {
       <div style={{ position: "relative", width: isMobile ? "100%" : 340, height: isMobile ? 210 : "auto", flexShrink: 0, overflow: "hidden" }}>
         <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.07)" : "scale(1)" }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
+          onError={e => { e.target.src = ""; }} />
         <div style={{ position: "absolute", inset: 0, background: isMobile ? "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.4) 100%)" : "linear-gradient(90deg,transparent 60%,rgba(0,0,0,.35) 100%)" }} />
         {svc.badge && (
           <div style={{ position: "absolute", top: 14, left: 14, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
@@ -4208,7 +4120,7 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
       <div style={{ position: "relative", height: 180, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
         <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800"; }} />
+          onError={e => { e.target.src = ""; }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.55) 100%)" }} />
         {svc.badge && (
           <div style={{ position: "absolute", top: 12, left: 12, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "3px 12px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
@@ -4668,224 +4580,11 @@ function TravelPackageDetailModal({ svc, onClose, waLink }) {
 }
 
 /* ─────────────── DESTINATIONS SECTION (full-page detail) ─────────────── */
-/* ─────────────── FACILITIES SECTION (editable) ─────────────── */
-function FacilitiesSection({ svc }) {
-  const ac = svc.accent || "#e8a020";
-  const [facilities, setFacilities] = useState(() => (svc.facilities || []).map((f, i) => ({ ...f, _id: i })));
-  const [showModal, setShowModal] = useState(false);
-  const [editTarget, setEditTarget] = useState(null);
-  const [form, setForm] = useState({ icon: "", label: "", detail: "" });
-
-  const openAdd = () => { setForm({ icon: "", label: "", detail: "" }); setEditTarget(null); setShowModal(true); };
-  const openEdit = (i) => { setForm({ ...facilities[i] }); setEditTarget(i); setShowModal(true); };
-  const closeModal = () => setShowModal(false);
-
-  const handleSave = () => {
-    if (!form.label.trim()) return;
-    if (editTarget !== null) {
-      setFacilities(prev => prev.map((f, i) => i === editTarget ? { ...form, _id: f._id } : f));
-    } else {
-      setFacilities(prev => [...prev, { ...form, _id: Date.now() }]);
-    }
-    closeModal();
-  };
-
-  const handleDelete = (i) => {
-    if (!window.confirm("Hapus fasilitas ini?")) return;
-    setFacilities(prev => prev.filter((_, idx) => idx !== i));
-  };
-
-  const COMMON_ICONS = ["🏨","🍽","📸","👤","🎫","🩺","💊","🚌","🧭","🌿","⛑","💧","🏆","✈","📋","🤝","🎒","🎵","🏖","🌄"];
-
-  return (
-    <div className="mg-fade-3" style={{ marginBottom: 48 }}>
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
-        <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${ac}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
-        <div>
-          <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: ac, fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Yang Sudah Termasuk</div>
-          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Fasilitas Perjalanan</div>
-        </div>
-        <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
-        <button onClick={openAdd}
-          style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", background: ac, color: "#fff", border: "none", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", flexShrink: 0 }}>
-          <span style={{ fontSize: "1rem" }}>＋</span> Tambah
-        </button>
-      </div>
-
-      {/* Grid fasilitas */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))", gap: 10 }}>
-        {facilities.map((f, i) => (
-          <div key={f._id} style={{ display: "flex", gap: 12, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px", border: "1px solid #c8eaf2", position: "relative", overflow: "hidden", transition: "box-shadow .2s" }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 16px rgba(13,59,102,.1)"}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
-            <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: ac, borderRadius: "10px 0 0 10px" }} />
-            <span style={{ fontSize: 22, flexShrink: 0 }}>{f.icon}</span>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{f.label}</div>
-              {f.detail && <div style={{ fontSize: "0.75rem", color: "#4a7f98", lineHeight: 1.5 }}>{f.detail}</div>}
-            </div>
-            {/* Edit/Delete */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 4, flexShrink: 0 }}>
-              <button onClick={() => openEdit(i)} title="Edit"
-                style={{ width: 24, height: 24, borderRadius: 6, border: `1px solid ${ac}40`, background: `${ac}10`, color: ac, cursor: "pointer", fontSize: "0.625rem", display: "flex", alignItems: "center", justifyContent: "center" }}>✏</button>
-              <button onClick={() => handleDelete(i)} title="Hapus"
-                style={{ width: 24, height: 24, borderRadius: 6, border: "1px solid #fca5a540", background: "#fff0f0", color: "#ef4444", cursor: "pointer", fontSize: "0.625rem", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
-            </div>
-          </div>
-        ))}
-        {facilities.length === 0 && (
-          <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "32px 20px", background: "#f8fbfd", borderRadius: 10, border: `2px dashed ${ac}40`, color: "#4a7f98" }}>
-            <div style={{ fontSize: "2rem", marginBottom: 6 }}>🎒</div>
-            <div style={{ fontWeight: 600, fontSize: "0.875rem" }}>Belum ada fasilitas</div>
-          </div>
-        )}
-      </div>
-
-      {/* MODAL Add/Edit Fasilitas */}
-      {showModal && (
-        <ModalOverlay onClose={closeModal}>
-          <div style={{ padding: "28px 28px 24px" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
-              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.1rem", fontWeight: 800, color: "#0d3b66" }}>
-                {editTarget !== null ? "Edit Fasilitas" : "Tambah Fasilitas"}
-              </div>
-              <button onClick={closeModal} style={{ width: 32, height: 32, borderRadius: "50%", border: "none", background: "#f0f4f8", cursor: "pointer", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#0d3b66" }}>✕</button>
-            </div>
-
-            {/* Emoji picker cepat */}
-            <div style={{ marginBottom: 16 }}>
-              <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 8 }}>Ikon / Emoji</label>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
-                {COMMON_ICONS.map(ic => (
-                  <button key={ic} onClick={() => setForm(f => ({ ...f, icon: ic }))}
-                    style={{ width: 38, height: 38, fontSize: "1.3rem", borderRadius: 8, border: `2px solid ${form.icon === ic ? ac : "#c8eaf2"}`, background: form.icon === ic ? `${ac}18` : "#fff", cursor: "pointer", transition: "border .15s" }}>
-                    {ic}
-                  </button>
-                ))}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <input value={form.icon || ""} onChange={e => setForm(f => ({ ...f, icon: e.target.value }))} placeholder="Atau ketik emoji…"
-                  style={{ flex: 1, padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "1rem", outline: "none", fontFamily: "'DM Sans',sans-serif" }} />
-                {form.icon && <span style={{ fontSize: "1.8rem" }}>{form.icon}</span>}
-              </div>
-            </div>
-
-            {/* Label */}
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 5 }}>Nama Fasilitas <span style={{ color: "#ef4444" }}>*</span></label>
-              <input value={form.label || ""} onChange={e => setForm(f => ({ ...f, label: e.target.value }))} placeholder="cth: Hotel Bintang 3–4"
-                style={{ width: "100%", padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.875rem", fontFamily: "'DM Sans',sans-serif", outline: "none", boxSizing: "border-box" }} />
-            </div>
-
-            {/* Detail */}
-            <div style={{ marginBottom: 22 }}>
-              <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 5 }}>Keterangan</label>
-              <input value={form.detail || ""} onChange={e => setForm(f => ({ ...f, detail: e.target.value }))} placeholder="cth: Kamar twin sharing ber-AC"
-                style={{ width: "100%", padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.875rem", fontFamily: "'DM Sans',sans-serif", outline: "none", boxSizing: "border-box" }} />
-            </div>
-
-            {/* Preview */}
-            {(form.label || form.icon) && (
-              <div style={{ background: "#f8fbfd", borderRadius: 10, padding: "12px 14px", marginBottom: 18, border: "1px solid #c8eaf2", display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <div style={{ width: 3, alignSelf: "stretch", background: ac, borderRadius: 2, flexShrink: 0 }} />
-                <span style={{ fontSize: 22 }}>{form.icon}</span>
-                <div>
-                  <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{form.label || "—"}</div>
-                  {form.detail && <div style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{form.detail}</div>}
-                </div>
-              </div>
-            )}
-
-            {/* Actions */}
-            <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-              <button onClick={closeModal}
-                style={{ padding: "9px 20px", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", background: "#f0f4f8", color: "#0d3b66" }}>
-                Batal
-              </button>
-              <button onClick={handleSave}
-                style={{ padding: "9px 20px", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", background: ac, color: "#fff", opacity: !form.label?.trim() ? .5 : 1 }}>
-                {editTarget !== null ? "Simpan Perubahan" : "Tambah Fasilitas"}
-              </button>
-            </div>
-          </div>
-        </ModalOverlay>
-      )}
-    </div>
-  );
-}
-
-/* ── MODAL OVERLAY helper ── */
-function ModalOverlay({ onClose, children }) {
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, []);
-  return (
-    <div onClick={e => { if (e.target === e.currentTarget) onClose(); }}
-      style={{ position: "fixed", inset: 0, background: "rgba(5,20,45,.65)", backdropFilter: "blur(4px)", zIndex: 99999, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-      <div style={{ background: "#fff", borderRadius: 18, width: "100%", maxWidth: 560, maxHeight: "90vh", overflowY: "auto", boxShadow: "0 32px 80px rgba(0,0,0,.35)", position: "relative" }}>
-        {children}
-      </div>
-    </div>
-  );
-}
-
 function DestinationsSection({ svc, catInfo }) {
-  const [dests, setDests] = useState(() => (svc.destinations || []).map((d, i) => ({ ...d, _id: i })));
   const [destIdx, setDestIdx] = useState(0);
-  const [showModal, setShowModal] = useState(false);
-  const [editTarget, setEditTarget] = useState(null); // null = add new
-  const [form, setForm] = useState({});
   const ac = svc.accent || "#e8a020";
+  const dests = svc.destinations || [];
   const dest = dests[destIdx];
-
-  const emptyForm = () => ({ no: String(dests.length + 1).padStart(2, "0"), name: "", tag: "", title: "", sub: "", duration: "", desc: "", points: [""], img: "", imgPreview: "" });
-
-  const openAdd = () => { setForm(emptyForm()); setEditTarget(null); setShowModal(true); };
-  const openEdit = (i) => {
-    const d = dests[i];
-    setForm({ ...d, points: d.points?.length ? [...d.points] : [""], imgPreview: d.img || "" });
-    setEditTarget(i); setShowModal(true);
-  };
-  const closeModal = () => setShowModal(false);
-
-  const handleImg = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => setForm(f => ({ ...f, img: ev.target.result, imgPreview: ev.target.result }));
-    reader.readAsDataURL(file);
-  };
-
-  const handleSave = () => {
-    if (!form.name.trim() || !form.title.trim()) return;
-    const clean = { ...form, points: (form.points || []).filter(p => p.trim()), _id: editTarget !== null ? dests[editTarget]._id : Date.now() };
-    if (editTarget !== null) {
-      setDests(prev => prev.map((d, i) => i === editTarget ? clean : d));
-    } else {
-      setDests(prev => [...prev, clean]);
-      setDestIdx(dests.length);
-    }
-    closeModal();
-  };
-
-  const handleDelete = (i) => {
-    if (!window.confirm("Hapus destinasi ini?")) return;
-    const next = dests.filter((_, idx) => idx !== i);
-    setDests(next);
-    setDestIdx(Math.min(destIdx, next.length - 1));
-  };
-
-  const setPoint = (i, v) => setForm(f => { const pts = [...(f.points || [])]; pts[i] = v; return { ...f, points: pts }; });
-  const addPoint = () => setForm(f => ({ ...f, points: [...(f.points || []), ""] }));
-  const removePoint = (i) => setForm(f => ({ ...f, points: (f.points || []).filter((_, idx) => idx !== i) }));
-
-  const BtnStyle = (primary) => ({
-    padding: "9px 20px", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700,
-    cursor: "pointer", background: primary ? ac : "#f0f4f8", color: primary ? "#fff" : "#0d3b66", transition: "opacity .15s",
-  });
 
   return (
     <div className="mg-fade-3" style={{ marginBottom: 48 }}>
@@ -4897,26 +4596,16 @@ function DestinationsSection({ svc, catInfo }) {
           <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Destinasi Wisata</div>
         </div>
         <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
-        <button onClick={openAdd}
-          style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", background: ac, color: "#fff", border: "none", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", flexShrink: 0 }}>
-          <span style={{ fontSize: "1rem", lineHeight: 1 }}>＋</span> Tambah
-        </button>
       </div>
 
       {/* Tab selector */}
-      {dests.length > 0 && (
+      {dests.length > 1 && (
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
           {dests.map((d, i) => (
-            <div key={d._id} style={{ display: "flex", alignItems: "center", gap: 2 }}>
-              <button onClick={() => setDestIdx(i)}
-                style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${i === destIdx ? ac : ac + "30"}`, background: i === destIdx ? ac : "#fff", color: i === destIdx ? "#fff" : ac, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", transition: "all .2s", fontFamily: "'DM Sans',sans-serif" }}>
-                {d.no}. {d.name}
-              </button>
-              <button onClick={() => openEdit(i)} title="Edit"
-                style={{ width: 26, height: 26, borderRadius: "50%", border: `1px solid ${ac}40`, background: "#fff", color: ac, cursor: "pointer", fontSize: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center" }}>✏</button>
-              <button onClick={() => handleDelete(i)} title="Hapus"
-                style={{ width: 26, height: 26, borderRadius: "50%", border: "1px solid #fca5a540", background: "#fff", color: "#ef4444", cursor: "pointer", fontSize: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
-            </div>
+            <button key={i} onClick={() => setDestIdx(i)}
+              style={{ padding: "7px 16px", borderRadius: 20, border: `1.5px solid ${i === destIdx ? ac : ac + "30"}`, background: i === destIdx ? ac : "#fff", color: i === destIdx ? "#fff" : ac, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", transition: "all .2s", fontFamily: "'DM Sans',sans-serif" }}>
+              {d.no}. {d.name}
+            </button>
           ))}
         </div>
       )}
@@ -4924,18 +4613,15 @@ function DestinationsSection({ svc, catInfo }) {
       {/* Destination card */}
       {dest ? (
         <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
-          {/* Image — full width, contain agar tidak terpotong */}
           <div style={{ width: "100%", background: `linear-gradient(135deg,${ac}22,#e8f4f8)`, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 280 }}>
             {dest.img ? (
-              <img loading="lazy" src={dest.img} alt={dest.name}
-                style={{ width: "100%", maxHeight: 360, objectFit: "contain", display: "block" }}
+              <img loading="lazy" src={dest.img} alt={dest.name} style={{ width: "100%", maxHeight: 360, objectFit: "contain", display: "block" }}
                 onError={e => { e.target.style.display = "none"; }} />
             ) : (
               <div style={{ padding: 40, color: ac, opacity: .4, fontSize: "3rem" }}>🏔</div>
             )}
             <div style={{ position: "absolute", top: 12, left: 12, background: ac, color: "#fff", borderRadius: "50%", width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6875rem", fontWeight: 800, zIndex: 2, boxShadow: "0 2px 8px rgba(0,0,0,.2)" }}>{dest.no}</div>
           </div>
-          {/* Content */}
           <div style={{ padding: "20px 24px 24px" }}>
             <div style={{ fontSize: "0.5625rem", color: ac, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 6 }}>{dest.tag}</div>
             <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 800, color: "#0d3b66", marginBottom: 6, lineHeight: 1.3 }}>{dest.title}</h3>
@@ -4953,93 +4639,45 @@ function DestinationsSection({ svc, catInfo }) {
       ) : (
         <div style={{ textAlign: "center", padding: "40px 20px", background: "#f8fbfd", borderRadius: 14, border: `2px dashed ${ac}40`, color: "#4a7f98" }}>
           <div style={{ fontSize: "2rem", marginBottom: 8 }}>🗺</div>
-          <div style={{ fontWeight: 600, marginBottom: 4 }}>Belum ada destinasi</div>
-          <div style={{ fontSize: "0.8125rem" }}>Klik <b>Tambah</b> untuk menambahkan destinasi wisata</div>
+          <div style={{ fontWeight: 600, fontSize: "0.875rem" }}>Belum ada destinasi ditambahkan</div>
         </div>
       )}
+    </div>
+  );
+}
 
-      {/* MODAL Add/Edit */}
-      {showModal && (
-        <ModalOverlay onClose={closeModal}>
-          <div style={{ padding: "28px 28px 24px" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
-              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.1rem", fontWeight: 800, color: "#0d3b66" }}>
-                {editTarget !== null ? "Edit Destinasi" : "Tambah Destinasi"}
+/* ─────────────── FACILITIES SECTION (read-only) ─────────────── */
+function FacilitiesSection({ svc }) {
+  const ac = svc.accent || "#e8a020";
+  const facilities = svc.facilities || [];
+  return (
+    <div className="mg-fade-3" style={{ marginBottom: 48 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+        <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${ac}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+        <div>
+          <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: ac, fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Yang Sudah Termasuk</div>
+          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Fasilitas Perjalanan</div>
+        </div>
+        <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
+      </div>
+      {facilities.length > 0 ? (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }}>
+          {facilities.map((f, i) => (
+            <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px", border: "1px solid #c8eaf2", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: ac, borderRadius: "10px 0 0 10px" }} />
+              <span style={{ fontSize: 22, flexShrink: 0 }}>{f.icon}</span>
+              <div>
+                <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{f.label}</div>
+                {f.detail && <div style={{ fontSize: "0.75rem", color: "#4a7f98", lineHeight: 1.5 }}>{f.detail}</div>}
               </div>
-              <button onClick={closeModal} style={{ width: 32, height: 32, borderRadius: "50%", border: "none", background: "#f0f4f8", cursor: "pointer", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#0d3b66" }}>✕</button>
             </div>
-
-            {/* Upload foto */}
-            <label style={{ display: "block", marginBottom: 16, cursor: "pointer" }}>
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", marginBottom: 6 }}>Foto Destinasi</div>
-              <div style={{ width: "100%", height: 180, borderRadius: 10, border: `2px dashed ${ac}60`, background: `${ac}08`, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", position: "relative" }}>
-                {form.imgPreview ? (
-                  <img src={form.imgPreview} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-                ) : (
-                  <div style={{ textAlign: "center", color: ac, opacity: .6 }}>
-                    <div style={{ fontSize: "2rem", marginBottom: 6 }}>📷</div>
-                    <div style={{ fontSize: "0.75rem", fontWeight: 600 }}>Klik untuk upload foto</div>
-                    <div style={{ fontSize: "0.6875rem", color: "#4a7f98", marginTop: 2 }}>JPG, PNG — maks 5MB</div>
-                  </div>
-                )}
-              </div>
-              <input type="file" accept="image/*" onChange={handleImg} style={{ display: "none" }} />
-            </label>
-            {form.imgPreview && (
-              <button onClick={() => setForm(f => ({ ...f, img: "", imgPreview: "" }))}
-                style={{ ...BtnStyle(false), fontSize: "0.6875rem", padding: "5px 12px", marginBottom: 14, color: "#ef4444" }}>
-                Hapus Foto
-              </button>
-            )}
-
-            {/* Form fields */}
-            {[
-              { key: "no", label: "Nomor", placeholder: "01" },
-              { key: "name", label: "Nama Singkat (tab)", placeholder: "Tanah Lot" },
-              { key: "tag", label: "Tag / Kategori", placeholder: "Pura Hindu · Keindahan Alam" },
-              { key: "title", label: "Judul Lengkap", placeholder: "Pura Megah di Atas Batu Karang Laut" },
-              { key: "sub", label: "Lokasi", placeholder: "Tabanan, Bali" },
-              { key: "duration", label: "Durasi", placeholder: "2–3 jam" },
-            ].map(({ key, label, placeholder }) => (
-              <div key={key} style={{ marginBottom: 14 }}>
-                <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 5 }}>{label}</label>
-                <input value={form[key] || ""} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))} placeholder={placeholder}
-                  style={{ width: "100%", padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.875rem", fontFamily: "'DM Sans',sans-serif", color: "#0d3b66", outline: "none", boxSizing: "border-box" }} />
-              </div>
-            ))}
-
-            {/* Deskripsi */}
-            <div style={{ marginBottom: 14 }}>
-              <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 5 }}>Deskripsi</label>
-              <textarea value={form.desc || ""} onChange={e => setForm(f => ({ ...f, desc: e.target.value }))} rows={4} placeholder="Tulis deskripsi destinasi..."
-                style={{ width: "100%", padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.875rem", fontFamily: "'DM Sans',sans-serif", color: "#0d3b66", outline: "none", resize: "vertical", boxSizing: "border-box" }} />
-            </div>
-
-            {/* Points */}
-            <div style={{ marginBottom: 20 }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66" }}>Highlight (✓ Poin)</label>
-                <button onClick={addPoint} style={{ fontSize: "0.6875rem", fontWeight: 700, color: ac, background: `${ac}15`, border: "none", borderRadius: 6, padding: "4px 10px", cursor: "pointer" }}>＋ Tambah</button>
-              </div>
-              {(form.points || []).map((pt, i) => (
-                <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8, alignItems: "center" }}>
-                  <span style={{ color: ac, fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>✓</span>
-                  <input value={pt} onChange={e => setPoint(i, e.target.value)} placeholder={`Highlight ${i + 1}`}
-                    style={{ flex: 1, padding: "8px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.8125rem", fontFamily: "'DM Sans',sans-serif", outline: "none" }} />
-                  <button onClick={() => removePoint(i)} style={{ width: 28, height: 28, borderRadius: "50%", border: "none", background: "#fee2e2", color: "#ef4444", cursor: "pointer", flexShrink: 0, fontSize: "0.875rem" }}>✕</button>
-                </div>
-              ))}
-            </div>
-
-            {/* Actions */}
-            <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
-              <button onClick={closeModal} style={BtnStyle(false)}>Batal</button>
-              <button onClick={handleSave} style={{ ...BtnStyle(true), opacity: (!form.name?.trim() || !form.title?.trim()) ? .5 : 1 }}>
-                {editTarget !== null ? "Simpan Perubahan" : "Tambah Destinasi"}
-              </button>
-            </div>
-          </div>
-        </ModalOverlay>
+          ))}
+        </div>
+      ) : (
+        <div style={{ textAlign: "center", padding: "32px 20px", background: "#f8fbfd", borderRadius: 10, border: `2px dashed ${ac}40`, color: "#4a7f98" }}>
+          <div style={{ fontSize: "2rem", marginBottom: 6 }}>🎒</div>
+          <div style={{ fontWeight: 600, fontSize: "0.875rem" }}>Belum ada fasilitas ditambahkan</div>
+        </div>
       )}
     </div>
   );
@@ -5079,7 +4717,7 @@ function ServiceHeroSlideshow({ slides, catColor }) {
         {/* Slide image */}
         <img key={cur} loading="lazy" src={slide.img} alt={slide.name}
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", position: "absolute", inset: 0, animation: "heroFadeIn .6s ease both" }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=800&h=500&fit=crop"; }} />
+          onError={e => { e.target.src = ""; }} />
 
         {/* Bottom gradient */}
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 130, background: "linear-gradient(to top, rgba(5,20,45,.85), transparent)", pointerEvents: "none", zIndex: 2 }} />
@@ -5171,7 +4809,7 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
         <img key={`cur-${cur}`} loading="lazy" src={slide.img} alt={slide.name}
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block",
             animation: `slideIn${dir > 0 ? "R" : "L"} .55s cubic-bezier(.22,1,.36,1) both` }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1200&h=420&fit=crop"; }} />
+          onError={e => { e.target.src = ""; }} />
 
         {/* Gradient overlay */}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,30,60,.72) 0%, rgba(10,30,60,.15) 55%, transparent 100%)", pointerEvents: "none" }} />
@@ -5225,7 +4863,7 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
                 border: i === cur ? `2.5px solid ${catColor}` : "2.5px solid transparent",
                 opacity: i === cur ? 1 : 0.55, transition: "all .25s", boxShadow: i === cur ? `0 0 0 1px ${catColor}55` : "none" }}>
               <img loading="lazy" src={s.img} alt={s.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                onError={e => e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=72&h=50&fit=crop"} />
+                onError={e => e.target.src = ""} />
             </div>
           ))}
         </div>
@@ -5574,7 +5212,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                     onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(13,59,102,.07)"}>
                     <div style={{ width: 90, flexShrink: 0, overflow: "hidden" }}>
                       <img loading="lazy" src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
-                        onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=300&h=120&fit=crop"} />
+                        onError={e => e.target.src = ""} />
                     </div>
                     <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#0891b2"}, transparent)` }} />
                     <div style={{ padding: "12px 14px", flex: 1, minWidth: 0 }}>
@@ -5737,6 +5375,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
       accent: "#e8a020", accentLight: "#fff8e6", duration: "3 Hari 2 Malam", minPeserta: "20",
       price: "", priceNote: "/ orang", images: [], image: "", coverIndex: 0,
       description: "", features: [], highlight: false,
+      destinations: [], facilities: [],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "", points: ["Full AC Double Blower", "TV LCD + Audio System", "Toilet dalam bus"] },
         { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "", points: ["Full AC Split", "Monitor + Speaker", "Kursi empuk & nyaman"] },
@@ -5747,10 +5386,14 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
     setUploadProgresses([]);
     setEditSvc("new");
   };
+  const editFormRefs = useRef({});
   const openEdit = (s) => {
     setSvcForm({ ...s, features: [...(s.features || [])], images: [...(s.images || (s.image ? [s.image] : []))], coverIndex: s.coverIndex || 0 });
     setUploadProgresses([]);
     setEditSvc(s.id);
+    setTimeout(() => {
+      editFormRefs.current[s.id]?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
   };
   const cancelEdit = () => { setEditSvc(null); setSvcForm({}); setUploadProgresses([]); };
 
@@ -5782,6 +5425,22 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
     const f = [...(svcForm.features || [])]; f.splice(i, 1);
     setSvcForm(p => ({ ...p, features: f }));
   };
+
+  // ── Destinations helpers ──
+  const emptyDest = () => ({ no: String((svcForm.destinations || []).length + 1).padStart(2,"0"), name: "", tag: "", title: "", sub: "", duration: "", desc: "", points: [""], img: "" });
+  const addDest = () => setSvcForm(p => ({ ...p, destinations: [...(p.destinations || []), { no: String((p.destinations||[]).length+1).padStart(2,"0"), name:"", tag:"", title:"", sub:"", duration:"", desc:"", points:[""], img:"" }] }));
+  const removeDest = (i) => setSvcForm(p => ({ ...p, destinations: (p.destinations||[]).filter((_,idx) => idx!==i) }));
+  const updateDest = (i, key, val) => setSvcForm(p => { const d=[...(p.destinations||[])]; d[i]={...d[i],[key]:val}; return {...p,destinations:d}; });
+  const addDestPoint = (i) => setSvcForm(p => { const d=[...(p.destinations||[])]; d[i]={...d[i],points:[...(d[i].points||[]),""]}; return {...p,destinations:d}; });
+  const updateDestPoint = (di,pi,val) => setSvcForm(p => { const d=[...(p.destinations||[])]; const pts=[...(d[di].points||[])]; pts[pi]=val; d[di]={...d[di],points:pts}; return {...p,destinations:d}; });
+  const removeDestPoint = (di,pi) => setSvcForm(p => { const d=[...(p.destinations||[])]; d[di]={...d[di],points:(d[di].points||[]).filter((_,idx)=>idx!==pi)}; return {...p,destinations:d}; });
+  const handleDestImg = (i, e) => { const file=e.target.files?.[0]; if(!file)return; const r=new FileReader(); r.onload=ev=>updateDest(i,"img",ev.target.result); r.readAsDataURL(file); };
+
+  // ── Facilities helpers ──
+  const addFac = () => setSvcForm(p => ({ ...p, facilities: [...(p.facilities||[]), {icon:"", label:"", detail:""}] }));
+  const removeFac = (i) => setSvcForm(p => ({ ...p, facilities: (p.facilities||[]).filter((_,idx)=>idx!==i) }));
+  const updateFac = (i,key,val) => setSvcForm(p => { const f=[...(p.facilities||[])]; f[i]={...f[i],[key]:val}; return {...p,facilities:f}; });
+  const FAC_ICONS = ["🏨","🍽","📸","👤","🎫","🩺","💊","🚌","🧭","🌿","⛑","💧","🏆","✈","📋","🤝","🎒","🎵","🏖","🌄"];
 
   /* Upload dengan progress simulasi per-file */
   const handleImageUpload = async (e) => {
@@ -5830,8 +5489,8 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
         )}
       </div>
 
-      {/* ══════════ Form Tambah / Edit — FULL WIDTH WORKSPACE ══════════ */}
-      {editSvc !== null && (
+      {/* ══════════ Form Tambah — hanya untuk paket baru ══════════ */}
+      {editSvc === "new" && (
         <div style={{ background: "#fff", borderRadius: 14, marginBottom: 32, boxShadow: "0 6px 32px rgba(0,0,0,.10)", borderTop: "5px solid #0ea5c5", overflow: "hidden" }}>
           {/* Header bar */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 32px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 55%,#0aa8bf 100%)" }}>
@@ -6092,6 +5751,164 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
             </div>
           </div>
 
+          {/* ══════════ DESTINASI WISATA ══════════ */}
+          {(svcForm.category === "traveling" || svcForm.category === "event" || svcForm.category === "wedding") && (
+            <div style={{ padding: "24px 32px", borderTop: "2px solid #edfafc", background: "#fffdf8" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <span style={{ fontSize: 18 }}>🗺</span>
+                  <span style={{ fontSize: 14, fontWeight: 800, color: "#0d3b66" }}>Destinasi Wisata / Itinerary</span>
+                </div>
+                <button onClick={addDest} style={{ fontSize: 12, padding: "7px 16px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700 }}>＋ Tambah Destinasi</button>
+              </div>
+              {(svcForm.destinations || []).length === 0 ? (
+                <p style={{ fontSize: 12, color: "#a0c4d8", textAlign: "center", padding: "20px 0" }}>Belum ada destinasi. Klik + Tambah Destinasi.</p>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                  {(svcForm.destinations || []).map((dest, di) => (
+                    <div key={di} style={{ background: "#fff", borderRadius: 12, border: "1.5px solid #fde68a", overflow: "hidden" }}>
+                      {/* Dest header */}
+                      <div style={{ background: "linear-gradient(90deg,#fffbeb,#fff8dc)", padding: "10px 16px", display: "flex", alignItems: "center", gap: 10, borderBottom: "1px solid #fde68a" }}>
+                        <span style={{ background: "#e8a020", color: "#fff", borderRadius: "50%", width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, flexShrink: 0 }}>{dest.no || di+1}</span>
+                        <span style={{ fontWeight: 700, color: "#0d3b66", fontSize: 13, flex: 1 }}>{dest.name || `Destinasi ${di+1}`}</span>
+                        <button onClick={() => removeDest(di)} style={{ padding: "5px 12px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 6, cursor: "pointer", fontSize: 12, fontWeight: 700 }}>✕ Hapus</button>
+                      </div>
+                      {/* Dest body */}
+                      <div style={{ padding: "14px 16px" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: "80px 1fr 1fr", gap: 10, marginBottom: 10 }}>
+                          <div>
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>No.</label>
+                            <input value={dest.no||""} onChange={e=>updateDest(di,"no",e.target.value)} placeholder="01"
+                              style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Nama Tab</label>
+                            <input value={dest.name||""} onChange={e=>updateDest(di,"name",e.target.value)} placeholder="Tanah Lot"
+                              style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Tag / Kategori</label>
+                            <input value={dest.tag||""} onChange={e=>updateDest(di,"tag",e.target.value)} placeholder="Pura Hindu · Keindahan Alam"
+                              style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                          </div>
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 120px", gap: 10, marginBottom: 10 }}>
+                          <div>
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Judul Lengkap</label>
+                            <input value={dest.title||""} onChange={e=>updateDest(di,"title",e.target.value)} placeholder="Pura Megah di Atas Batu Karang"
+                              style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Lokasi</label>
+                            <input value={dest.sub||""} onChange={e=>updateDest(di,"sub",e.target.value)} placeholder="Tabanan, Bali"
+                              style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Durasi</label>
+                            <input value={dest.duration||""} onChange={e=>updateDest(di,"duration",e.target.value)} placeholder="2–3 jam"
+                              style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                          </div>
+                        </div>
+                        <div style={{ marginBottom: 10 }}>
+                          <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Deskripsi</label>
+                          <textarea value={dest.desc||""} onChange={e=>updateDest(di,"desc",e.target.value)} rows={3} placeholder="Deskripsi destinasi..."
+                            style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+                        </div>
+                        {/* Foto & Points side by side */}
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                          {/* Foto */}
+                          <div>
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Foto Destinasi</label>
+                            <label style={{ cursor: "pointer", display: "block" }}>
+                              <div style={{ height: 120, border: "2px dashed #fde68a", borderRadius: 8, background: "#fffbeb", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", position: "relative" }}>
+                                {dest.img ? (
+                                  <img src={dest.img} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                ) : (
+                                  <div style={{ textAlign: "center", color: "#e8a020", opacity: .7 }}>
+                                    <div style={{ fontSize: "1.5rem" }}>📷</div>
+                                    <div style={{ fontSize: 11, fontWeight: 600, marginTop: 4 }}>Upload Foto</div>
+                                  </div>
+                                )}
+                              </div>
+                              <input type="file" accept="image/*" onChange={e=>handleDestImg(di,e)} style={{ display: "none" }} />
+                            </label>
+                            {dest.img && (
+                              <button onClick={()=>updateDest(di,"img","")} style={{ marginTop: 6, fontSize: 11, padding: "4px 10px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 6, cursor: "pointer" }}>Hapus Foto</button>
+                            )}
+                          </div>
+                          {/* Points */}
+                          <div>
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+                              <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Highlight (✓)</label>
+                              <button onClick={()=>addDestPoint(di)} style={{ fontSize: 11, padding: "3px 10px", background: "#e8f8ef", color: "#27ae60", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 700 }}>+ Tambah</button>
+                            </div>
+                            <div style={{ display: "flex", flexDirection: "column", gap: 6, maxHeight: 140, overflowY: "auto" }}>
+                              {(dest.points||[]).map((pt,pi) => (
+                                <div key={pi} style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                                  <span style={{ color: "#e8a020", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                                  <input value={pt} onChange={e=>updateDestPoint(di,pi,e.target.value)} placeholder={`Highlight ${pi+1}`}
+                                    style={{ flex: 1, padding: "6px 8px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none" }} />
+                                  <button onClick={()=>removeDestPoint(di,pi)} style={{ width: 24, height: 24, background: "#fee", color: "#e74c3c", border: "none", borderRadius: 5, cursor: "pointer", flexShrink: 0, fontSize: 11 }}>✕</button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ══════════ FASILITAS PERJALANAN ══════════ */}
+          {(svcForm.category === "traveling" || svcForm.category === "event" || svcForm.category === "wedding") && (
+            <div style={{ padding: "24px 32px", borderTop: "2px solid #edfafc", background: "#f9fdff" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <span style={{ fontSize: 18 }}>🎒</span>
+                  <span style={{ fontSize: 14, fontWeight: 800, color: "#0d3b66" }}>Fasilitas Perjalanan</span>
+                </div>
+                <button onClick={addFac} style={{ fontSize: 12, padding: "7px 16px", background: "#0891b2", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700 }}>＋ Tambah Fasilitas</button>
+              </div>
+              {(svcForm.facilities || []).length === 0 ? (
+                <p style={{ fontSize: 12, color: "#a0c4d8", textAlign: "center", padding: "16px 0" }}>Belum ada fasilitas. Klik + Tambah Fasilitas.</p>
+              ) : (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 12 }}>
+                  {(svcForm.facilities || []).map((fac, fi) => (
+                    <div key={fi} style={{ background: "#fff", borderRadius: 10, border: "1.5px solid #b0dce8", padding: "12px 14px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                        {/* Emoji picker mini */}
+                        <div style={{ position: "relative" }}>
+                          <input value={fac.icon||""} onChange={e=>updateFac(fi,"icon",e.target.value)}
+                            placeholder="🏨" maxLength={4}
+                            style={{ width: 44, height: 38, textAlign: "center", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: "1.2rem", outline: "none", cursor: "pointer" }} />
+                        </div>
+                        <div style={{ flex: 1, display: "flex", gap: 8 }}>
+                          <input value={fac.label||""} onChange={e=>updateFac(fi,"label",e.target.value)} placeholder="Nama Fasilitas"
+                            style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none" }} />
+                        </div>
+                        <button onClick={()=>removeFac(fi)} style={{ width: 30, height: 30, background: "#fee", color: "#e74c3c", border: "none", borderRadius: 7, cursor: "pointer", fontSize: 13, flexShrink: 0 }}>✕</button>
+                      </div>
+                      {/* Quick icon picker */}
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 8 }}>
+                        {FAC_ICONS.map(ic => (
+                          <button key={ic} onClick={()=>updateFac(fi,"icon",ic)}
+                            style={{ width: 28, height: 28, fontSize: "0.9rem", borderRadius: 6, border: `1.5px solid ${fac.icon===ic?"#0891b2":"#e0f0f5"}`, background: fac.icon===ic?"#edfafc":"#fff", cursor: "pointer" }}>
+                            {ic}
+                          </button>
+                        ))}
+                      </div>
+                      <input value={fac.detail||""} onChange={e=>updateFac(fi,"detail",e.target.value)} placeholder="Keterangan (opsional)"
+                        style={{ width: "100%", padding: "7px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 12, outline: "none", boxSizing: "border-box" }} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Footer action bar */}
           <div style={{ display: "flex", gap: 12, padding: "18px 32px", background: "#f5fdff", borderTop: "1px solid #edfafc" }}>
             <button onClick={saveSvc} style={{ padding: "11px 28px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 800, cursor: "pointer" }}>💾 Simpan Paket</button>
@@ -6126,7 +5943,8 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                 {/* Package rows */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {catSvcs.map(svc => (
-                    <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "16px 18px", boxShadow: "0 2px 8px rgba(0,0,0,.05)", display: "flex", gap: 14, alignItems: "flex-start", borderLeft: `4px solid ${svc.highlight ? cat.color : cat.border}` }}>
+                    <div key={svc.id}>
+                    <div style={{ background: "#fff", borderRadius: 10, padding: "16px 18px", boxShadow: "0 2px 8px rgba(0,0,0,.05)", display: "flex", gap: 14, alignItems: "flex-start", borderLeft: `4px solid ${svc.highlight ? cat.color : cat.border}` }}>
                       {svc.image && (
                         <img loading="lazy" src={svc.image} alt={svc.title} style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
                       )}
@@ -6140,9 +5958,82 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                         <div style={{ fontSize: 12, color: "#5090aa", marginTop: 2 }}>{(svc.features || []).length} fitur termasuk</div>
                       </div>
                       <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
-                        <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: cat.light, color: cat.color, border: `1px solid ${cat.border}`, borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
+                        <button onClick={() => editSvc === svc.id ? cancelEdit() : openEdit(svc)} style={{ padding: "6px 14px", background: editSvc === svc.id ? cat.color : cat.light, color: editSvc === svc.id ? "#fff" : cat.color, border: `1px solid ${cat.border}`, borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>{editSvc === svc.id ? "✕ Tutup" : "✏ Edit"}</button>
                         <button onClick={() => deleteSvc(svc.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
                       </div>
+                    </div>
+                    {/* ── Inline Edit Form ── */}
+                    {editSvc === svc.id && (
+                      <div ref={el => editFormRefs.current[svc.id] = el} style={{ background: "#fff", borderRadius: "0 0 14px 14px", marginTop: 2, boxShadow: "0 6px 32px rgba(0,0,0,.10)", borderTop: `4px solid ${cat.color}`, overflow: "hidden" }}>
+                        {/* Header bar */}
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 24px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 55%,#0aa8bf 100%)" }}>
+                          <h2 style={{ fontSize: 16, fontWeight: 800, color: "#fff", margin: 0 }}>✏ Edit Paket</h2>
+                          <div style={{ display: "flex", gap: 10 }}>
+                            <button onClick={saveSvc} style={{ padding: "8px 20px", background: "#10d0e0", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 800, cursor: "pointer" }}>💾 Simpan</button>
+                            <button onClick={cancelEdit} style={{ padding: "8px 14px", background: "rgba(255,255,255,.15)", color: "#fff", border: "1px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>✕ Batal</button>
+                          </div>
+                        </div>
+                        {/* Body — 2-column grid */}
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+                          {/* Left Column */}
+                          <div style={{ padding: "24px 28px", borderRight: "1px solid #edfafc" }}>
+                            <div style={{ marginBottom: 20 }}>
+                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Kategori *</label>
+                              <select value={svcForm.category || "traveling"} onChange={e => setSvcForm(p => ({ ...p, category: e.target.value }))}
+                                style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 14, outline: "none", background: "#fff" }}>
+                                <option value="traveling">✈️ Traveling</option>
+                                <option value="event">🎉 Event Plan</option>
+                                <option value="wedding">💍 Wedding Organizer</option>
+                              </select>
+                            </div>
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 20 }}>
+                              {[
+                                { label: "Judul Paket *", key: "title", placeholder: "Paket Malang 3D2N" },
+                                { label: "Harga (teks)", key: "price", placeholder: "Rp 1.200.000" },
+                                { label: "Keterangan Harga", key: "priceNote", placeholder: "/ orang" },
+                                { label: "Badge (opsional)", key: "badge", placeholder: "Best Seller" },
+                              ].map(f => (
+                                <div key={f.key}>
+                                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
+                                  <input value={svcForm[f.key] || ""} onChange={e => setSvcForm(p => ({ ...p, [f.key]: e.target.value }))}
+                                    placeholder={f.placeholder}
+                                    style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                                </div>
+                              ))}
+                            </div>
+                            <div style={{ marginBottom: 20 }}>
+                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Deskripsi</label>
+                              <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
+                                rows={4} placeholder="Deskripsi singkat paket layanan..."
+                                style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.7, boxSizing: "border-box" }} />
+                            </div>
+                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                              <input type="checkbox" id={`svc-highlight-${svc.id}`} checked={!!svcForm.highlight} onChange={e => setSvcForm(p => ({ ...p, highlight: e.target.checked }))} style={{ width: 18, height: 18, cursor: "pointer", accentColor: "#0891b2" }} />
+                              <label htmlFor={`svc-highlight-${svc.id}`} style={{ fontSize: 13, color: "#0d3b66", fontWeight: 600, cursor: "pointer" }}>⭐ Tandai sebagai Pilihan Utama (highlight)</label>
+                            </div>
+                          </div>
+                          {/* Right Column */}
+                          <div style={{ padding: "24px 28px" }}>
+                            <div style={{ marginBottom: 20 }}>
+                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Fitur Termasuk</label>
+                              {(svcForm.features || []).map((feat, fi) => (
+                                <div key={fi} style={{ display: "flex", gap: 8, marginBottom: 8, alignItems: "center" }}>
+                                  <input value={feat} onChange={e => updateFeature(fi, e.target.value)} placeholder={`Fitur ${fi + 1}`}
+                                    style={{ flex: 1, padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none" }} />
+                                  <button onClick={() => removeFeature(fi)} style={{ width: 32, height: 32, background: "#fee", color: "#e74c3c", border: "none", borderRadius: 7, cursor: "pointer", flexShrink: 0, fontWeight: 700 }}>✕</button>
+                                </div>
+                              ))}
+                              <button onClick={addFeature} style={{ fontSize: 12, padding: "7px 14px", background: "#edfafc", color: "#0891b2", border: "1px solid #b0dce8", borderRadius: 7, cursor: "pointer", fontWeight: 700, marginTop: 4 }}>＋ Tambah Fitur</button>
+                            </div>
+                          </div>
+                        </div>
+                        {/* Footer */}
+                        <div style={{ display: "flex", gap: 12, padding: "16px 28px", background: "#f5fdff", borderTop: "1px solid #edfafc" }}>
+                          <button onClick={saveSvc} style={{ padding: "10px 24px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 800, cursor: "pointer" }}>💾 Simpan Paket</button>
+                          <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#edfafc", color: "#4a7f98", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
+                        </div>
+                      </div>
+                    )}
                     </div>
                   ))}
                 </div>
@@ -6753,7 +6644,7 @@ function HomeIntroSlideshow({ data }) {
 
   // Fallback
   if (allImgs.length === 0) {
-    add("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg", "");
+    add("", "");
   }
 
   const [cur, setCur] = useState(0);
