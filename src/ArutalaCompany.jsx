@@ -2534,6 +2534,8 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
     setEditBlockIdx(null);
     setEditBlockVal("");
   };
+
+  const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
