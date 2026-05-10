@@ -2323,6 +2323,22 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
     }
   };
 
+  const handlePaste = (e) => {
+    e.preventDefault();
+    // Ambil plain text saja — buang semua HTML/formatting dari Word/browser lain
+    const plain = e.clipboardData.getData("text/plain");
+    if (!plain) return;
+    // Preserve line breaks sebagai <br>, escape karakter HTML
+    const safe = plain
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\r\n|\r|\n/g, "<br>");
+    document.execCommand("insertHTML", false, safe);
+    if (editorRef.current) { onChange(editorRef.current.innerHTML); setIsEmpty(false); }
+  };
+
+
   useEffect(() => {
     const close = (e) => { if (!e.target.closest?.("[data-richpicker]")) { setColorMenuOpen(false); setHighlightMenuOpen(false); } };
     document.addEventListener("mousedown", close);
@@ -2451,6 +2467,7 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
           suppressContentEditableWarning
           onInput={handleInput}
           onKeyDown={handleKeyDown}
+          onPaste={handlePaste}
           onFocus={() => setIsEmpty(false)}
           onBlur={() => setIsEmpty(!editorRef.current?.textContent?.trim())}
           style={{
