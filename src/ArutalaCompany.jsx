@@ -2776,7 +2776,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
 
                 {addType === "image" && imgUploadMode === "upload" ? (
                   <div>
-                    <input ref={fileRef} type="file" accept="image/*" onChange={handleImageFile} style={{ display: "none" }} />
+                    <input ref={fileRef} type="file" accept="image/*" onChange={handleImageUpload} style={{ display: "none" }} />
                     <button onClick={() => fileRef.current?.click()} style={{
                       padding: "10px 20px", border: "1.5px dashed #0ea5c5", borderRadius: 8,
                       color: "#0ea5c5", fontSize: 13, background: "#e8f9fc", width: "100%", marginBottom: 8
