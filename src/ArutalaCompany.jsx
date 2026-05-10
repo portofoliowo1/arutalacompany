@@ -3241,7 +3241,7 @@ function EventWeddingPackageCard({ svc, onDetail, waLink }) {
           </div>
         )}
         <div style={{ position: "absolute", bottom: 12, left: 14, right: 14 }}>
-          <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.0625rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 2 }}>{svc.title}</h3>
+          <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.0625rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 2, textShadow: "0 2px 12px rgba(0,0,0,.8), 0 1px 4px rgba(0,0,0,.6)" }}>{svc.title}</h3>
         </div>
       </div>
 
@@ -3406,8 +3406,8 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
           <div style={{ position: "absolute", top: 12, right: 12, background: "linear-gradient(130deg,#063d5c,#0891b2)", color: "#fff", borderRadius: 20, padding: "3px 10px", fontSize: "0.625rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
         )}
         <div style={{ position: "absolute", bottom: 12, left: 14, right: 14 }}>
-          <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 2 }}>{svc.title}</h3>
-          {svc.tagline && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,.8)", lineHeight: 1.4 }}>{svc.tagline}</p>}
+          <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 2, textShadow: "0 2px 12px rgba(0,0,0,.8), 0 1px 4px rgba(0,0,0,.6)" }}>{svc.title}</h3>
+          {svc.tagline && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,.9)", lineHeight: 1.4, textShadow: "0 1px 8px rgba(0,0,0,.75)" }}>{svc.tagline}</p>}
         </div>
       </div>
 
