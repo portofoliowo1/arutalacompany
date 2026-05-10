@@ -5386,14 +5386,10 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
     setUploadProgresses([]);
     setEditSvc("new");
   };
-  const editFormRefs = useRef({});
   const openEdit = (s) => {
     setSvcForm({ ...s, features: [...(s.features || [])], images: [...(s.images || (s.image ? [s.image] : []))], coverIndex: s.coverIndex || 0 });
     setUploadProgresses([]);
     setEditSvc(s.id);
-    setTimeout(() => {
-      editFormRefs.current[s.id]?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 50);
   };
   const cancelEdit = () => { setEditSvc(null); setSvcForm({}); setUploadProgresses([]); };
 
@@ -5474,6 +5470,294 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
     e.target.value = "";
   };
 
+  /* ── Shared form JSX (dipakai baik new maupun edit) ── */
+  const renderForm = (isNew) => (
+    <div className="fade-in" style={{ background: "#f5fdff", minHeight: "100%" }}>
+      {/* ── Sticky header ── */}
+      <div style={{ position: "sticky", top: 0, zIndex: 10, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 28px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 55%,#0aa8bf 100%)", boxShadow: "0 4px 16px rgba(0,0,0,.18)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <button onClick={cancelEdit} style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,.15)", color: "#fff", border: "1px solid rgba(255,255,255,.3)", cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>←</button>
+          <div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: "#fff" }}>{isNew ? "➕ Tambah Paket Baru" : `✏ Edit: ${svcForm.title || "Paket"}`}</div>
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,.7)", marginTop: 2 }}>Layanan / Paket</div>
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 10 }}>
+          <button onClick={saveSvc} style={{ padding: "9px 24px", background: "#10d0e0", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 800, cursor: "pointer", boxShadow: "0 2px 8px rgba(0,0,0,.25)" }}>💾 Simpan Paket</button>
+          <button onClick={cancelEdit} style={{ padding: "9px 16px", background: "rgba(255,255,255,.15)", color: "#fff", border: "1px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>✕ Batal</button>
+        </div>
+      </div>
+
+      {/* ── 3×3 Grid utama ── */}
+      <div style={{ padding: "24px 28px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
+
+        {/* [1,1] Informasi Dasar */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #0891b2" }}>
+          <div style={{ fontSize: 12, fontWeight: 800, color: "#0891b2", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 16 }}>📋 Informasi Dasar</div>
+          <div style={{ marginBottom: 14 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 6 }}>Kategori *</label>
+            <select value={svcForm.category || "traveling"} onChange={e => setSvcForm(p => ({ ...p, category: e.target.value }))}
+              style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", background: "#fff" }}>
+              <option value="traveling">✈️ Traveling</option>
+              <option value="event">🎉 Event Plan</option>
+              <option value="wedding">💍 Wedding Organizer</option>
+            </select>
+          </div>
+          {[
+            { label: "Judul Paket *", key: "title", placeholder: "Paket Kota Malang 3D2N" },
+            { label: "Keterangan Harga", key: "priceNote", placeholder: "/ orang (mulai)" },
+          ].map(f => (
+            <div key={f.key} style={{ marginBottom: 14 }}>
+              <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 6 }}>{f.label}</label>
+              <input value={svcForm[f.key] || ""} onChange={e => setSvcForm(p => ({ ...p, [f.key]: e.target.value }))} placeholder={f.placeholder}
+                style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+            </div>
+          ))}
+          <div style={{ marginBottom: 14 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 6 }}>Deskripsi</label>
+            <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
+              rows={4} placeholder="Deskripsi singkat paket layanan..."
+              style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.7, boxSizing: "border-box" }} />
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <input type="checkbox" id="svc-highlight-fp" checked={!!svcForm.highlight} onChange={e => setSvcForm(p => ({ ...p, highlight: e.target.checked }))} style={{ width: 18, height: 18, cursor: "pointer", accentColor: "#0891b2" }} />
+            <label htmlFor="svc-highlight-fp" style={{ fontSize: 13, color: "#0d3b66", fontWeight: 600, cursor: "pointer" }}>⭐ Pilihan Utama (highlight)</label>
+          </div>
+        </div>
+
+        {/* [1,2] Badge & Tampilan */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #8e44ad" }}>
+          <div style={{ fontSize: 12, fontWeight: 800, color: "#8e44ad", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 16 }}>🎨 Badge & Tampilan</div>
+          <div style={{ marginBottom: 14 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 6 }}>Teks Badge</label>
+            <input value={svcForm.badge || ""} onChange={e => setSvcForm(p => ({ ...p, badge: e.target.value }))} placeholder="Best Seller / Rekomendasi"
+              style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+          </div>
+          <div style={{ marginBottom: 14 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 8 }}>Warna Badge</label>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+              {["#0891b2","#27ae60","#e67e22","#c0392b","#8e44ad","#e84393","#1abc9c","#f39c12","#0d3b66"].map(c => (
+                <button key={c} onClick={() => setSvcForm(p => ({ ...p, badgeColor: c }))}
+                  style={{ width: 26, height: 26, borderRadius: "50%", background: c, border: "none", cursor: "pointer",
+                    boxShadow: svcForm.badgeColor === c ? `0 0 0 3px #fff, 0 0 0 5px ${c}` : "0 1px 3px rgba(0,0,0,.2)",
+                    transform: svcForm.badgeColor === c ? "scale(1.2)" : "scale(1)", transition: "all .15s" }} />
+              ))}
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <input type="color" value={svcForm.badgeColor || "#0891b2"} onChange={e => setSvcForm(p => ({ ...p, badgeColor: e.target.value }))}
+                style={{ width: 36, height: 36, border: "none", background: "none", cursor: "pointer", padding: 0 }} />
+              <input value={svcForm.badgeColor || "#0891b2"} onChange={e => setSvcForm(p => ({ ...p, badgeColor: e.target.value }))} maxLength={7}
+                style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", fontFamily: "monospace" }} />
+            </div>
+            {svcForm.badge && (
+              <div style={{ marginTop: 12, padding: "10px 14px", background: "#f5f0ff", borderRadius: 8, display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 11, color: "#5090aa" }}>Preview:</span>
+                <span style={{ background: svcForm.badgeColor || "#0891b2", color: "#fff", borderRadius: 10, padding: "3px 10px", fontSize: 11, fontWeight: 800 }}>{svcForm.badge}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* [1,3] Galeri Gambar */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #27ae60" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+            <div style={{ fontSize: 12, fontWeight: 800, color: "#27ae60", textTransform: "uppercase", letterSpacing: "1px" }}>🖼 Galeri Gambar</div>
+            {(svcForm.images || []).length > 0 && <span style={{ fontSize: 11, color: "#27ae60", fontWeight: 600 }}>Cover: Foto #{(svcForm.coverIndex||0)+1}</span>}
+          </div>
+          {uploadProgresses.length > 0 && (
+            <div style={{ background: "#f0fafe", border: "1px solid #b0dce8", borderRadius: 8, padding: "12px 14px", marginBottom: 12 }}>
+              {uploadProgresses.map((up, i) => (
+                <div key={i} style={{ marginBottom: 8 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 3 }}>
+                    <span style={{ color: up.error?"#e74c3c":"#0d3b66", fontWeight:600, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", maxWidth:160 }}>{up.error?"❌ ":up.done?"✅ ":"📤 "}{up.name}</span>
+                    <span style={{ color: up.error?"#e74c3c":up.done?"#27ae60":"#0891b2", fontWeight:700 }}>{up.error?"Gagal":up.done?"✓":`${up.pct}%`}</span>
+                  </div>
+                  <div style={{ height:5, background:"#c0e8f0", borderRadius:3, overflow:"hidden" }}>
+                    <div style={{ height:"100%", width:`${up.pct}%`, borderRadius:3, background: up.error?"#e74c3c":up.done?"#27ae60":"linear-gradient(90deg,#0891b2,#10d0e0)", transition:"width .3s" }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {(svcForm.images||[]).length > 0 && (
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(80px,1fr))", gap:8, marginBottom:12 }}>
+              {(svcForm.images||[]).map((img,i) => {
+                const isCover=(svcForm.coverIndex||0)===i;
+                return (
+                  <div key={i} style={{ position:"relative", borderRadius:7, overflow:"hidden", border:isCover?"3px solid #0891b2":"2px solid #c0e8f0" }}>
+                    <img loading="lazy" src={img} alt="" style={{ width:"100%", height:68, objectFit:"cover", display:"block" }} />
+                    {isCover && <div style={{ position:"absolute", top:0, left:0, right:0, background:"rgba(8,145,178,.85)", color:"#fff", fontSize:9, fontWeight:800, textAlign:"center", padding:"2px 0" }}>✔ COVER</div>}
+                    <div style={{ position:"absolute", bottom:0, left:0, right:0, display:"flex", gap:2, padding:"4px", background:"linear-gradient(0deg,rgba(0,0,0,.65),transparent)" }}>
+                      {!isCover && <button onClick={()=>setSvcForm(p=>({...p,coverIndex:i,image:p.images[i]}))} style={{ flex:1, fontSize:8, fontWeight:800, background:"#0891b2", color:"#fff", border:"none", borderRadius:3, padding:"3px 1px", cursor:"pointer" }}>📌</button>}
+                      <button onClick={()=>setSvcForm(p=>{const n=p.images.filter((_,j)=>j!==i);const c=p.coverIndex>=n.length?Math.max(0,n.length-1):(p.coverIndex>i?p.coverIndex-1:p.coverIndex);return{...p,images:n,coverIndex:c,image:n[c]||""};} )} style={{ width:20, fontSize:8, fontWeight:800, background:"#e74c3c", color:"#fff", border:"none", borderRadius:3, padding:"3px 1px", cursor:"pointer" }}>✕</button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          <label style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:6, padding:"16px 12px", border:"2px dashed #0ea5c5", borderRadius:10, background:"#f0fafe", cursor:"pointer" }}>
+            <span style={{ fontSize:24 }}>🖼️</span>
+            <span style={{ fontSize:12, fontWeight:700, color:"#0891b2" }}>Klik Upload Foto</span>
+            <span style={{ fontSize:10, color:"#5090aa", textAlign:"center" }}>JPG, PNG, WEBP · Multi-file</span>
+            <input type="file" accept="image/*" multiple onChange={handleImageUpload} style={{ display:"none" }} />
+          </label>
+        </div>
+
+        {/* [2,1] Fitur Termasuk */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #e67e22" }}>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
+            <div style={{ fontSize:12, fontWeight:800, color:"#e67e22", textTransform:"uppercase", letterSpacing:"1px" }}>✅ Fitur Termasuk</div>
+            <button onClick={addFeature} style={{ fontSize:11, padding:"5px 12px", background:"#fff8e1", color:"#e67e22", border:"1px solid #fde68a", borderRadius:6, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
+          </div>
+          <div style={{ maxHeight:280, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
+            {(svcForm.features||[]).map((feat,i)=>(
+              <div key={i} style={{ display:"flex", gap:8 }}>
+                <input value={feat} onChange={e=>updateFeature(i,e.target.value)} placeholder={`Fitur ${i+1}...`}
+                  style={{ flex:1, padding:"9px 11px", border:"1px solid #b0dce8", borderRadius:7, fontSize:13, outline:"none" }} />
+                <button onClick={()=>removeFeature(i)} style={{ padding:"9px 12px", background:"#fee", color:"#e74c3c", border:"none", borderRadius:7, cursor:"pointer", fontWeight:700 }}>✕</button>
+              </div>
+            ))}
+            {(svcForm.features||[]).length===0 && <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada fitur. Klik + Tambah.</p>}
+          </div>
+        </div>
+
+        {/* [2,2] Harga per Kendaraan */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #0891b2" }}>
+          <div style={{ fontSize:12, fontWeight:800, color:"#0891b2", textTransform:"uppercase", letterSpacing:"1px", marginBottom:4 }}>🚌 Harga per Kendaraan</div>
+          <div style={{ fontSize:11, color:"#5090aa", marginBottom:14 }}>Harga Bus = harga utama di kartu paket</div>
+          <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+            {(svcForm.prices||[]).map((p,i)=>(
+              <div key={i} style={{ background: i===0?"#edfafc":"#f9fdff", borderRadius:8, border:i===0?"1.5px solid #0891b2":"1px solid #d0eaf4", padding:"12px 14px" }}>
+                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
+                  <span style={{ fontSize:16 }}>{p.icon}</span>
+                  <span style={{ fontWeight:700, color:"#0d3b66", fontSize:13, flex:1 }}>{p.vehicle}</span>
+                  <span style={{ fontSize:10, color:"#5090aa" }}>{p.capacity}</span>
+                  {i===0 && <span style={{ fontSize:9, background:"#0891b2", color:"#fff", borderRadius:5, padding:"2px 6px", fontWeight:800 }}>UTAMA</span>}
+                </div>
+                <div style={{ position:"relative" }}>
+                  <span style={{ position:"absolute", left:10, top:"50%", transform:"translateY(-50%)", fontSize:12, fontWeight:700, color:"#0891b2", pointerEvents:"none" }}>Rp</span>
+                  <input type="number" min="0" value={p.price||""} onChange={e=>{
+                    const newPrices=[...(svcForm.prices||[])]; newPrices[i]={...newPrices[i],price:e.target.value};
+                    const ns={...svcForm,prices:newPrices}; if(i===0)ns.price=formatRp(e.target.value); setSvcForm(ns);
+                  }} placeholder="500000"
+                    style={{ width:"100%", padding:"9px 10px 9px 30px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                </div>
+                {p.price && !isNaN(p.price) && Number(p.price)>0 && <div style={{ fontSize:11, color:"#27ae60", fontWeight:600, marginTop:4 }}>✓ {formatRp(p.price)}</div>}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* [2,3] Fasilitas */}
+        <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #1abc9c" }}>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
+            <div style={{ fontSize:12, fontWeight:800, color:"#1abc9c", textTransform:"uppercase", letterSpacing:"1px" }}>🎒 Fasilitas</div>
+            <button onClick={addFac} style={{ fontSize:11, padding:"5px 12px", background:"#e8f8f5", color:"#1abc9c", border:"1px solid #a8e6db", borderRadius:6, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
+          </div>
+          {(svcForm.facilities||[]).length===0
+            ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada fasilitas.</p>
+            : <div style={{ maxHeight:280, overflowY:"auto", display:"flex", flexDirection:"column", gap:10 }}>
+                {(svcForm.facilities||[]).map((fac,fi)=>(
+                  <div key={fi} style={{ background:"#f5fffe", borderRadius:8, border:"1px solid #b0dce8", padding:"10px 12px" }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
+                      <input value={fac.icon||""} onChange={e=>updateFac(fi,"icon",e.target.value)} placeholder="🏨" maxLength={4}
+                        style={{ width:38, height:34, textAlign:"center", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:"1.1rem", outline:"none" }} />
+                      <input value={fac.label||""} onChange={e=>updateFac(fi,"label",e.target.value)} placeholder="Nama Fasilitas"
+                        style={{ flex:1, padding:"7px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none" }} />
+                      <button onClick={()=>removeFac(fi)} style={{ width:28, height:28, background:"#fee", color:"#e74c3c", border:"none", borderRadius:6, cursor:"pointer", flexShrink:0 }}>✕</button>
+                    </div>
+                    <div style={{ display:"flex", flexWrap:"wrap", gap:3, marginBottom:7 }}>
+                      {FAC_ICONS.map(ic=>(
+                        <button key={ic} onClick={()=>updateFac(fi,"icon",ic)}
+                          style={{ width:26, height:26, fontSize:"0.85rem", borderRadius:5, border:`1px solid ${fac.icon===ic?"#0891b2":"#e0f0f5"}`, background:fac.icon===ic?"#edfafc":"#fff", cursor:"pointer" }}>{ic}</button>
+                      ))}
+                    </div>
+                    <input value={fac.detail||""} onChange={e=>updateFac(fi,"detail",e.target.value)} placeholder="Keterangan (opsional)"
+                      style={{ width:"100%", padding:"6px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none", boxSizing:"border-box" }} />
+                  </div>
+                ))}
+              </div>
+          }
+        </div>
+
+        {/* [3,1–3] Destinasi — full width */}
+        {(svcForm.category==="traveling"||svcForm.category==="event"||svcForm.category==="wedding") && (
+          <div style={{ gridColumn:"1 / -1", background:"#fff", borderRadius:12, padding:"22px 24px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:"3px solid #e8a020" }}>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
+              <div style={{ fontSize:12, fontWeight:800, color:"#e8a020", textTransform:"uppercase", letterSpacing:"1px" }}>🗺 Destinasi Wisata / Itinerary</div>
+              <button onClick={addDest} style={{ fontSize:12, padding:"7px 16px", background:"#e8a020", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:700 }}>＋ Tambah Destinasi</button>
+            </div>
+            {(svcForm.destinations||[]).length===0
+              ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada destinasi. Klik + Tambah Destinasi.</p>
+              : <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))", gap:16 }}>
+                  {(svcForm.destinations||[]).map((dest,di)=>(
+                    <div key={di} style={{ background:"#fffbeb", borderRadius:10, border:"1.5px solid #fde68a", overflow:"hidden" }}>
+                      <div style={{ background:"linear-gradient(90deg,#fffbeb,#fff8dc)", padding:"10px 14px", display:"flex", alignItems:"center", gap:10, borderBottom:"1px solid #fde68a" }}>
+                        <span style={{ background:"#e8a020", color:"#fff", borderRadius:"50%", width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", fontSize:11, fontWeight:800, flexShrink:0 }}>{dest.no||di+1}</span>
+                        <span style={{ fontWeight:700, color:"#0d3b66", fontSize:13, flex:1 }}>{dest.name||`Destinasi ${di+1}`}</span>
+                        <button onClick={()=>removeDest(di)} style={{ padding:"4px 10px", background:"#fee", color:"#e74c3c", border:"none", borderRadius:5, cursor:"pointer", fontSize:12, fontWeight:700 }}>✕</button>
+                      </div>
+                      <div style={{ padding:"12px 14px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+                        {[["no","No.","01"],["name","Nama Tab","Tanah Lot"],["tag","Tag","Pura Hindu · Alam"],["title","Judul Lengkap","Pura Megah"],["sub","Lokasi","Tabanan, Bali"],["duration","Durasi","2–3 jam"]].map(([k,lbl,ph])=>(
+                          <div key={k}>
+                            <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>{lbl}</label>
+                            <input value={dest[k]||""} onChange={e=>updateDest(di,k,e.target.value)} placeholder={ph}
+                              style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", boxSizing:"border-box" }} />
+                          </div>
+                        ))}
+                        <div style={{ gridColumn:"1/-1" }}>
+                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Deskripsi</label>
+                          <textarea value={dest.desc||""} onChange={e=>updateDest(di,"desc",e.target.value)} rows={2} placeholder="Deskripsi destinasi..."
+                            style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", resize:"vertical", boxSizing:"border-box" }} />
+                        </div>
+                        <div>
+                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Foto Destinasi</label>
+                          <label style={{ cursor:"pointer", display:"block" }}>
+                            <div style={{ height:90, border:"2px dashed #fde68a", borderRadius:7, background:"#fffdf0", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden" }}>
+                              {dest.img ? <img src={dest.img} alt="" style={{ width:"100%", height:"100%", objectFit:"contain" }} /> : <div style={{ textAlign:"center", color:"#e8a020", opacity:.7 }}><div style={{ fontSize:"1.4rem" }}>📷</div><div style={{ fontSize:10, fontWeight:600, marginTop:2 }}>Upload</div></div>}
+                            </div>
+                            <input type="file" accept="image/*" onChange={e=>handleDestImg(di,e)} style={{ display:"none" }} />
+                          </label>
+                          {dest.img && <button onClick={()=>updateDest(di,"img","")} style={{ marginTop:4, fontSize:11, padding:"3px 8px", background:"#fee", color:"#e74c3c", border:"none", borderRadius:5, cursor:"pointer" }}>Hapus Foto</button>}
+                        </div>
+                        <div>
+                          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
+                            <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px" }}>Highlight (✓)</label>
+                            <button onClick={()=>addDestPoint(di)} style={{ fontSize:10, padding:"2px 8px", background:"#e8f8ef", color:"#27ae60", border:"none", borderRadius:5, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
+                          </div>
+                          <div style={{ display:"flex", flexDirection:"column", gap:5, maxHeight:120, overflowY:"auto" }}>
+                            {(dest.points||[]).map((pt,pi)=>(
+                              <div key={pi} style={{ display:"flex", gap:5, alignItems:"center" }}>
+                                <span style={{ color:"#e8a020", fontWeight:700, flexShrink:0 }}>✓</span>
+                                <input value={pt} onChange={e=>updateDestPoint(di,pi,e.target.value)} placeholder={`Highlight ${pi+1}`}
+                                  style={{ flex:1, padding:"5px 7px", border:"1px solid #b0dce8", borderRadius:5, fontSize:11, outline:"none" }} />
+                                <button onClick={()=>removeDestPoint(di,pi)} style={{ width:22, height:22, background:"#fee", color:"#e74c3c", border:"none", borderRadius:4, cursor:"pointer", flexShrink:0, fontSize:10 }}>✕</button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+            }
+          </div>
+        )}
+
+      </div>{/* end 3×3 grid */}
+
+      {/* ── Footer sticky ── */}
+      <div style={{ position:"sticky", bottom:0, display:"flex", gap:12, padding:"14px 28px", background:"#fff", borderTop:"1px solid #d0eaf4", boxShadow:"0 -4px 16px rgba(0,0,0,.07)" }}>
+        <button onClick={saveSvc} style={{ padding:"11px 28px", background:"linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color:"#fff", border:"none", borderRadius:8, fontSize:14, fontWeight:800, cursor:"pointer" }}>💾 Simpan Paket</button>
+        <button onClick={cancelEdit} style={{ padding:"11px 18px", background:"#edfafc", color:"#4a7f98", border:"1px solid #b0dce8", borderRadius:8, fontSize:13, cursor:"pointer" }}>✕ Batal / Kembali</button>
+      </div>
+    </div>
+  );
+
+  /* ── Jika sedang edit/tambah → tampilkan form full-page ── */
+  if (editSvc !== null) return renderForm(editSvc === "new");
+
   return (
     <div className="fade-in">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
@@ -5481,17 +5765,15 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 4 }}>Layanan / Paket</h1>
           <p style={{ fontSize: 12, color: "#5090aa" }}>Kelola paket layanan yang tampil di halaman Layanan Kami.</p>
         </div>
-        {editSvc === null && (
-          <button onClick={openNew}
-            style={{ padding: "9px 20px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
-            + Tambah Paket
-          </button>
-        )}
+        <button onClick={openNew}
+          style={{ padding: "9px 20px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+          + Tambah Paket
+        </button>
       </div>
 
-      {/* ══════════ Form Tambah — hanya untuk paket baru ══════════ */}
-      {editSvc === "new" && (
-        <div style={{ background: "#fff", borderRadius: 14, marginBottom: 32, boxShadow: "0 6px 32px rgba(0,0,0,.10)", borderTop: "5px solid #0ea5c5", overflow: "hidden" }}>
+      {/* ══════════ [old form removed — handled by full-page renderForm above] ══════════ */}
+      {false && (
+        <div>
           {/* Header bar */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 32px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 55%,#0aa8bf 100%)" }}>
             <h2 style={{ fontSize: 18, fontWeight: 800, color: "#fff", margin: 0 }}>
@@ -5943,8 +6225,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                 {/* Package rows */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {catSvcs.map(svc => (
-                    <div key={svc.id}>
-                    <div style={{ background: "#fff", borderRadius: 10, padding: "16px 18px", boxShadow: "0 2px 8px rgba(0,0,0,.05)", display: "flex", gap: 14, alignItems: "flex-start", borderLeft: `4px solid ${svc.highlight ? cat.color : cat.border}` }}>
+                    <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "16px 18px", boxShadow: "0 2px 8px rgba(0,0,0,.05)", display: "flex", gap: 14, alignItems: "flex-start", borderLeft: `4px solid ${svc.highlight ? cat.color : cat.border}` }}>
                       {svc.image && (
                         <img loading="lazy" src={svc.image} alt={svc.title} style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
                       )}
@@ -5958,82 +6239,9 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                         <div style={{ fontSize: 12, color: "#5090aa", marginTop: 2 }}>{(svc.features || []).length} fitur termasuk</div>
                       </div>
                       <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
-                        <button onClick={() => editSvc === svc.id ? cancelEdit() : openEdit(svc)} style={{ padding: "6px 14px", background: editSvc === svc.id ? cat.color : cat.light, color: editSvc === svc.id ? "#fff" : cat.color, border: `1px solid ${cat.border}`, borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>{editSvc === svc.id ? "✕ Tutup" : "✏ Edit"}</button>
+                        <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: cat.light, color: cat.color, border: `1px solid ${cat.border}`, borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
                         <button onClick={() => deleteSvc(svc.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
                       </div>
-                    </div>
-                    {/* ── Inline Edit Form ── */}
-                    {editSvc === svc.id && (
-                      <div ref={el => editFormRefs.current[svc.id] = el} style={{ background: "#fff", borderRadius: "0 0 14px 14px", marginTop: 2, boxShadow: "0 6px 32px rgba(0,0,0,.10)", borderTop: `4px solid ${cat.color}`, overflow: "hidden" }}>
-                        {/* Header bar */}
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 24px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 55%,#0aa8bf 100%)" }}>
-                          <h2 style={{ fontSize: 16, fontWeight: 800, color: "#fff", margin: 0 }}>✏ Edit Paket</h2>
-                          <div style={{ display: "flex", gap: 10 }}>
-                            <button onClick={saveSvc} style={{ padding: "8px 20px", background: "#10d0e0", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 800, cursor: "pointer" }}>💾 Simpan</button>
-                            <button onClick={cancelEdit} style={{ padding: "8px 14px", background: "rgba(255,255,255,.15)", color: "#fff", border: "1px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>✕ Batal</button>
-                          </div>
-                        </div>
-                        {/* Body — 2-column grid */}
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
-                          {/* Left Column */}
-                          <div style={{ padding: "24px 28px", borderRight: "1px solid #edfafc" }}>
-                            <div style={{ marginBottom: 20 }}>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Kategori *</label>
-                              <select value={svcForm.category || "traveling"} onChange={e => setSvcForm(p => ({ ...p, category: e.target.value }))}
-                                style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 14, outline: "none", background: "#fff" }}>
-                                <option value="traveling">✈️ Traveling</option>
-                                <option value="event">🎉 Event Plan</option>
-                                <option value="wedding">💍 Wedding Organizer</option>
-                              </select>
-                            </div>
-                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 20 }}>
-                              {[
-                                { label: "Judul Paket *", key: "title", placeholder: "Paket Malang 3D2N" },
-                                { label: "Harga (teks)", key: "price", placeholder: "Rp 1.200.000" },
-                                { label: "Keterangan Harga", key: "priceNote", placeholder: "/ orang" },
-                                { label: "Badge (opsional)", key: "badge", placeholder: "Best Seller" },
-                              ].map(f => (
-                                <div key={f.key}>
-                                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
-                                  <input value={svcForm[f.key] || ""} onChange={e => setSvcForm(p => ({ ...p, [f.key]: e.target.value }))}
-                                    placeholder={f.placeholder}
-                                    style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
-                                </div>
-                              ))}
-                            </div>
-                            <div style={{ marginBottom: 20 }}>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Deskripsi</label>
-                              <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
-                                rows={4} placeholder="Deskripsi singkat paket layanan..."
-                                style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.7, boxSizing: "border-box" }} />
-                            </div>
-                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                              <input type="checkbox" id={`svc-highlight-${svc.id}`} checked={!!svcForm.highlight} onChange={e => setSvcForm(p => ({ ...p, highlight: e.target.checked }))} style={{ width: 18, height: 18, cursor: "pointer", accentColor: "#0891b2" }} />
-                              <label htmlFor={`svc-highlight-${svc.id}`} style={{ fontSize: 13, color: "#0d3b66", fontWeight: 600, cursor: "pointer" }}>⭐ Tandai sebagai Pilihan Utama (highlight)</label>
-                            </div>
-                          </div>
-                          {/* Right Column */}
-                          <div style={{ padding: "24px 28px" }}>
-                            <div style={{ marginBottom: 20 }}>
-                              <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Fitur Termasuk</label>
-                              {(svcForm.features || []).map((feat, fi) => (
-                                <div key={fi} style={{ display: "flex", gap: 8, marginBottom: 8, alignItems: "center" }}>
-                                  <input value={feat} onChange={e => updateFeature(fi, e.target.value)} placeholder={`Fitur ${fi + 1}`}
-                                    style={{ flex: 1, padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none" }} />
-                                  <button onClick={() => removeFeature(fi)} style={{ width: 32, height: 32, background: "#fee", color: "#e74c3c", border: "none", borderRadius: 7, cursor: "pointer", flexShrink: 0, fontWeight: 700 }}>✕</button>
-                                </div>
-                              ))}
-                              <button onClick={addFeature} style={{ fontSize: 12, padding: "7px 14px", background: "#edfafc", color: "#0891b2", border: "1px solid #b0dce8", borderRadius: 7, cursor: "pointer", fontWeight: 700, marginTop: 4 }}>＋ Tambah Fitur</button>
-                            </div>
-                          </div>
-                        </div>
-                        {/* Footer */}
-                        <div style={{ display: "flex", gap: 12, padding: "16px 28px", background: "#f5fdff", borderTop: "1px solid #edfafc" }}>
-                          <button onClick={saveSvc} style={{ padding: "10px 24px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 800, cursor: "pointer" }}>💾 Simpan Paket</button>
-                          <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#edfafc", color: "#4a7f98", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
-                        </div>
-                      </div>
-                    )}
                     </div>
                   ))}
                 </div>
