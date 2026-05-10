@@ -1773,13 +1773,13 @@ const GS = () => (
     @media(max-width:768px){.sidebar-overlay.open{display:block}}
 
     /* CMS Editor: editor + sidebar */
-    .cms-editor-grid{display:grid;grid-template-columns:1fr 300px;min-height:700px;max-height:calc(100vh - 120px);overflow:hidden}
-    @media(max-width:900px){.cms-editor-grid{grid-template-columns:1fr;max-height:none;overflow:visible}}
-    .cms-editor-left{padding:32px 40px;border-right:1px solid #e0f7fa;overflow-y:auto;max-height:calc(100vh - 120px)}
-    .cms-editor-right{padding:24px 20px;background:#f5fdff;display:flex;flex-direction:column;gap:20px;overflow-y:auto}
+    .cms-editor-grid{display:grid;grid-template-columns:1fr 300px;min-height:700px}
+    @media(max-width:900px){.cms-editor-grid{grid-template-columns:1fr}}
+    .cms-editor-left{padding:32px 40px;border-right:1px solid #e0f7fa;overflow-y:auto}
+    .cms-editor-right{padding:24px 20px;background:#f5fdff;display:flex;flex-direction:column;gap:20px;overflow-y:auto;max-height:calc(100vh - 120px);position:sticky;top:0}
     @media(max-width:900px){
-      .cms-editor-left{padding:20px 16px;max-height:none;border-right:none;border-bottom:1px solid #e0f7fa}
-      .cms-editor-right{padding:16px}
+      .cms-editor-left{padding:20px 16px;border-right:none;border-bottom:1px solid #e0f7fa}
+      .cms-editor-right{padding:16px;max-height:none;position:static}
     }
 
     /* Dashboard profile header */
@@ -2719,11 +2719,15 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
         {/* Left: Editor */}
         <div className="cms-editor-left">
           {/* Title */}
-          <input value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
+          <textarea value={form.title} onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
             placeholder="Masukkan judul artikel di sini..."
+            rows={2}
             style={{ width: "100%", fontSize: 28, fontFamily: "'Cormorant Garamond',serif", fontWeight: 600,
               color: "#0d3b66", border: "none", outline: "none", borderBottom: "2px solid #e0f7fa",
-              paddingBottom: 14, marginBottom: 24, background: "transparent" }} />
+              paddingBottom: 14, marginBottom: 24, background: "transparent",
+              resize: "none", overflow: "hidden", lineHeight: 1.3, boxSizing: "border-box",
+              fontStyle: "normal" }}
+            onInput={e => { e.target.style.height = "auto"; e.target.style.height = e.target.scrollHeight + "px"; }} />
 
           {/* Excerpt */}
           <textarea value={form.excerpt} onChange={e => setForm(p => ({ ...p, excerpt: e.target.value }))}
@@ -2775,7 +2779,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                   </div>
                 ) : b.type === "image" ? (
                   <div>
-                    <img loading="lazy" src={b.value} alt="" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 6 }} onError={e => { e.target.style.display = "none"; }} />
+                    <img loading="lazy" src={b.value} alt="" style={{ width: "100%", maxHeight: 480, objectFit: "contain", borderRadius: 6, background: "#f5fdff" }} onError={e => { e.target.style.display = "none"; }} />
                     {b.caption && <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4, fontStyle: "italic" }}>{b.caption}</p>}
                   </div>
                 ) : b.type === "divider" ? (
@@ -5596,12 +5600,53 @@ function HomeIntroSlideshow({ data }) {
 
 /* ─────────────── HERO SLIDESHOW ─────────────── */
 function HeroSlideshow({ data, navigateTo }) {
-  // Kumpulkan semua coverImage dari semua posts yang published
+  const heroMode = data.content?.heroMode || "slideshow";
+
+  // ── MODE STATIC: tampilkan satu gambar diam ──
+  if (heroMode === "static") {
+    const staticSrc = data.content?.heroStaticImage || (data.images?.hero?.[0] || "");
+    return (
+      <section style={{ position: "relative", width: "100%", height: "clamp(560px,88vh,800px)", overflow: "hidden", background: "#04080f" }}>
+        {staticSrc && (
+          <img src={staticSrc} alt="Hero" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        )}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.35) 0%, rgba(10,20,35,.78) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, zIndex: 10, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 6%", textAlign: "center" }}>
+          <div style={{ maxWidth: 780 }}>
+            <div style={{ display: "inline-block", background: "#e8a020", color: "#fff", fontSize: "0.6875rem", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: 2, marginBottom: 18 }}>
+              Arutala Organizer
+            </div>
+            <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.75rem,4.2vw,2.8rem)", fontWeight: 900, color: "#fff", lineHeight: 1.18, marginBottom: 18, textShadow: "0 2px 16px rgba(0,0,0,.5)" }}>
+              {data.content?.heroTitle || "Travel & Relax"}
+            </h1>
+            {data.content?.heroSub && (
+              <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.82)", lineHeight: 1.8, marginBottom: 32 }}>
+                {data.content.heroSub.length > 120 ? data.content.heroSub.slice(0, 120) + "…" : data.content.heroSub}
+              </p>
+            )}
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+              <button onClick={() => navigateTo("services")} style={{ padding: "13px 30px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>Read More →</button>
+              <button onClick={() => navigateTo("about")} style={{ padding: "13px 30px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "2px solid rgba(255,255,255,.55)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>About Us →</button>
+            </div>
+          </div>
+        </div>
+        {/* Side gradients */}
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "18%", background: "linear-gradient(to right, rgba(4,8,15,.82) 0%, rgba(4,8,15,0) 100%)", zIndex: 15, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "18%", background: "linear-gradient(to left, rgba(4,8,15,.82) 0%, rgba(4,8,15,0) 100%)", zIndex: 15, pointerEvents: "none" }} />
+      </section>
+    );
+  }
+
+  // ── MODE SLIDESHOW: lanjutkan logika slideshow ──
+  // Kumpulkan semua posts published — src = gambar pertama dari content blocks
   const allSections = ["news", "shop", "destinations"];
   const slides = [];
   allSections.forEach(sec => {
-    (data.posts?.[sec] || []).filter(p => p.status === "published" && p.coverImage).forEach(p => {
-      slides.push({ src: p.coverImage, title: p.title, section: sec, excerpt: p.excerpt || "" });
+    (data.posts?.[sec] || []).filter(p => p.status === "published").forEach(p => {
+      // Cari block image pertama dari konten artikel
+      const firstImageBlock = (p.content || []).find(b => b.type === "image" && b.value);
+      const src = firstImageBlock?.value || p.coverImage;
+      if (src) slides.push({ src, title: p.title, section: sec, excerpt: p.excerpt || "" });
     });
   });
   // Fallback: gunakan hero images jika belum ada post
@@ -8968,6 +9013,75 @@ export default function BricksyTravel() {
                       </button>
                       <span style={{ fontSize: 12, color: "#5090aa" }}>Saat ini: <strong style={{ color: "#0d3b66" }}>{data.content.foundingYear || "2026"}</strong> · Pengalaman: <strong style={{ color: "#0891b2" }}>{new Date().getFullYear() - parseInt(data.content.foundingYear || "2026")} tahun</strong></span>
                     </div>
+                  </div>
+
+                  {/* Hero Display Mode */}
+                  <div style={{ background: "#fff", borderRadius: 8, padding: "22px 24px", marginBottom: 24, boxShadow: "0 2px 8px rgba(0,0,0,.06)", borderTop: "4px solid #8e44ad" }}>
+                    <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0d3b66", marginBottom: 6 }}>🖥 Mode Tampilan Hero Beranda</h3>
+                    <p style={{ fontSize: 12, color: "#5090aa", marginBottom: 20, lineHeight: 1.6 }}>
+                      Pilih apakah bagian hero di halaman utama ditampilkan sebagai <strong>slideshow otomatis</strong> (berganti-ganti gambar dari artikel) atau <strong>gambar statis diam</strong> dari satu URL yang ditentukan.
+                    </p>
+                    {/* Toggle Pill */}
+                    <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
+                      {[
+                        { val: "slideshow", icon: "▶", label: "Slideshow Otomatis", desc: "Gambar berganti dari artikel published" },
+                        { val: "static",    icon: "🖼", label: "Gambar Statis",     desc: "Satu gambar diam yang bisa diatur" },
+                      ].map(opt => {
+                        const active = (data.content.heroMode || "slideshow") === opt.val;
+                        return (
+                          <div key={opt.val} onClick={() => { save({ ...data, content: { ...data.content, heroMode: opt.val } }); notify(`✅ Mode hero diubah ke: ${opt.label}`); }}
+                            style={{ flex: 1, minWidth: 200, padding: "16px 20px", borderRadius: 10, cursor: "pointer",
+                              border: active ? "2px solid #8e44ad" : "2px solid #e0f7fa",
+                              background: active ? "#f5eeff" : "#f5fdff",
+                              transition: "all .18s" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                              <span style={{ fontSize: 22 }}>{opt.icon}</span>
+                              <span style={{ fontWeight: 700, fontSize: 14, color: active ? "#8e44ad" : "#0d3b66" }}>{opt.label}</span>
+                              {active && <span style={{ marginLeft: "auto", fontSize: 10, background: "#8e44ad", color: "#fff", borderRadius: 8, padding: "2px 8px", fontWeight: 700 }}>AKTIF</span>}
+                            </div>
+                            <div style={{ fontSize: 12, color: "#5090aa", lineHeight: 1.5 }}>{opt.desc}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Static image setting — hanya tampil kalau mode static */}
+                    {(data.content.heroMode || "slideshow") === "static" && (
+                      <div style={{ background: "#f5eeff", borderRadius: 8, padding: "16px 18px", border: "1px solid #d8b4fe" }}>
+                        <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 8 }}>URL Gambar Statis Hero</label>
+                        <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+                          <input id="hero-static-url" defaultValue={data.content.heroStaticImage || ""}
+                            placeholder="https://..."
+                            style={{ flex: 1, padding: "9px 12px", border: "1px solid #d8b4fe", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }} />
+                          <button onClick={() => {
+                            const url = document.getElementById("hero-static-url")?.value?.trim();
+                            if (!url) return notify("Masukkan URL gambar.", "error");
+                            save({ ...data, content: { ...data.content, heroStaticImage: url } });
+                            notify("✅ Gambar statis hero disimpan!");
+                          }} style={{ padding: "9px 16px", background: "#8e44ad", color: "#fff", borderRadius: 6, fontSize: 12, border: "none", fontWeight: 600, whiteSpace: "nowrap" }}>
+                            Simpan
+                          </button>
+                        </div>
+                        {/* Upload file */}
+                        <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Atau Upload Gambar</label>
+                        <input type="file" accept="image/*" onChange={async e => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          try {
+                            notify("⏳ Mengupload gambar hero...");
+                            const url = await uploadToCloudinary(file);
+                            save({ ...data, content: { ...data.content, heroStaticImage: url } });
+                            notify("✅ Gambar hero statis diupload!");
+                          } catch { notify("Gagal upload. Coba lagi.", "error"); }
+                        }} style={{ padding: "8px", border: "1.5px dashed #8e44ad", borderRadius: 8, fontSize: 12, background: "#fff", color: "#8e44ad", width: "100%", boxSizing: "border-box", marginBottom: 10 }} />
+                        {/* Preview */}
+                        {data.content.heroStaticImage && (
+                          <img src={data.content.heroStaticImage} alt="Hero Preview"
+                            style={{ width: "100%", maxHeight: 180, objectFit: "cover", borderRadius: 8, border: "1px solid #d8b4fe" }}
+                            onError={e => e.target.style.display = "none"} />
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   <div className="settings-grid">
