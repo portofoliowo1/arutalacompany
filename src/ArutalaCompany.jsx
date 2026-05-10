@@ -255,6 +255,209 @@ async function uploadToCloudinary(file) {
   return data.secure_url;
 }
 
+/* ─────────────── SHARED UPLOAD HELPERS ─────────────── */
+/**
+ * Upload satu file ke Cloudinary dengan progress nyata via XHR.
+ * @param {File} file
+ * @param {(pct: number) => void} onProgress  — dipanggil 0–100
+ * @returns {Promise<string>} secure_url
+ */
+function uploadWithProgress(file, onProgress) {
+  return new Promise((resolve, reject) => {
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("upload_preset", CLOUDINARY.uploadPreset);
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLOUDINARY.cloudName}/image/upload`);
+    xhr.upload.addEventListener("progress", e => {
+      if (e.lengthComputable) onProgress(Math.round((e.loaded / e.total) * 100));
+    });
+    xhr.addEventListener("load", () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try { resolve(JSON.parse(xhr.responseText).secure_url); }
+        catch { reject(new Error("Parse error")); }
+      } else { reject(new Error("Upload gagal")); }
+    });
+    xhr.addEventListener("error", () => reject(new Error("Network error")));
+    xhr.send(fd);
+  });
+}
+
+/**
+ * GalleryImageTile — thumbnail gambar galeri dengan tombol URL & Upload + progress bar inline.
+ */
+function GalleryImageTile({ src, onUrlEdit, onUploaded, onError }) {
+  const [item, setItem] = useState(null); // {name, pct, done, error} | null
+  const inputRef = useRef();
+
+  const handleChange = async (e) => {
+    const file = e.target.files?.[0]; if (!file) return;
+    setItem({ name: file.name, pct: 0, done: false, error: false });
+    try {
+      const url = await uploadWithProgress(file, pct => setItem(p => ({ ...p, pct })));
+      setItem({ name: file.name, pct: 100, done: true, error: false });
+      if (onUploaded) onUploaded(url);
+      setTimeout(() => { setItem(null); if (inputRef.current) inputRef.current.value = ""; }, 2200);
+    } catch {
+      setItem(p => ({ ...p, error: true }));
+      if (onError) onError();
+      setTimeout(() => { setItem(null); if (inputRef.current) inputRef.current.value = ""; }, 2200);
+    }
+  };
+
+  const isUploading = item && !item.done && !item.error;
+
+  return (
+    <div style={{ width: 140 }}>
+      <div style={{ position: "relative" }}>
+        <img loading="lazy" src={src} alt="" style={{ width: 140, height: 95, objectFit: "cover", borderRadius: 6, display: "block",
+          opacity: isUploading ? 0.5 : 1, transition: "opacity .2s" }} />
+        {isUploading && (
+          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+            background: "rgba(8,145,178,.12)", borderRadius: 6 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: "#0891b2" }}>{item.pct}%</span>
+          </div>
+        )}
+      </div>
+      {/* Progress bar — muncul saat upload */}
+      {item && (
+        <div style={{ marginTop: 4 }}>
+          <div style={{ height: 5, background: "#c0e8f0", borderRadius: 3, overflow: "hidden" }}>
+            <div style={{
+              height: "100%", borderRadius: 3, transition: "width .2s ease",
+              width: `${item.pct}%`,
+              background: item.error ? "#e74c3c" : item.done ? "#27ae60" : "linear-gradient(90deg,#0891b2,#10d0e0)"
+            }} />
+          </div>
+          <div style={{ fontSize: 9, fontWeight: 700, color: item.error ? "#e74c3c" : item.done ? "#27ae60" : "#0891b2",
+            textAlign: "right", marginTop: 2 }}>
+            {item.error ? "❌ Gagal" : item.done ? "✅ Selesai" : `📤 ${item.pct}%`}
+          </div>
+        </div>
+      )}
+      <div style={{ display: "flex", gap: 3, marginTop: 5 }}>
+        <button onClick={onUrlEdit} style={{
+          flex: 1, background: "#edfafc", color: "#0ea5c5",
+          border: "1px solid #b0dce8", borderRadius: 4, padding: "4px 0", fontSize: 10, fontWeight: 600, cursor: "pointer" }}>🔗 URL</button>
+        <label style={{
+          flex: 1, background: isUploading ? "#e0f7ff" : "#eeffee",
+          color: isUploading ? "#5090aa" : "#27ae60",
+          border: "1px solid #b0dce8", borderRadius: 4, padding: "4px 0", fontSize: 10, fontWeight: 600,
+          cursor: isUploading ? "not-allowed" : "pointer", textAlign: "center", display: "block",
+          pointerEvents: isUploading ? "none" : "auto" }}>
+          {isUploading ? "⏳..." : "⬆ Upload"}
+          <input ref={inputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handleChange} disabled={isUploading} />
+        </label>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * UploadButton — tombol upload foto dengan progress bar inline.
+ * Props:
+ *   accept        string   (default "image/*")
+ *   multiple      bool
+ *   label         string   (teks tombol)
+ *   onDone        (urls: string[]) => void
+ *   onError       (msg: string) => void
+ *   style         object   (override style tombol/label)
+ *   dropZone      bool     (tampilkan sebagai drop zone besar)
+ */
+function UploadButton({ accept = "image/*", multiple = false, label = "📁 Upload Gambar", onDone, onError, style: styleProp = {}, dropZone = false }) {
+  const [items, setItems] = useState([]); // [{name, pct, done, error}]
+  const inputRef = useRef();
+  const isUploading = items.some(it => !it.done && !it.error);
+
+  const handleFiles = async (files) => {
+    if (!files.length) return;
+    const init = files.map(f => ({ name: f.name, pct: 0, done: false, error: false }));
+    setItems(init);
+    const results = [];
+    for (let i = 0; i < files.length; i++) {
+      try {
+        const url = await uploadWithProgress(files[i], pct => {
+          setItems(prev => prev.map((it, idx) => idx === i ? { ...it, pct } : it));
+        });
+        setItems(prev => prev.map((it, idx) => idx === i ? { ...it, pct: 100, done: true } : it));
+        results.push({ url, error: false });
+      } catch {
+        setItems(prev => prev.map((it, idx) => idx === i ? { ...it, error: true } : it));
+        results.push({ url: null, error: true });
+      }
+    }
+    const urls = results.filter(r => r.url).map(r => r.url);
+    const errCount = results.filter(r => r.error).length;
+    if (urls.length && onDone) onDone(urls);
+    if (errCount && onError) onError(`${errCount} file gagal diupload.`);
+    setTimeout(() => { setItems([]); if (inputRef.current) inputRef.current.value = ""; }, 2500);
+  };
+
+  const onChange = (e) => handleFiles(Array.from(e.target.files || []));
+
+  const progressArea = items.length > 0 && (
+    <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+      {items.map((it, i) => (
+        <div key={i}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: it.error ? "#e74c3c" : "#0d3b66", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {it.error ? "❌ " : it.done ? "✅ " : "📤 "}{it.name}
+            </span>
+            <span style={{ fontSize: 11, fontWeight: 800, color: it.error ? "#e74c3c" : it.done ? "#27ae60" : "#0891b2" }}>
+              {it.error ? "Gagal" : it.done ? "Selesai" : `${it.pct}%`}
+            </span>
+          </div>
+          <div style={{ height: 6, background: "#c0e8f0", borderRadius: 3, overflow: "hidden" }}>
+            <div style={{
+              height: "100%", borderRadius: 3,
+              width: `${it.pct}%`,
+              background: it.error ? "#e74c3c" : it.done ? "#27ae60" : "linear-gradient(90deg,#0891b2,#10d0e0)",
+              transition: "width .2s ease"
+            }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
+  if (dropZone) return (
+    <div>
+      <label style={{
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+        gap: 8, padding: "22px 16px", border: "2px dashed #0ea5c5", borderRadius: 10,
+        background: isUploading ? "#e0f7ff" : "#f0fafe", cursor: isUploading ? "not-allowed" : "pointer",
+        transition: "background .15s", pointerEvents: isUploading ? "none" : "auto",
+        ...styleProp
+      }}
+        onMouseEnter={e => { if (!isUploading) e.currentTarget.style.background = "#daf4fb"; }}
+        onMouseLeave={e => { if (!isUploading) e.currentTarget.style.background = "#f0fafe"; }}>
+        <span style={{ fontSize: 28 }}>{isUploading ? "⏳" : "🖼️"}</span>
+        <span style={{ fontSize: 13, fontWeight: 700, color: "#0891b2" }}>{isUploading ? "Sedang mengupload..." : label}</span>
+        <span style={{ fontSize: 11, color: "#5090aa" }}>JPG, PNG, WEBP</span>
+        <input ref={inputRef} type="file" accept={accept} multiple={multiple} onChange={onChange} style={{ display: "none" }} disabled={isUploading} />
+      </label>
+      {progressArea}
+    </div>
+  );
+
+  return (
+    <div>
+      <label style={{
+        display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+        padding: "9px 14px", border: "1.5px dashed #0ea5c5", borderRadius: 8,
+        background: isUploading ? "#e0f7ff" : "#e8f9fc", cursor: isUploading ? "not-allowed" : "pointer",
+        fontSize: 12, fontWeight: 600, color: isUploading ? "#5090aa" : "#0ea5c5",
+        pointerEvents: isUploading ? "none" : "auto",
+        ...styleProp
+      }}>
+        {isUploading ? "⏳ Mengupload..." : label}
+        <input ref={inputRef} type="file" accept={accept} multiple={multiple} onChange={onChange} style={{ display: "none" }} disabled={isUploading} />
+      </label>
+      {progressArea}
+    </div>
+  );
+}
+
 /* ─── EmailJS Config ─── */
 const EJS = {
   publicKey:  "0BWUeevU4Il0DoL4E",
@@ -2628,35 +2831,41 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
     setEditBlockIdx(null); setEditBlockVal("");
   };
 
+  const [imgUploadItems, setImgUploadItems] = useState([]);
+  const [coverUploadItems, setCoverUploadItems] = useState([]);
+
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setImgUploadItems([{ name: file.name, pct: 0, done: false, error: false }]);
     try {
-      notify("⏳ Mengupload gambar...");
-      const url = await uploadToCloudinary(file);
+      const url = await uploadWithProgress(file, pct => setImgUploadItems([{ name: file.name, pct, done: false, error: false }]));
+      setImgUploadItems([{ name: file.name, pct: 100, done: true, error: false }]);
       setAddVal(url);
       notify("✅ Gambar berhasil diupload!");
-    } catch (err) {
+    } catch {
+      setImgUploadItems([{ name: file.name, pct: 0, done: false, error: true }]);
       notify("❌ Gagal upload gambar. Periksa koneksi & Cloudinary preset.", "error");
     }
-    // reset input agar bisa upload file sama lagi
-    if (fileRef.current) fileRef.current.value = "";
+    setTimeout(() => { setImgUploadItems([]); if (fileRef.current) fileRef.current.value = ""; }, 2500);
   };
 
   const handleCoverUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setCoverUploading(true);
+    setCoverUploadItems([{ name: file.name, pct: 0, done: false, error: false }]);
     try {
-      notify("⏳ Mengupload cover image...");
-      const url = await uploadToCloudinary(file);
+      const url = await uploadWithProgress(file, pct => setCoverUploadItems([{ name: file.name, pct, done: false, error: false }]));
+      setCoverUploadItems([{ name: file.name, pct: 100, done: true, error: false }]);
       setForm(p => ({ ...p, coverImage: url }));
       notify("✅ Cover image berhasil diupload!");
     } catch {
+      setCoverUploadItems([{ name: file.name, pct: 0, done: false, error: true }]);
       notify("❌ Gagal upload cover. Periksa koneksi & Cloudinary preset.", "error");
     } finally {
       setCoverUploading(false);
-      if (coverFileRef.current) coverFileRef.current.value = "";
+      setTimeout(() => { setCoverUploadItems([]); if (coverFileRef.current) coverFileRef.current.value = ""; }, 2500);
     }
   };
 
@@ -2886,10 +3095,30 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                 {addType === "image" && imgUploadMode === "upload" ? (
                   <div>
                     <input ref={fileRef} type="file" accept="image/*" onChange={handleImageUpload} style={{ display: "none" }} />
-                    <button onClick={() => fileRef.current?.click()} style={{
-                      padding: "10px 20px", border: "1.5px dashed #0ea5c5", borderRadius: 8,
-                      color: "#0ea5c5", fontSize: 13, background: "#e8f9fc", width: "100%", marginBottom: 8
-                    }}>📁 Click to Upload Image</button>
+                    <button onClick={() => fileRef.current?.click()} disabled={imgUploadItems.some(it => !it.done && !it.error)}
+                      style={{
+                        padding: "10px 20px", border: "1.5px dashed #0ea5c5", borderRadius: 8,
+                        color: imgUploadItems.some(it => !it.done && !it.error) ? "#5090aa" : "#0ea5c5",
+                        fontSize: 13, background: "#e8f9fc", width: "100%", marginBottom: 8,
+                        cursor: imgUploadItems.some(it => !it.done && !it.error) ? "not-allowed" : "pointer"
+                      }}>{imgUploadItems.some(it => !it.done && !it.error) ? "⏳ Mengupload..." : "📁 Click to Upload Image"}</button>
+                    {imgUploadItems.length > 0 && imgUploadItems.map((it, i) => (
+                      <div key={i} style={{ marginBottom: 8 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                          <span style={{ fontSize: 11, fontWeight: 600, color: it.error ? "#e74c3c" : "#0d3b66", maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {it.error ? "❌ " : it.done ? "✅ " : "📤 "}{it.name}
+                          </span>
+                          <span style={{ fontSize: 11, fontWeight: 800, color: it.error ? "#e74c3c" : it.done ? "#27ae60" : "#0891b2" }}>
+                            {it.error ? "Gagal" : it.done ? "Selesai" : `${it.pct}%`}
+                          </span>
+                        </div>
+                        <div style={{ height: 6, background: "#c0e8f0", borderRadius: 3, overflow: "hidden" }}>
+                          <div style={{ height: "100%", borderRadius: 3, width: `${it.pct}%`,
+                            background: it.error ? "#e74c3c" : it.done ? "#27ae60" : "linear-gradient(90deg,#0891b2,#10d0e0)",
+                            transition: "width .2s ease" }} />
+                        </div>
+                      </div>
+                    ))}
                     {addVal && <img loading="lazy" src={addVal} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 6, marginBottom: 8 }} />}
                   </div>
                 ) : addType === "paragraph" ? (
@@ -3086,6 +3315,23 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                       cursor: coverUploading ? "not-allowed" : "pointer", fontWeight: 600 }}>
                     {coverUploading ? "⏳ Mengupload..." : "📁 Pilih File Gambar"}
                   </button>
+                  {coverUploadItems.length > 0 && coverUploadItems.map((it, i) => (
+                    <div key={i} style={{ marginTop: 8 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                        <span style={{ fontSize: 11, fontWeight: 600, color: it.error ? "#e74c3c" : "#0d3b66", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {it.error ? "❌ " : it.done ? "✅ " : "📤 "}{it.name}
+                        </span>
+                        <span style={{ fontSize: 11, fontWeight: 800, color: it.error ? "#e74c3c" : it.done ? "#27ae60" : "#0891b2" }}>
+                          {it.error ? "Gagal" : it.done ? "Selesai" : `${it.pct}%`}
+                        </span>
+                      </div>
+                      <div style={{ height: 6, background: "#c0e8f0", borderRadius: 3, overflow: "hidden" }}>
+                        <div style={{ height: "100%", borderRadius: 3, width: `${it.pct}%`,
+                          background: it.error ? "#e74c3c" : it.done ? "#27ae60" : "linear-gradient(90deg,#0891b2,#10d0e0)",
+                          transition: "width .2s ease" }} />
+                      </div>
+                    </div>
+                  ))}
                   <p style={{ fontSize: 10, color: "#5090aa", marginTop: 6 }}>JPG/PNG/WEBP · Maks 10MB · Otomatis ke Cloudinary</p>
                 </div>
               ) : (
@@ -5111,21 +5357,30 @@ function ServicesPage({ content, services, navigateTo }) {
 function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
   const [editSvc, setEditSvc] = useState(null);
   const [svcForm, setSvcForm] = useState({});
+  const [uploadProgresses, setUploadProgresses] = useState([]); // [{name, pct, done, error}]
   const svcs = data.services || [];
 
   const openNew = () => {
-    setSvcForm({ id: Date.now(), category: "traveling", title: "", badge: "", badgeColor: "#0891b2", accent: "#e8a020", accentLight: "#fff8e6", duration: "3 Hari 2 Malam", minPeserta: "20", price: "", priceNote: "/ orang", images: [], image: "", description: "", features: [], highlight: false, prices: [{vehicle:"Bus Executive",icon:"🚌",capacity:"35–60 org",price:"0",points:["Keterangan 1","Keterangan 2"]}] });
+    setSvcForm({ id: Date.now(), category: "traveling", title: "", badge: "", badgeColor: "#0891b2", accent: "#e8a020", accentLight: "#fff8e6", duration: "3 Hari 2 Malam", minPeserta: "20", price: "", priceNote: "/ orang", images: [], image: "", coverIndex: 0, description: "", features: [], highlight: false, prices: [{vehicle:"Bus Executive",icon:"🚌",capacity:"35–60 org",price:"0",points:["Keterangan 1","Keterangan 2"]}] });
+    setUploadProgresses([]);
     setEditSvc("new");
   };
-  const openEdit = (s) => { setSvcForm({ ...s, features: [...(s.features || [])], images: [...(s.images || (s.image ? [s.image] : []))] }); setEditSvc(s.id); };
-  const cancelEdit = () => { setEditSvc(null); setSvcForm({}); };
+  const openEdit = (s) => {
+    setSvcForm({ ...s, features: [...(s.features || [])], images: [...(s.images || (s.image ? [s.image] : []))], coverIndex: s.coverIndex || 0 });
+    setUploadProgresses([]);
+    setEditSvc(s.id);
+  };
+  const cancelEdit = () => { setEditSvc(null); setSvcForm({}); setUploadProgresses([]); };
 
   const saveSvc = () => {
     if (!svcForm.title?.trim()) return notify("Judul paket wajib diisi.", "error");
-    const idx = svcs.findIndex(x => x.id === svcForm.id);
-    const updated = idx >= 0 ? svcs.map((x, i) => i === idx ? svcForm : x) : [...svcs, svcForm];
+    const ci = svcForm.coverIndex || 0;
+    const coverUrl = (svcForm.images || [])[ci] || svcForm.image || "";
+    const finalForm = { ...svcForm, image: coverUrl };
+    const idx = svcs.findIndex(x => x.id === finalForm.id);
+    const updated = idx >= 0 ? svcs.map((x, i) => i === idx ? finalForm : x) : [...svcs, finalForm];
     save({ ...data, services: updated });
-    setEditSvc(null); setSvcForm({});
+    setEditSvc(null); setSvcForm({}); setUploadProgresses([]);
     notify("Paket layanan disimpan!");
   };
   const deleteSvc = (id) => {
@@ -5143,6 +5398,38 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
     setSvcForm(p => ({ ...p, features: f }));
   };
 
+  /* Upload dengan progress simulasi per-file */
+  const handleImageUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    const initProgress = files.map(f => ({ name: f.name, pct: 0, done: false, error: false }));
+    setUploadProgresses(initProgress);
+    const results = [];
+    for (let i = 0; i < files.length; i++) {
+      try {
+        const url = await uploadWithProgress(files[i], pct => {
+          setUploadProgresses(prev => prev.map((p, idx) => idx === i ? { ...p, pct } : p));
+        });
+        setUploadProgresses(prev => prev.map((p, idx) => idx === i ? { ...p, pct: 100, done: true } : p));
+        results.push(url);
+      } catch {
+        setUploadProgresses(prev => prev.map((p, idx) => idx === i ? { ...p, pct: 0, done: false, error: true } : p));
+        results.push(null);
+      }
+    }
+    const validUrls = results.filter(Boolean);
+    if (validUrls.length > 0) {
+      setSvcForm(p => {
+        const newImgs = [...(p.images || []), ...validUrls];
+        return { ...p, images: newImgs, image: newImgs[p.coverIndex || 0] || newImgs[0] };
+      });
+      notify(`✅ ${validUrls.length} gambar berhasil diupload!`);
+    }
+    if (results.some(r => r === null)) notify(`⚠ ${results.filter(r => !r).length} gambar gagal diupload.`, "error");
+    setTimeout(() => setUploadProgresses([]), 2200);
+    e.target.value = "";
+  };
+
   return (
     <div className="fade-in">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
@@ -5150,138 +5437,235 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 4 }}>Layanan / Paket</h1>
           <p style={{ fontSize: 12, color: "#5090aa" }}>Kelola paket layanan yang tampil di halaman Layanan Kami.</p>
         </div>
-        <button onClick={openNew}
-          style={{ padding: "9px 20px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
-          + Tambah Paket
-        </button>
+        {editSvc === null && (
+          <button onClick={openNew}
+            style={{ padding: "9px 20px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+            + Tambah Paket
+          </button>
+        )}
       </div>
 
-      {/* Form Tambah / Edit */}
+      {/* ══════════ Form Tambah / Edit — FULL WIDTH WORKSPACE ══════════ */}
       {editSvc !== null && (
-        <div style={{ background: "#fff", borderRadius: 10, padding: "24px 28px", marginBottom: 28, boxShadow: "0 4px 16px rgba(0,0,0,.08)", borderTop: "4px solid #0ea5c5" }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: "#0d3b66", marginBottom: 20 }}>
-            {editSvc === "new" ? "➕ Tambah Paket Baru" : "✏ Edit Paket"}
-          </h2>
-
-          {/* Kategori */}
-          <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Kategori *</label>
-            <select value={svcForm.category || "traveling"} onChange={e => setSvcForm(p => ({ ...p, category: e.target.value }))}
-              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }}>
-              <option value="traveling">✈️ Traveling</option>
-              <option value="event">🎉 Event Plan</option>
-              <option value="wedding">💍 Wedding Organizer</option>
-            </select>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
-            {[
-              { label: "Judul Paket *", key: "title", placeholder: "Paket Wedding Premium" },
-              { label: "Harga (teks)", key: "price", placeholder: "Rp 25.000.000" },
-              { label: "Keterangan Harga", key: "priceNote", placeholder: "/ wedding" },
-              { label: "Badge (opsional)", key: "badge", placeholder: "Best Seller" },
-            ].map(f => (
-              <div key={f.key}>
-                <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
-                <input value={svcForm[f.key] || ""} onChange={e => setSvcForm(p => ({ ...p, [f.key]: e.target.value }))}
-                  placeholder={f.placeholder}
-                  style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
-              </div>
-            ))}
-
-            {/* Warna Badge — color picker ramah pemula */}
-            <div>
-              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Warna Badge</label>
-              {/* Palet warna cepat */}
-              <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginBottom: 8 }}>
-                {["#0891b2","#27ae60","#e67e22","#c0392b","#8e44ad","#e84393","#1abc9c","#f39c12","#0d3b66","#2c3e50"].map(c => (
-                  <button key={c} onClick={() => setSvcForm(p => ({ ...p, badgeColor: c }))}
-                    title={c}
-                    style={{
-                      width: 26, height: 26, borderRadius: "50%", background: c, border: "none", cursor: "pointer",
-                      boxShadow: svcForm.badgeColor === c ? `0 0 0 3px #fff, 0 0 0 5px ${c}` : "0 1px 3px rgba(0,0,0,.2)",
-                      transform: svcForm.badgeColor === c ? "scale(1.15)" : "scale(1)",
-                      transition: "all .15s", flexShrink: 0
-                    }} />
-                ))}
-              </div>
-              {/* Input hex + native color picker */}
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <input type="color" value={svcForm.badgeColor || "#0891b2"}
-                  onChange={e => setSvcForm(p => ({ ...p, badgeColor: e.target.value }))}
-                  style={{ width: 36, height: 36, border: "none", background: "none", cursor: "pointer", padding: 0, flexShrink: 0 }} />
-                <input value={svcForm.badgeColor || "#0891b2"}
-                  onChange={e => setSvcForm(p => ({ ...p, badgeColor: e.target.value }))}
-                  placeholder="#0891b2" maxLength={7}
-                  style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", fontFamily: "monospace" }} />
-                {/* Live preview badge */}
-                {svcForm.badge && (
-                  <span style={{ background: svcForm.badgeColor || "#0891b2", color: "#fff", borderRadius: 4, padding: "4px 10px", fontSize: 10, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
-                    {svcForm.badge}
-                  </span>
-                )}
-              </div>
+        <div style={{ background: "#fff", borderRadius: 14, marginBottom: 32, boxShadow: "0 6px 32px rgba(0,0,0,.10)", borderTop: "5px solid #0ea5c5", overflow: "hidden" }}>
+          {/* Header bar */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 32px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 55%,#0aa8bf 100%)" }}>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: "#fff", margin: 0 }}>
+              {editSvc === "new" ? "➕ Tambah Paket Baru" : "✏ Edit Paket"}
+            </h2>
+            <div style={{ display: "flex", gap: 10 }}>
+              <button onClick={saveSvc} style={{ padding: "9px 24px", background: "#10d0e0", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 800, cursor: "pointer", boxShadow: "0 2px 8px rgba(0,0,0,.2)" }}>💾 Simpan Paket</button>
+              <button onClick={cancelEdit} style={{ padding: "9px 18px", background: "rgba(255,255,255,.15)", color: "#fff", border: "1px solid rgba(255,255,255,.3)", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>✕ Batal</button>
             </div>
           </div>
-          <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Deskripsi</label>
-            <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
-              rows={3} placeholder="Deskripsi singkat paket layanan..."
-              style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.6 }} />
-          </div>
 
-          {/* Multi-Image Upload */}
-          <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Galeri Gambar ({(svcForm.images || []).length} foto)</label>
-            {/* Preview thumbnails */}
-            {(svcForm.images || []).length > 0 && (
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
-                {(svcForm.images || []).map((img, i) => (
-                  <div key={i} style={{ position: "relative" }}>
-                    <img loading="lazy" src={img} alt="" style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, border: i === 0 ? "2px solid #0891b2" : "2px solid #c0e8f0" }} />
-                    {i === 0 && <div style={{ position: "absolute", bottom: 2, left: 2, fontSize: 8, background: "#0891b2", color: "#fff", borderRadius: 3, padding: "1px 4px", fontWeight: 700 }}>COVER</div>}
-                    <button onClick={() => setSvcForm(p => ({ ...p, images: p.images.filter((_, j) => j !== i), image: i === 0 ? (p.images[1] || "") : p.image }))}
-                      style={{ position: "absolute", top: -4, right: -4, width: 18, height: 18, borderRadius: "50%", background: "#e74c3c", color: "#fff", border: "none", cursor: "pointer", fontSize: 10, lineHeight: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+          {/* Body — 2-column grid */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
+
+            {/* ── Left Column ── */}
+            <div style={{ padding: "28px 32px", borderRight: "1px solid #edfafc" }}>
+
+              {/* Kategori */}
+              <div style={{ marginBottom: 20 }}>
+                <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Kategori *</label>
+                <select value={svcForm.category || "traveling"} onChange={e => setSvcForm(p => ({ ...p, category: e.target.value }))}
+                  style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 14, outline: "none", background: "#fff" }}>
+                  <option value="traveling">✈️ Traveling</option>
+                  <option value="event">🎉 Event Plan</option>
+                  <option value="wedding">💍 Wedding Organizer</option>
+                </select>
+              </div>
+
+              {/* Fields grid */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 20 }}>
+                {[
+                  { label: "Judul Paket *", key: "title", placeholder: "Paket Malang 3D2N" },
+                  { label: "Harga (teks)", key: "price", placeholder: "Rp 1.200.000" },
+                  { label: "Keterangan Harga", key: "priceNote", placeholder: "/ orang" },
+                  { label: "Badge (opsional)", key: "badge", placeholder: "Best Seller" },
+                ].map(f => (
+                  <div key={f.key}>
+                    <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
+                    <input value={svcForm[f.key] || ""} onChange={e => setSvcForm(p => ({ ...p, [f.key]: e.target.value }))}
+                      placeholder={f.placeholder}
+                      style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                   </div>
                 ))}
               </div>
-            )}
-            <input type="file" accept="image/*" multiple onChange={async e => {
-              const files = Array.from(e.target.files || []); if (!files.length) return;
-              try {
-                notify(`⏳ Mengupload ${files.length} gambar...`);
-                const urls = await Promise.all(files.map(f => uploadToCloudinary(f)));
-                setSvcForm(p => {
-                  const newImgs = [...(p.images || []), ...urls];
-                  return { ...p, images: newImgs, image: newImgs[0] || p.image };
-                });
-                notify(`${files.length} gambar berhasil diupload!`);
-              } catch { notify("Gagal upload gambar.", "error"); }
-            }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #0ea5c5", borderRadius: 6, background: "#e8f9fc", color: "#0ea5c5", width: "100%" }} />
-            <div style={{ fontSize: 11, color: "#5090aa", marginTop: 4 }}>Bisa pilih beberapa foto sekaligus. Foto pertama = cover.</div>
+
+              {/* Warna Badge */}
+              <div style={{ marginBottom: 20 }}>
+                <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Warna Badge</label>
+                <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginBottom: 10 }}>
+                  {["#0891b2","#27ae60","#e67e22","#c0392b","#8e44ad","#e84393","#1abc9c","#f39c12","#0d3b66","#2c3e50"].map(c => (
+                    <button key={c} onClick={() => setSvcForm(p => ({ ...p, badgeColor: c }))} title={c}
+                      style={{ width: 28, height: 28, borderRadius: "50%", background: c, border: "none", cursor: "pointer",
+                        boxShadow: svcForm.badgeColor === c ? `0 0 0 3px #fff, 0 0 0 5px ${c}` : "0 1px 3px rgba(0,0,0,.2)",
+                        transform: svcForm.badgeColor === c ? "scale(1.2)" : "scale(1)", transition: "all .15s", flexShrink: 0 }} />
+                  ))}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <input type="color" value={svcForm.badgeColor || "#0891b2"} onChange={e => setSvcForm(p => ({ ...p, badgeColor: e.target.value }))}
+                    style={{ width: 38, height: 38, border: "none", background: "none", cursor: "pointer", padding: 0, flexShrink: 0 }} />
+                  <input value={svcForm.badgeColor || "#0891b2"} onChange={e => setSvcForm(p => ({ ...p, badgeColor: e.target.value }))}
+                    placeholder="#0891b2" maxLength={7}
+                    style={{ flex: 1, padding: "9px 10px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", fontFamily: "monospace" }} />
+                  {svcForm.badge && (
+                    <span style={{ background: svcForm.badgeColor || "#0891b2", color: "#fff", borderRadius: 4, padding: "5px 12px", fontSize: 11, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                      {svcForm.badge}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Deskripsi */}
+              <div style={{ marginBottom: 20 }}>
+                <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 8 }}>Deskripsi</label>
+                <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
+                  rows={5} placeholder="Deskripsi singkat paket layanan..."
+                  style={{ width: "100%", padding: "11px 14px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.7, boxSizing: "border-box" }} />
+              </div>
+
+              {/* Highlight */}
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <input type="checkbox" id="svc-highlight" checked={!!svcForm.highlight} onChange={e => setSvcForm(p => ({ ...p, highlight: e.target.checked }))} style={{ width: 18, height: 18, cursor: "pointer", accentColor: "#0891b2" }} />
+                <label htmlFor="svc-highlight" style={{ fontSize: 13, color: "#0d3b66", fontWeight: 600, cursor: "pointer" }}>⭐ Tandai sebagai Pilihan Utama (highlight)</label>
+              </div>
+            </div>
+
+            {/* ── Right Column ── */}
+            <div style={{ padding: "28px 32px" }}>
+
+              {/* ════ GALERI GAMBAR — Enhanced Upload ════ */}
+              <div style={{ marginBottom: 24 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                  <label style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>
+                    Galeri Gambar ({(svcForm.images || []).length} foto)
+                  </label>
+                  {(svcForm.images || []).length > 0 && (
+                    <span style={{ fontSize: 11, color: "#27ae60", fontWeight: 600 }}>
+                      🖼 Cover: Foto #{(svcForm.coverIndex || 0) + 1}
+                    </span>
+                  )}
+                </div>
+
+                {/* Progress Bars — tampil saat uploading */}
+                {uploadProgresses.length > 0 && (
+                  <div style={{ background: "#f0fafe", border: "1px solid #b0dce8", borderRadius: 10, padding: "14px 16px", marginBottom: 14 }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: "#0891b2", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 10 }}>
+                      ⏳ Proses Upload
+                    </div>
+                    {uploadProgresses.map((up, i) => (
+                      <div key={i} style={{ marginBottom: 10 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                          <span style={{ fontSize: 12, color: up.error ? "#e74c3c" : "#0d3b66", fontWeight: 600, maxWidth: 220, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {up.error ? "❌ " : up.done ? "✅ " : "📤 "}{up.name}
+                          </span>
+                          <span style={{ fontSize: 12, fontWeight: 800, color: up.error ? "#e74c3c" : up.done ? "#27ae60" : "#0891b2" }}>
+                            {up.error ? "Gagal" : up.done ? "Selesai" : `${up.pct}%`}
+                          </span>
+                        </div>
+                        <div style={{ height: 7, background: "#c0e8f0", borderRadius: 4, overflow: "hidden" }}>
+                          <div style={{
+                            height: "100%", borderRadius: 4, transition: "width .3s ease",
+                            width: `${up.pct}%`,
+                            background: up.error ? "#e74c3c" : up.done
+                              ? "#27ae60"
+                              : "linear-gradient(90deg,#0891b2 0%,#10d0e0 100%)"
+                          }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Thumbnails galeri */}
+                {(svcForm.images || []).length > 0 && (
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))", gap: 10, marginBottom: 14 }}>
+                    {(svcForm.images || []).map((img, i) => {
+                      const isCover = (svcForm.coverIndex || 0) === i;
+                      return (
+                        <div key={i} style={{ position: "relative", borderRadius: 8, overflow: "hidden",
+                          border: isCover ? "3px solid #0891b2" : "2px solid #c0e8f0",
+                          boxShadow: isCover ? "0 0 0 2px rgba(8,145,178,.2)" : "none",
+                          transition: "border .15s" }}>
+                          <img loading="lazy" src={img} alt="" style={{ width: "100%", height: 84, objectFit: "cover", display: "block" }} />
+                          {isCover && (
+                            <div style={{ position: "absolute", top: 0, left: 0, right: 0, background: "rgba(8,145,178,.85)", color: "#fff", fontSize: 9, fontWeight: 800, textAlign: "center", padding: "3px 0", letterSpacing: "1px" }}>
+                              ✔ COVER
+                            </div>
+                          )}
+                          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, display: "flex", gap: 3, padding: "5px 5px", background: "linear-gradient(0deg,rgba(0,0,0,.65) 0%,transparent 100%)" }}>
+                            {!isCover && (
+                              <button
+                                onClick={() => setSvcForm(p => ({ ...p, coverIndex: i, image: p.images[i] }))}
+                                title="Jadikan Cover"
+                                style={{ flex: 1, fontSize: 9, fontWeight: 800, background: "#0891b2", color: "#fff", border: "none", borderRadius: 4, padding: "4px 2px", cursor: "pointer", lineHeight: 1.3, textAlign: "center" }}>
+                                📌 Cover
+                              </button>
+                            )}
+                            <button
+                              onClick={() => setSvcForm(p => {
+                                const newImgs = p.images.filter((_, j) => j !== i);
+                                const newCi = p.coverIndex >= newImgs.length ? Math.max(0, newImgs.length - 1) : (p.coverIndex > i ? p.coverIndex - 1 : p.coverIndex);
+                                return { ...p, images: newImgs, coverIndex: newCi, image: newImgs[newCi] || "" };
+                              })}
+                              title="Hapus foto"
+                              style={{ width: 22, fontSize: 9, fontWeight: 800, background: "#e74c3c", color: "#fff", border: "none", borderRadius: 4, padding: "4px 2px", cursor: "pointer" }}>
+                              ✕
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* Drop zone / Upload button */}
+                <label style={{
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                  gap: 8, padding: "22px 16px", border: "2px dashed #0ea5c5", borderRadius: 10,
+                  background: "#f0fafe", cursor: "pointer", transition: "background .15s"
+                }}
+                  onMouseEnter={e => e.currentTarget.style.background = "#daf4fb"}
+                  onMouseLeave={e => e.currentTarget.style.background = "#f0fafe"}>
+                  <span style={{ fontSize: 28 }}>🖼️</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "#0891b2" }}>Klik untuk Upload Foto</span>
+                  <span style={{ fontSize: 11, color: "#5090aa" }}>Bisa pilih beberapa foto sekaligus · JPG, PNG, WEBP</span>
+                  <input type="file" accept="image/*" multiple onChange={handleImageUpload} style={{ display: "none" }} />
+                </label>
+                <div style={{ fontSize: 11, color: "#5090aa", marginTop: 6, textAlign: "center" }}>
+                  Klik thumbnail lalu <strong>📌 Cover</strong> untuk memilih foto cover
+                </div>
+              </div>
+
+              {/* Fitur */}
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                  <label style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Fitur / Yang Termasuk</label>
+                  <button onClick={addFeature} style={{ fontSize: 12, padding: "5px 14px", background: "#e8f8ef", color: "#27ae60", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 700 }}>+ Tambah</button>
+                </div>
+                <div style={{ maxHeight: 260, overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                  {(svcForm.features || []).map((feat, i) => (
+                    <div key={i} style={{ display: "flex", gap: 8 }}>
+                      <input value={feat} onChange={e => updateFeature(i, e.target.value)}
+                        placeholder={`Fitur ${i + 1}...`}
+                        style={{ flex: 1, padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none" }} />
+                      <button onClick={() => removeFeature(i)} style={{ padding: "9px 14px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 700 }}>✕</button>
+                    </div>
+                  ))}
+                  {(svcForm.features || []).length === 0 && (
+                    <p style={{ fontSize: 12, color: "#a0c4d8", textAlign: "center", padding: "16px 0" }}>Belum ada fitur. Klik + Tambah.</p>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div style={{ marginBottom: 16 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-              <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Fitur / Yang Termasuk</label>
-              <button onClick={addFeature} style={{ fontSize: 12, padding: "4px 12px", background: "#e8f8ef", color: "#27ae60", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 700 }}>+ Tambah</button>
-            </div>
-            {(svcForm.features || []).map((feat, i) => (
-              <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
-                <input value={feat} onChange={e => updateFeature(i, e.target.value)}
-                  placeholder={`Fitur ${i + 1}...`}
-                  style={{ flex: 1, padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
-                <button onClick={() => removeFeature(i)} style={{ padding: "8px 12px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 6, cursor: "pointer", fontSize: 13, fontWeight: 700 }}>✕</button>
-              </div>
-            ))}
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-            <input type="checkbox" id="svc-highlight" checked={!!svcForm.highlight} onChange={e => setSvcForm(p => ({ ...p, highlight: e.target.checked }))} style={{ width: 16, height: 16, cursor: "pointer" }} />
-            <label htmlFor="svc-highlight" style={{ fontSize: 13, color: "#0d3b66", fontWeight: 600, cursor: "pointer" }}>Tandai sebagai Pilihan Utama (highlight)</label>
-          </div>
-          <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={saveSvc} style={{ padding: "10px 22px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>💾 Simpan Paket</button>
-            <button onClick={cancelEdit} style={{ padding: "10px 18px", background: "#edfafc", color: "#4a7f98", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
+          {/* Footer action bar */}
+          <div style={{ display: "flex", gap: 12, padding: "18px 32px", background: "#f5fdff", borderTop: "1px solid #edfafc" }}>
+            <button onClick={saveSvc} style={{ padding: "11px 28px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 800, cursor: "pointer" }}>💾 Simpan Paket</button>
+            <button onClick={cancelEdit} style={{ padding: "11px 20px", background: "#edfafc", color: "#4a7f98", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>Batal</button>
           </div>
         </div>
       )}
@@ -5764,11 +6148,9 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
             <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Foto</label>
             {form.photo && <img loading="lazy" src={form.photo} alt="preview" style={{ height: 80, width: 80, objectFit: "cover", borderRadius: "50%", marginBottom: 10, border: "2px solid #c0e8f0" }} />}
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <input type="file" accept="image/*" onChange={async e => {
-                const file = e.target.files?.[0]; if (!file) return;
-                try { notify("⏳ Mengupload foto..."); const url = await uploadToCloudinary(file); setForm(p => ({ ...p, photo: url })); notify("Foto berhasil diupload!"); }
-                catch { notify("Gagal upload foto.", "error"); }
-              }} style={{ fontSize: 12, padding: "6px", border: "1.5px dashed #0ea5c5", borderRadius: 6, background: "#e8f9fc", color: "#0ea5c5", width: "100%" }} />
+              <UploadButton label="📁 Upload Foto Tim"
+                onDone={urls => { setForm(p => ({ ...p, photo: urls[0] })); notify("Foto berhasil diupload!"); }}
+                onError={msg => notify(msg, "error")} />
               <div style={{ fontSize: 11, color: "#7ab5cc", textAlign: "center" }}>— atau paste URL foto —</div>
               <input type="url" value={form.photo || ""} onChange={e => setForm(p => ({ ...p, photo: e.target.value }))}
                 placeholder="https://..." style={{ width: "100%", padding: "8px 12px", border: "1.5px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none" }} />
@@ -6250,13 +6632,22 @@ function ReviewForm({ token, onSubmitDone, data, save, notify }) {
     </div>
   );
 
+  const [photoUploadItem, setPhotoUploadItem] = useState(null); // {name, pct, done, error}
+
   const handlePhotoUpload = async (file) => {
     if (!file) return;
     setPhotoUploading(true);
+    setPhotoUploadItem({ name: file.name, pct: 0, done: false, error: false });
     try {
-      const url = await uploadToCloudinary(file);
+      const url = await uploadWithProgress(file, pct => setPhotoUploadItem(p => ({ ...p, pct })));
+      setPhotoUploadItem({ name: file.name, pct: 100, done: true, error: false });
       setForm(p => ({ ...p, photo: url }));
-    } catch { setErr("Gagal upload foto. Coba lagi."); }
+      setTimeout(() => setPhotoUploadItem(null), 2000);
+    } catch {
+      setPhotoUploadItem(p => ({ ...p, error: true }));
+      setErr("Gagal upload foto. Coba lagi.");
+      setTimeout(() => setPhotoUploadItem(null), 2000);
+    }
     finally { setPhotoUploading(false); }
   };
 
@@ -6304,14 +6695,31 @@ function ReviewForm({ token, onSubmitDone, data, save, notify }) {
           {/* Photo Upload */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase" }}>Foto Profil (Opsional)</label>
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
               <div style={{ width: 60, height: 60, borderRadius: "50%", background: form.photo ? "transparent" : "linear-gradient(135deg,#c0e8f0,#c5dde9)", border: "2px solid #c0e8f0", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {form.photo ? <img loading="lazy" src={form.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ fontSize: 24 }}>👤</span>}
               </div>
               <div style={{ flex: 1 }}>
                 <input type="file" accept="image/*" onChange={e => handlePhotoUpload(e.target.files?.[0])}
-                  style={{ fontSize: "0.8125rem", color: "#1a5a78", width: "100%" }} />
-                {photoUploading && <span style={{ fontSize: "0.75rem", color: "#0891b2" }}>⏳ Mengupload...</span>}
+                  disabled={photoUploading}
+                  style={{ fontSize: "0.8125rem", color: "#1a5a78", width: "100%", cursor: photoUploading ? "not-allowed" : "pointer" }} />
+                {photoUploadItem && (
+                  <div style={{ marginTop: 6 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                      <span style={{ fontSize: 11, fontWeight: 600, color: photoUploadItem.error ? "#e74c3c" : "#0d3b66", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {photoUploadItem.error ? "❌ " : photoUploadItem.done ? "✅ " : "📤 "}{photoUploadItem.name}
+                      </span>
+                      <span style={{ fontSize: 11, fontWeight: 800, color: photoUploadItem.error ? "#e74c3c" : photoUploadItem.done ? "#27ae60" : "#0891b2" }}>
+                        {photoUploadItem.error ? "Gagal" : photoUploadItem.done ? "Selesai" : `${photoUploadItem.pct}%`}
+                      </span>
+                    </div>
+                    <div style={{ height: 5, background: "#c0e8f0", borderRadius: 3, overflow: "hidden" }}>
+                      <div style={{ height: "100%", borderRadius: 3, width: `${photoUploadItem.pct}%`,
+                        background: photoUploadItem.error ? "#e74c3c" : photoUploadItem.done ? "#27ae60" : "linear-gradient(90deg,#0891b2,#10d0e0)",
+                        transition: "width .2s ease" }} />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -8433,20 +8841,15 @@ export default function BricksyTravel() {
                       {/* Upload Photo */}
                       <div style={{ marginTop: 4 }}>
                         <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Upload Foto Profil</label>
-                        <input type="file" accept="image/*" onChange={async e => {
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-                          try {
-                            notify("⏳ Mengupload foto profil...");
-                            const photo = await uploadToCloudinary(file);
+                        <UploadButton label="📁 Pilih Foto Profil"
+                          onDone={async urls => {
+                            const photo = urls[0];
                             const updated = { ...user, photo };
                             setUser(updated);
                             try { const prev = await fsGet(`profile-${user.username}`) || {}; await fsSet(`profile-${user.username}`, { ...prev, name: updated.name, phone: updated.phone, email: updated.email, desc: updated.desc, photo }); } catch {}
                             notify("Foto profil diperbarui!");
-                          } catch {
-                            notify("Gagal upload foto. Coba lagi.", "error");
-                          }
-                        }} style={{ fontSize: 11, border: "1.5px dashed #0ea5c5", borderRadius: 6, padding: "6px", background: "#e8f9fc", color: "#0ea5c5", width: "100%", boxSizing: "border-box" }} />
+                          }}
+                          onError={msg => notify(msg, "error")} />
                         {user.photo && (
                           <button onClick={async () => {
                             const updated = { ...user, photo: "" };
@@ -8680,36 +9083,18 @@ export default function BricksyTravel() {
                       <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0d3b66", marginBottom: 16 }}>{group.label}</h3>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                         {data.images[group.key].map((src, i) => (
-                          <div key={i} style={{ width: 140 }}>
-                            <img loading="lazy" src={src} alt="" style={{ width: 140, height: 95, objectFit: "cover", borderRadius: 6, display: "block" }} />
-                            <div style={{ display: "flex", gap: 3, marginTop: 5 }}>
-                              <button onClick={() => setEditImg({ group: group.key, idx: i, url: src })} style={{
-                                flex: 1, background: "#edfafc", color: "#0ea5c5",
-                                border: "1px solid #b0dce8", borderRadius: 4, padding: "4px 0", fontSize: 10, fontWeight: 600, cursor: "pointer" }}>🔗 URL</button>
-                              <label style={{
-                                flex: 1, background: "#eeffee", color: "#27ae60",
-                                border: "1px solid #b0dce8", borderRadius: 4, padding: "4px 0", fontSize: 10, fontWeight: 600, cursor: "pointer", textAlign: "center", display: "block" }}>
-                                ⬆ Upload
-                                <input type="file" accept="image/*" style={{ display: "none" }} onChange={async (e) => {
-                                  const file = e.target.files?.[0];
-                                  if (!file) return;
-                                  try {
-                                    notify("⏳ Mengupload gambar...");
-                                    const url = await uploadToCloudinary(file);
-                                    const newImages = { ...data.images };
-                                    const arr = [...newImages[group.key]];
-                                    arr[i] = url;
-                                    newImages[group.key] = arr;
-                                    save({ ...data, images: newImages });
-                                    notify("✅ Gambar berhasil diperbarui!");
-                                  } catch {
-                                    notify("❌ Gagal upload. Coba lagi.", "error");
-                                  }
-                                  e.target.value = "";
-                                }} />
-                              </label>
-                            </div>
-                          </div>
+                          <GalleryImageTile key={i} src={src} groupKey={group.key} idx={i}
+                            onUrlEdit={() => setEditImg({ group: group.key, idx: i, url: src })}
+                            onUploaded={url => {
+                              const newImages = { ...data.images };
+                              const arr = [...newImages[group.key]];
+                              arr[i] = url;
+                              newImages[group.key] = arr;
+                              save({ ...data, images: newImages });
+                              notify("✅ Gambar berhasil diperbarui!");
+                            }}
+                            onError={() => notify("❌ Gagal upload. Coba lagi.", "error")}
+                          />
                         ))}
                       </div>
                     </div>
@@ -9345,18 +9730,12 @@ export default function BricksyTravel() {
                       )}
                       <div style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1, minWidth: 240 }}>
                         <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Upload File Logo</label>
-                        <input type="file" accept="image/*" onChange={async e => {
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-                          try {
-                            notify("⏳ Mengupload logo...");
-                            const url = await uploadToCloudinary(file);
-                            save({ ...data, content: { ...data.content, logoImage: url } });
+                        <UploadButton label="📁 Pilih File Logo"
+                          onDone={urls => {
+                            save({ ...data, content: { ...data.content, logoImage: urls[0] } });
                             notify("Logo uploaded & applied to all sections!");
-                          } catch {
-                            notify("Gagal upload logo. Coba lagi.", "error");
-                          }
-                        }} style={{ padding: "8px", border: "1.5px dashed #0ea5c5", borderRadius: 8, fontSize: 12, background: "#e8f9fc", color: "#0ea5c5" }} />
+                          }}
+                          onError={() => notify("Gagal upload logo. Coba lagi.", "error")} />
                         <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginTop: 4 }}>Atau URL Gambar</label>
                         <div style={{ display: "flex", gap: 8 }}>
                           <input placeholder="https://..." defaultValue={data.content.logoImage}
@@ -9449,16 +9828,13 @@ export default function BricksyTravel() {
                         </div>
                         {/* Upload file */}
                         <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Atau Upload Gambar</label>
-                        <input type="file" accept="image/*" onChange={async e => {
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-                          try {
-                            notify("⏳ Mengupload gambar hero...");
-                            const url = await uploadToCloudinary(file);
-                            save({ ...data, content: { ...data.content, heroStaticImage: url } });
+                        <UploadButton label="📁 Pilih Gambar Hero"
+                          style={{ border: "1.5px dashed #8e44ad", color: "#8e44ad", background: "#fff" }}
+                          onDone={urls => {
+                            save({ ...data, content: { ...data.content, heroStaticImage: urls[0] } });
                             notify("✅ Gambar hero statis diupload!");
-                          } catch { notify("Gagal upload. Coba lagi.", "error"); }
-                        }} style={{ padding: "8px", border: "1.5px dashed #8e44ad", borderRadius: 8, fontSize: 12, background: "#fff", color: "#8e44ad", width: "100%", boxSizing: "border-box", marginBottom: 10 }} />
+                          }}
+                          onError={() => notify("Gagal upload. Coba lagi.", "error")} />
                         {/* Preview */}
                         {data.content.heroStaticImage && (
                           <img src={data.content.heroStaticImage} alt="Hero Preview"
