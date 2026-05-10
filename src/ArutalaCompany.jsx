@@ -1944,12 +1944,7 @@ const GS = () => (
       a[title*="WhatsApp"]{bottom:16px!important;right:14px!important;width:50px!important;height:50px!important}
     }
 
-    /* 14. Article detail */
-    @media(max-width:640px){
-      .article-body,.article-body *{max-width:100%!important;overflow-x:hidden!important}
-      .article-body h1{font-size:clamp(1.4rem,7vw,2rem)!important}
-      .article-back-bar{top:60px!important}
-    }
+    /* 14. Article detail — handled in main layout block above */
 
     /* 15. Buttons: solid color, NO transparent background on mobile */
     @media(max-width:640px){
@@ -2075,11 +2070,30 @@ const GS = () => (
       .post-card-list .post-thumb{width:100%!important;height:160px!important}
     }
 
-    /* ── Article Detail ── */
+    /* ── Article Detail 3-Column Layout ── */
+    .article-detail-layout{
+      display:grid;
+      grid-template-columns:280px 1fr 260px;
+      grid-template-areas:"left main right";
+      gap:28px;
+      align-items:start;
+    }
+    .article-sidebar-left{ grid-area:left; position:sticky; top:160px; }
+    .article-body{ grid-area:main; }
+    .article-sidebar-right{ grid-area:right; position:sticky; top:160px; }
+
+    @media(max-width:1200px){
+      .article-detail-layout{grid-template-columns:240px 1fr 220px;gap:20px;}
+    }
+    @media(max-width:960px){
+      .article-detail-layout{grid-template-columns:1fr!important;grid-template-areas:"main" "left" "right"!important;gap:20px!important;}
+      .article-sidebar-left,.article-sidebar-right{position:static!important;}
+    }
     @media(max-width:640px){
       .article-body{padding:28px 4% 60px!important}
       .article-body h1{font-size:clamp(1.5rem,7vw,2.25rem)!important}
       .article-back-bar{top:58px!important}
+      .article-sidebar-right{display:none!important;}
     }
 
     /* ── Contact grid mobile ── */
@@ -3123,52 +3137,283 @@ function PostCard({ post, onClick, view = "grid" }) {
 }
 
 /* ─────────────── ARTICLE DETAIL VIEW ─────────────── */
-function ArticleDetail({ post, onBack }) {
+function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
+  /* Related posts: same category or section, exclude current */
+  const related = allPosts
+    .filter(p => p.status === "published" && p.id !== post.id &&
+      (p.category === post.category || p.section === post.section))
+    .slice(0, 5);
+
+  /* Fallback: latest published posts if no related */
+  const morePosts = allPosts
+    .filter(p => p.status === "published" && p.id !== post.id)
+    .slice(-6).reverse();
+
+  const suggested = related.length >= 2 ? related : morePosts.slice(0, 5);
+  const readAlso  = morePosts.filter(p => !suggested.find(s => s.id === p.id)).slice(0, 4);
+
+  /* Collect all tags from published posts */
+  const allTags = [...new Set(allPosts.flatMap(p => p.tags || []))].slice(0, 18);
+
+  const travelTips = [
+    { icon: "🌤", tip: "Periksa cuaca setempat sebelum berangkat." },
+    { icon: "🎒", tip: "Bawa asuransi perjalanan untuk ketenangan pikiran." },
+    { icon: "📸", tip: "Simpan foto offline sebagai kenang-kenangan." },
+    { icon: "🤝", tip: "Hormati budaya & adat istiadat setempat." },
+    { icon: "💧", tip: "Selalu bawa air minum yang cukup." },
+  ];
+
+  const handlePost = (p) => {
+    if (onReadPost) { onReadPost(p); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  };
+
   return (
-    <div className="fade-in" style={{ minHeight: "100vh", background: "#fff" }}>
-      {/* Back Bar */}
-      <div className="article-back-bar" style={{ background: "rgba(250,252,253,.96)", backdropFilter: "blur(10px)", borderBottom: "1px solid #c0e8f0",
+    <div className="fade-in" style={{ minHeight: "100vh", background: "#f5fbfd" }}>
+      {/* ── Back Bar ── */}
+      <div className="article-back-bar" style={{ background: "rgba(250,252,253,.97)", backdropFilter: "blur(10px)", borderBottom: "1px solid #c0e8f0",
         padding: "12px 5%", position: "sticky", top: 96, zIndex: 90 }}>
         <button onClick={onBack} style={{ fontSize: 13, color: "#0ea5c5", display: "flex", alignItems: "center", gap: 6, fontWeight: 500 }}>
-          ← Back
+          ← Kembali
         </button>
       </div>
 
-      {/* Cover */}
+      {/* ── Hero Cover ── */}
       {post.coverImage && (
-        <div style={{ height: "clamp(240px, 45vw, 520px)", overflow: "hidden" }}>
+        <div style={{ height: "clamp(220px, 40vw, 480px)", overflow: "hidden", position: "relative" }}>
           <img loading="lazy" src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(5,40,70,.45) 100%)" }} />
         </div>
       )}
 
-      {/* Article */}
-      <div className="article-body" style={{ maxWidth: 760, margin: "0 auto", padding: "48px 5% 80px" }}>
-        {post.category && (
-          <div className="label-xs" style={{ color: "#0891b2", marginBottom: 16 }}>{post.category}</div>
-        )}
-        <h1 className="display" style={{ fontSize: "clamp(1.875rem, 5vw, 3.25rem)", fontWeight: 800, lineHeight: 1.12, color: "#0d3b66", marginBottom: 20 }}>
-          {post.title}
-        </h1>
-        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32, paddingBottom: 24, borderBottom: "1px solid #c0e8f0" }}>
-          <span style={{ fontSize: "0.875rem", color: "#1a5a78", fontWeight: 500 }}>By {post.author}</span>
-          <span style={{ fontSize: "0.875rem", color: "#86cad8" }}>·</span>
-          <span style={{ fontSize: "0.875rem", color: "#1a5a78" }}>{formatDate(post.date)}</span>
-          {post.price && <span style={{ fontSize: "1.375rem", fontWeight: 700, color: "#0891b2", fontFamily: "'Playfair Display',serif", marginLeft: "auto" }}>{post.price}</span>}
-        </div>
-        {post.excerpt && (
-          <p style={{ fontSize: "1.125rem", color: "#1a4a72", lineHeight: 1.85, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400, whiteSpace: "pre-line" }}>
-            {post.excerpt}
-          </p>
-        )}
-        <RichRenderer blocks={post.content} />
-        {post.tags?.length > 0 && (
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 40, paddingTop: 24, borderTop: "1px solid #c0e8f0" }}>
-            <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 500 }}>Tags:</span>
-            {post.tags.map(t => (
-              <span key={t} style={{ fontSize: "0.8125rem", padding: "3px 12px", background: "#edfafc", border: "1px solid #c0e8f0", borderRadius: 20, color: "#1a4a72", fontWeight: 500 }}>#{t}</span>
-            ))}
-          </div>
-        )}
+      {/* ── Wide 3-Column Layout ── */}
+      <div style={{ maxWidth: 1360, margin: "0 auto", padding: "40px 3% 80px" }}>
+        <div className="article-detail-layout">
+
+          {/* ════════ LEFT SIDEBAR ════════ */}
+          <aside className="article-sidebar-left">
+
+            {/* ── Saran Postingan ── */}
+            <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 14px rgba(0,0,0,.07)", marginBottom: 20 }}>
+              <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", padding: "14px 18px", display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 16 }}>✨</span>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "#fff", letterSpacing: "1.2px", textTransform: "uppercase" }}>Saran Postingan</span>
+              </div>
+              <div>
+                {suggested.length === 0 ? (
+                  <p style={{ padding: "20px", fontSize: 13, color: "#5090aa" }}>Belum ada saran postingan.</p>
+                ) : suggested.map(p => (
+                  <div key={p.id} onClick={() => handlePost(p)}
+                    style={{ display: "flex", gap: 10, padding: "12px 16px", cursor: "pointer", borderBottom: "1px solid #edfafc", transition: "background .15s" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "#f0fafd"}
+                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                    {p.coverImage && (
+                      <div style={{ width: 58, height: 54, borderRadius: 8, overflow: "hidden", flexShrink: 0 }}>
+                        <img loading="lazy" src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display="none"} />
+                      </div>
+                    )}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: 12.5, fontWeight: 600, color: "#0d3b66", lineHeight: 1.4, marginBottom: 4,
+                        display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                        {p.title}
+                      </p>
+                      <span style={{ fontSize: 11, color: "#86cad8" }}>{p.category || p.section}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Topik / Tag Cloud ── */}
+            {allTags.length > 0 && (
+              <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 14px rgba(0,0,0,.07)", marginBottom: 20 }}>
+                <div style={{ background: "#edfafc", padding: "13px 18px", borderBottom: "1px solid #d4f0f8" }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#0d3b66", letterSpacing: "1.2px", textTransform: "uppercase" }}>🏷 Topik</span>
+                </div>
+                <div style={{ padding: "14px 16px", display: "flex", flexWrap: "wrap", gap: 7 }}>
+                  {allTags.map(t => (
+                    <span key={t} style={{ fontSize: 11.5, padding: "4px 12px", background: "#edfafc", border: "1px solid #c0e8f0",
+                      borderRadius: 20, color: "#0875a8", fontWeight: 500, cursor: "default" }}>#{t}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ── Tips Perjalanan (Decorative) ── */}
+            <div style={{ background: "linear-gradient(135deg,#0d3b66 0%,#1a5a78 50%,#0891b2 100%)", borderRadius: 14, overflow: "hidden", boxShadow: "0 4px 20px rgba(13,59,102,.18)", marginBottom: 20, position: "relative" }}>
+              <div style={{ position: "absolute", top: -30, right: -30, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,.07)" }} />
+              <div style={{ position: "absolute", bottom: -20, left: -20, width: 90, height: 90, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
+              <div style={{ padding: "18px 18px 6px", position: "relative", zIndex: 1 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,.7)", letterSpacing: "1.2px", textTransform: "uppercase", marginBottom: 10 }}>
+                  🌍 Tips Perjalanan
+                </div>
+                {travelTips.map((t, i) => (
+                  <div key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start", marginBottom: 11 }}>
+                    <span style={{ fontSize: 16, flexShrink: 0, lineHeight: 1.4 }}>{t.icon}</span>
+                    <span style={{ fontSize: 12, color: "rgba(255,255,255,.85)", lineHeight: 1.55 }}>{t.tip}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Quote Dekoratif ── */}
+            <div style={{ background: "#fff", borderRadius: 14, padding: "20px 18px", boxShadow: "0 2px 14px rgba(0,0,0,.07)", borderLeft: "4px solid #0891b2", position: "relative" }}>
+              <div style={{ fontSize: 48, color: "#c0e8f0", lineHeight: 1, fontFamily: "'Playfair Display',serif", position: "absolute", top: 8, left: 14, pointerEvents: "none" }}>"</div>
+              <p style={{ fontSize: 13.5, color: "#1a4a72", lineHeight: 1.75, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", paddingTop: 18, fontWeight: 500 }}>
+                Setiap perjalanan adalah cerita baru yang menunggu untuk ditulis.
+              </p>
+              <div style={{ marginTop: 10, fontSize: 11, color: "#86cad8", fontWeight: 600 }}>— Arutala Organizer</div>
+            </div>
+          </aside>
+
+          {/* ════════ MAIN ARTICLE ════════ */}
+          <main className="article-body" style={{ minWidth: 0, background: "#fff", borderRadius: 16, boxShadow: "0 2px 20px rgba(0,0,0,.07)", overflow: "hidden" }}>
+            <div style={{ padding: "44px 6% 72px" }}>
+              {post.category && (
+                <div className="label-xs" style={{ color: "#0891b2", marginBottom: 14, fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase" }}>
+                  {post.category}
+                </div>
+              )}
+              <h1 className="display" style={{ fontSize: "clamp(1.875rem, 4vw, 3rem)", fontWeight: 800, lineHeight: 1.12, color: "#0d3b66", marginBottom: 20 }}>
+                {post.title}
+              </h1>
+              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32, paddingBottom: 24, borderBottom: "1px solid #c0e8f0", flexWrap: "wrap" }}>
+                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#0875a8,#10d0e0)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 13, flexShrink: 0 }}>
+                  {(post.author || "A")[0].toUpperCase()}
+                </div>
+                <div>
+                  <span style={{ fontSize: "0.875rem", color: "#1a5a78", fontWeight: 600, display: "block" }}>By {post.author}</span>
+                  <span style={{ fontSize: "0.8125rem", color: "#86cad8" }}>{formatDate(post.date)}</span>
+                </div>
+                {post.price && <span style={{ fontSize: "1.375rem", fontWeight: 700, color: "#0891b2", fontFamily: "'Playfair Display',serif", marginLeft: "auto" }}>{post.price}</span>}
+              </div>
+              {post.excerpt && (
+                <p style={{ fontSize: "1.125rem", color: "#1a4a72", lineHeight: 1.9, marginBottom: 32, fontStyle: "italic", fontFamily: "'Cormorant Garamond',serif", fontWeight: 400, whiteSpace: "pre-line", paddingLeft: 16, borderLeft: "3px solid #c0e8f0" }}>
+                  {post.excerpt}
+                </p>
+              )}
+              <RichRenderer blocks={post.content} />
+              {post.tags?.length > 0 && (
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 40, paddingTop: 24, borderTop: "1px solid #c0e8f0" }}>
+                  <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 600 }}>Tags:</span>
+                  {post.tags.map(t => (
+                    <span key={t} style={{ fontSize: "0.8125rem", padding: "3px 14px", background: "#edfafc", border: "1px solid #c0e8f0", borderRadius: 20, color: "#1a4a72", fontWeight: 500 }}>#{t}</span>
+                  ))}
+                </div>
+              )}
+
+              {/* ── Share Bar ── */}
+              <div style={{ marginTop: 40, paddingTop: 28, borderTop: "2px dashed #c0e8f0", display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Bagikan:</span>
+                {[
+                  { label: "WhatsApp", color: "#25d366", icon: "💬", url: `https://wa.me/?text=${encodeURIComponent(post.title)}` },
+                  { label: "Facebook", color: "#1877f2", icon: "f", url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}` },
+                  { label: "Twitter/X", color: "#1da1f2", icon: "𝕏", url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}` },
+                  { label: "Copy Link", color: "#0891b2", icon: "🔗", url: null },
+                ].map(s => (
+                  <button key={s.label}
+                    onClick={() => s.url ? window.open(s.url, "_blank") : (navigator.clipboard?.writeText(window.location.href))}
+                    style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 20, background: s.color + "15",
+                      border: `1px solid ${s.color}40`, color: s.color, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+                    <span>{s.icon}</span> {s.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </main>
+
+          {/* ════════ RIGHT SIDEBAR ════════ */}
+          <aside className="article-sidebar-right">
+
+            {/* ── Baca Juga ── */}
+            <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 14px rgba(0,0,0,.07)", marginBottom: 20 }}>
+              <div style={{ background: "#edfafc", padding: "13px 18px", borderBottom: "1px solid #d4f0f8" }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "#0d3b66", letterSpacing: "1.2px", textTransform: "uppercase" }}>📖 Baca Juga</span>
+              </div>
+              <div>
+                {readAlso.length === 0 ? (
+                  <p style={{ padding: "20px", fontSize: 13, color: "#5090aa" }}>Belum ada artikel lain.</p>
+                ) : readAlso.map((p, i) => (
+                  <div key={p.id} onClick={() => handlePost(p)}
+                    style={{ padding: "13px 16px", cursor: "pointer", borderBottom: "1px solid #edfafc", transition: "background .15s" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "#f0fafd"}
+                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                    <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                      <span style={{ fontSize: 18, fontWeight: 900, color: i < 2 ? "#0891b2" : "#c0e8f0", fontFamily: "'Playfair Display',serif", lineHeight: 1, minWidth: 20 }}>{i + 1}</span>
+                      <p style={{ fontSize: 12.5, color: "#0d3b66", lineHeight: 1.45, fontWeight: 500,
+                        display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                        {p.title}
+                      </p>
+                    </div>
+                    {p.category && <div style={{ fontSize: 11, color: "#86cad8", marginTop: 5, paddingLeft: 28 }}>{p.category}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Tentang Arutala (Decorative) ── */}
+            <div style={{ background: "linear-gradient(135deg,#052240 0%,#0875a8 60%,#10d0e0 100%)", borderRadius: 14, padding: "22px 18px", boxShadow: "0 4px 20px rgba(8,117,168,.22)", marginBottom: 20, position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: -30, right: -25, width: 110, height: 110, borderRadius: "50%", background: "rgba(255,255,255,.08)" }} />
+              <div style={{ position: "absolute", bottom: -25, left: -15, width: 85, height: 85, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
+              <div style={{ position: "relative", zIndex: 1 }}>
+                <div style={{ fontSize: 24, marginBottom: 8 }}>🏔</div>
+                <h3 style={{ fontSize: 15, fontWeight: 800, color: "#fff", fontFamily: "'Playfair Display',serif", lineHeight: 1.2, marginBottom: 8 }}>
+                  Arutala Organizer
+                </h3>
+                <p style={{ fontSize: 12, color: "rgba(255,255,255,.8)", lineHeight: 1.65, marginBottom: 16 }}>
+                  Spesialis perjalanan & wedding organizer terpercaya. Kami wujudkan setiap momen menjadi kenangan tak terlupakan.
+                </p>
+                <a href="https://wa.me/6285234567890" target="_blank" rel="noreferrer"
+                  style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px",
+                    background: "rgba(255,255,255,.18)", border: "1px solid rgba(255,255,255,.35)",
+                    borderRadius: 20, color: "#fff", fontSize: 12, fontWeight: 600, textDecoration: "none" }}>
+                  💬 Hubungi Kami
+                </a>
+              </div>
+            </div>
+
+            {/* ── Layanan Kami ── */}
+            <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", boxShadow: "0 2px 14px rgba(0,0,0,.07)", marginBottom: 20 }}>
+              <div style={{ background: "#edfafc", padding: "13px 18px", borderBottom: "1px solid #d4f0f8" }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "#0d3b66", letterSpacing: "1.2px", textTransform: "uppercase" }}>🌟 Layanan Kami</span>
+              </div>
+              <div style={{ padding: "10px 0" }}>
+                {[
+                  { icon: "✈", label: "Traveling & Tour", desc: "Paket wisata dalam & luar negeri" },
+                  { icon: "💍", label: "Wedding Organizer", desc: "Dekorasi & koordinasi penuh" },
+                  { icon: "🎉", label: "Event Planning", desc: "Konser, seminar, gathering" },
+                  { icon: "🏨", label: "Akomodasi", desc: "Hotel & villa pilihan terbaik" },
+                ].map(s => (
+                  <div key={s.label} style={{ display: "flex", gap: 12, padding: "11px 16px", borderBottom: "1px solid #edfafc" }}>
+                    <span style={{ fontSize: 20, flexShrink: 0 }}>{s.icon}</span>
+                    <div>
+                      <div style={{ fontSize: 12.5, fontWeight: 600, color: "#0d3b66" }}>{s.label}</div>
+                      <div style={{ fontSize: 11, color: "#5090aa", marginTop: 2 }}>{s.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Dekorasi Statistik ── */}
+            <div style={{ background: "#fff", borderRadius: 14, padding: "18px 16px", boxShadow: "0 2px 14px rgba(0,0,0,.07)" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1.2px", textTransform: "uppercase", marginBottom: 14 }}>📊 Fakta Singkat</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                {[
+                  { val: "200+", label: "Destinasi", color: "#0891b2" },
+                  { val: "5★", label: "Rating", color: "#f39c12" },
+                  { val: "1000+", label: "Klien Puas", color: "#27ae60" },
+                  { val: "10+", label: "Tahun Pengalaman", color: "#8e44ad" },
+                ].map(s => (
+                  <div key={s.label} style={{ background: "#f5fdff", borderRadius: 10, padding: "12px 10px", textAlign: "center", borderBottom: `3px solid ${s.color}` }}>
+                    <div style={{ fontSize: 18, fontWeight: 900, color: s.color, fontFamily: "'Playfair Display',serif" }}>{s.val}</div>
+                    <div style={{ fontSize: 10.5, color: "#5090aa", marginTop: 3, fontWeight: 500 }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </aside>
+
+        </div>{/* end article-detail-layout */}
       </div>
     </div>
   );
@@ -7233,7 +7478,7 @@ export default function BricksyTravel() {
 
           {/* ── ARTICLE DETAIL ── */}
           {readPost && (
-            <ArticleDetail post={readPost} onBack={() => { setReadPost(null); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
+            <ArticleDetail post={readPost} onBack={() => { setReadPost(null); window.scrollTo({ top: 0, behavior: "smooth" }); }} allPosts={allPosts} onReadPost={(p) => { setReadPost(p); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
           )}
 
           {/* ── PAGE CONTENT ── */}
