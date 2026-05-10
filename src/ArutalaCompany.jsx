@@ -491,41 +491,6 @@ async function sendOTPEmail(toEmail, passcode) {
 
 const SECTIONS = ["news", "shop", "destinations"];
 
-// ─── URL Routing ────────────────────────────────────────────────────
-const PAGE_TO_PATH = {
-  home:         "/",
-  about:        "/about",
-  news:         "/event",
-  shop:         "/traveling",
-  destinations: "/wedding",
-  services:     "/services",
-};
-const PATH_TO_PAGE = Object.fromEntries(
-  Object.entries(PAGE_TO_PATH).map(([k, v]) => [v, k])
-);
-
-// Baca service id dari URL: /paket/{category}/{id}
-const getInitialServiceId = () => {
-  try {
-    const m = window.location.pathname.match(/^\/paket\/[^/]+\/(\d+)$/);
-    return m ? parseInt(m[1]) : null;
-  } catch { return null; }
-};
-
-const getInitialPage = () => {
-  try {
-    const path = window.location.pathname.replace(/\/$/, "") || "/";
-    if (path === "/control-panel") return "home"; // admin overlay
-    if (path.startsWith("/paket/"))     return "services";
-    return PATH_TO_PAGE[path] || "home";
-  } catch { return "home"; }
-};
-
-const getInitialShowAdmin = () => {
-  try { return window.location.pathname === "/control-panel"; }
-  catch { return false; }
-};
-
 const SECTION_LABELS = {
   news: "Event Plan",
   shop: "Traveling",
@@ -4930,25 +4895,12 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
 }
 
 /* ─────────────── SERVICES PAGE ─────────────── */
-function ServicesPage({ content, services, navigateTo, initialServiceId, onOpenService, onCloseService }) {
-  const [selectedService, setSelectedService] = useState(() =>
-    initialServiceId ? (services || []).find(s => s.id === initialServiceId) || null : null
-  );
+function ServicesPage({ content, services, navigateTo }) {
+  const [selectedService, setSelectedService] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
 
   const [activeCategory, setActiveCategory] = useState("traveling"); // Default: tab Traveling langsung aktif
   const [activeImg, setActiveImg] = useState(0);
-
-  // Sync saat initialServiceId berubah (deep link / popstate)
-  useEffect(() => {
-    if (initialServiceId) {
-      const svc = (services || []).find(s => s.id === initialServiceId) || null;
-      setSelectedService(svc);
-      if (svc) setActiveImg(0);
-    } else {
-      setSelectedService(null);
-    }
-  }, [initialServiceId, services]);
 
   const CATEGORIES = [
     { key: "traveling", label: "✈️ Traveling", color: "#27ae60" },
@@ -4957,14 +4909,9 @@ function ServicesPage({ content, services, navigateTo, initialServiceId, onOpenS
   ];
 
   const openDetail = (svc) => {
-    setSelectedService(svc); setActiveImg(0);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    if (onOpenService) onOpenService(svc);
+    setSelectedService(svc); setActiveImg(0); window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const closeDetail = () => {
-    setSelectedService(null);
-    if (onCloseService) onCloseService();
-  };
+  const closeDetail = () => setSelectedService(null);
 
   const handleBook = (svc) => {
     const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
@@ -5005,13 +4952,6 @@ function ServicesPage({ content, services, navigateTo, initialServiceId, onOpenS
         <div style={{ background: "linear-gradient(90deg,#063d5c,#0891b2)", padding: "0 5%", position: "sticky", top: 96, zIndex: 90, borderBottom: "1px solid #c0e8f0" }}>
           <button onClick={closeDetail} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#7ab8d0", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer", padding: "13px 0", letterSpacing: ".04em", textTransform: "uppercase" }}>
             <span style={{ fontSize: 18, lineHeight: 1 }}>←</span> Kembali ke Layanan
-          </button>
-          {/* Tombol Share Link */}
-          <button onClick={() => {
-            const url = `${window.location.origin}/paket/${svc.category}/${svc.id}`;
-            navigator.clipboard?.writeText(url).then(() => alert("✅ Link paket disalin!\n" + url)).catch(() => alert("Link: " + url));
-          }} style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,.12)", border: "1px solid rgba(255,255,255,.25)", color: "#fff", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer", padding: "8px 14px", borderRadius: 8, letterSpacing: ".04em", marginLeft: "auto" }}>
-            🔗 Salin Link Paket
           </button>
         </div>
 
@@ -7224,16 +7164,33 @@ function AdminReviews({ data, save, notify }) {
 );
 }
 
+// ─── Session persistence (sessionStorage) ──────────────────────────
+// Sesi bertahan saat reload, tapi otomatis bersih saat browser ditutup
+const SESSION_KEY = "arutala_session";
+const sessionSave = (u) => {
+  try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(u)); } catch {}
+};
+const sessionLoad = () => {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+};
+const sessionClear = () => {
+  try { sessionStorage.removeItem(SESSION_KEY); } catch {}
+};
+
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  const [page, setPage] = useState(() => getInitialPage());
-  const [deepLinkServiceId, setDeepLinkServiceId] = useState(() => getInitialServiceId());
+  const [user, setUser] = useState(() => sessionLoad()); // ← restore session saat reload
+  const [page, setPage] = useState("home");   // home | about | news | shop | destinations | services
+  const [historyStack, setHistoryStack] = useState(["home"]); // SPA history
+  const [historyIdx, setHistoryIdx] = useState(0);            // current position in stack
   const [readPost, setReadPost] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [comingSoon, setComingSoon] = useState(null); // null | "google" | "apple"
-  const [showAdmin, setShowAdmin] = useState(() => getInitialShowAdmin());
+  const [showAdmin, setShowAdmin] = useState(false);
   const [adminTab, setAdminTab] = useState("dashboard");
   const [adminSection, setAdminSection] = useState("news");
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
@@ -7415,7 +7372,9 @@ export default function BricksyTravel() {
       }
     } catch {}
     if (loginForm.password !== savedPass) { setLoginErr("Invalid username or password."); return; }
-    setUser({ ...u, ...profile });
+    const sessionUser = { ...u, ...profile };
+    setUser(sessionUser);
+    sessionSave(sessionUser);
     setShowLogin(false); setLoginErr(""); setLoginForm({ username: "", password: "" });
     notify(`Welcome back, ${profile.name || u.username}!`);
   };
@@ -7486,7 +7445,9 @@ export default function BricksyTravel() {
 
   const logout = () => {
     setUser(null);
-    closeControlPanel();
+    sessionClear();
+    setShowAdmin(false);
+    window.history.pushState({ page: "home" }, "", "/");
     notify("Logged out.");
   };
 
@@ -7495,74 +7456,33 @@ export default function BricksyTravel() {
   const canEdit = user?.role === "admin" || user?.role === "content_writer";
   const canCS = user?.role === "admin" || user?.role === "customer_services";
 
-  // ─── Sync browser back/forward ke page state ───────────────────
-  useEffect(() => {
-    const handlePop = () => {
-      const path = window.location.pathname.replace(/\/$/, "") || "/";
-      if (path === "/control-panel") {
-        setShowAdmin(true);
-      } else if (path.startsWith("/paket/")) {
-        const m = path.match(/^\/paket\/[^/]+\/(\d+)$/);
-        setPage("services");
-        setDeepLinkServiceId(m ? parseInt(m[1]) : null);
-        setShowAdmin(false);
-      } else {
-        setPage(PATH_TO_PAGE[path] || "home");
-        setDeepLinkServiceId(null);
-        setShowAdmin(false);
-      }
-      setReadPost(null);
-      setMobileMenu(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-    window.addEventListener("popstate", handlePop);
-    return () => window.removeEventListener("popstate", handlePop);
-  }, []);
-
-  // Navigasi halaman biasa
   const navigateTo = (p) => {
-    const path = PAGE_TO_PATH[p] || "/";
-    window.history.pushState({ page: p }, "", path);
-    setPage(p);
-    setDeepLinkServiceId(null);
-    setShowAdmin(false);
-    setReadPost(null);
-    setMobileMenu(false);
+    setPage(p); setReadPost(null); setMobileMenu(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setHistoryStack(prev => {
+      const trimmed = prev.slice(0, historyIdx + 1); // buang forward history
+      return [...trimmed, p];
+    });
+    setHistoryIdx(prev => prev + 1);
+  };
+
+  const spaBack = () => {
+    if (historyIdx <= 0) return;
+    const newIdx = historyIdx - 1;
+    setHistoryIdx(newIdx);
+    const target = historyStack[newIdx];
+    setPage(target); setReadPost(null); setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Navigasi ke detail satu paket layanan → /paket/{category}/{id}
-  const navigateToService = (svc) => {
-    const path = `/paket/${svc.category}/${svc.id}`;
-    window.history.pushState({ page: "services", serviceId: svc.id }, "", path);
-    setPage("services");
-    setDeepLinkServiceId(svc.id);
-    setShowAdmin(false);
-    setReadPost(null);
-    setMobileMenu(false);
+  const spaForward = () => {
+    if (historyIdx >= historyStack.length - 1) return;
+    const newIdx = historyIdx + 1;
+    setHistoryIdx(newIdx);
+    const target = historyStack[newIdx];
+    setPage(target); setReadPost(null); setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  // Tutup detail paket → kembali ke /services
-  const closeServiceDetail = () => {
-    window.history.pushState({ page: "services" }, "", "/services");
-    setDeepLinkServiceId(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  // Buka / tutup control panel dengan URL
-  const openControlPanel = () => {
-    window.history.pushState({ page: "control-panel" }, "", "/control-panel");
-    setShowAdmin(true);
-  };
-  const closeControlPanel = () => {
-    window.history.pushState({ page: "home" }, "", "/");
-    setShowAdmin(false);
-  };
-
-  // Back & Forward pakai native browser
-  const spaBack    = () => window.history.back();
-  const spaForward = () => window.history.forward();
 
   // Post operations
   // silent=true → auto-save, tetap di editor, tanpa notif
@@ -7845,7 +7765,7 @@ export default function BricksyTravel() {
                           {user.name || user.username}
                         </span>
                         {/* CP button dengan border shape asimetris */}
-                        <button onClick={() => openControlPanel()}
+                        <button onClick={() => setShowAdmin(true)}
                           style={{
                             fontSize: "0.6rem", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 800,
                             color: "#fff",
@@ -7947,7 +7867,7 @@ export default function BricksyTravel() {
                     <div style={{ fontSize: ".8125rem", color: "rgba(255,255,255,.6)", marginBottom: 10, padding: "0 12px" }}>
                       Login sebagai <strong style={{ color: "#38c5d8" }}>{user.name || user.username}</strong>
                     </div>
-                    <button onClick={() => { openControlPanel(); setMobileMenu(false); }}
+                    <button onClick={() => { setShowAdmin(true); setMobileMenu(false); }}
                       style={{ fontSize: ".875rem", color: "#fff", background: "linear-gradient(135deg,#0891b2,#22d3ee)", border: "none", borderRadius: 10, padding: "11px 16px", fontWeight: 700, width: "100%", marginBottom: 8 }}>
                       🛠 Admin Panel
                     </button>
@@ -7973,10 +7893,10 @@ export default function BricksyTravel() {
           {/* ── NAVIGASI MAJU / MUNDUR ── */}
           {(() => {
             const isMobileNav = window.innerWidth <= 768;
-            const canBack = window.history.length > 1;
-            const canFwd = false;
-            const PAGE_LABELS = { home: "Beranda", about: "About", services: "Layanan Kami", destinations: "Wedding Organizer", news: "Event Plan", shop: "Traveling" };
-            const currentLabel = PAGE_LABELS[page] || page || "Halaman";
+            const canBack = historyIdx > 0;
+            const canFwd = historyIdx < historyStack.length - 1;
+            const PAGE_LABELS = { home: "Beranda", about: "Tentang Kami", services: "Layanan", destinations: "Destinasi", news: "Berita", shop: "Toko" };
+            const currentLabel = PAGE_LABELS[historyStack[historyIdx]] || historyStack[historyIdx] || "Halaman";
             if (isMobileNav) {
               /* ── MOBILE: bold rectangle pill di kiri bawah ── */
               return (
@@ -8500,7 +8420,7 @@ export default function BricksyTravel() {
               {page === "about" && <AboutPage content={data.content} images={data.images} teamMembers={data.teamMembers || []} />}
 
               {/* SERVICES PAGE */}
-              {page === "services" && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} initialServiceId={deepLinkServiceId} onOpenService={navigateToService} onCloseService={closeServiceDetail} />}
+              {page === "services" && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} />}
 
               {/* NEWS / SHOP / DESTINATIONS */}
               {["news", "shop", "destinations"].includes(page) && (
@@ -8782,7 +8702,7 @@ export default function BricksyTravel() {
             </div>
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
               <span style={{ fontSize: 12, color: "rgba(255,255,255,.6)" }} className="hide-sm">{user.username}</span>
-              <button onClick={() => closeControlPanel()} style={{ padding: "6px 14px", border: "1px solid rgba(255,255,255,.3)", borderRadius: 4, color: "rgba(255,255,255,.8)", fontSize: 12, background: "none" }}>← Website</button>
+              <button onClick={() => setShowAdmin(false)} style={{ padding: "6px 14px", border: "1px solid rgba(255,255,255,.3)", borderRadius: 4, color: "rgba(255,255,255,.8)", fontSize: 12, background: "none" }}>← Website</button>
             </div>
           </div>
 
@@ -8949,7 +8869,7 @@ export default function BricksyTravel() {
                           onDone={async urls => {
                             const photo = urls[0];
                             const updated = { ...user, photo };
-                            setUser(updated);
+                            setUser(updated); sessionSave(updated);
                             try { const prev = await fsGet(`profile-${user.username}`) || {}; await fsSet(`profile-${user.username}`, { ...prev, name: updated.name, phone: updated.phone, email: updated.email, desc: updated.desc, photo }); } catch {}
                             notify("Foto profil diperbarui!");
                           }}
@@ -8957,7 +8877,7 @@ export default function BricksyTravel() {
                         {user.photo && (
                           <button onClick={async () => {
                             const updated = { ...user, photo: "" };
-                            setUser(updated);
+                            setUser(updated); sessionSave(updated);
                             try { const prev = await fsGet(`profile-${user.username}`) || {}; await fsSet(`profile-${user.username}`, { ...prev, photo: "" }); } catch {}
                             notify("Foto profil dihapus.");
                           }} style={{ marginTop: 8, fontSize: 11, padding: "4px 12px", background: "#fee", color: "#e74c3c", borderRadius: 6, border: "none", cursor: "pointer" }}>Hapus Foto</button>
@@ -8997,7 +8917,7 @@ export default function BricksyTravel() {
                           <div style={{ display: "flex", gap: 10 }}>
                             <button onClick={async () => {
                               const updated = { ...user, name: profileEdit.name, phone: profileEdit.phone, email: profileEdit.email, desc: profileEdit.desc };
-                              setUser(updated);
+                              setUser(updated); sessionSave(updated);
                               try { const prev = await fsGet(`profile-${user.username}`) || {}; await fsSet(`profile-${user.username}`, { ...prev, name: profileEdit.name, phone: profileEdit.phone, email: profileEdit.email, desc: profileEdit.desc, photo: user.photo || "" }); } catch {}
                               setProfileEditMode(false);
                               notify("Data diri berhasil disimpan!");
@@ -9214,7 +9134,7 @@ export default function BricksyTravel() {
                       <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 4 }}>Setting About Us</h1>
                       <p style={{ fontSize: 12, color: "#5090aa" }}>Kelola semua konten halaman About Us yang tampil di website.</p>
                     </div>
-                    <button onClick={() => { navigateTo("about"); closeControlPanel(); }}
+                    <button onClick={() => { navigateTo("about"); setShowAdmin(false); }}
                       style={{ padding: "8px 16px", background: "#edfafc", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, color: "#0ea5c5", cursor: "pointer", fontWeight: 600 }}>
                       👁 Lihat Halaman →
                     </button>
