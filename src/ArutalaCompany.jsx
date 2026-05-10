@@ -255,6 +255,21 @@ async function uploadToCloudinary(file) {
   return data.secure_url;
 }
 
+/* ─────────────── FORMAT RUPIAH GLOBAL ─────────────── */
+/**
+ * Format angka menjadi string Rupiah: 500000 → "Rp 500.000"
+ * Jika sudah mengandung "Rp" atau "Hubungi", kembalikan apa adanya.
+ */
+function formatRp(val) {
+  if (!val && val !== 0) return "";
+  const str = String(val);
+  if (str.toLowerCase().includes("hubungi") || str.toLowerCase().includes("nego")) return str;
+  if (str.startsWith("Rp") || str.startsWith("rp")) return str; // sudah diformat
+  const num = Number(str.replace(/[^0-9]/g, ""));
+  if (isNaN(num) || num === 0) return str;
+  return "Rp " + num.toLocaleString("id-ID");
+}
+
 /* ─────────────── SHARED UPLOAD HELPERS ─────────────── */
 /**
  * Upload satu file ke Cloudinary dengan progress nyata via XHR.
@@ -3973,7 +3988,7 @@ function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
         <div style={{ display: "flex", alignItems: isMobile ? "stretch" : "center", gap: 12, flexDirection: isMobile ? "column" : "row", flexWrap: "wrap" }}>
           <div style={{ marginBottom: isMobile ? 4 : 0 }}>
             <div style={{ fontSize: "0.625rem", color: "rgba(255,255,255,.55)", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 2 }}>Harga</div>
-            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff" }}>{svc.price}</div>
+            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff" }}>{formatRp(svc.price) || svc.price}</div>
             <div style={{ fontSize: "0.6875rem", color: "rgba(255,255,255,.6)", fontStyle: "italic" }}>{svc.priceNote}</div>
           </div>
           <button onClick={onDetail}
@@ -4079,7 +4094,7 @@ function EventWeddingPackageCard({ svc, onDetail, waLink }) {
         <div style={{ position: "absolute", right: -16, top: -16, width: 100, height: 100, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
         <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Mulai Dari</p>
         <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff", lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{svc.price}</span>
+          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff", lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{formatRp(svc.price) || svc.price}</span>
           <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>{svc.priceNote}</span>
         </div>
         <p style={{ color: "rgba(255,255,255,.5)", fontSize: "0.6rem", marginTop: 4, fontStyle: "italic" }}>Nego / Konsultasi dulu</p>
@@ -4152,7 +4167,7 @@ function TravelPackageCardWide({ svc, onDetail, waLink }) {
         <div style={{ display: "flex", alignItems: isMobile ? "stretch" : "center", flexDirection: isMobile ? "column" : "row", gap: 12, flexWrap: "wrap" }}>
           <div style={{ marginBottom: isMobile ? 4 : 0 }}>
             <div style={{ fontSize: "0.625rem", color: "#5090aa", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 2 }}>Harga</div>
-            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66" }}>{svc.price}</div>
+            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66" }}>{formatRp(svc.price) || svc.price}</div>
             <div style={{ fontSize: "0.6875rem", color: "#4a7f98", fontStyle: "italic" }}>{svc.priceNote}</div>
           </div>
           <button onClick={onDetail}
@@ -4268,9 +4283,10 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
               {(() => {
                 const rawPrice = svc.prices?.[0]?.price ?? svc.price;
                 const isContact = String(rawPrice).toLowerCase().includes("hubungi");
+                const numericPrice = !isContact && rawPrice ? Number(String(rawPrice).replace(/[^0-9]/g, "")) : 0;
                 return isContact ? (
                   <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.35rem", fontWeight: 700, color: "#fff", lineHeight: 1 }}>Hubungi Kami</span>
-                ) : (
+                ) : numericPrice > 0 ? (
                   <>
                     <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.8125rem", color: "rgba(255,255,255,.7)" }}>Rp</span>
                     <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 700, color: "#fff", lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>
@@ -4278,8 +4294,9 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
                     </span>
                     <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>/ orang</span>
                   </>
+                ) : (
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.35rem", fontWeight: 700, color: "rgba(255,255,255,.6)", lineHeight: 1 }}>Rp 0</span>
                 );
-              })()}
             </div>
           </div>
           <div style={{
@@ -4965,7 +4982,6 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
     const imgs = (svc.images?.length ? svc.images : [svc.image]).filter(Boolean);
     const catInfo = CATEGORIES.find(c => c.key === svc.category) || {};
     const relatedSvcs = services.filter(s => s.id !== svc.id && s.category === svc.category);
-    const facilityImgs = imgs.slice(1);
 
     return (
       <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#e8f7fc 0%,#f0fbfd 100%)", fontFamily: "'DM Sans', sans-serif" }}>
@@ -5034,7 +5050,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   <div>
                     <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: "rgba(255,255,255,.65)", fontWeight: 700, textTransform: "uppercase", marginBottom: 5 }}>Harga Mulai</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{svc.price}</span>
+                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{formatRp(svc.price) || svc.price}</span>
                       <span style={{ fontSize: "0.875rem", color: "rgba(255,255,255,.68)", fontWeight: 500 }}>{svc.priceNote}</span>
                     </div>
                   </div>
@@ -5062,12 +5078,34 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
             {/* ── LEFT COLUMN ── */}
             <div>
 
-              {/* FACILITY GALLERY — slideshow dari gambar destinasi */}
+              {/* FACILITY GALLERY — slideshow dari galeri upload paket + destinasi */}
               {(() => {
-                const destImgs = (svc.destinations || [])
+                // 1. Gambar dari galeri upload Control Panel (svc.images)
+                const uploadedSlides = (svc.images || []).filter(Boolean).map((img, i) => ({
+                  img,
+                  name: `Foto ${i + 1}`,
+                  no: String(i + 1).padStart(2, "0"),
+                  title: `${svc.title} — Foto ${i + 1}`,
+                }));
+
+                // 2. Gambar dari destinations (jika ada, tambahkan setelah galeri upload)
+                const destSlides = (svc.destinations || [])
                   .filter(d => d.img)
                   .map(d => ({ img: d.img, name: d.name, no: d.no, title: d.title }));
-                const slideImgs = destImgs.length > 0 ? destImgs : (facilityImgs.length > 0 ? facilityImgs.map((img, i) => ({ img, name: `Foto ${i+1}`, no: String(i+1).padStart(2,"0"), title: svc.title })) : []);
+
+                // Gabungkan: galeri upload dulu, lalu destinasi — hapus duplikat URL
+                const seenUrls = new Set();
+                const slideImgs = [...uploadedSlides, ...destSlides].filter(s => {
+                  if (!s.img || seenUrls.has(s.img)) return false;
+                  seenUrls.add(s.img);
+                  return true;
+                });
+
+                // Fallback ke svc.image tunggal jika tidak ada galeri sama sekali
+                if (slideImgs.length === 0 && svc.image) {
+                  slideImgs.push({ img: svc.image, name: svc.title, no: "01", title: svc.title });
+                }
+
                 if (slideImgs.length === 0) return null;
                 return (
                   <DestGallerySlideshow
@@ -5165,7 +5203,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                     {/* Harga */}
                     <div style={{ textAlign: "center", marginBottom: 10 }}>
                       <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: svc.highlight ? "rgba(255,255,255,.38)" : "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Harga Mulai</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.6rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#0d3b66", lineHeight: 1, marginBottom: 4 }}>{svc.price}</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.6rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#0d3b66", lineHeight: 1, marginBottom: 4 }}>{formatRp(svc.price) || svc.price}</div>
                       <div style={{ fontSize: "0.875rem", color: svc.highlight ? "rgba(255,255,255,.45)" : "#7ab5cc", fontWeight: 500 }}>{svc.priceNote}</div>
                     </div>
                     <div style={{ height: 1, background: svc.highlight ? "rgba(255,255,255,.08)" : "#f0e8df", margin: "18px 0" }} />
@@ -5398,7 +5436,18 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
   const svcs = data.services || [];
 
   const openNew = () => {
-    setSvcForm({ id: Date.now(), category: "traveling", title: "", badge: "", badgeColor: "#0891b2", accent: "#e8a020", accentLight: "#fff8e6", duration: "3 Hari 2 Malam", minPeserta: "20", price: "", priceNote: "/ orang", images: [], image: "", coverIndex: 0, description: "", features: [], highlight: false, prices: [{vehicle:"Bus Executive",icon:"🚌",capacity:"35–60 org",price:"0",points:["Keterangan 1","Keterangan 2"]}] });
+    setSvcForm({
+      id: Date.now(), category: "traveling", title: "", badge: "", badgeColor: "#0891b2",
+      accent: "#e8a020", accentLight: "#fff8e6", duration: "3 Hari 2 Malam", minPeserta: "20",
+      price: "", priceNote: "/ orang", images: [], image: "", coverIndex: 0,
+      description: "", features: [], highlight: false,
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "", points: ["Full AC Double Blower", "TV LCD + Audio System", "Toilet dalam bus"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "", points: ["Full AC Split", "Monitor + Speaker", "Kursi empuk & nyaman"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "", points: ["AC Dual Zone", "Captain seat", "Bluetooth Audio"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "", points: ["Terbuka / angin alami", "Bangku kayu + pegangan", "Terpal pelindung"] },
+      ]
+    });
     setUploadProgresses([]);
     setEditSvc("new");
   };
@@ -5413,7 +5462,10 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
     if (!svcForm.title?.trim()) return notify("Judul paket wajib diisi.", "error");
     const ci = svcForm.coverIndex || 0;
     const coverUrl = (svcForm.images || [])[ci] || svcForm.image || "";
-    const finalForm = { ...svcForm, image: coverUrl };
+    // Harga utama otomatis dari Bus Executive (prices[0]), diformat Rupiah
+    const busPrice = (svcForm.prices || [])[0]?.price || svcForm.price || "";
+    const autoPrice = formatRp(busPrice);
+    const finalForm = { ...svcForm, image: coverUrl, price: autoPrice };
     const idx = svcs.findIndex(x => x.id === finalForm.id);
     const updated = idx >= 0 ? svcs.map((x, i) => i === idx ? finalForm : x) : [...svcs, finalForm];
     save({ ...data, services: updated });
@@ -5699,6 +5751,51 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
             </div>
           </div>
 
+          {/* ══════════ HARGA PER KENDARAAN ══════════ */}
+          <div style={{ padding: "24px 32px", borderTop: "2px solid #edfafc", background: "#f9fdff" }}>
+            <div style={{ marginBottom: 14, display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 18 }}>🚌</span>
+              <span style={{ fontSize: 14, fontWeight: 800, color: "#0d3b66", letterSpacing: ".02em" }}>Harga per Kendaraan</span>
+              <span style={{ fontSize: 11, color: "#5090aa", fontWeight: 500 }}>· Harga Bus tampil sebagai harga utama di kartu</span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
+              {(svcForm.prices || []).map((p, i) => (
+                <div key={i} style={{ background: "#fff", borderRadius: 10, border: i === 0 ? "2px solid #0891b2" : "1.5px solid #b0dce8", padding: "14px 16px", boxShadow: i === 0 ? "0 2px 10px rgba(8,145,178,.12)" : "none" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+                    <span style={{ fontSize: 18 }}>{p.icon}</span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
+                    {i === 0 && <span style={{ fontSize: 9, background: "#0891b2", color: "#fff", borderRadius: 6, padding: "2px 7px", fontWeight: 800, letterSpacing: ".06em" }}>UTAMA</span>}
+                  </div>
+                  <div style={{ fontSize: 10, color: "#5090aa", marginBottom: 6 }}>{p.capacity}</div>
+                  <label style={{ display: "block", fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 5 }}>Harga / orang</label>
+                  <div style={{ position: "relative" }}>
+                    <span style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", fontSize: 12, fontWeight: 700, color: "#0891b2", pointerEvents: "none" }}>Rp</span>
+                    <input
+                      type="number"
+                      min="0"
+                      value={p.price || ""}
+                      onChange={e => {
+                        const newPrices = [...(svcForm.prices || [])];
+                        newPrices[i] = { ...newPrices[i], price: e.target.value };
+                        // Jika Bus (index 0), update harga utama secara realtime
+                        const newState = { ...svcForm, prices: newPrices };
+                        if (i === 0) newState.price = formatRp(e.target.value);
+                        setSvcForm(newState);
+                      }}
+                      placeholder="500000"
+                      style={{ width: "100%", padding: "9px 10px 9px 30px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }}
+                    />
+                  </div>
+                  {p.price && !isNaN(p.price) && Number(p.price) > 0 && (
+                    <div style={{ fontSize: 11, color: "#27ae60", fontWeight: 600, marginTop: 4 }}>
+                      ✓ {formatRp(p.price)}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Footer action bar */}
           <div style={{ display: "flex", gap: 12, padding: "18px 32px", background: "#f5fdff", borderTop: "1px solid #edfafc" }}>
             <button onClick={saveSvc} style={{ padding: "11px 28px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 800, cursor: "pointer" }}>💾 Simpan Paket</button>
@@ -5743,7 +5840,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                           {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor || cat.color, color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
                           {svc.highlight && <span style={{ fontSize: 10, background: cat.color, color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
                         </div>
-                        <div style={{ fontSize: 13, fontWeight: 700, color: cat.color }}>{svc.price}<span style={{ color: "#5090aa", fontWeight: 400 }}> {svc.priceNote}</span></div>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: cat.color }}>{formatRp(svc.price) || svc.price}<span style={{ color: "#5090aa", fontWeight: 400 }}> {svc.priceNote}</span></div>
                         <div style={{ fontSize: 12, color: "#5090aa", marginTop: 2 }}>{(svc.features || []).length} fitur termasuk</div>
                       </div>
                       <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
@@ -7513,6 +7610,16 @@ export default function BricksyTravel() {
     }
   }, [data.content.logoImage]);
 
+  // Sync browser tab title — selalu satu baris, ikuti logoText
+  useEffect(() => {
+    const oneLiner = (data.content.logoText || "Arutala Organizer")
+      .replace(/\n/g, " ")   // hapus newline → spasi
+      .replace(/\s+/g, " ")  // collapse spasi ganda
+      .trim()
+      .toUpperCase();         // bold effect tidak bisa di title, tapi uppercase memperkuat brand
+    document.title = oneLiner;
+  }, [data.content.logoText]);
+
   const save = async (d) => {
     // Selalu merge dengan DEFAULT_DATA sebelum simpan:
     // field baru yang ditambahkan di kode (lewat git push) tidak akan hilang
@@ -9052,6 +9159,12 @@ export default function BricksyTravel() {
                         onMouseEnter={e => { e.currentTarget.style.borderColor = "#0d3b66"; }}
                         onMouseLeave={e => { e.currentTarget.style.borderColor = "#c0e8f0"; }}>
                         🔔 Pesan Masuk {data.messages.filter(m => !m.read).length > 0 && <span style={{ background: "#e74c3c", color: "#fff", borderRadius: 10, padding: "1px 7px", fontSize: "0.6875rem", fontWeight: 700 }}>{data.messages.filter(m => !m.read).length}</span>}
+                      </button>
+                      <button onClick={() => setAdminTab("profile")}
+                        style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "transparent", color: "#0d3b66", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "2px solid #c0e8f0", cursor: "pointer", letterSpacing: ".03em", transition: "all .2s" }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = "#0891b2"; e.currentTarget.style.color = "#0891b2"; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = "#c0e8f0"; e.currentTarget.style.color = "#0d3b66"; }}>
+                        ✏️ Edit Profil
                       </button>
                     </div>
                   </div>
