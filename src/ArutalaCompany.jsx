@@ -2789,6 +2789,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
         ...form, content: blocks, status: "draft",
         id: form.id || Date.now(), section,
         tags: typeof form.tags === "string" ? form.tags.split(",").map(t => t.trim()).filter(Boolean) : form.tags,
+        slug: form.slug || slugify(form.title || "artikel"),
         _autoSaved: true,
       };
       // Simpan ke storage persisten (bertahan saat tab ditutup / perangkat mati)
@@ -2871,13 +2872,15 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
 
   const handleSave = async (status, targetSection = section) => {
     clearTimeout(autoSaveTimer.current);
+    const postId = form.id || Date.now();
     const p = {
       ...form,
       content: blocks,
       status,
-      id: form.id || Date.now(),
+      id: postId,
       section: targetSection,
       tags: typeof form.tags === "string" ? form.tags.split(",").map(t => t.trim()).filter(Boolean) : form.tags,
+      slug: form.slug || slugify(form.title || "artikel"),
     };
     // Hapus draft persisten setelah publish / save manual
     try { await window.storage?.delete(draftKey); } catch {}
@@ -3456,7 +3459,10 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
     if (onReadPost) { onReadPost(p); window.scrollTo({ top: 0, behavior: "smooth" }); }
   };
 
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  // Gunakan URL canonical artikel, bukan window.location.href yang bisa berubah
+  const shareUrl = typeof window !== "undefined"
+    ? window.location.origin + articleUrl(post)
+    : "";
 
   const copyLink = () => {
     navigator.clipboard?.writeText(shareUrl);
@@ -4894,8 +4900,29 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
   );
 }
 
+/* ── PaketBackBar — Back + Salin Link di halaman detail paket ── */
+function PaketBackBar({ svc, onClose }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    const url = window.location.origin + paketUrl(svc);
+    navigator.clipboard?.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+  };
+  return (
+    <div style={{ background: "linear-gradient(90deg,#063d5c,#0891b2)", padding: "0 5%", position: "sticky", top: 96, zIndex: 90, borderBottom: "1px solid #c0e8f0", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <button onClick={onClose} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#7ab8d0", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer", padding: "13px 0", letterSpacing: ".04em", textTransform: "uppercase" }}>
+        <span style={{ fontSize: 18, lineHeight: 1 }}>←</span> Kembali ke Layanan
+      </button>
+      <button onClick={copy} style={{ display: "flex", alignItems: "center", gap: 6, background: copied ? "rgba(16,208,224,.25)" : "rgba(255,255,255,.10)", border: "1px solid rgba(255,255,255,.20)", borderRadius: 20, color: copied ? "#10d0e0" : "#b8dde8", fontSize: "0.75rem", fontWeight: 600, padding: "6px 14px", cursor: "pointer", transition: "all .2s", letterSpacing: ".04em" }}>
+        🔗 {copied ? "Tersalin!" : "Salin Link Paket"}
+      </button>
+    </div>
+  );
+}
+
 /* ─────────────── SERVICES PAGE ─────────────── */
-function ServicesPage({ content, services, navigateTo }) {
+function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket, onClosePaket }) {
   const [selectedService, setSelectedService] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
 
@@ -4909,9 +4936,23 @@ function ServicesPage({ content, services, navigateTo }) {
   ];
 
   const openDetail = (svc) => {
+    if (onOpenPaket) onOpenPaket(svc);   // push URL ke parent
     setSelectedService(svc); setActiveImg(0); window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const closeDetail = () => setSelectedService(null);
+  const closeDetail = () => {
+    if (onClosePaket) onClosePaket();   // restore URL di parent
+    setSelectedService(null);
+  };
+
+  // Restore selectedService dari activePaket prop (saat mount via URL /paket/...)
+  useEffect(() => {
+    if (activePaket && services.length) {
+      const svc = services.find(s => s.id === activePaket.id || String(s.id) === String(activePaket.id));
+      if (svc && !selectedService) { setSelectedService(svc); setActiveImg(0); }
+    }
+    if (!activePaket) { setSelectedService(null); }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePaket, services.length]);
 
   const handleBook = (svc) => {
     const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
@@ -4949,11 +4990,7 @@ function ServicesPage({ content, services, navigateTo }) {
         `}</style>
 
         {/* ── Back Bar ── */}
-        <div style={{ background: "linear-gradient(90deg,#063d5c,#0891b2)", padding: "0 5%", position: "sticky", top: 96, zIndex: 90, borderBottom: "1px solid #c0e8f0" }}>
-          <button onClick={closeDetail} style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", color: "#7ab8d0", fontWeight: 600, fontSize: "0.8125rem", cursor: "pointer", padding: "13px 0", letterSpacing: ".04em", textTransform: "uppercase" }}>
-            <span style={{ fontSize: 18, lineHeight: 1 }}>←</span> Kembali ke Layanan
-          </button>
-        </div>
+        <PaketBackBar svc={svc} onClose={closeDetail} />
 
         {/* ── MAGAZINE HERO ── */}
         <div className="mg-fade" style={{ position: "relative", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", overflow: "hidden" }}>
@@ -7187,10 +7224,61 @@ const PAGE_TO_PATH = {
 };
 const PATH_TO_PAGE = Object.fromEntries(Object.entries(PAGE_TO_PATH).map(([k, v]) => [v, k]));
 
-/** Baca halaman awal dari URL saat render — bukan saat module load.
- *  Dipanggil sebagai lazy initializer useState(() => getInitialPage())
- *  sehingga window.location selalu dibaca pada saat komponen di-mount. */
-const getInitialPage = () => PATH_TO_PAGE[window.location.pathname] || "home";
+/* ── URL helper functions ─────────────────────────────────────────────────── */
+
+/** Slug generator dari teks judul */
+const makeSlug = (s) => String(s || "").toLowerCase()
+  .replace(/[àáâãäå]/g, "a").replace(/[èéêë]/g, "e")
+  .replace(/[ìíîï]/g, "i").replace(/[òóôõö]/g, "o")
+  .replace(/[ùúûü]/g, "u")
+  .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+/**
+ * URL canonical untuk artikel:
+ * /artikel/{section}/{slug}-{id}
+ */
+const articleUrl = (post) => {
+  const slug = post.slug || makeSlug(post.title);
+  return `/artikel/${post.section || "news"}/${slug}-${post.id}`;
+};
+
+/**
+ * URL canonical untuk paket layanan:
+ * /services/{category}/{nama-paket}/{id}
+ */
+const paketUrl = (svc) => {
+  const slug = makeSlug(svc.title);
+  return `/services/${svc.category || "event"}/${slug}/${svc.id}`;
+};
+
+/** Parse URL /artikel/{section}/{slug}-{id} → { section, slug, id } atau null */
+const parseArtikelPath = (path) => {
+  const m = path.match(/^\/artikel\/([^/]+)\/(.+)-(\d+)$/);
+  if (!m) return null;
+  return { section: m[1], slug: m[2], id: Number(m[3]) };
+};
+
+/** Parse URL /services/{category}/{slug}/{id} → { category, slug, id } atau null */
+const parsePaketPath = (path) => {
+  const m = path.match(/^\/services\/([^/]+)\/([^/]+)\/(\d+)$/);
+  if (!m) return null;
+  return { category: m[1], slug: m[2], id: Number(m[3]) };
+};
+
+/** Baca halaman awal dari URL saat render — bukan saat module load. */
+const getInitialPage = () => {
+  const p = window.location.pathname;
+  if (PATH_TO_PAGE[p]) return PATH_TO_PAGE[p];
+  // URL paket → langsung mount ServicesPage (activePaket sudah di-init dari URL)
+  if (parsePaketPath(p)) return "services";
+  // URL artikel → mount section yang sesuai (readPost di-resolve setelah data load)
+  const art = parseArtikelPath(p);
+  if (art) return { news: "news", shop: "shop", destinations: "destinations" }[art.section] || "news";
+  return "home";
+};
+
+/** Cek apakah URL saat mount adalah /control-panel → tampilkan admin panel */
+const getInitialShowAdmin = () => window.location.pathname === "/control-panel";
 
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
@@ -7203,7 +7291,7 @@ export default function BricksyTravel() {
   const [readPost, setReadPost] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [comingSoon, setComingSoon] = useState(null); // null | "google" | "apple"
-  const [showAdmin, setShowAdmin] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(() => getInitialShowAdmin()); // restore dari URL /control-panel
   const [adminTab, setAdminTab] = useState("dashboard");
   const [adminSection, setAdminSection] = useState("news");
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
@@ -7262,10 +7350,37 @@ export default function BricksyTravel() {
   /* ── Fix #2: popstate listener — sync React state saat user tekan Back/Forward browser ── */
   useEffect(() => {
     const onPopState = (e) => {
-      // Baca page dari history state (jika ada) atau dari pathname
-      const p = e.state?.page || PATH_TO_PAGE[window.location.pathname] || "home";
-      setPage(p);
+      const pathname = window.location.pathname;
+      // /control-panel
+      if (pathname === "/control-panel" || e.state?.admin) {
+        setShowAdmin(true);
+        return;
+      }
+      setShowAdmin(false);
+      // /services/{category}/{slug}/{id} → buka detail paket
+      const pkgParsed = parsePaketPath(pathname);
+      if (pkgParsed) {
+        setPage("services");
+        setActivePaket({ id: pkgParsed.id, category: pkgParsed.category });
+        setMobileMenu(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      // /artikel/{section}/{slug}-{id} → buka detail artikel
+      const artParsed = parseArtikelPath(pathname);
+      if (artParsed) {
+        const sectionPage = { news: "news", shop: "shop", destinations: "destinations" }[artParsed.section] || "news";
+        setPage(sectionPage);
+        setMobileMenu(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        // readPost di-resolve via useEffect [isLoading] jika data sudah ada
+        return;
+      }
+      // Normal page — tutup detail paket & artikel jika ada
+      setActivePaket(null);
       setReadPost(null);
+      const p = e.state?.page || PATH_TO_PAGE[pathname] || "home";
+      setPage(p);
       setMobileMenu(false);
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
@@ -7355,6 +7470,35 @@ export default function BricksyTravel() {
       }
     })();
   }, []);
+
+  // Setelah data selesai load → resolve artikel atau paket dari URL saat mount
+  useEffect(() => {
+    if (isLoading) return;
+    const pathname = window.location.pathname;
+    // /artikel/{section}/{slug}-{id}
+    const artParsed = parseArtikelPath(pathname);
+    if (artParsed) {
+      const allP = Object.values(data.posts || {}).flat();
+      const found = allP.find(p => p.id === artParsed.id || String(p.id) === String(artParsed.id));
+      if (found) {
+        // Set page ke section yang sesuai, tapi jangan push URL lagi
+        const sectionPage = { news: "news", shop: "shop", destinations: "destinations" }[found.section] || "news";
+        setPage(sectionPage);
+        setReadPost(found);
+      }
+      return;
+    }
+    // /paket/{category}/{id}
+    const pkgParsed = parsePaketPath(pathname);
+    if (pkgParsed) {
+      const found = (data.services || []).find(s => s.id === pkgParsed.id || String(s.id) === String(pkgParsed.id));
+      if (found) {
+        setPage("services");
+        setActivePaket({ id: found.id, category: found.category });
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, (data.services || []).length]);
 
   // Sync favicon with logo
   useEffect(() => {
@@ -7473,7 +7617,7 @@ export default function BricksyTravel() {
   const logout = () => {
     setUser(null);
     sessionClear();
-    setShowAdmin(false);
+    closeAdmin();
     window.history.pushState({ page: "home" }, "", "/");
     notify("Logged out.");
   };
@@ -7494,6 +7638,57 @@ export default function BricksyTravel() {
       return [...trimmed, p];
     });
     setHistoryIdx(prev => prev + 1);
+  };
+
+  /** Buka artikel: push URL /artikel/{section}/{slug}-{id} + set state */
+  const openArticle = (post) => {
+    const url = articleUrl(post);
+    window.history.pushState({ artikelId: post.id, section: post.section }, "", url);
+    setReadPost(post);
+    setMobileMenu(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /** Tutup artikel: kembali ke page aktif */
+  const closeArticle = () => {
+    const navPath = PAGE_TO_PATH[page] || "/";
+    window.history.pushState({ page }, "", navPath);
+    setReadPost(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /** Buka admin panel: set state + sync URL ke /control-panel */
+  const openAdmin = () => {
+    window.history.pushState({ admin: true }, "", "/control-panel");
+    setShowAdmin(true);
+  };
+
+  /** Tutup admin panel: kembali ke page aktif + sync URL */
+  const closeAdmin = () => {
+    const navPath = PAGE_TO_PATH[page] || "/";
+    window.history.pushState({ page }, "", navPath);
+    setShowAdmin(false);
+  };
+
+  /** openPaket / closePaket — URL sync untuk halaman detail paket */
+  // State ini dioper ke ServicesPage sebagai prop
+  const [activePaket, setActivePaket] = useState(() => {
+    // Restore dari URL /paket/{category}/{id} saat mount
+    const parsed = parsePaketPath(window.location.pathname);
+    return parsed ? parsed : null; // { category, id } — ServicesPage cari svc-nya
+  });
+
+  const openPaket = (svc) => {
+    const url = paketUrl(svc);
+    window.history.pushState({ paketId: svc.id, category: svc.category }, "", url);
+    setActivePaket({ id: svc.id, category: svc.category });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const closePaket = () => {
+    window.history.pushState({ page: "services" }, "", PAGE_TO_PATH["services"] || "/services");
+    setActivePaket(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const spaBack = () => {
@@ -7797,7 +7992,7 @@ export default function BricksyTravel() {
                           {user.name || user.username}
                         </span>
                         {/* CP button dengan border shape asimetris */}
-                        <button onClick={() => setShowAdmin(true)}
+                        <button onClick={() => openAdmin()}
                           style={{
                             fontSize: "0.6rem", letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 800,
                             color: "#fff",
@@ -7899,7 +8094,7 @@ export default function BricksyTravel() {
                     <div style={{ fontSize: ".8125rem", color: "rgba(255,255,255,.6)", marginBottom: 10, padding: "0 12px" }}>
                       Login sebagai <strong style={{ color: "#38c5d8" }}>{user.name || user.username}</strong>
                     </div>
-                    <button onClick={() => { setShowAdmin(true); setMobileMenu(false); }}
+                    <button onClick={() => { openAdmin(); setMobileMenu(false); }}
                       style={{ fontSize: ".875rem", color: "#fff", background: "linear-gradient(135deg,#0891b2,#22d3ee)", border: "none", borderRadius: 10, padding: "11px 16px", fontWeight: 700, width: "100%", marginBottom: 8 }}>
                       🛠 Admin Panel
                     </button>
@@ -8069,7 +8264,7 @@ export default function BricksyTravel() {
 
           {/* ── ARTICLE DETAIL ── */}
           {readPost && (
-            <ArticleDetail post={readPost} onBack={() => { setReadPost(null); window.scrollTo({ top: 0, behavior: "smooth" }); }} allPosts={allPosts} onReadPost={(p) => { setReadPost(p); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
+            <ArticleDetail post={readPost} onBack={closeArticle} allPosts={allPosts} onReadPost={(p) => openArticle(p)} />
           )}
 
           {/* ── PAGE CONTENT ── */}
@@ -8190,7 +8385,7 @@ export default function BricksyTravel() {
                             <div className="gal-ticker-track">
                               {doubled.map((item, i) => (
                                 <div key={i} className="gal-ticker-item hover-lift"
-                                  onClick={() => { if (item.post) { setReadPost(item.post); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
+                                  onClick={() => { if (item.post) openArticle(item.post); }}
                                   style={{ cursor: item.post ? "pointer" : "default" }}>
                                   <img loading="lazy" src={item.src} alt={item.title || ""} />
                                 </div>
@@ -8274,7 +8469,7 @@ export default function BricksyTravel() {
                       </div>
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 28 }}>
                         {(data.posts?.news || []).filter(p => p.status === "published").slice(0, 3).map(post => (
-                          <PostCard key={post.id} post={post} onClick={() => { setReadPost(post); window.scrollTo({ top: 0, behavior: "smooth" }); }} view="grid" />
+                          <PostCard key={post.id} post={post} onClick={() => openArticle(post)} view="grid" />
                         ))}
                       </div>
                     </div>
@@ -8452,14 +8647,14 @@ export default function BricksyTravel() {
               {page === "about" && <AboutPage content={data.content} images={data.images} teamMembers={data.teamMembers || []} />}
 
               {/* SERVICES PAGE */}
-              {page === "services" && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} />}
+              {(page === "services" || activePaket) && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} activePaket={activePaket} onOpenPaket={openPaket} onClosePaket={closePaket} />}
 
               {/* NEWS / SHOP / DESTINATIONS */}
               {["news", "shop", "destinations"].includes(page) && (
                 <SectionPage
                   section={page}
                   posts={data.posts || {}}
-                  onReadPost={(post) => { setReadPost(post); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  onReadPost={(post) => openArticle(post)}
                 />
               )}
             </>
@@ -8734,7 +8929,7 @@ export default function BricksyTravel() {
             </div>
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
               <span style={{ fontSize: 12, color: "rgba(255,255,255,.6)" }} className="hide-sm">{user.username}</span>
-              <button onClick={() => setShowAdmin(false)} style={{ padding: "6px 14px", border: "1px solid rgba(255,255,255,.3)", borderRadius: 4, color: "rgba(255,255,255,.8)", fontSize: 12, background: "none" }}>← Website</button>
+              <button onClick={() => closeAdmin()} style={{ padding: "6px 14px", border: "1px solid rgba(255,255,255,.3)", borderRadius: 4, color: "rgba(255,255,255,.8)", fontSize: 12, background: "none" }}>← Website</button>
             </div>
           </div>
 
@@ -9166,7 +9361,7 @@ export default function BricksyTravel() {
                       <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 4 }}>Setting About Us</h1>
                       <p style={{ fontSize: 12, color: "#5090aa" }}>Kelola semua konten halaman About Us yang tampil di website.</p>
                     </div>
-                    <button onClick={() => { navigateTo("about"); setShowAdmin(false); }}
+                    <button onClick={() => { navigateTo("about"); closeAdmin(); }}
                       style={{ padding: "8px 16px", background: "#edfafc", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, color: "#0ea5c5", cursor: "pointer", fontWeight: 600 }}>
                       👁 Lihat Halaman →
                     </button>
