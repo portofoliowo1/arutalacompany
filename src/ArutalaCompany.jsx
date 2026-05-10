@@ -5293,27 +5293,48 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           <p style={{ fontSize: 14 }}>Belum ada paket layanan. Klik "+ Tambah Paket" untuk memulai.</p>
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          {svcs.map(svc => (
-            <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "18px 20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", gap: 16, alignItems: "flex-start", borderLeft: svc.highlight ? "4px solid #0ea5c5" : "4px solid #c0e8f0" }}>
-              {svc.image && (
-                <img loading="lazy" src={svc.image} alt={svc.title} style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
-              )}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 4 }}>
-                  <span style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66" }}>{svc.title}</span>
-                  {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor || "#0891b2", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
-                  {svc.highlight && <span style={{ fontSize: 10, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
+        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+          {[
+            { key: "traveling", label: "Traveling",          icon: "✈️", color: "#0891b2", light: "#edfafc", border: "#b0dce8" },
+            { key: "event",     label: "Event Plan",         icon: "🎉", color: "#f39c12", light: "#fff8e1", border: "#fde68a" },
+            { key: "wedding",   label: "Wedding Organizer",  icon: "💍", color: "#db2777", light: "#fff0f7", border: "#fbcfe8" },
+          ].map(cat => {
+            const catSvcs = svcs.filter(s => (s.category || "traveling") === cat.key);
+            if (catSvcs.length === 0) return null;
+            return (
+              <div key={cat.key}>
+                {/* Category Header */}
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, paddingBottom: 10, borderBottom: `2px solid ${cat.border}` }}>
+                  <span style={{ fontSize: 18 }}>{cat.icon}</span>
+                  <span style={{ fontSize: 15, fontWeight: 800, color: cat.color, letterSpacing: ".02em" }}>{cat.label}</span>
+                  <span style={{ fontSize: 11, background: cat.light, color: cat.color, border: `1px solid ${cat.border}`, borderRadius: 10, padding: "2px 10px", fontWeight: 700 }}>{catSvcs.length} paket</span>
                 </div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#0ea5c5" }}>{svc.price}<span style={{ color: "#5090aa", fontWeight: 400 }}> {svc.priceNote}</span></div>
-                <div style={{ fontSize: 12, color: "#5090aa", marginTop: 4 }}>{(svc.features || []).length} fitur termasuk</div>
+                {/* Package rows */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {catSvcs.map(svc => (
+                    <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "16px 18px", boxShadow: "0 2px 8px rgba(0,0,0,.05)", display: "flex", gap: 14, alignItems: "flex-start", borderLeft: `4px solid ${svc.highlight ? cat.color : cat.border}` }}>
+                      {svc.image && (
+                        <img loading="lazy" src={svc.image} alt={svc.title} style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
+                      )}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 3 }}>
+                          <span style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66" }}>{svc.title}</span>
+                          {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor || cat.color, color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
+                          {svc.highlight && <span style={{ fontSize: 10, background: cat.color, color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
+                        </div>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: cat.color }}>{svc.price}<span style={{ color: "#5090aa", fontWeight: 400 }}> {svc.priceNote}</span></div>
+                        <div style={{ fontSize: 12, color: "#5090aa", marginTop: 2 }}>{(svc.features || []).length} fitur termasuk</div>
+                      </div>
+                      <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                        <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: cat.light, color: cat.color, border: `1px solid ${cat.border}`, borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
+                        <button onClick={() => deleteSvc(svc.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
-                <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: "#edfafc", color: "#0d3b66", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
-                <button onClick={() => deleteSvc(svc.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
