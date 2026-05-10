@@ -56,9 +56,7 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
                 <p style={{ fontSize: "0.875rem", color: "#4a7f98" }}>Belum ada artikel.</p>
               ) : allPosts.slice(-5).reverse().map(p => (
                 <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid #edfafc" }}>
-                  <div style={{ width: 42, height: 42, borderRadius: 6, overflow: "hidden", flexShrink: 0 }}>
-                    <img loading="lazy" src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
-                  </div>
+                  <div style={{ width: 42, height: 42, borderRadius: 6, background: "#edfafc", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>📄</div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.title}</p>
                     <span style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{p.section} · {formatDate(p.date)}</span>
@@ -1571,8 +1569,7 @@ const GS = () => (
       .hero-img-grid>div:nth-child(2){animation:floatB 6s ease-in-out infinite .5s}
       .hero-img-grid>div:nth-child(3){animation:floatA 7s ease-in-out infinite 1s}
       .hero-img-grid>div:nth-child(4){animation:floatB 5.5s ease-in-out infinite .8s}
-      #cursor-glow{pointer-events:none;position:fixed;width:24px;height:24px;border-radius:50%;background:rgba(14,165,197,.28);border:1.5px solid rgba(14,165,197,.55);transform:translate(-50%,-50%);transition:left .06s ease,top .06s ease,width .25s,height .25s,background .25s;z-index:99998;mix-blend-mode:multiply}
-      #cursor-glow.expanded{width:48px;height:48px;background:rgba(8,145,178,.1)}
+      *{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87c.45 0 .67-.54.35-.85L6.35 2.85a.5.5 0 0 0-.85.36z' fill='%230891b2' stroke='%23fff' stroke-width='1'/%3E%3C/svg%3E") 5 3, auto}
     }
 
     .logo-brand{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:#111;text-shadow:0 1px 6px rgba(0,0,0,.35),0 2px 14px rgba(0,0,0,.18)}
@@ -2074,7 +2071,7 @@ const GS = () => (
     .art-page{ background:#f2f2f2; min-height:100vh; }
     .art-share-bar{ background:#fff; border-bottom:1px solid #e8e8e8; padding:10px 5%; display:flex; align-items:center; gap:14px; position:sticky; top:96px; z-index:88; }
     .art-share-bar .art-share-title{ flex:1; font-size:12px; color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .art-body-wrap{ max-width:1200px; margin:0 auto; padding:24px 3% 60px; display:grid; grid-template-columns:1fr 300px; gap:28px; align-items:start; }
+    .art-body-wrap{ max-width:1320px; margin:0 auto; padding:24px 3% 60px; display:grid; grid-template-columns:1fr 260px; gap:24px; align-items:start; }
     .art-main{ min-width:0; }
     .art-sidebar{ position:sticky; top:168px; }
     .art-cover-wrap{ position:relative; border-radius:6px; overflow:hidden; margin-bottom:0; }
@@ -3121,10 +3118,6 @@ function PostCard({ post, onClick, view = "grid" }) {
     <article className="post-card hover-lift post-card-list" onClick={onClick}
       style={{ display: "flex", gap: 20, background: "#fff", borderRadius: 8, overflow: "hidden",
         cursor: "pointer", boxShadow: "0 2px 10px rgba(0,0,0,.06)", marginBottom: 16 }}>
-      <div className="post-thumb" style={{ flexShrink: 0, width: 180, height: 130, overflow: "hidden" }}>
-        <img loading="lazy" src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=400&fit=crop"; }} />
-      </div>
       <div style={{ padding: "14px 16px 14px 0", flex: 1 }}>
         {post.category && <span className="label-xs" style={{ color: "#0891b2" }}>{post.category}</span>}
         <h3 className="post-card-title" style={{ fontFamily: "'Playfair Display',serif", fontWeight: 700,
@@ -3142,10 +3135,6 @@ function PostCard({ post, onClick, view = "grid" }) {
     <article className="post-card hover-lift" onClick={onClick}
       style={{ background: "#fff", borderRadius: 8, overflow: "hidden", cursor: "pointer",
         boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
-      <div className="img-zoom" style={{ height: 200, overflow: "hidden" }}>
-        <img loading="lazy" src={post.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          onError={e => { e.target.src = "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1600&h=400&fit=crop"; }} />
-      </div>
       <div style={{ padding: "18px 20px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
           {post.category && <span className="label-xs" style={{ color: "#0891b2" }}>{post.category}</span>}
@@ -3284,17 +3273,6 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                 </div>
               </div>
 
-              {/* Cover Image — in-content, proportional */}
-              {post.coverImage && (
-                <div style={{ borderRadius: 6, overflow: "hidden", marginBottom: 24, position: "relative" }}>
-                  <img loading="lazy" src={post.coverImage} alt={post.title}
-                    style={{ width: "100%", maxHeight: 420, objectFit: "cover", display: "block" }} />
-                  <div style={{ position: "absolute", top: 12, right: 12, background: "rgba(0,0,0,.5)", color: "#fff",
-                    fontSize: 11, padding: "4px 11px", borderRadius: 4, display: "flex", alignItems: "center", gap: 5, fontWeight: 500 }}>
-                    👁 Lihat Foto
-                  </div>
-                </div>
-              )}
 
               {/* Excerpt */}
               {post.excerpt && (
@@ -3348,15 +3326,7 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
               <div className="art-terkait-scroll">
                 {artikelTerkait.map(p => (
                   <div key={p.id} className="art-terkait-card" onClick={() => handlePost(p)}>
-                    {p.coverImage ? (
-                      <div style={{ height: 120, overflow: "hidden" }}>
-                        <img loading="lazy" src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
-                          onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
-                          onMouseLeave={e => e.target.style.transform = "scale(1)"} />
-                      </div>
-                    ) : (
-                      <div style={{ height: 120, background: "linear-gradient(135deg,#edfafc,#c0e8f0)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>📄</div>
-                    )}
+                    <div style={{ height: 120, background: "linear-gradient(135deg,#edfafc,#c0e8f0)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>📄</div>
                     <div style={{ padding: "10px 12px 14px" }}>
                       {p.category && <div style={{ fontSize: 10, color: "#0891b2", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 5 }}>{p.category}</div>}
                       <p style={{ fontSize: 12.5, fontWeight: 600, color: "#222", lineHeight: 1.45,
@@ -3379,15 +3349,7 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
               <div className="art-pilihan-grid">
                 {pilihanUntukmu.map(p => (
                   <div key={p.id} className="art-pilihan-card" onClick={() => handlePost(p)}>
-                    {p.coverImage ? (
-                      <div style={{ height: 140, overflow: "hidden" }}>
-                        <img loading="lazy" src={p.coverImage} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
-                          onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
-                          onMouseLeave={e => e.target.style.transform = "scale(1)"} />
-                      </div>
-                    ) : (
-                      <div style={{ height: 140, background: "linear-gradient(135deg,#f5fdff,#edfafc)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}>🌟</div>
-                    )}
+                    <div style={{ height: 140, background: "linear-gradient(135deg,#f5fdff,#edfafc)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}>🌟</div>
                     <div style={{ padding: "12px 14px 16px" }}>
                       {p.category && <div style={{ fontSize: 10, color: "#0891b2", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", marginBottom: 5 }}>{p.category}</div>}
                       <p style={{ fontSize: 13, fontWeight: 600, color: "#222", lineHeight: 1.45,
@@ -3431,10 +3393,7 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                 {sidebarCards.map(p => (
                   <div key={p.id} className="art-sb-card" onClick={() => handlePost(p)}>
                     <div className="art-sb-thumb">
-                      {p.coverImage
-                        ? <img loading="lazy" src={p.coverImage} alt="" onError={e => e.target.style.display="none"} />
-                        : <div style={{ width: "100%", height: "100%", background: "#edfafc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>📄</div>
-                      }
+                      <div style={{ width: "100%", height: "100%", background: "#edfafc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>📄</div>
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p style={{ fontSize: 12, fontWeight: 600, color: "#222", lineHeight: 1.45,
@@ -3473,6 +3432,72 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* ── Saran Postingan ── */}
+          {sidebarCards.length > 0 && (
+            <div style={{ background: "#fff", borderRadius: 8, overflow: "hidden", marginTop: 20, boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
+              <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 60%,#10d0e0 100%)", padding: "12px 16px", display: "flex", alignItems: "center", gap: 7 }}>
+                <span style={{ fontSize: 14 }}>✨</span>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: "1px" }}>Saran Postingan</span>
+              </div>
+              <div style={{ padding: "10px 14px", display: "flex", flexDirection: "column", gap: 10 }}>
+                {sidebarCards.slice(0, 3).map(p => (
+                  <div key={p.id} onClick={() => handlePost(p)}
+                    style={{ display: "flex", gap: 10, cursor: "pointer", padding: "6px 0", borderBottom: "1px solid #f0f9fb" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "#f5fdff"}
+                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                    <div style={{ width: 36, height: 36, borderRadius: 6, background: "#edfafc", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>📄</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: 12, fontWeight: 600, color: "#1a2e3b", lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", marginBottom: 4 }}>{p.title}</p>
+                      <span style={{ fontSize: 10, color: "#0891b2", fontWeight: 600 }}>{p.category || (p.section === "news" ? "Event Plan" : p.section === "shop" ? "Traveling" : "Wedding")}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Topik ── */}
+          {(() => {
+            const allTags = [];
+            others.forEach(p => (p.tags || []).forEach(t => { if (!allTags.includes(t)) allTags.push(t); }));
+            if (allTags.length === 0) return null;
+            return (
+              <div style={{ background: "#fff", borderRadius: 8, overflow: "hidden", marginTop: 16, boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
+                <div style={{ padding: "12px 16px", borderBottom: "1px solid #edfafc", display: "flex", alignItems: "center", gap: 7 }}>
+                  <span style={{ fontSize: 13 }}>🗂</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#0d3b66", textTransform: "uppercase", letterSpacing: "1px" }}>Topik</span>
+                </div>
+                <div style={{ padding: "12px 14px", display: "flex", flexWrap: "wrap", gap: 7 }}>
+                  {allTags.slice(0, 14).map(tag => (
+                    <span key={tag} style={{ fontSize: 11, padding: "4px 11px", background: "#edfafc", border: "1px solid #b6dff0", borderRadius: 20, color: "#0875a8", fontWeight: 500 }}>#{tag}</span>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ── Tips Perjalanan ── */}
+          <div style={{ background: "linear-gradient(135deg,#0a3d55 0%,#0d5a7a 100%)", borderRadius: 8, overflow: "hidden", marginTop: 16, marginBottom: 4, boxShadow: "0 2px 10px rgba(0,0,0,.1)" }}>
+            <div style={{ padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,.12)", display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22d3ee", display: "inline-block", boxShadow: "0 0 6px #22d3ee" }} />
+              <span style={{ fontSize: 11, fontWeight: 700, color: "#fff", textTransform: "uppercase", letterSpacing: "1px" }}>Tips Perjalanan</span>
+            </div>
+            <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: 10 }}>
+              {[
+                { icon: "🌤", tip: "Periksa cuaca setempat sebelum berangkat." },
+                { icon: "🛡", tip: "Bawa asuransi perjalanan untuk ketenangan pikiran." },
+                { icon: "📷", tip: "Simpan foto offline sebagai kenang-kenangan." },
+                { icon: "🌏", tip: "Hormati budaya & adat istiadat lokal setempat." },
+                { icon: "💳", tip: "Siapkan uang tunai & kartu cadangan untuk keadaan darurat." },
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", gap: 9, alignItems: "flex-start" }}>
+                  <span style={{ fontSize: 15, flexShrink: 0, marginTop: 1 }}>{item.icon}</span>
+                  <span style={{ fontSize: 11.5, color: "rgba(255,255,255,.88)", lineHeight: 1.55 }}>{item.tip}</span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -6735,15 +6760,7 @@ export default function BricksyTravel() {
     const isDesktop = window.matchMedia("(pointer:fine)").matches;
     if (!isDesktop) return;
 
-    // Cursor glow
-    const dot = document.createElement("div");
-    dot.id = "cursor-glow";
-    document.body.appendChild(dot);
-    const moveDot = (e) => { dot.style.left = e.clientX + "px"; dot.style.top = e.clientY + "px"; };
-    const enterLink = () => dot.classList.add("expanded");
-    const leaveLink = () => dot.classList.remove("expanded");
-    document.addEventListener("mousemove", moveDot);
-    document.querySelectorAll("a,button").forEach(el => { el.addEventListener("mouseenter", enterLink); el.addEventListener("mouseleave", leaveLink); });
+
 
     // Scroll-reveal IntersectionObserver
     const observer = new IntersectionObserver((entries) => {
@@ -6752,8 +6769,6 @@ export default function BricksyTravel() {
     document.querySelectorAll(".anim-fade-up, .anim-zoom").forEach(el => observer.observe(el));
 
     return () => {
-      document.removeEventListener("mousemove", moveDot);
-      if (dot.parentNode) dot.parentNode.removeChild(dot);
       observer.disconnect();
     };
   }, []);
@@ -7638,20 +7653,33 @@ export default function BricksyTravel() {
                       </h2>
                       <p style={{ fontSize: "0.9375rem", color: "#4a7f98", lineHeight: 1.8, maxWidth: 440, margin: "0 auto 40px", whiteSpace: "pre-line" }}>{data.content.newAdvSub}</p>
 
-                      {/* Gallery Ticker — scroll kiri di desktop, grid di mobile */}
+                      {/* Gallery Ticker — gambar dari blok image di dalam konten postingan */}
                       {(() => {
                         const allSecs = ["news","shop","destinations"];
-                        const publishedPosts = allSecs.flatMap(sec => (data.posts?.[sec] || []).filter(p => p.status === "published" && p.coverImage));
-                        const galItems = publishedPosts.length > 0 ? publishedPosts.slice(0, 6) : data.images.gal.map(src => ({ coverImage: src, _static: true }));
+                        const imgUrls = [];
+                        allSecs.forEach(sec => {
+                          (data.posts?.[sec] || [])
+                            .filter(p => p.status === "published")
+                            .forEach(p => {
+                              (p.content || []).forEach(b => {
+                                if (b.type === "image" && b.value) imgUrls.push({ src: b.value, title: p.title, post: p });
+                              });
+                            });
+                        });
+                        // fallback ke data.images.gal jika tidak ada gambar di postingan
+                        const galItems = imgUrls.length > 0
+                          ? imgUrls
+                          : (data.images?.gal || []).map(src => ({ src, title: "", post: null }));
+                        if (galItems.length === 0) return null;
                         const doubled = [...galItems, ...galItems];
                         return (
-                          <div className="gal-ticker">
+                          <div className="gal-ticker" style={{ marginBottom: 40 }}>
                             <div className="gal-ticker-track">
                               {doubled.map((item, i) => (
                                 <div key={i} className="gal-ticker-item hover-lift"
-                                  onClick={() => { if (!item._static) { setReadPost(item); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
-                                  style={{ cursor: item._static ? "default" : "pointer" }}>
-                                  <img loading="lazy" src={item.coverImage || item} alt={item.title || ""} />
+                                  onClick={() => { if (item.post) { setReadPost(item.post); window.scrollTo({ top: 0, behavior: "smooth" }); } }}
+                                  style={{ cursor: item.post ? "pointer" : "default" }}>
+                                  <img loading="lazy" src={item.src} alt={item.title || ""} />
                                 </div>
                               ))}
                             </div>
