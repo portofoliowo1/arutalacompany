@@ -931,6 +931,228 @@ const DEFAULT_DATA = {
       ],
     },
 
+    /* ── TRAVELING TAMBAHAN: OUTBOUND, STUDY BANDING, KUNJUNGAN INDUSTRI, KUNJUNGAN KAMPUS ── */
+    {
+      id: 30,
+      category: "traveling",
+      pkgId: "outbound",
+      title: "Paket Outbound",
+      tagline: "Team Building & Petualangan Alam Terbuka",
+      badge: "SERU & MENANTANG",
+      badgeColor: "#16a34a",
+      accent: "#16a34a",
+      accentLight: "#f0fdf4",
+      duration: "1–2 Hari",
+      minPeserta: "20",
+      price: "Rp 175.000",
+      priceNote: "/ orang (mulai)",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/1280px-Raja_Ampat_Islands.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      description: "Paket outbound seru untuk membangun kekompakan tim, jiwa kepemimpinan, dan semangat kerjasama. Cocok untuk pelajar, mahasiswa, karyawan, dan komunitas. Tersedia area hijau & wahana petualangan.",
+      features: ["Fasilitator Outbound Berpengalaman", "Games & Simulasi Team Building", "Flying Fox & High Rope Course", "Konsumsi & Snack", "Dokumentasi Foto & Video", "Sertifikat Peserta", "P3K & Asuransi Kegiatan"],
+      highlight: false,
+      facilities: [
+        { icon: "🎯", label: "Fasilitator Profesional", detail: "Tim fasilitator bersertifikat" },
+        { icon: "🏕", label: "Area Outdoor Luas", detail: "Lapangan & alam terbuka" },
+        { icon: "🍽", label: "Konsumsi & Snack", detail: "Makan siang + snack 2x" },
+        { icon: "📸", label: "Dokumentasi", detail: "Foto & video kegiatan" },
+        { icon: "🛡", label: "Asuransi Kegiatan", detail: "Seluruh peserta tercover" },
+        { icon: "📋", label: "Sertifikat", detail: "Sertifikat peserta outbound" },
+        { icon: "💊", label: "P3K Lengkap", detail: "Tim medis & kotak P3K" },
+        { icon: "💧", label: "Air Mineral", detail: "Gratis sepanjang kegiatan" },
+      ],
+      services: [
+        "Konsultasi & perancangan program outbound custom",
+        "Pemilihan lokasi sesuai kebutuhan & anggaran",
+        "Fasilitator & instruktur berpengalaman",
+        "Perlengkapan outbound lengkap & safety",
+        "Rundown kegiatan & ice breaking",
+        "Laporan kegiatan & dokumentasi digital",
+        "Free program tambahan (opsional)",
+      ],
+      destinations: [
+        { no: "01", name: "Ice Breaking & Warming Up", sub: "Area Utama", tag: "Pembukaan · Energizer", title: "Sesi Pembuka & Penghangatan Tim", desc: "Dimulai dengan ice breaking kreatif untuk memecah kekakuan dan membangun suasana ceria. Berbagai permainan energizer dirancang agar seluruh peserta langsung aktif dan bersemangat sejak awal.", points: ["Permainan energizer kreatif", "Pembagian tim & yel-yel", "Orientasi area & safety briefing", "Foto bersama pembukaan"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg" },
+        { no: "02", name: "Low Rope & Ground Games", sub: "Area Permainan", tag: "Team Building · Strategi", title: "Permainan Strategi & Kerjasama Tim", desc: "Sesi ini menguji kemampuan komunikasi, strategi, dan koordinasi tim melalui serangkaian permainan low rope dan ground games yang dirancang untuk meningkatkan sinergi antar anggota.", points: ["Spider Web & Trust Fall", "Tongkat Pipa & Bola Koordinasi", "Jembatan Bambu", "Blindfold Challenge"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg" },
+        { no: "03", name: "High Rope & Flying Fox", sub: "Area Petualangan", tag: "Adrenalin · Keberanian", title: "Tantangan Ketinggian & Flying Fox", desc: "Puncak adrenalin di wahana high rope dan flying fox yang memacu keberanian peserta. Semua wahana dilengkapi harness dan safety equipment standar internasional, didampingi instruktur bersertifikat.", points: ["Flying fox 50–200 meter", "Jembatan gantung & panjat dinding", "Safety harness & helmet lengkap", "Instruktur bersertifikat"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/800px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg" },
+        { no: "04", name: "Refleksi & Penutupan", sub: "Area Aula / Terbuka", tag: "Evaluasi · Closing Ceremony", title: "Sesi Refleksi & Pemberian Award", desc: "Sesi penutup yang bermakna — setiap tim berbagi pembelajaran, dilanjutkan pemberian penghargaan untuk tim terbaik, foto bersama, dan penyerahan sertifikat peserta.", points: ["Sharing & refleksi kelompok", "Pemberian penghargaan tim terbaik", "Penyerahan sertifikat peserta", "Foto bersama penutupan"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/800px-Raja_Ampat_regency_cover.jpg" },
+      ],
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "175.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "210.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "280.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "120.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      ],
+    },
+    {
+      id: 31,
+      category: "traveling",
+      pkgId: "study-banding",
+      title: "Paket Study Banding",
+      tagline: "Belajar Langsung dari Instansi Terbaik",
+      badge: "EDUKATIF",
+      badgeColor: "#0369a1",
+      accent: "#0369a1",
+      accentLight: "#e0f2fe",
+      duration: "1–3 Hari",
+      minPeserta: "20",
+      price: "Rp 220.000",
+      priceNote: "/ orang (mulai)",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Prambanan.jpg/800px-Prambanan.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Malioboro_yogyakarta.jpg/800px-Malioboro_yogyakarta.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+      description: "Paket study banding ke instansi, lembaga pemerintah, BUMN, perusahaan unggulan, atau sekolah/universitas terbaik. Dirancang untuk memperluas wawasan, benchmarking, dan adopsi praktik terbaik secara langsung.",
+      features: ["Koordinasi dengan Instansi Tujuan", "Konsumsi 3x Sehari", "Dokumentasi Foto & Video", "Tour Leader Berpengalaman", "Laporan Kunjungan Resmi", "Sertifikat Peserta", "Asuransi Perjalanan"],
+      highlight: false,
+      facilities: [
+        { icon: "🏛", label: "Koordinasi Instansi", detail: "Pengurusan izin & jadwal kunjungan" },
+        { icon: "🍽", label: "Konsumsi 3x Sehari", detail: "Sarapan, makan siang, makan malam" },
+        { icon: "📸", label: "Dokumentasi", detail: "Foto & video kunjungan resmi" },
+        { icon: "👨‍💼", label: "Tour Leader", detail: "Pendamping & koordinator berpengalaman" },
+        { icon: "📄", label: "Laporan Resmi", detail: "Laporan kunjungan tertulis lengkap" },
+        { icon: "📋", label: "Sertifikat Peserta", detail: "Sertifikat study banding resmi" },
+        { icon: "🛡", label: "Asuransi Perjalanan", detail: "Seluruh peserta tercover" },
+        { icon: "💧", label: "Air Mineral", detail: "Gratis sepanjang perjalanan" },
+      ],
+      services: [
+        "Koordinasi & pengurusan izin kunjungan ke instansi tujuan",
+        "Pembuatan surat permohonan & administrasi resmi",
+        "Penyusunan agenda & rundown kunjungan",
+        "Fasilitasi sesi diskusi & tanya jawab",
+        "Dokumentasi foto & video profesional",
+        "Penyusunan laporan kunjungan lengkap",
+        "Konsultasi pra-keberangkatan gratis",
+      ],
+      destinations: [
+        { no: "01", name: "Briefing & Persiapan", sub: "Titik Kumpul", tag: "Pra-Keberangkatan · Administrasi", title: "Briefing Pra-Kunjungan & Pembagian Kelompok", desc: "Sebelum berangkat, seluruh peserta mendapat briefing lengkap — tujuan kunjungan, agenda, tata tertib, dan pembagian kelompok diskusi. Surat pengantar resmi dan ID card kunjungan dibagikan.", points: ["Pembagian ID card & name tag", "Briefing agenda & tata tertib", "Pembagian kelompok diskusi", "Penyiapan bahan pertanyaan"], duration: "30 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/800px-Borobudur_ship.jpg" },
+        { no: "02", name: "Kunjungan Instansi Utama", sub: "Instansi / Lembaga Tujuan", tag: "Inti Kunjungan · Observasi", title: "Kunjungan & Observasi Langsung ke Instansi", desc: "Peserta berkunjung langsung ke instansi tujuan, mengikuti sesi presentasi dari tuan rumah, observasi lapangan/operasional, dan sesi diskusi interaktif. Semua sesi didokumentasikan secara profesional.", points: ["Sesi presentasi dari instansi tujuan", "Tour & observasi area kerja/produksi", "Sesi diskusi & tanya jawab", "Foto bersama dengan tim tuan rumah"], duration: "3–4 jam", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Prambanan.jpg/800px-Prambanan.jpg" },
+        { no: "03", name: "FGD & Evaluasi", sub: "Ruang Diskusi", tag: "Analisis · Focus Group Discussion", title: "Focus Group Discussion & Analisis Hasil", desc: "Setelah kunjungan, setiap kelompok melakukan FGD untuk menganalisis temuan, membandingkan dengan kondisi di instansi asal, dan merumuskan rekomendasi yang dapat diterapkan.", points: ["Diskusi antar kelompok", "Analisis perbandingan (benchmarking)", "Perumusan rekomendasi", "Presentasi hasil tiap kelompok"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Malioboro_yogyakarta.jpg/800px-Malioboro_yogyakarta.jpg" },
+        { no: "04", name: "Penyusunan Laporan & Penutupan", sub: "Area Akomodasi / Hotel", tag: "Dokumentasi · Closing", title: "Penyusunan Laporan Kunjungan Resmi", desc: "Tim kami membantu penyusunan laporan kunjungan resmi yang komprehensif, siap digunakan untuk keperluan administrasi, pelaporan ke pimpinan, atau publikasi internal organisasi.", points: ["Draft laporan kunjungan tertulis", "Kompilasi dokumentasi foto & video", "Sertifikat peserta study banding", "Serah terima laporan digital & cetak"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg" },
+      ],
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "220.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "265.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "340.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "140.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      ],
+    },
+    {
+      id: 32,
+      category: "traveling",
+      pkgId: "kunjungan-industri",
+      title: "Paket Kunjungan Industri",
+      tagline: "Mengenal Dunia Industri Secara Nyata",
+      badge: "VOKASI & SMK",
+      badgeColor: "#b45309",
+      accent: "#b45309",
+      accentLight: "#fffbeb",
+      duration: "1–2 Hari",
+      minPeserta: "20",
+      price: "Rp 195.000",
+      priceNote: "/ orang (mulai)",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/1280px-Raja_Ampat_regency_cover.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+      description: "Paket kunjungan industri untuk siswa SMK, mahasiswa vokasi, dan instansi yang ingin mengenal proses produksi, manajemen operasional, dan dunia kerja nyata secara langsung di pabrik atau perusahaan terkemuka.",
+      features: ["Koordinasi dengan Perusahaan Tujuan", "Konsumsi 2–3x Sehari", "Dokumentasi Foto & Video", "Tour Leader & Pemandu Industri", "Sertifikat Kunjungan Industri", "Laporan Kunjungan Resmi", "Asuransi Perjalanan"],
+      highlight: false,
+      facilities: [
+        { icon: "🏭", label: "Koordinasi Pabrik/Industri", detail: "Pengurusan izin & jadwal kunjungan" },
+        { icon: "🍽", label: "Konsumsi 2–3x Sehari", detail: "Makan siang wajib, sarapan & malam opsional" },
+        { icon: "📸", label: "Dokumentasi", detail: "Foto & video area produksi (area yg diizinkan)" },
+        { icon: "👨‍🏭", label: "Pemandu Industri", detail: "Staf ahli perusahaan sebagai pemandu" },
+        { icon: "📋", label: "Sertifikat Kunjungan", detail: "Sertifikat kunjungan industri resmi" },
+        { icon: "📄", label: "Laporan Resmi", detail: "Laporan kunjungan industri lengkap" },
+        { icon: "🛡", label: "Asuransi Perjalanan", detail: "Seluruh peserta tercover" },
+        { icon: "⛑", label: "APD Kunjungan", detail: "Helm & safety vest tersedia" },
+      ],
+      services: [
+        "Koordinasi & pengurusan izin kunjungan ke perusahaan/pabrik",
+        "Pembuatan surat permohonan resmi & administrasi",
+        "Penyusunan rundown kunjungan bersama pihak industri",
+        "Pemandu dari staf ahli perusahaan",
+        "Sesi tanya jawab langsung dengan praktisi industri",
+        "Dokumentasi foto & video (area yang diizinkan)",
+        "Penyusunan laporan kunjungan industri lengkap",
+      ],
+      destinations: [
+        { no: "01", name: "Penerimaan & Pengarahan", sub: "Aula / Ruang Meeting Perusahaan", tag: "Opening · Company Profile", title: "Sambutan & Presentasi Profil Perusahaan", desc: "Peserta diterima oleh tim perusahaan dan mendapatkan presentasi company profile — sejarah, visi misi, produk/layanan, skala bisnis, dan posisi perusahaan di industri nasional.", points: ["Sambutan resmi dari manajemen", "Presentasi company profile", "Sesi pengenalan produk & layanan", "Pembagian helm & APD kunjungan"], duration: "45 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg" },
+        { no: "02", name: "Tour Area Produksi", sub: "Lantai Produksi / Workshop", tag: "Observasi · Proses Industri", title: "Observasi Langsung Proses Produksi", desc: "Dipandu oleh staf ahli, peserta berkeliling area produksi dan menyaksikan langsung proses manufacturing, quality control, pergudangan, hingga distribusi. Pengalaman yang tidak bisa didapat dari buku.", points: ["Tour area produksi & gudang", "Penjelasan proses manufaktur langsung", "Melihat mesin & teknologi industri", "Observasi quality control"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Raja_Ampat_regency_cover.jpg/800px-Raja_Ampat_regency_cover.jpg" },
+        { no: "03", name: "Sesi Tanya Jawab Praktisi", sub: "Aula / Ruang Meeting", tag: "Interaktif · Career Talk", title: "Dialog Interaktif dengan Praktisi Industri", desc: "Sesi diskusi langsung dengan praktisi — manajer produksi, HRD, atau direktur operasional. Peserta bisa bertanya soal karier, tantangan industri, kebutuhan kompetensi, hingga peluang magang/kerja.", points: ["Sesi QnA dengan praktisi senior", "Career talk & tips memasuki dunia kerja", "Informasi peluang magang & rekrutmen", "Motivasi dari profesional industri"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/800px-Borobudur_ship.jpg" },
+        { no: "04", name: "Penutupan & Sertifikasi", sub: "Aula Perusahaan", tag: "Closing · Sertifikat Resmi", title: "Penyerahan Sertifikat & Foto Bersama", desc: "Sesi penutupan diakhiri dengan penyerahan sertifikat kunjungan industri resmi yang dapat digunakan untuk portofolio, laporan sekolah, atau persyaratan program studi.", points: ["Penyerahan sertifikat kunjungan industri", "Foto bersama dengan tim perusahaan", "Souvenir dari perusahaan (jika ada)", "Evaluasi & kesan-pesan peserta"], duration: "30 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg" },
+      ],
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "195.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "240.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "310.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "130.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      ],
+    },
+    {
+      id: 33,
+      category: "traveling",
+      pkgId: "kunjungan-kampus",
+      title: "Paket Kunjungan Kampus",
+      tagline: "Inspirasi Masa Depan Dimulai di Sini",
+      badge: "SMA / SMK",
+      badgeColor: "#7c3aed",
+      accent: "#7c3aed",
+      accentLight: "#f5f3ff",
+      duration: "1–2 Hari",
+      minPeserta: "20",
+      price: "Rp 185.000",
+      priceNote: "/ orang (mulai)",
+      images: [
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/1280px-Bromo_tengger_semeru_national_park.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1280px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
+      ],
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/1200px-Borobudur_ship.jpg",
+      description: "Paket kunjungan kampus untuk siswa SMA/SMK yang ingin mengenal dunia perguruan tinggi secara langsung — fasilitas, jurusan, beasiswa, kehidupan mahasiswa, hingga prospek karir. Kunjungi universitas negeri & swasta terkemuka.",
+      features: ["Koordinasi dengan Pihak Kampus", "Konsumsi 2–3x Sehari", "Dokumentasi Foto & Video", "Tour Leader Berpengalaman", "Campus Tour Terpandu", "Sertifikat Kunjungan", "Asuransi Perjalanan"],
+      highlight: false,
+      facilities: [
+        { icon: "🎓", label: "Campus Tour Terpandu", detail: "Mahasiswa guide dari kampus tujuan" },
+        { icon: "🍽", label: "Konsumsi 2–3x Sehari", detail: "Makan di kantin kampus / restoran" },
+        { icon: "📸", label: "Dokumentasi", detail: "Foto & video selama kunjungan" },
+        { icon: "👨‍💼", label: "Tour Leader", detail: "Pendamping & koordinator berpengalaman" },
+        { icon: "📋", label: "Sertifikat Kunjungan", detail: "Sertifikat kunjungan kampus resmi" },
+        { icon: "📚", label: "Brosur & Informasi", detail: "Materi jurusan & beasiswa kampus" },
+        { icon: "🛡", label: "Asuransi Perjalanan", detail: "Seluruh peserta tercover" },
+        { icon: "💧", label: "Air Mineral", detail: "Gratis sepanjang perjalanan" },
+      ],
+      services: [
+        "Koordinasi dengan humas / biro penerimaan mahasiswa kampus tujuan",
+        "Penyusunan agenda campus tour & jadwal sesi informasi",
+        "Pemandu mahasiswa aktif dari kampus tujuan",
+        "Sesi informasi jurusan, beasiswa & jalur masuk",
+        "Campus tour: laboratorium, perpustakaan, fasilitas olahraga",
+        "Sesi diskusi & tanya jawab dengan mahasiswa aktif",
+        "Dokumentasi lengkap & sertifikat kunjungan resmi",
+      ],
+      destinations: [
+        { no: "01", name: "Sambutan & Info Kampus", sub: "Aula / Auditorium Kampus", tag: "Opening · Informasi Umum", title: "Presentasi Kampus & Pengenalan Jurusan", desc: "Tim humas atau perwakilan rektorat menyambut rombongan dan mempresentasikan profil kampus secara menyeluruh — akreditasi, jurusan unggulan, prestasi, fasilitas, jalur masuk, dan program beasiswa.", points: ["Presentasi profil & akreditasi kampus", "Informasi jurusan & program studi", "Jalur masuk: SNBP, SNBT, Mandiri", "Program beasiswa tersedia"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Borobudur_ship.jpg/800px-Borobudur_ship.jpg" },
+        { no: "02", name: "Campus Tour Fasilitas", sub: "Seluruh Area Kampus", tag: "Observasi · Fasilitas Kampus", title: "Tur Fasilitas Kampus Bersama Mahasiswa Guide", desc: "Dipandu mahasiswa aktif, peserta berkeliling kampus — laboratorium, studio, perpustakaan, pusat olahraga, kantin, asrama, dan UKM. Melihat langsung suasana kehidupan kampus yang sesungguhnya.", points: ["Laboratorium & studio praktikum", "Perpustakaan & pusat riset", "Fasilitas olahraga & kesehatan", "Area UKM & organisasi mahasiswa"], duration: "90 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Bromo_tengger_semeru_national_park.jpg/800px-Bromo_tengger_semeru_national_park.jpg" },
+        { no: "03", name: "Diskusi dengan Mahasiswa", sub: "Ruang Diskusi / Taman Kampus", tag: "Interaktif · Sharing Session", title: "Sesi Sharing & Tanya Jawab Mahasiswa Aktif", desc: "Peserta berdiskusi langsung dengan mahasiswa aktif berbagai jurusan. Sharing kehidupan kampus, tips lolos seleksi, cara adaptasi, manajemen waktu kuliah, hingga pengalaman magang dan organisasi.", points: ["Sharing pengalaman kuliah", "Tips lolos seleksi & adaptasi kampus", "Diskusi minat jurusan", "Motivasi dari kakak tingkat"], duration: "60 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/800px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg" },
+        { no: "04", name: "Penutupan & Sertifikasi", sub: "Aula / Area Terbuka Kampus", tag: "Closing · Sertifikat", title: "Sertifikat & Foto Bersama di Kampus", desc: "Kunjungan ditutup dengan penyerahan sertifikat resmi, pembagian brosur jurusan & beasiswa, foto bersama di landmark kampus, dan sesi motivasi singkat dari dosen atau alumni berprestasi.", points: ["Penyerahan sertifikat kunjungan kampus", "Pembagian brosur jurusan & beasiswa", "Foto bersama di landmark kampus", "Motivasi dari dosen / alumni"], duration: "30 menit", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Raja_Ampat_Islands.jpg/800px-Raja_Ampat_Islands.jpg" },
+      ],
+      prices: [
+        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "185.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "230.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "295.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "125.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      ],
+    },
+
     /* ── EVENT PLAN TAMBAHAN: TEDAK SINTEN, ANNIVERSARY, DIES NATALIS, UPACARA ADAT, REUNIAN ── */
     {
       id: 13,
@@ -3660,9 +3882,10 @@ function DestinationsSection({ svc, catInfo }) {
 
       {/* Destination card */}
       <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
-        <div style={{ display: "flex", flexWrap: "wrap", minHeight: 220 }}>
+        <style>{`.dest-card-inner{display:flex;flex-wrap:wrap;min-height:220px} @media(max-width:768px){.dest-card-inner{flex-direction:column!important}} .dest-card-img{width:clamp(140px,36%,260px);flex-shrink:0;position:relative;overflow:hidden;background:linear-gradient(135deg,${ac}55,#c5e8f0);align-self:stretch;min-height:200px} @media(max-width:768px){.dest-card-img{width:100%!important;height:220px!important;min-height:220px!important}}`}</style>
+        <div className="dest-card-inner">
           {/* Image */}
-          <div style={{ width: "clamp(140px,36%,260px)", flexShrink: 0, position: "relative", overflow: "hidden", background: `linear-gradient(135deg,${ac}55,#c5e8f0)`, alignSelf: "stretch", minHeight: 200 }}>
+          <div className="dest-card-img">
             <img loading="lazy" src={dest.img} alt={dest.name}
               style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               onLoad={e => { e.target.style.opacity = "1"; }}
@@ -4095,38 +4318,6 @@ function ServicesPage({ content, services, navigateTo }) {
                 </div>
               )}
 
-              {/* RELATED PACKAGES */}
-              {relatedSvcs.length > 0 && (
-                <div className="mg-fade-3">
-                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
-                    <div style={{ width: 4, height: 30, background: "linear-gradient(to bottom, #7ab5cc, transparent)", borderRadius: 2, flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Lihat Juga</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Paket Serupa</div>
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                    {relatedSvcs.map(s => (
-                      <div key={s.id} className="mg-related" onClick={() => openDetail(s)}
-                        style={{ display: "flex", gap: 0, alignItems: "stretch", background: "#fff", borderRadius: 12, overflow: "hidden", cursor: "pointer", boxShadow: "0 2px 10px rgba(13,59,102,.07)", border: "1px solid #c8eaf2" }}
-                        onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 28px rgba(13,59,102,.14)"}
-                        onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(13,59,102,.07)"}>
-                        <div style={{ width: 90, flexShrink: 0, overflow: "hidden", position: "relative" }}>
-                          <img loading="lazy" src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
-                            onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1600&h=70&fit=crop"} />
-                        </div>
-                        <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#0891b2"}, transparent)` }} />
-                        <div style={{ padding: "12px 14px", flex: 1 }}>
-                          {s.badge && <div style={{ fontSize: "0.5625rem", color: s.badgeColor || "#0891b2", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{s.badge}</div>}
-                          <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#0d3b66", marginBottom: 4, lineHeight: 1.3 }}>{s.title}</div>
-                          <div style={{ fontSize: "0.8125rem", color: s.badgeColor || "#0891b2", fontWeight: 800 }}>{s.price} <span style={{ color: "#7ab5cc", fontWeight: 400, fontSize: "0.75rem" }}>{s.priceNote}</span></div>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", paddingRight: 14, color: "#9ed4e0", fontSize: "1.125rem" }}>›</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* ── RIGHT SIDEBAR ── */}
@@ -4201,6 +4392,39 @@ function ServicesPage({ content, services, navigateTo }) {
 
             </div>
           </div>
+
+          {/* RELATED PACKAGES — selalu di bawah, mobile friendly */}
+          {relatedSvcs.length > 0 && (
+            <div className="mg-fade-3" style={{ marginTop: 48 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 18 }}>
+                <div style={{ width: 4, height: 30, background: "linear-gradient(to bottom, #7ab5cc, transparent)", borderRadius: 2, flexShrink: 0 }} />
+                <div>
+                  <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Lihat Juga</div>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Paket Serupa</div>
+                </div>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 10 }}>
+                {relatedSvcs.map(s => (
+                  <div key={s.id} className="mg-related" onClick={() => openDetail(s)}
+                    style={{ display: "flex", gap: 0, alignItems: "stretch", background: "#fff", borderRadius: 12, overflow: "hidden", cursor: "pointer", boxShadow: "0 2px 10px rgba(13,59,102,.07)", border: "1px solid #c8eaf2" }}
+                    onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 28px rgba(13,59,102,.14)"}
+                    onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(13,59,102,.07)"}>
+                    <div style={{ width: 90, flexShrink: 0, overflow: "hidden" }}>
+                      <img loading="lazy" src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
+                        onError={e => e.target.src = "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=300&h=120&fit=crop"} />
+                    </div>
+                    <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#0891b2"}, transparent)` }} />
+                    <div style={{ padding: "12px 14px", flex: 1, minWidth: 0 }}>
+                      {s.badge && <div style={{ fontSize: "0.5625rem", color: s.badgeColor || "#0891b2", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 3 }}>{s.badge}</div>}
+                      <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#0d3b66", marginBottom: 4, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.title}</div>
+                      <div style={{ fontSize: "0.8125rem", color: s.badgeColor || "#0891b2", fontWeight: 800 }}>{s.price} <span style={{ color: "#7ab5cc", fontWeight: 400, fontSize: "0.75rem" }}>{s.priceNote}</span></div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", paddingRight: 14, color: "#9ed4e0", fontSize: "1.125rem", flexShrink: 0 }}>›</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -4755,16 +4979,16 @@ function AboutPage({ content, images, teamMembers }) {
               { icon: "💍", title: "Wedding Organizer", color: "#8e44ad", items: ["Konsultasi & Perencanaan", "Dekorasi & Venue", "Koordinasi Hari H", "Dokumentasi & Foto", "Catering & Entertainment"] },
               { icon: "🎉", title: "Event Organizer", color: "#e67e22", items: ["Corporate Event", "Birthday & Anniversary", "Gathering & Outbound", "Seminar & Conference", "Pesta Perpisahan & Reunian"] },
             ].map(s => (
-              <div key={s.title} style={{ border: "1px solid #c0e8f0", borderRadius: 12, overflow: "hidden" }}>
+              <div key={s.title} style={{ border: "1px solid rgba(255,255,255,.25)", borderRadius: 12, overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,.12)" }}>
                 <div style={{ background: s.color, padding: "24px 28px", display: "flex", alignItems: "center", gap: 14 }}>
                   <span style={{ fontSize: 32 }}>{s.icon}</span>
                   <h3 style={{ fontSize: "1.125rem", fontFamily: "'Playfair Display',serif", fontWeight: 800, color: "#fff" }}>{s.title}</h3>
                 </div>
-                <div style={{ padding: "20px 28px" }}>
+                <div style={{ padding: "20px 28px", background: "#fff" }}>
                   <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
                     {s.items.map(item => (
-                      <li key={item} style={{ display: "flex", gap: 10, fontSize: "0.9rem", color: "#1a5a78" }}>
-                        <span style={{ color: s.color, fontWeight: 700 }}>→</span> {item}
+                      <li key={item} style={{ display: "flex", gap: 10, fontSize: "0.9rem", color: "#0d3b66", fontWeight: 500 }}>
+                        <span style={{ color: s.color, fontWeight: 700, flexShrink: 0 }}>→</span> {item}
                       </li>
                     ))}
                   </ul>
