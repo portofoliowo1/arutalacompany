@@ -5387,7 +5387,15 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
     setEditSvc("new");
   };
   const openEdit = (s) => {
-    setSvcForm({ ...s, features: [...(s.features || [])], images: [...(s.images || (s.image ? [s.image] : []))], coverIndex: s.coverIndex || 0 });
+    setSvcForm({
+      ...s,
+      features: [...(s.features || [])],
+      images: [...(s.images || (s.image ? [s.image] : []))],
+      coverIndex: s.coverIndex || 0,
+      destinations: (s.destinations || []).map(d => ({ ...d, points: [...(d.points || [])] })),
+      facilities: (s.facilities || []).map(f => ({ ...f })),
+      prices: (s.prices || []).map(p => ({ ...p, points: [...(p.points || [])] })),
+    });
     setUploadProgresses([]);
     setEditSvc(s.id);
   };
@@ -5430,7 +5438,19 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
   const addDestPoint = (i) => setSvcForm(p => { const d=[...(p.destinations||[])]; d[i]={...d[i],points:[...(d[i].points||[]),""]}; return {...p,destinations:d}; });
   const updateDestPoint = (di,pi,val) => setSvcForm(p => { const d=[...(p.destinations||[])]; const pts=[...(d[di].points||[])]; pts[pi]=val; d[di]={...d[di],points:pts}; return {...p,destinations:d}; });
   const removeDestPoint = (di,pi) => setSvcForm(p => { const d=[...(p.destinations||[])]; d[di]={...d[di],points:(d[di].points||[]).filter((_,idx)=>idx!==pi)}; return {...p,destinations:d}; });
-  const handleDestImg = (i, e) => { const file=e.target.files?.[0]; if(!file)return; const r=new FileReader(); r.onload=ev=>updateDest(i,"img",ev.target.result); r.readAsDataURL(file); };
+  const handleDestImg = async (i, e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    notify("⏳ Mengupload foto destinasi...");
+    try {
+      const url = await uploadWithProgress(file, () => {});
+      updateDest(i, "img", url);
+      notify("✅ Foto destinasi berhasil diupload!");
+    } catch {
+      notify("❌ Gagal upload foto destinasi. Coba lagi.", "error");
+    }
+    e.target.value = "";
+  };
 
   // ── Facilities helpers ──
   const addFac = () => setSvcForm(p => ({ ...p, facilities: [...(p.facilities||[]), {icon:"", label:"", detail:""}] }));
@@ -5690,7 +5710,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
             </div>
             {(svcForm.destinations||[]).length===0
               ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada destinasi. Klik + Tambah Destinasi.</p>
-              : <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(340px,1fr))", gap:16 }}>
+              : <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
                   {(svcForm.destinations||[]).map((dest,di)=>(
                     <div key={di} style={{ background:"#fffbeb", borderRadius:10, border:"1.5px solid #fde68a", overflow:"hidden" }}>
                       <div style={{ background:"linear-gradient(90deg,#fffbeb,#fff8dc)", padding:"10px 14px", display:"flex", alignItems:"center", gap:10, borderBottom:"1px solid #fde68a" }}>
@@ -5698,43 +5718,72 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                         <span style={{ fontWeight:700, color:"#0d3b66", fontSize:13, flex:1 }}>{dest.name||`Destinasi ${di+1}`}</span>
                         <button onClick={()=>removeDest(di)} style={{ padding:"4px 10px", background:"#fee", color:"#e74c3c", border:"none", borderRadius:5, cursor:"pointer", fontSize:12, fontWeight:700 }}>✕</button>
                       </div>
-                      <div style={{ padding:"12px 14px", display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
-                        {[["no","No.","01"],["name","Nama Tab","Tanah Lot"],["tag","Tag","Pura Hindu · Alam"],["title","Judul Lengkap","Pura Megah"],["sub","Lokasi","Tabanan, Bali"],["duration","Durasi","2–3 jam"]].map(([k,lbl,ph])=>(
-                          <div key={k}>
-                            <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>{lbl}</label>
-                            <input value={dest[k]||""} onChange={e=>updateDest(di,k,e.target.value)} placeholder={ph}
-                              style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", boxSizing:"border-box" }} />
-                          </div>
-                        ))}
-                        <div style={{ gridColumn:"1/-1" }}>
-                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Deskripsi</label>
-                          <textarea value={dest.desc||""} onChange={e=>updateDest(di,"desc",e.target.value)} rows={2} placeholder="Deskripsi destinasi..."
-                            style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", resize:"vertical", boxSizing:"border-box" }} />
-                        </div>
-                        <div>
-                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Foto Destinasi</label>
-                          <label style={{ cursor:"pointer", display:"block" }}>
-                            <div style={{ height:90, border:"2px dashed #fde68a", borderRadius:7, background:"#fffdf0", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden" }}>
-                              {dest.img ? <img src={dest.img} alt="" style={{ width:"100%", height:"100%", objectFit:"contain" }} /> : <div style={{ textAlign:"center", color:"#e8a020", opacity:.7 }}><div style={{ fontSize:"1.4rem" }}>📷</div><div style={{ fontSize:10, fontWeight:600, marginTop:2 }}>Upload</div></div>}
+                      <div style={{ padding:"14px 16px", display:"flex", flexDirection:"column", gap:10 }}>
+                        {/* Row 1: No + Nama Tab */}
+                        <div style={{ display:"grid", gridTemplateColumns:"100px 1fr", gap:10 }}>
+                          {[["no","No.","01"],["name","Nama Tab","Tanah Lot"]].map(([k,lbl,ph])=>(
+                            <div key={k}>
+                              <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>{lbl}</label>
+                              <input value={dest[k]||""} onChange={e=>updateDest(di,k,e.target.value)} placeholder={ph}
+                                style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", boxSizing:"border-box" }} />
                             </div>
-                            <input type="file" accept="image/*" onChange={e=>handleDestImg(di,e)} style={{ display:"none" }} />
-                          </label>
-                          {dest.img && <button onClick={()=>updateDest(di,"img","")} style={{ marginTop:4, fontSize:11, padding:"3px 8px", background:"#fee", color:"#e74c3c", border:"none", borderRadius:5, cursor:"pointer" }}>Hapus Foto</button>}
+                          ))}
                         </div>
+                        {/* Row 2: Tag full width */}
                         <div>
-                          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
-                            <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px" }}>Highlight (✓)</label>
-                            <button onClick={()=>addDestPoint(di)} style={{ fontSize:10, padding:"2px 8px", background:"#e8f8ef", color:"#27ae60", border:"none", borderRadius:5, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
-                          </div>
-                          <div style={{ display:"flex", flexDirection:"column", gap:5, maxHeight:120, overflowY:"auto" }}>
-                            {(dest.points||[]).map((pt,pi)=>(
-                              <div key={pi} style={{ display:"flex", gap:5, alignItems:"center" }}>
-                                <span style={{ color:"#e8a020", fontWeight:700, flexShrink:0 }}>✓</span>
-                                <input value={pt} onChange={e=>updateDestPoint(di,pi,e.target.value)} placeholder={`Highlight ${pi+1}`}
-                                  style={{ flex:1, padding:"5px 7px", border:"1px solid #b0dce8", borderRadius:5, fontSize:11, outline:"none" }} />
-                                <button onClick={()=>removeDestPoint(di,pi)} style={{ width:22, height:22, background:"#fee", color:"#e74c3c", border:"none", borderRadius:4, cursor:"pointer", flexShrink:0, fontSize:10 }}>✕</button>
+                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Tag / Kategori</label>
+                          <input value={dest.tag||""} onChange={e=>updateDest(di,"tag",e.target.value)} placeholder="Pura Hindu · Keindahan Alam"
+                            style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", boxSizing:"border-box" }} />
+                        </div>
+                        {/* Row 3: Judul Lengkap full width */}
+                        <div>
+                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Judul Lengkap</label>
+                          <input value={dest.title||""} onChange={e=>updateDest(di,"title",e.target.value)} placeholder="Pura Megah di Atas Batu Karang"
+                            style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", boxSizing:"border-box" }} />
+                        </div>
+                        {/* Row 4: Lokasi + Durasi */}
+                        <div style={{ display:"grid", gridTemplateColumns:"1fr 120px", gap:10 }}>
+                          {[["sub","Lokasi","Tabanan, Bali"],["duration","Durasi","2–3 jam"]].map(([k,lbl,ph])=>(
+                            <div key={k}>
+                              <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>{lbl}</label>
+                              <input value={dest[k]||""} onChange={e=>updateDest(di,k,e.target.value)} placeholder={ph}
+                                style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", boxSizing:"border-box" }} />
+                            </div>
+                          ))}
+                        </div>
+                        {/* Row 5: Deskripsi full width */}
+                        <div>
+                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Deskripsi</label>
+                          <textarea value={dest.desc||""} onChange={e=>updateDest(di,"desc",e.target.value)} rows={4} placeholder="Deskripsi destinasi..."
+                            style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", resize:"vertical", lineHeight:1.6, boxSizing:"border-box" }} />
+                        </div>
+                        {/* Row 6: Foto + Highlight side by side */}
+                        <div style={{ display:"grid", gridTemplateColumns:"140px 1fr", gap:12 }}>
+                          <div>
+                            <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Foto Destinasi</label>
+                            <label style={{ cursor:"pointer", display:"block" }}>
+                              <div style={{ height:100, border:"2px dashed #fde68a", borderRadius:7, background:"#fffdf0", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden" }}>
+                                {dest.img ? <img src={dest.img} alt="" style={{ width:"100%", height:"100%", objectFit:"contain" }} /> : <div style={{ textAlign:"center", color:"#e8a020", opacity:.7 }}><div style={{ fontSize:"1.4rem" }}>📷</div><div style={{ fontSize:10, fontWeight:600, marginTop:2 }}>Upload</div></div>}
                               </div>
-                            ))}
+                              <input type="file" accept="image/*" onChange={e=>handleDestImg(di,e)} style={{ display:"none" }} />
+                            </label>
+                            {dest.img && <button onClick={()=>updateDest(di,"img","")} style={{ marginTop:4, fontSize:11, padding:"3px 8px", background:"#fee", color:"#e74c3c", border:"none", borderRadius:5, cursor:"pointer" }}>Hapus Foto</button>}
+                          </div>
+                          <div>
+                            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
+                              <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px" }}>Highlight (✓)</label>
+                              <button onClick={()=>addDestPoint(di)} style={{ fontSize:10, padding:"2px 8px", background:"#e8f8ef", color:"#27ae60", border:"none", borderRadius:5, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
+                            </div>
+                            <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
+                              {(dest.points||[]).map((pt,pi)=>(
+                                <div key={pi} style={{ display:"flex", gap:5, alignItems:"center" }}>
+                                  <span style={{ color:"#e8a020", fontWeight:700, flexShrink:0 }}>✓</span>
+                                  <input value={pt} onChange={e=>updateDestPoint(di,pi,e.target.value)} placeholder={`Highlight ${pi+1}`}
+                                    style={{ flex:1, padding:"5px 7px", border:"1px solid #b0dce8", borderRadius:5, fontSize:11, outline:"none" }} />
+                                  <button onClick={()=>removeDestPoint(di,pi)} style={{ width:22, height:22, background:"#fee", color:"#e74c3c", border:"none", borderRadius:4, cursor:"pointer", flexShrink:0, fontSize:10 }}>✕</button>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
