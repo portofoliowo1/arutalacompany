@@ -4667,13 +4667,228 @@ function TravelPackageDetailModal({ svc, onClose, waLink }) {
 }
 
 /* ─────────────── DESTINATIONS SECTION (full-page detail) ─────────────── */
-function DestinationsSection({ svc, catInfo }) {
-  const [destIdx, setDestIdx] = useState(0);
+/* ─────────────── FACILITIES SECTION (editable) ─────────────── */
+function FacilitiesSection({ svc }) {
   const ac = svc.accent || "#e8a020";
-  const dest = (svc.destinations || [])[destIdx];
-  if (!dest) return null;
+  const [facilities, setFacilities] = useState(() => (svc.facilities || []).map((f, i) => ({ ...f, _id: i })));
+  const [showModal, setShowModal] = useState(false);
+  const [editTarget, setEditTarget] = useState(null);
+  const [form, setForm] = useState({ icon: "", label: "", detail: "" });
+
+  const openAdd = () => { setForm({ icon: "", label: "", detail: "" }); setEditTarget(null); setShowModal(true); };
+  const openEdit = (i) => { setForm({ ...facilities[i] }); setEditTarget(i); setShowModal(true); };
+  const closeModal = () => setShowModal(false);
+
+  const handleSave = () => {
+    if (!form.label.trim()) return;
+    if (editTarget !== null) {
+      setFacilities(prev => prev.map((f, i) => i === editTarget ? { ...form, _id: f._id } : f));
+    } else {
+      setFacilities(prev => [...prev, { ...form, _id: Date.now() }]);
+    }
+    closeModal();
+  };
+
+  const handleDelete = (i) => {
+    if (!window.confirm("Hapus fasilitas ini?")) return;
+    setFacilities(prev => prev.filter((_, idx) => idx !== i));
+  };
+
+  const COMMON_ICONS = ["🏨","🍽","📸","👤","🎫","🩺","💊","🚌","🧭","🌿","⛑","💧","🏆","✈","📋","🤝","🎒","🎵","🏖","🌄"];
+
   return (
     <div className="mg-fade-3" style={{ marginBottom: 48 }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
+        <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${ac}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+        <div>
+          <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: ac, fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Yang Sudah Termasuk</div>
+          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Fasilitas Perjalanan</div>
+        </div>
+        <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
+        <button onClick={openAdd}
+          style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", background: ac, color: "#fff", border: "none", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", flexShrink: 0 }}>
+          <span style={{ fontSize: "1rem" }}>＋</span> Tambah
+        </button>
+      </div>
+
+      {/* Grid fasilitas */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))", gap: 10 }}>
+        {facilities.map((f, i) => (
+          <div key={f._id} style={{ display: "flex", gap: 12, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px", border: "1px solid #c8eaf2", position: "relative", overflow: "hidden", transition: "box-shadow .2s" }}
+            onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 16px rgba(13,59,102,.1)"}
+            onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
+            <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: ac, borderRadius: "10px 0 0 10px" }} />
+            <span style={{ fontSize: 22, flexShrink: 0 }}>{f.icon}</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{f.label}</div>
+              {f.detail && <div style={{ fontSize: "0.75rem", color: "#4a7f98", lineHeight: 1.5 }}>{f.detail}</div>}
+            </div>
+            {/* Edit/Delete */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 4, flexShrink: 0 }}>
+              <button onClick={() => openEdit(i)} title="Edit"
+                style={{ width: 24, height: 24, borderRadius: 6, border: `1px solid ${ac}40`, background: `${ac}10`, color: ac, cursor: "pointer", fontSize: "0.625rem", display: "flex", alignItems: "center", justifyContent: "center" }}>✏</button>
+              <button onClick={() => handleDelete(i)} title="Hapus"
+                style={{ width: 24, height: 24, borderRadius: 6, border: "1px solid #fca5a540", background: "#fff0f0", color: "#ef4444", cursor: "pointer", fontSize: "0.625rem", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+            </div>
+          </div>
+        ))}
+        {facilities.length === 0 && (
+          <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "32px 20px", background: "#f8fbfd", borderRadius: 10, border: `2px dashed ${ac}40`, color: "#4a7f98" }}>
+            <div style={{ fontSize: "2rem", marginBottom: 6 }}>🎒</div>
+            <div style={{ fontWeight: 600, fontSize: "0.875rem" }}>Belum ada fasilitas</div>
+          </div>
+        )}
+      </div>
+
+      {/* MODAL Add/Edit Fasilitas */}
+      {showModal && (
+        <ModalOverlay onClose={closeModal}>
+          <div style={{ padding: "28px 28px 24px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.1rem", fontWeight: 800, color: "#0d3b66" }}>
+                {editTarget !== null ? "Edit Fasilitas" : "Tambah Fasilitas"}
+              </div>
+              <button onClick={closeModal} style={{ width: 32, height: 32, borderRadius: "50%", border: "none", background: "#f0f4f8", cursor: "pointer", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#0d3b66" }}>✕</button>
+            </div>
+
+            {/* Emoji picker cepat */}
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 8 }}>Ikon / Emoji</label>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
+                {COMMON_ICONS.map(ic => (
+                  <button key={ic} onClick={() => setForm(f => ({ ...f, icon: ic }))}
+                    style={{ width: 38, height: 38, fontSize: "1.3rem", borderRadius: 8, border: `2px solid ${form.icon === ic ? ac : "#c8eaf2"}`, background: form.icon === ic ? `${ac}18` : "#fff", cursor: "pointer", transition: "border .15s" }}>
+                    {ic}
+                  </button>
+                ))}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <input value={form.icon || ""} onChange={e => setForm(f => ({ ...f, icon: e.target.value }))} placeholder="Atau ketik emoji…"
+                  style={{ flex: 1, padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "1rem", outline: "none", fontFamily: "'DM Sans',sans-serif" }} />
+                {form.icon && <span style={{ fontSize: "1.8rem" }}>{form.icon}</span>}
+              </div>
+            </div>
+
+            {/* Label */}
+            <div style={{ marginBottom: 14 }}>
+              <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 5 }}>Nama Fasilitas <span style={{ color: "#ef4444" }}>*</span></label>
+              <input value={form.label || ""} onChange={e => setForm(f => ({ ...f, label: e.target.value }))} placeholder="cth: Hotel Bintang 3–4"
+                style={{ width: "100%", padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.875rem", fontFamily: "'DM Sans',sans-serif", outline: "none", boxSizing: "border-box" }} />
+            </div>
+
+            {/* Detail */}
+            <div style={{ marginBottom: 22 }}>
+              <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 5 }}>Keterangan</label>
+              <input value={form.detail || ""} onChange={e => setForm(f => ({ ...f, detail: e.target.value }))} placeholder="cth: Kamar twin sharing ber-AC"
+                style={{ width: "100%", padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.875rem", fontFamily: "'DM Sans',sans-serif", outline: "none", boxSizing: "border-box" }} />
+            </div>
+
+            {/* Preview */}
+            {(form.label || form.icon) && (
+              <div style={{ background: "#f8fbfd", borderRadius: 10, padding: "12px 14px", marginBottom: 18, border: "1px solid #c8eaf2", display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <div style={{ width: 3, alignSelf: "stretch", background: ac, borderRadius: 2, flexShrink: 0 }} />
+                <span style={{ fontSize: 22 }}>{form.icon}</span>
+                <div>
+                  <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{form.label || "—"}</div>
+                  {form.detail && <div style={{ fontSize: "0.75rem", color: "#4a7f98" }}>{form.detail}</div>}
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+              <button onClick={closeModal}
+                style={{ padding: "9px 20px", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", background: "#f0f4f8", color: "#0d3b66" }}>
+                Batal
+              </button>
+              <button onClick={handleSave}
+                style={{ padding: "9px 20px", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", background: ac, color: "#fff", opacity: !form.label?.trim() ? .5 : 1 }}>
+                {editTarget !== null ? "Simpan Perubahan" : "Tambah Fasilitas"}
+              </button>
+            </div>
+          </div>
+        </ModalOverlay>
+      )}
+    </div>
+  );
+}
+
+/* ── MODAL OVERLAY helper ── */
+function ModalOverlay({ onClose, children }) {
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, []);
+  return (
+    <div onClick={e => { if (e.target === e.currentTarget) onClose(); }}
+      style={{ position: "fixed", inset: 0, background: "rgba(5,20,45,.65)", backdropFilter: "blur(4px)", zIndex: 99999, display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+      <div style={{ background: "#fff", borderRadius: 18, width: "100%", maxWidth: 560, maxHeight: "90vh", overflowY: "auto", boxShadow: "0 32px 80px rgba(0,0,0,.35)", position: "relative" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function DestinationsSection({ svc, catInfo }) {
+  const [dests, setDests] = useState(() => (svc.destinations || []).map((d, i) => ({ ...d, _id: i })));
+  const [destIdx, setDestIdx] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [editTarget, setEditTarget] = useState(null); // null = add new
+  const [form, setForm] = useState({});
+  const ac = svc.accent || "#e8a020";
+  const dest = dests[destIdx];
+
+  const emptyForm = () => ({ no: String(dests.length + 1).padStart(2, "0"), name: "", tag: "", title: "", sub: "", duration: "", desc: "", points: [""], img: "", imgPreview: "" });
+
+  const openAdd = () => { setForm(emptyForm()); setEditTarget(null); setShowModal(true); };
+  const openEdit = (i) => {
+    const d = dests[i];
+    setForm({ ...d, points: d.points?.length ? [...d.points] : [""], imgPreview: d.img || "" });
+    setEditTarget(i); setShowModal(true);
+  };
+  const closeModal = () => setShowModal(false);
+
+  const handleImg = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => setForm(f => ({ ...f, img: ev.target.result, imgPreview: ev.target.result }));
+    reader.readAsDataURL(file);
+  };
+
+  const handleSave = () => {
+    if (!form.name.trim() || !form.title.trim()) return;
+    const clean = { ...form, points: (form.points || []).filter(p => p.trim()), _id: editTarget !== null ? dests[editTarget]._id : Date.now() };
+    if (editTarget !== null) {
+      setDests(prev => prev.map((d, i) => i === editTarget ? clean : d));
+    } else {
+      setDests(prev => [...prev, clean]);
+      setDestIdx(dests.length);
+    }
+    closeModal();
+  };
+
+  const handleDelete = (i) => {
+    if (!window.confirm("Hapus destinasi ini?")) return;
+    const next = dests.filter((_, idx) => idx !== i);
+    setDests(next);
+    setDestIdx(Math.min(destIdx, next.length - 1));
+  };
+
+  const setPoint = (i, v) => setForm(f => { const pts = [...(f.points || [])]; pts[i] = v; return { ...f, points: pts }; });
+  const addPoint = () => setForm(f => ({ ...f, points: [...(f.points || []), ""] }));
+  const removePoint = (i) => setForm(f => ({ ...f, points: (f.points || []).filter((_, idx) => idx !== i) }));
+
+  const BtnStyle = (primary) => ({
+    padding: "9px 20px", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700,
+    cursor: "pointer", background: primary ? ac : "#f0f4f8", color: primary ? "#fff" : "#0d3b66", transition: "opacity .15s",
+  });
+
+  return (
+    <div className="mg-fade-3" style={{ marginBottom: 48 }}>
+      {/* Section header */}
       <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
         <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${ac}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
         <div>
@@ -4681,49 +4896,150 @@ function DestinationsSection({ svc, catInfo }) {
           <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Destinasi Wisata</div>
         </div>
         <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
+        <button onClick={openAdd}
+          style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", background: ac, color: "#fff", border: "none", borderRadius: 20, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", flexShrink: 0 }}>
+          <span style={{ fontSize: "1rem", lineHeight: 1 }}>＋</span> Tambah
+        </button>
       </div>
 
       {/* Tab selector */}
-      {svc.destinations.length > 1 && (
+      {dests.length > 0 && (
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
-          {svc.destinations.map((d, i) => (
-            <button key={i} onClick={() => setDestIdx(i)}
-              style={{ padding: "7px 16px", borderRadius: 20, border: `1.5px solid ${i === destIdx ? ac : ac + "30"}`, background: i === destIdx ? ac : "#fff", color: i === destIdx ? "#fff" : ac, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", transition: "all .2s", fontFamily: "'DM Sans',sans-serif" }}>
-              {d.no}. {d.name}
-            </button>
+          {dests.map((d, i) => (
+            <div key={d._id} style={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <button onClick={() => setDestIdx(i)}
+                style={{ padding: "7px 14px", borderRadius: 20, border: `1.5px solid ${i === destIdx ? ac : ac + "30"}`, background: i === destIdx ? ac : "#fff", color: i === destIdx ? "#fff" : ac, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", transition: "all .2s", fontFamily: "'DM Sans',sans-serif" }}>
+                {d.no}. {d.name}
+              </button>
+              <button onClick={() => openEdit(i)} title="Edit"
+                style={{ width: 26, height: 26, borderRadius: "50%", border: `1px solid ${ac}40`, background: "#fff", color: ac, cursor: "pointer", fontSize: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center" }}>✏</button>
+              <button onClick={() => handleDelete(i)} title="Hapus"
+                style={{ width: 26, height: 26, borderRadius: "50%", border: "1px solid #fca5a540", background: "#fff", color: "#ef4444", cursor: "pointer", fontSize: "0.75rem", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+            </div>
           ))}
         </div>
       )}
 
       {/* Destination card */}
-      <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
-        <style>{`.dest-card-inner{display:flex;flex-wrap:wrap;min-height:220px} @media(max-width:768px){.dest-card-inner{flex-direction:column!important}} .dest-card-img{width:clamp(140px,36%,260px);flex-shrink:0;position:relative;overflow:hidden;background:linear-gradient(135deg,${ac}55,#c5e8f0);align-self:stretch;min-height:200px} @media(max-width:768px){.dest-card-img{width:100%!important;height:220px!important;min-height:220px!important}}`}</style>
-        <div className="dest-card-inner">
-          {/* Image */}
-          <div className="dest-card-img">
-            <img loading="lazy" src={dest.img} alt={dest.name}
-              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-              onLoad={e => { e.target.style.opacity = "1"; }}
-              onError={e => { e.target.style.opacity = "0"; }} />
-            <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}44,transparent)`, pointerEvents: "none" }} />
-            <div style={{ position: "absolute", top: 12, left: 12, background: ac, color: "#fff", borderRadius: "50%", width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.625rem", fontWeight: 800, zIndex: 2 }}>{dest.no}</div>
+      {dest ? (
+        <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
+          {/* Image — full width, contain agar tidak terpotong */}
+          <div style={{ width: "100%", background: `linear-gradient(135deg,${ac}22,#e8f4f8)`, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 280 }}>
+            {dest.img ? (
+              <img loading="lazy" src={dest.img} alt={dest.name}
+                style={{ width: "100%", maxHeight: 360, objectFit: "contain", display: "block" }}
+                onError={e => { e.target.style.display = "none"; }} />
+            ) : (
+              <div style={{ padding: 40, color: ac, opacity: .4, fontSize: "3rem" }}>🏔</div>
+            )}
+            <div style={{ position: "absolute", top: 12, left: 12, background: ac, color: "#fff", borderRadius: "50%", width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6875rem", fontWeight: 800, zIndex: 2, boxShadow: "0 2px 8px rgba(0,0,0,.2)" }}>{dest.no}</div>
           </div>
           {/* Content */}
-          <div style={{ flex: 1, padding: "20px 22px", minWidth: 200 }}>
-            <div style={{ fontSize: "0.5625rem", color: ac, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 4 }}>{dest.tag}</div>
-            <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.0625rem", fontWeight: 800, color: "#0d3b66", marginBottom: 5, lineHeight: 1.3 }}>{dest.title}</h3>
-            <div style={{ fontSize: "0.75rem", color: "#4a7f98", marginBottom: 10 }}>📍 {dest.sub} &nbsp;·&nbsp; ⏱ {dest.duration}</div>
-            <p style={{ fontSize: "0.8125rem", color: "#3a5266", lineHeight: 1.7, marginBottom: 12 }}>{dest.desc}</p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "5px 16px" }}>
+          <div style={{ padding: "20px 24px 24px" }}>
+            <div style={{ fontSize: "0.5625rem", color: ac, fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", marginBottom: 6 }}>{dest.tag}</div>
+            <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.125rem", fontWeight: 800, color: "#0d3b66", marginBottom: 6, lineHeight: 1.3 }}>{dest.title}</h3>
+            <div style={{ fontSize: "0.75rem", color: "#4a7f98", marginBottom: 12 }}>📍 {dest.sub} &nbsp;·&nbsp; ⏱ {dest.duration}</div>
+            <p style={{ fontSize: "0.875rem", color: "#3a5266", lineHeight: 1.75, marginBottom: 14 }}>{dest.desc}</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 20px" }}>
               {(dest.points || []).map((pt, pi) => (
-                <div key={pi} style={{ display: "flex", gap: 6, alignItems: "center", fontSize: "0.75rem", color: "#1a5a78" }}>
-                  <span style={{ color: ac, fontWeight: 700, fontSize: "0.875rem" }}>✓</span> {pt}
+                <div key={pi} style={{ display: "flex", gap: 6, alignItems: "center", fontSize: "0.8125rem", color: "#1a5a78" }}>
+                  <span style={{ color: ac, fontWeight: 700 }}>✓</span> {pt}
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div style={{ textAlign: "center", padding: "40px 20px", background: "#f8fbfd", borderRadius: 14, border: `2px dashed ${ac}40`, color: "#4a7f98" }}>
+          <div style={{ fontSize: "2rem", marginBottom: 8 }}>🗺</div>
+          <div style={{ fontWeight: 600, marginBottom: 4 }}>Belum ada destinasi</div>
+          <div style={{ fontSize: "0.8125rem" }}>Klik <b>Tambah</b> untuk menambahkan destinasi wisata</div>
+        </div>
+      )}
+
+      {/* MODAL Add/Edit */}
+      {showModal && (
+        <ModalOverlay onClose={closeModal}>
+          <div style={{ padding: "28px 28px 24px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.1rem", fontWeight: 800, color: "#0d3b66" }}>
+                {editTarget !== null ? "Edit Destinasi" : "Tambah Destinasi"}
+              </div>
+              <button onClick={closeModal} style={{ width: 32, height: 32, borderRadius: "50%", border: "none", background: "#f0f4f8", cursor: "pointer", fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center", color: "#0d3b66" }}>✕</button>
+            </div>
+
+            {/* Upload foto */}
+            <label style={{ display: "block", marginBottom: 16, cursor: "pointer" }}>
+              <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", marginBottom: 6 }}>Foto Destinasi</div>
+              <div style={{ width: "100%", height: 180, borderRadius: 10, border: `2px dashed ${ac}60`, background: `${ac}08`, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", position: "relative" }}>
+                {form.imgPreview ? (
+                  <img src={form.imgPreview} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                ) : (
+                  <div style={{ textAlign: "center", color: ac, opacity: .6 }}>
+                    <div style={{ fontSize: "2rem", marginBottom: 6 }}>📷</div>
+                    <div style={{ fontSize: "0.75rem", fontWeight: 600 }}>Klik untuk upload foto</div>
+                    <div style={{ fontSize: "0.6875rem", color: "#4a7f98", marginTop: 2 }}>JPG, PNG — maks 5MB</div>
+                  </div>
+                )}
+              </div>
+              <input type="file" accept="image/*" onChange={handleImg} style={{ display: "none" }} />
+            </label>
+            {form.imgPreview && (
+              <button onClick={() => setForm(f => ({ ...f, img: "", imgPreview: "" }))}
+                style={{ ...BtnStyle(false), fontSize: "0.6875rem", padding: "5px 12px", marginBottom: 14, color: "#ef4444" }}>
+                Hapus Foto
+              </button>
+            )}
+
+            {/* Form fields */}
+            {[
+              { key: "no", label: "Nomor", placeholder: "01" },
+              { key: "name", label: "Nama Singkat (tab)", placeholder: "Tanah Lot" },
+              { key: "tag", label: "Tag / Kategori", placeholder: "Pura Hindu · Keindahan Alam" },
+              { key: "title", label: "Judul Lengkap", placeholder: "Pura Megah di Atas Batu Karang Laut" },
+              { key: "sub", label: "Lokasi", placeholder: "Tabanan, Bali" },
+              { key: "duration", label: "Durasi", placeholder: "2–3 jam" },
+            ].map(({ key, label, placeholder }) => (
+              <div key={key} style={{ marginBottom: 14 }}>
+                <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 5 }}>{label}</label>
+                <input value={form[key] || ""} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))} placeholder={placeholder}
+                  style={{ width: "100%", padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.875rem", fontFamily: "'DM Sans',sans-serif", color: "#0d3b66", outline: "none", boxSizing: "border-box" }} />
+              </div>
+            ))}
+
+            {/* Deskripsi */}
+            <div style={{ marginBottom: 14 }}>
+              <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66", display: "block", marginBottom: 5 }}>Deskripsi</label>
+              <textarea value={form.desc || ""} onChange={e => setForm(f => ({ ...f, desc: e.target.value }))} rows={4} placeholder="Tulis deskripsi destinasi..."
+                style={{ width: "100%", padding: "9px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.875rem", fontFamily: "'DM Sans',sans-serif", color: "#0d3b66", outline: "none", resize: "vertical", boxSizing: "border-box" }} />
+            </div>
+
+            {/* Points */}
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#0d3b66" }}>Highlight (✓ Poin)</label>
+                <button onClick={addPoint} style={{ fontSize: "0.6875rem", fontWeight: 700, color: ac, background: `${ac}15`, border: "none", borderRadius: 6, padding: "4px 10px", cursor: "pointer" }}>＋ Tambah</button>
+              </div>
+              {(form.points || []).map((pt, i) => (
+                <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8, alignItems: "center" }}>
+                  <span style={{ color: ac, fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>✓</span>
+                  <input value={pt} onChange={e => setPoint(i, e.target.value)} placeholder={`Highlight ${i + 1}`}
+                    style={{ flex: 1, padding: "8px 12px", borderRadius: 8, border: "1.5px solid #c8eaf2", fontSize: "0.8125rem", fontFamily: "'DM Sans',sans-serif", outline: "none" }} />
+                  <button onClick={() => removePoint(i)} style={{ width: 28, height: 28, borderRadius: "50%", border: "none", background: "#fee2e2", color: "#ef4444", cursor: "pointer", flexShrink: 0, fontSize: "0.875rem" }}>✕</button>
+                </div>
+              ))}
+            </div>
+
+            {/* Actions */}
+            <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+              <button onClick={closeModal} style={BtnStyle(false)}>Batal</button>
+              <button onClick={handleSave} style={{ ...BtnStyle(true), opacity: (!form.name?.trim() || !form.title?.trim()) ? .5 : 1 }}>
+                {editTarget !== null ? "Simpan Perubahan" : "Tambah Destinasi"}
+              </button>
+            </div>
+          </div>
+        </ModalOverlay>
+      )}
     </div>
   );
 }
@@ -5147,28 +5463,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 
               {/* FACILITIES — hanya untuk traveling */}
               {svc.category === "traveling" && (svc.facilities || []).length > 0 && (
-                <div className="mg-fade-3" style={{ marginBottom: 48 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
-                    <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${svc.accent || "#e8a020"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: svc.accent || "#e8a020", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Yang Sudah Termasuk</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Fasilitas Perjalanan</div>
-                    </div>
-                    <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }}>
-                    {(svc.facilities || []).map((f, i) => (
-                      <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px", border: "1px solid #c8eaf2", position: "relative", overflow: "hidden" }}>
-                        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: svc.accent || "#e8a020", borderRadius: "10px 0 0 10px" }} />
-                        <span style={{ fontSize: 20, flexShrink: 0 }}>{f.icon}</span>
-                        <div>
-                          <div style={{ fontSize: "0.8125rem", fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{f.label}</div>
-                          {f.detail && <div style={{ fontSize: "0.75rem", color: "#4a7f98", lineHeight: 1.5 }}>{f.detail}</div>}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <FacilitiesSection svc={svc} />
               )}
 
               {/* PRICE ACCORDION — only for traveling packages */}
