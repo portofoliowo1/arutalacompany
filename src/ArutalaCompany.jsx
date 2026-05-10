@@ -6160,7 +6160,7 @@ export default function BricksyTravel() {
   const [forgotErr, setForgotErr] = useState("");
   const [notif, setNotif] = useState(null);
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [editImg, setEditImg] = useState({ group: null, idx: null, url: "" });
+  const [editImg, setEditImg] = useState({ group: null, idx: null, url: "", uploading: false });
   const [editContent, setEditContent] = useState({});
   const [contact, setContact] = useState({ name: "", email: "", message: "" });
   const [replyTo, setReplyTo] = useState(null);
@@ -8024,44 +8024,190 @@ export default function BricksyTravel() {
               {/* IMAGES */}
               {adminTab === "images" && canEdit && (
                 <div className="fade-in">
-                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 8 }}>Image Management</h1>
-                  <p style={{ fontSize: 13, color: "#5090aa", marginBottom: 8 }}>Update images via Cloudinary URL or direct URL</p>
-                  <div style={{ fontSize: 12, background: "#e8f4fd", border: "1px solid #86cad8", borderRadius: 6, padding: "10px 14px", marginBottom: 28, color: "#0ea5c5" }}>
-                    💡 Upload to Cloudinary first, then paste the delivery URL here.
-                  </div>
-                  {editImg.group !== null && (
-                    <div style={{ background: "#fff", borderRadius: 8, padding: "20px", marginBottom: 24, boxShadow: "0 2px 12px rgba(0,0,0,.08)" }}>
-                      <h3 style={{ fontSize: 15, marginBottom: 12 }}>Update {editImg.group}[{editImg.idx}]</h3>
-                      <div style={{ display: "flex", gap: 10 }}>
-                        <input value={editImg.url} onChange={e => setEditImg(p => ({ ...p, url: e.target.value }))}
-                          placeholder="https://..."
-                          style={{ flex: 1, padding: "10px 14px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
-                        <button onClick={updateImg} style={{ padding: "10px 20px", background: "#27ae60", color: "#fff", borderRadius: 6, fontSize: 13, border: "none" }}>Update</button>
-                        <button onClick={() => setEditImg({ group: null, idx: null, url: "" })}
-                          style={{ padding: "10px 20px", background: "#eee", borderRadius: 6, fontSize: 13, border: "none" }}>Cancel</button>
-                      </div>
-                      {editImg.url && <img loading="lazy" src={editImg.url} alt="" style={{ width: 200, height: 130, objectFit: "cover", borderRadius: 6, marginTop: 12 }} />}
+                  {/* Header */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
+                    <div>
+                      <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 4 }}>Image Management</h1>
+                      <p style={{ fontSize: 13, color: "#5090aa" }}>Klik "Edit" pada gambar lalu upload file atau paste URL baru.</p>
                     </div>
-                  )}
-                  {[
-                    { key: "hero", label: "Hero Images" },
-                    { key: "adv", label: "Adventure Images" },
-                    { key: "gal", label: "Gallery Images" },
-                  ].map(group => (
-                    <div key={group.key} style={{ background: "#fff", borderRadius: 8, padding: "20px 24px", marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
-                      <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0d3b66", marginBottom: 16 }}>{group.label}</h3>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-                        {data.images[group.key].map((src, i) => (
-                          <div key={i} style={{ position: "relative", width: 140 }}>
-                            <img loading="lazy" src={src} alt="" style={{ width: 140, height: 95, objectFit: "cover", borderRadius: 6, display: "block" }} />
-                            <button onClick={() => setEditImg({ group: group.key, idx: i, url: src })} style={{
-                              position: "absolute", bottom: 6, right: 6, background: "rgba(30,50,72,.8)", color: "#fff",
-                              border: "none", borderRadius: 4, padding: "4px 8px", fontSize: 11 }}>Edit</button>
+                  </div>
+
+                  {/* Edit / Upload Panel — muncul saat klik Edit */}
+                  {editImg.group !== null && (() => {
+                    const groupLabels = { hero: "Hero Images", adv: "Adventure Images", gal: "Gallery Images" };
+                    return (
+                      <div style={{ background: "#fff", borderRadius: 12, padding: "24px", marginBottom: 28, boxShadow: "0 4px 20px rgba(13,59,102,.10)", border: "1.5px solid #0ea5c525" }}>
+                        {/* Panel header */}
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+                          <div>
+                            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "#0ea5c5", background: "#e8f9fc", borderRadius: 20, padding: "3px 10px" }}>
+                              {groupLabels[editImg.group]} — Foto #{editImg.idx + 1}
+                            </span>
+                            <h3 style={{ fontSize: 16, fontWeight: 700, color: "#0d3b66", marginTop: 8, marginBottom: 0 }}>Ganti Foto</h3>
                           </div>
-                        ))}
+                          <button onClick={() => setEditImg({ group: null, idx: null, url: "", uploading: false })}
+                            style={{ width: 32, height: 32, borderRadius: "50%", background: "#f0f4f8", border: "none", fontSize: 16, cursor: "pointer", color: "#4a7f98", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "start" }}>
+                          {/* Left: Upload options */}
+                          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                            {/* Option A: Upload File */}
+                            <div style={{ border: "2px dashed #0ea5c550", borderRadius: 10, padding: "18px 16px", background: "#f0fbfd" }}>
+                              <p style={{ fontSize: 11, fontWeight: 700, color: "#0ea5c5", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 10 }}>
+                                📁 Upload File Gambar
+                              </p>
+                              <label style={{
+                                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                                padding: "11px 0", borderRadius: 8,
+                                background: editImg.uploading
+                                  ? "#e0f2fe"
+                                  : "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0ea5c5 100%)",
+                                color: editImg.uploading ? "#0ea5c5" : "#fff",
+                                fontWeight: 700, fontSize: 13,
+                                cursor: editImg.uploading ? "not-allowed" : "pointer",
+                                transition: "opacity .2s",
+                              }}>
+                                {editImg.uploading ? (
+                                  <>
+                                    <span style={{ display: "inline-block", width: 14, height: 14, border: "2px solid #0ea5c5", borderTopColor: "transparent", borderRadius: "50%", animation: "spin .7s linear infinite" }} />
+                                    Mengupload...
+                                  </>
+                                ) : (
+                                  <>⬆️ Pilih & Upload Foto</>
+                                )}
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  disabled={editImg.uploading}
+                                  style={{ display: "none" }}
+                                  onChange={async e => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+                                    setEditImg(p => ({ ...p, uploading: true }));
+                                    try {
+                                      const url = await uploadToCloudinary(file);
+                                      setEditImg(p => ({ ...p, url, uploading: false }));
+                                      notify("✅ Foto berhasil diupload! Klik Simpan untuk menyimpan.");
+                                    } catch {
+                                      setEditImg(p => ({ ...p, uploading: false }));
+                                      notify("Gagal upload foto. Coba lagi.", "error");
+                                    }
+                                    e.target.value = "";
+                                  }}
+                                />
+                              </label>
+                              <p style={{ fontSize: 11, color: "#5090aa", textAlign: "center", marginTop: 8 }}>PNG, JPG, WEBP — maks. 10MB</p>
+                            </div>
+
+                            {/* Option B: Paste URL */}
+                            <div style={{ borderRadius: 10, padding: "16px", background: "#f8fafc", border: "1px solid #c0e0ea" }}>
+                              <p style={{ fontSize: 11, fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 10 }}>
+                                🔗 Atau Paste URL Langsung
+                              </p>
+                              <input
+                                value={editImg.url}
+                                onChange={e => setEditImg(p => ({ ...p, url: e.target.value }))}
+                                placeholder="https://..."
+                                style={{ width: "100%", padding: "10px 12px", border: "1px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }}
+                              />
+                            </div>
+
+                            {/* Action buttons */}
+                            <div style={{ display: "flex", gap: 8 }}>
+                              <button
+                                onClick={updateImg}
+                                disabled={!editImg.url || editImg.uploading}
+                                style={{
+                                  flex: 1, padding: "11px 0",
+                                  background: (!editImg.url || editImg.uploading) ? "#c0dce8" : "linear-gradient(130deg,#17a76c,#27ae60)",
+                                  color: "#fff", border: "none", borderRadius: 8,
+                                  fontSize: 13, fontWeight: 700, cursor: (!editImg.url || editImg.uploading) ? "not-allowed" : "pointer",
+                                  transition: "opacity .2s",
+                                }}>
+                                💾 Simpan Perubahan
+                              </button>
+                              <button
+                                onClick={() => setEditImg({ group: null, idx: null, url: "", uploading: false })}
+                                style={{ padding: "11px 16px", background: "#f0f4f8", color: "#4a7f98", border: "none", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>
+                                Batal
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Right: Preview */}
+                          <div>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 10 }}>Preview</p>
+                            <div style={{ borderRadius: 10, overflow: "hidden", background: "#edf2f7", aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #c0e0ea" }}>
+                              {editImg.url ? (
+                                <img src={editImg.url} alt="preview"
+                                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                                  onError={e => { e.target.style.display = "none"; }} />
+                              ) : (
+                                <div style={{ textAlign: "center", color: "#a0b8c8" }}>
+                                  <div style={{ fontSize: 36, marginBottom: 8 }}>🖼️</div>
+                                  <p style={{ fontSize: 12 }}>Preview foto akan muncul di sini</p>
+                                </div>
+                              )}
+                            </div>
+                            {editImg.url && (
+                              <p style={{ fontSize: 10, color: "#5090aa", marginTop: 8, wordBreak: "break-all", lineHeight: 1.5 }}>
+                                URL: {editImg.url.length > 60 ? editImg.url.slice(0, 60) + "…" : editImg.url}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Image Groups */}
+                  {[
+                    { key: "hero", label: "Hero Images", desc: "Foto slideshow di halaman utama website", icon: "🏠" },
+                    { key: "adv",  label: "Adventure Images", desc: "Foto seksi Adventure / Petualangan", icon: "🧗" },
+                    { key: "gal",  label: "Gallery Images", desc: "Foto galeri ticker yang berjalan di homepage", icon: "🖼️" },
+                  ].map(group => (
+                    <div key={group.key} style={{ background: "#fff", borderRadius: 12, padding: "22px 24px", marginBottom: 20, boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "4px solid #0ea5c5" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                        <div>
+                          <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{group.icon} {group.label}</h3>
+                          <p style={{ fontSize: 12, color: "#5090aa" }}>{group.desc} · {data.images[group.key].length} foto</p>
+                        </div>
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
+                        {data.images[group.key].map((src, i) => {
+                          const isActive = editImg.group === group.key && editImg.idx === i;
+                          return (
+                            <div key={i} style={{ position: "relative", width: 150, flexShrink: 0 }}>
+                              <div style={{ borderRadius: 8, overflow: "hidden", border: isActive ? "2.5px solid #0ea5c5" : "2.5px solid transparent", transition: "border .2s", boxShadow: isActive ? "0 0 0 3px #0ea5c530" : "none" }}>
+                                <img loading="lazy" src={src} alt={`${group.label} ${i+1}`}
+                                  style={{ width: 150, height: 100, objectFit: "cover", display: "block" }}
+                                  onError={e => { e.target.src = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&q=60"; }} />
+                              </div>
+                              <div style={{ display: "flex", gap: 4, marginTop: 6 }}>
+                                <button
+                                  onClick={() => setEditImg({ group: group.key, idx: i, url: src, uploading: false })}
+                                  style={{
+                                    flex: 1, padding: "6px 0",
+                                    background: isActive
+                                      ? "linear-gradient(130deg,#063d5c,#0ea5c5)"
+                                      : "linear-gradient(130deg,#063d5c,#0875a8)",
+                                    color: "#fff", border: "none", borderRadius: 6,
+                                    fontSize: 11, fontWeight: 700, cursor: "pointer",
+                                  }}>
+                                  {isActive ? "✏️ Editing…" : "✏️ Edit"}
+                                </button>
+                              </div>
+                              <div style={{ fontSize: 10, color: "#8aa8ba", textAlign: "center", marginTop: 3 }}>Foto {i+1}</div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   ))}
+
+                  {/* CSS for spinner */}
+                  <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                 </div>
               )}
 
