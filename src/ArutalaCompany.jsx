@@ -555,7 +555,7 @@ const DEFAULT_DATA = {
       accentLight: "#fff8e6",
       duration: "4 Hari 3 Malam",
       minPeserta: "30",
-      price: "Rp 520.000",
+      price: "520000",
       priceNote: "/ orang (mulai)",
       images: [
         "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg/1200px-Tanah_Lot_Bali_Indonesia_Pura-Tanah-Lot-01.jpg",
@@ -2446,7 +2446,8 @@ function RichParagraphEditor({ value, onChange, placeholder = "Write your conten
 }
 
 /* ─────────────── CMS EDITOR ─────────────── */
-function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
+function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, notify: notifyFn }) {
+  const notify = typeof notifyFn === "function" ? notifyFn : (msg) => alert(msg);
   const authorDefault = post?.author || user?.name || user?.username || "";
   const [form, setForm] = useState(post || {
     title: "", date: new Date().toISOString().slice(0, 10), author: authorDefault, category: "",
@@ -2456,8 +2457,13 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
   const [addType, setAddType] = useState("paragraph");
   const [addVal, setAddVal] = useState("");
   const [addCaption, setAddCaption] = useState("");
+  const [editBlockIdx, setEditBlockIdx] = useState(null);
+  const [editBlockVal, setEditBlockVal] = useState("");
   const [imgUploadMode, setImgUploadMode] = useState("url");
+  const [coverUploadMode, setCoverUploadMode] = useState("url");
+  const [coverUploading, setCoverUploading] = useState(false);
   const [publishModal, setPublishModal] = useState(false);
+  const coverFileRef = useRef();
   const [autoSaveStatus, setAutoSaveStatus] = useState(""); // "", "saving…", "tersimpan ✓"
   const fileRef = useRef();
   const autoSaveTimer = useRef();
@@ -2522,16 +2528,40 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
     setBlocks(b);
   };
 
-  const handleImageFile = async (e) => {
+  const saveEditBlock = (i) => {
+    if (editBlockVal.trim() === "") return;
+    setBlocks(p => p.map((b, idx) => idx === i ? { ...b, value: editBlockVal } : b));
+    setEditBlockIdx(null);
+    setEditBlockVal("");
+  };
     const file = e.target.files?.[0];
     if (!file) return;
     try {
       notify("⏳ Mengupload gambar...");
       const url = await uploadToCloudinary(file);
       setAddVal(url);
-      notify("Gambar berhasil diupload!");
+      notify("✅ Gambar berhasil diupload!");
+    } catch (err) {
+      notify("❌ Gagal upload gambar. Periksa koneksi & Cloudinary preset.", "error");
+    }
+    // reset input agar bisa upload file sama lagi
+    if (fileRef.current) fileRef.current.value = "";
+  };
+
+  const handleCoverUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setCoverUploading(true);
+    try {
+      notify("⏳ Mengupload cover image...");
+      const url = await uploadToCloudinary(file);
+      setForm(p => ({ ...p, coverImage: url }));
+      notify("✅ Cover image berhasil diupload!");
     } catch {
-      notify("Gagal upload gambar. Coba lagi.", "error");
+      notify("❌ Gagal upload cover. Periksa koneksi & Cloudinary preset.", "error");
+    } finally {
+      setCoverUploading(false);
+      if (coverFileRef.current) coverFileRef.current.value = "";
     }
   };
 
@@ -2664,16 +2694,36 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
               </div>
             )}
             {blocks.map((b, i) => (
-              <div key={i} style={{ background: "#f5fdff", border: "1px solid #e0f7fa", borderRadius: 8, padding: "14px 16px", marginBottom: 10, position: "relative" }}>
+              <div key={i} style={{ background: "#f5fdff", border: `1px solid ${editBlockIdx === i ? "#0ea5c5" : "#e0f7fa"}`, borderRadius: 8, padding: "14px 16px", marginBottom: 10, position: "relative" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
                   <span style={{ fontSize: 11, background: "#e8f4fd", color: "#0ea5c5", padding: "2px 8px", borderRadius: 10, fontWeight: 500 }}>{blockLabels[b.type] || b.type}</span>
                   <div style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
-                    <button onClick={() => moveBlock(i, -1)} style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #b0dce8", borderRadius: 4, color: "#5090aa" }}>↑</button>
-                    <button onClick={() => moveBlock(i, 1)} style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #b0dce8", borderRadius: 4, color: "#5090aa" }}>↓</button>
-                    <button onClick={() => removeBlock(i)} style={{ padding: "3px 8px", fontSize: 11, border: "none", background: "#fee", color: "#e74c3c", borderRadius: 4 }}>✕</button>
+                    <button onClick={() => moveBlock(i, -1)} title="Naik" style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #b0dce8", borderRadius: 4, color: "#5090aa", background: "#fff" }}>↑</button>
+                    <button onClick={() => moveBlock(i, 1)} title="Turun" style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #b0dce8", borderRadius: 4, color: "#5090aa", background: "#fff" }}>↓</button>
+                    {b.type !== "divider" && b.type !== "image" && (
+                      <button onClick={() => { setEditBlockIdx(i); setEditBlockVal(b.value || ""); }} title="Edit" style={{ padding: "3px 8px", fontSize: 11, border: "1px solid #0ea5c5", background: "#e8f9fc", color: "#0ea5c5", borderRadius: 4 }}>✏</button>
+                    )}
+                    <button onClick={() => { if (editBlockIdx === i) { setEditBlockIdx(null); setEditBlockVal(""); } removeBlock(i); }} title="Hapus" style={{ padding: "3px 8px", fontSize: 11, border: "none", background: "#fee", color: "#e74c3c", borderRadius: 4 }}>✕</button>
                   </div>
                 </div>
-                {b.type === "image" ? (
+                {/* Inline edit mode */}
+                {editBlockIdx === i ? (
+                  <div>
+                    {b.type === "paragraph" ? (
+                      <textarea value={editBlockVal} onChange={e => setEditBlockVal(e.target.value)}
+                        rows={5} autoFocus
+                        style={{ width: "100%", padding: "10px 12px", border: "1px solid #0ea5c5", borderRadius: 6, fontSize: 13, outline: "none", resize: "vertical", lineHeight: 1.6, boxSizing: "border-box" }} />
+                    ) : (
+                      <input value={editBlockVal} onChange={e => setEditBlockVal(e.target.value)}
+                        autoFocus
+                        style={{ width: "100%", padding: "10px 12px", border: "1px solid #0ea5c5", borderRadius: 6, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                    )}
+                    <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                      <button onClick={() => saveEditBlock(i)} style={{ padding: "6px 16px", background: "#27ae60", color: "#fff", border: "none", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✓ Simpan</button>
+                      <button onClick={() => { setEditBlockIdx(null); setEditBlockVal(""); }} style={{ padding: "6px 12px", background: "#eee", color: "#5090aa", border: "none", borderRadius: 6, fontSize: 12, cursor: "pointer" }}>Batal</button>
+                    </div>
+                  </div>
+                ) : b.type === "image" ? (
                   <div>
                     <img loading="lazy" src={b.value} alt="" style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 6 }} onError={e => { e.target.style.display = "none"; }} />
                     {b.caption && <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4, fontStyle: "italic" }}>{b.caption}</p>}
@@ -2860,15 +2910,44 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user }) {
           </div>
 
           {/* Cover Image */}
-          <div>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Cover Image URL</label>
-            <input value={form.coverImage || ""} onChange={e => setForm(p => ({ ...p, coverImage: e.target.value }))}
-              placeholder="https://..."
-              style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none", marginBottom: 8 }} />
-            {form.coverImage && (
-              <img loading="lazy" src={form.coverImage} alt="" style={{ width: "100%", height: 100, objectFit: "cover", borderRadius: 6 }}
-                onError={e => e.target.style.display = "none"} />
-            )}
+          <div style={{ background: "#fff", border: "1px solid #e0f7fa", borderRadius: 8, overflow: "hidden" }}>
+            <div style={{ background: "#edfafc", padding: "12px 16px", borderBottom: "1px solid #e0f7fa", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <span style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66", letterSpacing: ".5px" }}>COVER IMAGE</span>
+              <div style={{ display: "flex", gap: 4 }}>
+                {["url", "upload"].map(m => (
+                  <button key={m} onClick={() => setCoverUploadMode(m)} style={{ padding: "2px 10px", fontSize: 10, borderRadius: 4, border: "none",
+                    background: coverUploadMode === m ? "#0d3b66" : "#d0eef5", color: coverUploadMode === m ? "#fff" : "#4a7f98", fontWeight: 600, cursor: "pointer" }}>
+                    {m === "url" ? "URL" : "⬆ Upload"}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div style={{ padding: "12px 14px" }}>
+              {coverUploadMode === "upload" ? (
+                <div>
+                  <input ref={coverFileRef} type="file" accept="image/*" onChange={handleCoverUpload} style={{ display: "none" }} />
+                  <button onClick={() => coverFileRef.current?.click()} disabled={coverUploading}
+                    style={{ width: "100%", padding: "10px", border: "1.5px dashed #0ea5c5", borderRadius: 8,
+                      color: coverUploading ? "#aaa" : "#0ea5c5", fontSize: 12, background: "#e8f9fc",
+                      cursor: coverUploading ? "not-allowed" : "pointer", fontWeight: 600 }}>
+                    {coverUploading ? "⏳ Mengupload..." : "📁 Pilih File Gambar"}
+                  </button>
+                  <p style={{ fontSize: 10, color: "#5090aa", marginTop: 6 }}>JPG/PNG/WEBP · Maks 10MB · Otomatis ke Cloudinary</p>
+                </div>
+              ) : (
+                <input value={form.coverImage || ""} onChange={e => setForm(p => ({ ...p, coverImage: e.target.value }))}
+                  placeholder="https://..."
+                  style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none", boxSizing: "border-box" }} />
+              )}
+              {form.coverImage && (
+                <div style={{ marginTop: 10, position: "relative" }}>
+                  <img loading="lazy" src={form.coverImage} alt="" style={{ width: "100%", height: 110, objectFit: "cover", borderRadius: 6, display: "block" }}
+                    onError={e => { e.target.style.display = "none"; }} />
+                  <button onClick={() => setForm(p => ({ ...p, coverImage: "" }))}
+                    style={{ position: "absolute", top: 6, right: 6, background: "rgba(231,76,60,.85)", color: "#fff", border: "none", borderRadius: 4, fontSize: 10, padding: "3px 7px", cursor: "pointer", fontWeight: 700 }}>✕ Hapus</button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Section badge */}
@@ -4107,7 +4186,7 @@ function ServicesPage({ content, services, navigateTo }) {
   const [selectedService, setSelectedService] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
 
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("traveling"); // Default: tab Traveling langsung aktif
   const [activeImg, setActiveImg] = useState(0);
 
   const CATEGORIES = [
@@ -6160,7 +6239,7 @@ export default function BricksyTravel() {
   const [forgotErr, setForgotErr] = useState("");
   const [notif, setNotif] = useState(null);
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [editImg, setEditImg] = useState({ group: null, idx: null, url: "", uploading: false });
+  const [editImg, setEditImg] = useState({ group: null, idx: null, url: "" });
   const [editContent, setEditContent] = useState({});
   const [contact, setContact] = useState({ name: "", email: "", message: "" });
   const [replyTo, setReplyTo] = useState(null);
@@ -6240,15 +6319,18 @@ export default function BricksyTravel() {
             if (!def) return savedItem; // item custom user, tidak ada di DEFAULT → biarkan
             // Inject field baru dari DEFAULT jika belum ada di item tersimpan
             const patched = { ...savedItem };
-            // Untuk paket traveling: selalu sync destinations, facilities, prices dari DEFAULT
-            // (agar update konten di code langsung terefleksi)
+            // Untuk paket traveling: PAKSA sync field kritis dari DEFAULT
+            // (pastikan filter category==="traveling" & pkgId selalu benar)
             if (def.category === "traveling") {
+              patched.category  = def.category;  // WAJIB: agar lolos filter Traveling
+              patched.pkgId     = def.pkgId;      // WAJIB: agar tidak salah bucket
+              patched.highlight = def.highlight;
               if (def.destinations) patched.destinations = def.destinations;
-              if (def.facilities) patched.facilities = def.facilities;
-              if (def.prices) patched.prices = def.prices;
-              if (def.services) patched.services = def.services;
+              if (def.facilities)   patched.facilities   = def.facilities;
+              if (def.prices)       patched.prices       = def.prices;
+              if (def.services)     patched.services     = def.services;
             }
-            for (const field of ["facilities", "destinations", "services", "images", "prices", "pkgId", "tagline", "accent", "accentLight", "duration", "minPeserta", "description", "features", "highlight", "badge", "badgeColor", "priceNote"]) {
+            for (const field of ["facilities", "destinations", "services", "images", "prices", "pkgId", "tagline", "accent", "accentLight", "duration", "minPeserta", "description", "features", "highlight", "badge", "badgeColor", "priceNote", "category"]) {
               if (patched[field] === undefined || patched[field] === null || patched[field] === "") {
                 if (def[field] !== undefined) patched[field] = def[field];
               }
@@ -6514,7 +6596,7 @@ export default function BricksyTravel() {
     { key: "home", label: data.content.nav1 },
     { key: "about", label: data.content.nav2 },
     { key: "news", label: data.content.nav3 },
-    { key: "shop", label: data.content.nav4 },
+    { key: "services", label: data.content.nav4 }, // Traveling → langsung ke halaman paket
     { key: "destinations", label: data.content.nav5 },
     { key: "services", label: data.content.nav6 || "Layanan Kami" },
   ];
@@ -7935,6 +8017,7 @@ export default function BricksyTravel() {
                       onCancel={() => setCmsEditPost(null)}
                       onSectionChange={(s) => setAdminSection(s)}
                       user={user}
+                      notify={notify}
                     />
                   ) : (
                     <>
@@ -8024,190 +8107,68 @@ export default function BricksyTravel() {
               {/* IMAGES */}
               {adminTab === "images" && canEdit && (
                 <div className="fade-in">
-                  {/* Header */}
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
-                    <div>
-                      <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 4 }}>Image Management</h1>
-                      <p style={{ fontSize: 13, color: "#5090aa" }}>Klik "Edit" pada gambar lalu upload file atau paste URL baru.</p>
-                    </div>
+                  <h1 style={{ fontSize: 24, fontWeight: 500, color: "#0d3b66", marginBottom: 8 }}>Image Management</h1>
+                  <p style={{ fontSize: 13, color: "#5090aa", marginBottom: 8 }}>Upload langsung ke Cloudinary atau tempel URL gambar</p>
+                  <div style={{ fontSize: 12, background: "#e8f4fd", border: "1px solid #86cad8", borderRadius: 6, padding: "10px 14px", marginBottom: 28, color: "#0ea5c5" }}>
+                    💡 Klik <strong>⬆ Upload</strong> untuk ganti via file lokal, atau <strong>🔗 URL</strong> untuk ganti via link langsung.
                   </div>
-
-                  {/* Edit / Upload Panel — muncul saat klik Edit */}
-                  {editImg.group !== null && (() => {
-                    const groupLabels = { hero: "Hero Images", adv: "Adventure Images", gal: "Gallery Images" };
-                    return (
-                      <div style={{ background: "#fff", borderRadius: 12, padding: "24px", marginBottom: 28, boxShadow: "0 4px 20px rgba(13,59,102,.10)", border: "1.5px solid #0ea5c525" }}>
-                        {/* Panel header */}
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                          <div>
-                            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "#0ea5c5", background: "#e8f9fc", borderRadius: 20, padding: "3px 10px" }}>
-                              {groupLabels[editImg.group]} — Foto #{editImg.idx + 1}
-                            </span>
-                            <h3 style={{ fontSize: 16, fontWeight: 700, color: "#0d3b66", marginTop: 8, marginBottom: 0 }}>Ganti Foto</h3>
-                          </div>
-                          <button onClick={() => setEditImg({ group: null, idx: null, url: "", uploading: false })}
-                            style={{ width: 32, height: 32, borderRadius: "50%", background: "#f0f4f8", border: "none", fontSize: 16, cursor: "pointer", color: "#4a7f98", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
-                        </div>
-
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "start" }}>
-                          {/* Left: Upload options */}
-                          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                            {/* Option A: Upload File */}
-                            <div style={{ border: "2px dashed #0ea5c550", borderRadius: 10, padding: "18px 16px", background: "#f0fbfd" }}>
-                              <p style={{ fontSize: 11, fontWeight: 700, color: "#0ea5c5", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 10 }}>
-                                📁 Upload File Gambar
-                              </p>
-                              <label style={{
-                                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                                padding: "11px 0", borderRadius: 8,
-                                background: editImg.uploading
-                                  ? "#e0f2fe"
-                                  : "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0ea5c5 100%)",
-                                color: editImg.uploading ? "#0ea5c5" : "#fff",
-                                fontWeight: 700, fontSize: 13,
-                                cursor: editImg.uploading ? "not-allowed" : "pointer",
-                                transition: "opacity .2s",
-                              }}>
-                                {editImg.uploading ? (
-                                  <>
-                                    <span style={{ display: "inline-block", width: 14, height: 14, border: "2px solid #0ea5c5", borderTopColor: "transparent", borderRadius: "50%", animation: "spin .7s linear infinite" }} />
-                                    Mengupload...
-                                  </>
-                                ) : (
-                                  <>⬆️ Pilih & Upload Foto</>
-                                )}
-                                <input
-                                  type="file"
-                                  accept="image/*"
-                                  disabled={editImg.uploading}
-                                  style={{ display: "none" }}
-                                  onChange={async e => {
-                                    const file = e.target.files?.[0];
-                                    if (!file) return;
-                                    setEditImg(p => ({ ...p, uploading: true }));
-                                    try {
-                                      const url = await uploadToCloudinary(file);
-                                      setEditImg(p => ({ ...p, url, uploading: false }));
-                                      notify("✅ Foto berhasil diupload! Klik Simpan untuk menyimpan.");
-                                    } catch {
-                                      setEditImg(p => ({ ...p, uploading: false }));
-                                      notify("Gagal upload foto. Coba lagi.", "error");
-                                    }
-                                    e.target.value = "";
-                                  }}
-                                />
-                              </label>
-                              <p style={{ fontSize: 11, color: "#5090aa", textAlign: "center", marginTop: 8 }}>PNG, JPG, WEBP — maks. 10MB</p>
-                            </div>
-
-                            {/* Option B: Paste URL */}
-                            <div style={{ borderRadius: 10, padding: "16px", background: "#f8fafc", border: "1px solid #c0e0ea" }}>
-                              <p style={{ fontSize: 11, fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 10 }}>
-                                🔗 Atau Paste URL Langsung
-                              </p>
-                              <input
-                                value={editImg.url}
-                                onChange={e => setEditImg(p => ({ ...p, url: e.target.value }))}
-                                placeholder="https://..."
-                                style={{ width: "100%", padding: "10px 12px", border: "1px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }}
-                              />
-                            </div>
-
-                            {/* Action buttons */}
-                            <div style={{ display: "flex", gap: 8 }}>
-                              <button
-                                onClick={updateImg}
-                                disabled={!editImg.url || editImg.uploading}
-                                style={{
-                                  flex: 1, padding: "11px 0",
-                                  background: (!editImg.url || editImg.uploading) ? "#c0dce8" : "linear-gradient(130deg,#17a76c,#27ae60)",
-                                  color: "#fff", border: "none", borderRadius: 8,
-                                  fontSize: 13, fontWeight: 700, cursor: (!editImg.url || editImg.uploading) ? "not-allowed" : "pointer",
-                                  transition: "opacity .2s",
-                                }}>
-                                💾 Simpan Perubahan
-                              </button>
-                              <button
-                                onClick={() => setEditImg({ group: null, idx: null, url: "", uploading: false })}
-                                style={{ padding: "11px 16px", background: "#f0f4f8", color: "#4a7f98", border: "none", borderRadius: 8, fontSize: 13, cursor: "pointer" }}>
-                                Batal
-                              </button>
-                            </div>
-                          </div>
-
-                          {/* Right: Preview */}
-                          <div>
-                            <p style={{ fontSize: 11, fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 10 }}>Preview</p>
-                            <div style={{ borderRadius: 10, overflow: "hidden", background: "#edf2f7", aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #c0e0ea" }}>
-                              {editImg.url ? (
-                                <img src={editImg.url} alt="preview"
-                                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                                  onError={e => { e.target.style.display = "none"; }} />
-                              ) : (
-                                <div style={{ textAlign: "center", color: "#a0b8c8" }}>
-                                  <div style={{ fontSize: 36, marginBottom: 8 }}>🖼️</div>
-                                  <p style={{ fontSize: 12 }}>Preview foto akan muncul di sini</p>
-                                </div>
-                              )}
-                            </div>
-                            {editImg.url && (
-                              <p style={{ fontSize: 10, color: "#5090aa", marginTop: 8, wordBreak: "break-all", lineHeight: 1.5 }}>
-                                URL: {editImg.url.length > 60 ? editImg.url.slice(0, 60) + "…" : editImg.url}
-                              </p>
-                            )}
-                          </div>
-                        </div>
+                  {editImg.group !== null && (
+                    <div style={{ background: "#fff", borderRadius: 8, padding: "20px", marginBottom: 24, boxShadow: "0 2px 12px rgba(0,0,0,.08)" }}>
+                      <h3 style={{ fontSize: 15, marginBottom: 12 }}>Update {editImg.group}[{editImg.idx}] — via URL</h3>
+                      <div style={{ display: "flex", gap: 10 }}>
+                        <input value={editImg.url} onChange={e => setEditImg(p => ({ ...p, url: e.target.value }))}
+                          placeholder="https://..."
+                          style={{ flex: 1, padding: "10px 14px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                        <button onClick={updateImg} style={{ padding: "10px 20px", background: "#27ae60", color: "#fff", borderRadius: 6, fontSize: 13, border: "none" }}>Update</button>
+                        <button onClick={() => setEditImg({ group: null, idx: null, url: "" })}
+                          style={{ padding: "10px 20px", background: "#eee", borderRadius: 6, fontSize: 13, border: "none" }}>Cancel</button>
                       </div>
-                    );
-                  })()}
-
-                  {/* Image Groups */}
+                      {editImg.url && <img loading="lazy" src={editImg.url} alt="" style={{ width: 200, height: 130, objectFit: "cover", borderRadius: 6, marginTop: 12 }} />}
+                    </div>
+                  )}
                   {[
-                    { key: "hero", label: "Hero Images", desc: "Foto slideshow di halaman utama website", icon: "🏠" },
-                    { key: "adv",  label: "Adventure Images", desc: "Foto seksi Adventure / Petualangan", icon: "🧗" },
-                    { key: "gal",  label: "Gallery Images", desc: "Foto galeri ticker yang berjalan di homepage", icon: "🖼️" },
+                    { key: "hero", label: "Hero Images" },
+                    { key: "adv", label: "Adventure Images" },
+                    { key: "gal", label: "Gallery Images" },
                   ].map(group => (
-                    <div key={group.key} style={{ background: "#fff", borderRadius: 12, padding: "22px 24px", marginBottom: 20, boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "4px solid #0ea5c5" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-                        <div>
-                          <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{group.icon} {group.label}</h3>
-                          <p style={{ fontSize: 12, color: "#5090aa" }}>{group.desc} · {data.images[group.key].length} foto</p>
-                        </div>
-                      </div>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
-                        {data.images[group.key].map((src, i) => {
-                          const isActive = editImg.group === group.key && editImg.idx === i;
-                          return (
-                            <div key={i} style={{ position: "relative", width: 150, flexShrink: 0 }}>
-                              <div style={{ borderRadius: 8, overflow: "hidden", border: isActive ? "2.5px solid #0ea5c5" : "2.5px solid transparent", transition: "border .2s", boxShadow: isActive ? "0 0 0 3px #0ea5c530" : "none" }}>
-                                <img loading="lazy" src={src} alt={`${group.label} ${i+1}`}
-                                  style={{ width: 150, height: 100, objectFit: "cover", display: "block" }}
-                                  onError={e => { e.target.src = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&q=60"; }} />
-                              </div>
-                              <div style={{ display: "flex", gap: 4, marginTop: 6 }}>
-                                <button
-                                  onClick={() => setEditImg({ group: group.key, idx: i, url: src, uploading: false })}
-                                  style={{
-                                    flex: 1, padding: "6px 0",
-                                    background: isActive
-                                      ? "linear-gradient(130deg,#063d5c,#0ea5c5)"
-                                      : "linear-gradient(130deg,#063d5c,#0875a8)",
-                                    color: "#fff", border: "none", borderRadius: 6,
-                                    fontSize: 11, fontWeight: 700, cursor: "pointer",
-                                  }}>
-                                  {isActive ? "✏️ Editing…" : "✏️ Edit"}
-                                </button>
-                              </div>
-                              <div style={{ fontSize: 10, color: "#8aa8ba", textAlign: "center", marginTop: 3 }}>Foto {i+1}</div>
+                    <div key={group.key} style={{ background: "#fff", borderRadius: 8, padding: "20px 24px", marginBottom: 20, boxShadow: "0 2px 8px rgba(0,0,0,.06)" }}>
+                      <h3 style={{ fontSize: 15, fontWeight: 500, color: "#0d3b66", marginBottom: 16 }}>{group.label}</h3>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                        {data.images[group.key].map((src, i) => (
+                          <div key={i} style={{ width: 140 }}>
+                            <img loading="lazy" src={src} alt="" style={{ width: 140, height: 95, objectFit: "cover", borderRadius: 6, display: "block" }} />
+                            <div style={{ display: "flex", gap: 3, marginTop: 5 }}>
+                              <button onClick={() => setEditImg({ group: group.key, idx: i, url: src })} style={{
+                                flex: 1, background: "#edfafc", color: "#0ea5c5",
+                                border: "1px solid #b0dce8", borderRadius: 4, padding: "4px 0", fontSize: 10, fontWeight: 600, cursor: "pointer" }}>🔗 URL</button>
+                              <label style={{
+                                flex: 1, background: "#eeffee", color: "#27ae60",
+                                border: "1px solid #b0dce8", borderRadius: 4, padding: "4px 0", fontSize: 10, fontWeight: 600, cursor: "pointer", textAlign: "center", display: "block" }}>
+                                ⬆ Upload
+                                <input type="file" accept="image/*" style={{ display: "none" }} onChange={async (e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+                                  try {
+                                    notify("⏳ Mengupload gambar...");
+                                    const url = await uploadToCloudinary(file);
+                                    const newImages = { ...data.images };
+                                    const arr = [...newImages[group.key]];
+                                    arr[i] = url;
+                                    newImages[group.key] = arr;
+                                    save({ ...data, images: newImages });
+                                    notify("✅ Gambar berhasil diperbarui!");
+                                  } catch {
+                                    notify("❌ Gagal upload. Coba lagi.", "error");
+                                  }
+                                  e.target.value = "";
+                                }} />
+                              </label>
                             </div>
-                          );
-                        })}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   ))}
-
-                  {/* CSS for spinner */}
-                  <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                 </div>
               )}
 
