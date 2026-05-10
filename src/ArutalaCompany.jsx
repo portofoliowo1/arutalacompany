@@ -5438,15 +5438,22 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
   const addDestPoint = (i) => setSvcForm(p => { const d=[...(p.destinations||[])]; d[i]={...d[i],points:[...(d[i].points||[]),""]}; return {...p,destinations:d}; });
   const updateDestPoint = (di,pi,val) => setSvcForm(p => { const d=[...(p.destinations||[])]; const pts=[...(d[di].points||[])]; pts[pi]=val; d[di]={...d[di],points:pts}; return {...p,destinations:d}; });
   const removeDestPoint = (di,pi) => setSvcForm(p => { const d=[...(p.destinations||[])]; d[di]={...d[di],points:(d[di].points||[]).filter((_,idx)=>idx!==pi)}; return {...p,destinations:d}; });
+  const [destUploadProgress, setDestUploadProgress] = useState({}); // { [destIndex]: { pct, done, error } }
+
   const handleDestImg = async (i, e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    notify("⏳ Mengupload foto destinasi...");
+    setDestUploadProgress(p => ({ ...p, [i]: { pct: 0, done: false, error: false, name: file.name } }));
     try {
-      const url = await uploadWithProgress(file, () => {});
+      const url = await uploadWithProgress(file, pct => {
+        setDestUploadProgress(p => ({ ...p, [i]: { ...p[i], pct } }));
+      });
       updateDest(i, "img", url);
+      setDestUploadProgress(p => ({ ...p, [i]: { ...p[i], pct: 100, done: true } }));
+      setTimeout(() => setDestUploadProgress(p => { const n={...p}; delete n[i]; return n; }), 2000);
       notify("✅ Foto destinasi berhasil diupload!");
     } catch {
+      setDestUploadProgress(p => ({ ...p, [i]: { ...p[i], error: true } }));
       notify("❌ Gagal upload foto destinasi. Coba lagi.", "error");
     }
     e.target.value = "";
@@ -5761,6 +5768,24 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                         <div style={{ display:"grid", gridTemplateColumns:"140px 1fr", gap:12 }}>
                           <div>
                             <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Foto Destinasi</label>
+                            {/* Progress bar */}
+                            {destUploadProgress[di] && !destUploadProgress[di].done && !destUploadProgress[di].error && (
+                              <div style={{ marginBottom:6, background:"#f0fafe", border:"1px solid #b0dce8", borderRadius:7, padding:"8px 10px" }}>
+                                <div style={{ display:"flex", justifyContent:"space-between", fontSize:10, fontWeight:600, color:"#0891b2", marginBottom:4 }}>
+                                  <span>📤 {destUploadProgress[di].name?.slice(0,24)}{destUploadProgress[di].name?.length>24?"…":""}</span>
+                                  <span>{destUploadProgress[di].pct}%</span>
+                                </div>
+                                <div style={{ height:5, background:"#c0e8f0", borderRadius:3, overflow:"hidden" }}>
+                                  <div style={{ height:"100%", width:`${destUploadProgress[di].pct}%`, background:"linear-gradient(90deg,#0891b2,#10d0e0)", borderRadius:3, transition:"width .3s" }} />
+                                </div>
+                              </div>
+                            )}
+                            {destUploadProgress[di]?.done && (
+                              <div style={{ marginBottom:6, fontSize:10, fontWeight:700, color:"#27ae60", background:"#e8f8ef", borderRadius:6, padding:"5px 9px" }}>✅ Upload selesai!</div>
+                            )}
+                            {destUploadProgress[di]?.error && (
+                              <div style={{ marginBottom:6, fontSize:10, fontWeight:700, color:"#e74c3c", background:"#fee", borderRadius:6, padding:"5px 9px" }}>❌ Upload gagal. Coba lagi.</div>
+                            )}
                             <label style={{ cursor:"pointer", display:"block" }}>
                               <div style={{ height:100, border:"2px dashed #fde68a", borderRadius:7, background:"#fffdf0", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden" }}>
                                 {dest.img ? <img src={dest.img} alt="" style={{ width:"100%", height:"100%", objectFit:"contain" }} /> : <div style={{ textAlign:"center", color:"#e8a020", opacity:.7 }}><div style={{ fontSize:"1.4rem" }}>📷</div><div style={{ fontSize:10, fontWeight:600, marginTop:2 }}>Upload</div></div>}
