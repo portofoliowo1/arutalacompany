@@ -2975,6 +2975,114 @@ function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
 }
 
 /* ── WIDE CARD for Custom Package — full width horizontal layout ── */
+/* ─────────────── EVENT / WEDDING PACKAGE CARD (Traveling-style) ─────────────── */
+function EventWeddingPackageCard({ svc, onDetail, waLink }) {
+  const [hovered, setHovered] = useState(false);
+  const ac = svc.accent || (svc.category === "wedding" ? "#db2777" : "#0891b2");
+  const al = svc.accentLight || (svc.category === "wedding" ? "#fff0f7" : "#edfafc");
+
+  /* image gallery — pakai images[] jika ada, fallback image */
+  const imgs = (svc.images && svc.images.length > 0) ? svc.images : [svc.image].filter(Boolean);
+  const [imgIdx, setImgIdx] = useState(0);
+
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ background: "#fff", borderRadius: 16, overflow: "visible",
+        boxShadow: hovered ? "0 16px 48px rgba(13,59,102,.18)" : "0 4px 20px rgba(13,59,102,.09)",
+        border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "transparent"}`,
+        fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)",
+        transform: hovered ? "translateY(-5px)" : "none", position: "relative" }}>
+
+      {/* Hero image with overlay title */}
+      <div style={{ position: "relative", height: 190, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
+        <img loading="lazy" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
+          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
+          onError={e => { e.target.src = "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800"; }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 35%,rgba(0,0,0,.65) 100%)" }} />
+        {svc.badge && (
+          <div style={{ position: "absolute", top: 12, left: 12, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "3px 12px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
+            {svc.badge}
+          </div>
+        )}
+        {svc.highlight && (
+          <div style={{ position: "absolute", top: 12, right: 12, background: "linear-gradient(130deg,#063d5c,#0891b2)", color: "#fff", borderRadius: 20, padding: "3px 10px", fontSize: "0.625rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
+        )}
+        {/* Image thumbnails nav (if multiple) */}
+        {imgs.length > 1 && (
+          <div style={{ position: "absolute", bottom: 42, right: 10, display: "flex", gap: 4 }}>
+            {imgs.map((_, i) => (
+              <button key={i} onClick={e => { e.stopPropagation(); setImgIdx(i); }}
+                style={{ width: i === imgIdx ? 18 : 6, height: 6, borderRadius: 3, border: "none", background: i === imgIdx ? "#fff" : "rgba(255,255,255,.5)", cursor: "pointer", padding: 0, transition: "all .2s" }} />
+            ))}
+          </div>
+        )}
+        <div style={{ position: "absolute", bottom: 12, left: 14, right: 14 }}>
+          <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.0625rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 2 }}>{svc.title}</h3>
+        </div>
+      </div>
+
+      {/* Info row: foto kegiatan count + category label */}
+      <div style={{ padding: "10px 14px 0", display: "flex", gap: 14, flexWrap: "wrap" }}>
+        {imgs.length > 1 && <span style={{ fontSize: "0.75rem", color: "#4a7f98" }}>🖼 {imgs.length} Foto Kegiatan</span>}
+        <span style={{ fontSize: "0.75rem", color: "#4a7f98", textTransform: "capitalize" }}>
+          {svc.category === "wedding" ? "💍 Wedding Organizer" : "📅 Event Organizer"}
+        </span>
+      </div>
+
+      {/* Description */}
+      <p style={{ fontSize: "0.8125rem", color: "#4a7f98", lineHeight: 1.6, padding: "8px 14px 10px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
+
+      {/* Top features */}
+      {(svc.features || []).length > 0 && (
+        <div style={{ padding: "0 14px 12px" }}>
+          {(svc.features || []).slice(0, 3).map((f, i) => (
+            <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", marginBottom: 5 }}>
+              <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem", flexShrink: 0, marginTop: 1 }}>✓</span>
+              <span style={{ fontSize: "0.75rem", color: "#1a5a78", fontWeight: 500, lineHeight: 1.45 }}>{f}</span>
+            </div>
+          ))}
+          {(svc.features || []).length > 3 && (
+            <div style={{ fontSize: "0.6875rem", color: "#0891b2", fontWeight: 600, marginTop: 2 }}>+{svc.features.length - 3} fitur lainnya</div>
+          )}
+        </div>
+      )}
+
+      {/* Price block */}
+      <div style={{
+        background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`,
+        padding: "14px 14px 16px", overflow: "hidden", position: "relative",
+        borderTop: "3px solid rgba(255,255,255,.15)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,.18)",
+      }}>
+        <div style={{ position: "absolute", right: -16, top: -16, width: 100, height: 100, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
+        <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Mulai Dari</p>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff", lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{svc.price}</span>
+          <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>{svc.priceNote}</span>
+        </div>
+        <p style={{ color: "rgba(255,255,255,.5)", fontSize: "0.6rem", marginTop: 4, fontStyle: "italic" }}>Nego / Konsultasi dulu</p>
+      </div>
+
+      {/* Footer CTA */}
+      <div style={{ padding: "10px 12px 12px", background: al, borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderBottom: `1px solid ${ac}25`, borderRadius: "0 0 14px 14px", display: "flex", gap: 8 }}>
+        <button
+          onClick={() => window.open(`${waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(`Halo, saya tertarik dengan ${svc.title}`)}`, "_blank")}
+          style={{ flex: 1, padding: "10px 0", background: "#25D366", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
+          💬 WA
+        </button>
+        <button onClick={onDetail}
+          style={{ flex: 3, padding: "10px 0", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s" }}
+          onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+          onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+          Lihat Detail →
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function TravelPackageCardWide({ svc, onDetail, waLink }) {
   const [hovered, setHovered] = useState(false);
   const isMobile = useIsMobile();
@@ -4179,67 +4287,17 @@ function ServicesPage({ content, services, navigateTo }) {
                 );
               })()
             ) : (
-              /* ── EVENT / WEDDING: card style dengan hover popup + Custom full-width di bawah ── */
+              /* ── EVENT / WEDDING: Traveling-style cards ── */
               (() => {
                 const customPkg = filteredServices.find(s => s.pkgId === "custom");
                 const regularSvcs = filteredServices.filter(s => s.pkgId !== "custom");
                 return (
                   <div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 28 }}>
-                      {regularSvcs.map(svc => {
-                        const isHov = hoveredCard === svc.id;
-                        return (
-                          <div key={svc.id}
-                            onMouseEnter={() => setHoveredCard(svc.id)}
-                            onMouseLeave={() => setHoveredCard(null)}
-                            style={{ background: "#fff", borderRadius: 14, overflow: "visible", boxShadow: isHov ? "0 20px 48px rgba(13,59,102,.18)" : "0 4px 16px rgba(13,59,102,.08)", transform: isHov ? "translateY(-6px)" : "none", transition: "all .3s cubic-bezier(.22,1,.36,1)", border: svc.highlight ? "2px solid #0891b2" : isHov ? "2px solid rgba(8,145,178,.4)" : "2px solid transparent", position: "relative" }}>
-
-                      {svc.badge && (
-                        <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2, background: svc.badgeColor || "#0891b2", color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase" }}>
-                          {svc.badge}
-                        </div>
-                      )}
-                      {svc.highlight && (
-                        <div style={{ position: "absolute", top: 14, right: 14, zIndex: 2, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 20, padding: "4px 12px", fontSize: "0.6875rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
-                      )}
-                      <div style={{ height: 200, overflow: "hidden", borderRadius: "12px 12px 0 0" }}>
-                        <img loading="lazy" src={(svc.images?.[0] || svc.image)} alt={svc.title}
-                          style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: isHov ? "scale(1.07)" : "scale(1)" }}
-                          onError={e => { e.target.src = "https://images.unsplash.com/photo-1570789210967-2cac24afeb00?w=1600&h=600&fit=crop"; }} />
-                      </div>
-                      <div style={{ padding: "22px 22px 20px" }}>
-                        <h3 className="display" style={{ fontSize: "1.125rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.25, marginBottom: 8 }}>{svc.title}</h3>
-                        <p style={{ fontSize: "0.875rem", color: "#4a7f98", lineHeight: 1.7, marginBottom: 16, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
-                        <div style={{ marginBottom: 16 }}>
-                          {(svc.features || []).slice(0, 3).map((feat, i) => (
-                            <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
-                              <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem" }}>✓</span>
-                              <span style={{ fontSize: "0.8125rem", color: "#1a5a78" }}>{feat}</span>
-                            </div>
-                          ))}
-                          {(svc.features || []).length > 3 && (
-                            <div style={{ fontSize: "0.75rem", color: "#0891b2", fontWeight: 600, marginTop: 4 }}>+{svc.features.length - 3} fitur lainnya</div>
-                          )}
-                        </div>
-                        <div style={{ borderTop: "1px solid #f0f7fb", paddingTop: 16, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-                          <div>
-                            <div style={{ fontSize: "0.65rem", color: "#5090aa", fontWeight: 600, textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 2 }}>Mulai Dari</div>
-                            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.375rem", fontWeight: 900, color: "#0d3b66", lineHeight: 1 }}>{svc.price}</div>
-                            <div style={{ fontSize: "0.6875rem", color: "#4a7f98" }}>{svc.priceNote}</div>
-                            <div style={{ fontSize: "0.6875rem", color: "#0891b2", fontWeight: 600, fontStyle: "italic", marginTop: 2 }}>Nego / Konsultasi dulu</div>
-                          </div>
-                          <button onClick={() => openDetail(svc)}
-                            style={{ padding: "10px 18px", background: svc.highlight ? "linear-gradient(135deg,#0d3b66,#0891b2)" : "#0d3b66", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s", letterSpacing: ".03em", whiteSpace: "nowrap" }}
-                            onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
-                            onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-                            Lihat Detail
-                          </button>
-                        </div>
-                      </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
+                      {regularSvcs.map(svc => (
+                        <EventWeddingPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} waLink={content.waLink} />
+                      ))}
                     </div>
-                  );
-                        })}
-                      </div>
                     {customPkg && (
                       <div style={{ marginTop: 28 }}>
                         <EventWeddingCustomCardWide svc={customPkg} onDetail={() => openDetail(customPkg)} waLink={content.waLink} />
@@ -6571,97 +6629,101 @@ export default function BricksyTravel() {
             const PAGE_LABELS = { home: "Beranda", about: "Tentang Kami", services: "Layanan", destinations: "Destinasi", news: "Berita", shop: "Toko" };
             const currentLabel = PAGE_LABELS[historyStack[historyIdx]] || historyStack[historyIdx] || "Halaman";
             if (isMobileNav) {
-              /* ── MOBILE: pill horizontal di kiri bawah ── */
+              /* ── MOBILE: bold rectangle pill di kiri bawah ── */
               return (
                 <div style={{
-                  position: "fixed", bottom: 24, left: 16, zIndex: 9989,
+                  position: "fixed", bottom: 20, left: 12, zIndex: 9989,
                   display: "flex", alignItems: "center",
-                  background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)",
-                  borderRadius: 40, boxShadow: "0 4px 20px rgba(0,0,0,.18), 0 1px 4px rgba(0,0,0,.10)",
-                  border: "1px solid rgba(13,59,102,.10)", overflow: "hidden",
+                  background: "#0d3b66",
+                  borderRadius: 10, overflow: "hidden",
+                  boxShadow: "0 4px 18px rgba(13,59,102,.45), 0 2px 6px rgba(0,0,0,.2)",
+                  border: "2px solid rgba(255,255,255,.15)",
                 }}>
                   {/* Tombol Mundur */}
                   <button onClick={spaBack} disabled={!canBack} aria-label="Halaman sebelumnya"
                     style={{
-                      width: 54, height: 54, border: "none", background: "transparent",
+                      width: 52, height: 48, border: "none",
+                      background: canBack ? "transparent" : "rgba(255,255,255,.05)",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       cursor: canBack ? "pointer" : "default",
-                      opacity: canBack ? 1 : 0.3,
+                      opacity: canBack ? 1 : 0.35,
                       WebkitTapHighlightColor: "transparent",
                       transition: "background .15s",
                     }}
-                    onPointerDown={e => { if (canBack) e.currentTarget.style.background = "rgba(13,59,102,.08)"; }}
+                    onPointerDown={e => { if (canBack) e.currentTarget.style.background = "rgba(255,255,255,.15)"; }}
                     onPointerUp={e => { e.currentTarget.style.background = "transparent"; }}
                     onPointerLeave={e => { e.currentTarget.style.background = "transparent"; }}
                   >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={canBack ? "#0d3b66" : "#aaa"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="15 18 9 12 15 6" />
                     </svg>
                   </button>
                   {/* Label halaman aktif */}
                   <div style={{
-                    padding: "0 6px", fontSize: "0.6875rem", fontWeight: 700,
-                    color: "#0d3b66", letterSpacing: ".02em", whiteSpace: "nowrap",
-                    maxWidth: 90, overflow: "hidden", textOverflow: "ellipsis",
+                    padding: "0 10px", fontSize: "0.6875rem", fontWeight: 800,
+                    color: "#fff", letterSpacing: ".04em", whiteSpace: "nowrap",
+                    maxWidth: 88, overflow: "hidden", textOverflow: "ellipsis",
                     fontFamily: "'DM Sans',sans-serif", lineHeight: 1,
-                    borderLeft: "1px solid rgba(13,59,102,.1)", borderRight: "1px solid rgba(13,59,102,.1)",
-                    height: 54, display: "flex", alignItems: "center",
+                    borderLeft: "1px solid rgba(255,255,255,.2)", borderRight: "1px solid rgba(255,255,255,.2)",
+                    height: 48, display: "flex", alignItems: "center",
+                    textTransform: "uppercase", letterSpacing: ".05em",
                   }}>
                     {currentLabel}
                   </div>
                   {/* Tombol Maju */}
                   <button onClick={spaForward} disabled={!canFwd} aria-label="Halaman berikutnya"
                     style={{
-                      width: 54, height: 54, border: "none", background: "transparent",
+                      width: 52, height: 48, border: "none",
+                      background: canFwd ? "transparent" : "rgba(255,255,255,.05)",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       cursor: canFwd ? "pointer" : "default",
-                      opacity: canFwd ? 1 : 0.3,
+                      opacity: canFwd ? 1 : 0.35,
                       WebkitTapHighlightColor: "transparent",
                       transition: "background .15s",
                     }}
-                    onPointerDown={e => { if (canFwd) e.currentTarget.style.background = "rgba(13,59,102,.08)"; }}
+                    onPointerDown={e => { if (canFwd) e.currentTarget.style.background = "rgba(255,255,255,.15)"; }}
                     onPointerUp={e => { e.currentTarget.style.background = "transparent"; }}
                     onPointerLeave={e => { e.currentTarget.style.background = "transparent"; }}
                   >
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={canFwd ? "#0d3b66" : "#aaa"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="9 18 15 12 9 6" />
                     </svg>
                   </button>
                 </div>
               );
             }
-            /* ── DESKTOP: dua tombol bulat vertikal di kanan ── */
+            /* ── DESKTOP: dua tombol persegi panjang bold vertikal di kanan ── */
             return (
-              <div style={{ position: "fixed", bottom: 100, right: 20, zIndex: 9989, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ position: "fixed", bottom: 100, right: 20, zIndex: 9989, display: "flex", flexDirection: "column", gap: 6 }}>
                 <button onClick={spaForward} disabled={!canFwd} title="Maju"
                   style={{
-                    width: 44, height: 44, borderRadius: "50%", border: "none",
-                    background: canFwd ? "#fff" : "rgba(255,255,255,.5)",
-                    boxShadow: "0 2px 10px rgba(0,0,0,.16)",
+                    width: 52, height: 44, borderRadius: 8, border: "none",
+                    background: canFwd ? "linear-gradient(135deg,#0d3b66,#0891b2)" : "rgba(200,210,220,.55)",
+                    boxShadow: canFwd ? "0 4px 14px rgba(13,59,102,.40)" : "0 2px 6px rgba(0,0,0,.12)",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    cursor: canFwd ? "pointer" : "default", opacity: canFwd ? 1 : 0.4,
-                    transition: "transform .2s, box-shadow .2s",
+                    cursor: canFwd ? "pointer" : "default", opacity: canFwd ? 1 : 0.45,
+                    transition: "transform .18s, box-shadow .18s, opacity .18s",
                   }}
-                  onMouseEnter={e => { if (canFwd) { e.currentTarget.style.transform = "scale(1.12)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,.22)"; }}}
-                  onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,.16)"; }}
+                  onMouseEnter={e => { if (canFwd) { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 22px rgba(13,59,102,.5)"; }}}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = canFwd ? "0 4px 14px rgba(13,59,102,.40)" : "0 2px 6px rgba(0,0,0,.12)"; }}
                 >
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke={canFwd ? "#0d3b66" : "#aaa"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
                 </button>
                 <button onClick={spaBack} disabled={!canBack} title="Mundur"
                   style={{
-                    width: 44, height: 44, borderRadius: "50%", border: "none",
-                    background: canBack ? "#fff" : "rgba(255,255,255,.5)",
-                    boxShadow: "0 2px 10px rgba(0,0,0,.16)",
+                    width: 52, height: 44, borderRadius: 8, border: "none",
+                    background: canBack ? "linear-gradient(135deg,#0d3b66,#0891b2)" : "rgba(200,210,220,.55)",
+                    boxShadow: canBack ? "0 4px 14px rgba(13,59,102,.40)" : "0 2px 6px rgba(0,0,0,.12)",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    cursor: canBack ? "pointer" : "default", opacity: canBack ? 1 : 0.4,
-                    transition: "transform .2s, box-shadow .2s",
+                    cursor: canBack ? "pointer" : "default", opacity: canBack ? 1 : 0.45,
+                    transition: "transform .18s, box-shadow .18s, opacity .18s",
                   }}
-                  onMouseEnter={e => { if (canBack) { e.currentTarget.style.transform = "scale(1.12)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,.22)"; }}}
-                  onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 2px 10px rgba(0,0,0,.16)"; }}
+                  onMouseEnter={e => { if (canBack) { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 22px rgba(13,59,102,.5)"; }}}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = canBack ? "0 4px 14px rgba(13,59,102,.40)" : "0 2px 6px rgba(0,0,0,.12)"; }}
                 >
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke={canBack ? "#0d3b66" : "#aaa"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="15 18 9 12 15 6" />
                   </svg>
                 </button>
