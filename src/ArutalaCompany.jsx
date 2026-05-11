@@ -2108,6 +2108,13 @@ const GS = () => (
       button[style*='"transparent"']{background:#0d3b66!important;color:#fff!important}
     }
 
+    /* Explore dropdown: di mobile tidak absolute agar tidak overlap konten */
+    @media(max-width:768px){
+      .explore-dropdown{position:static!important;top:auto!important;left:auto!important;margin-top:6px!important;width:100%!important;box-shadow:none!important;border-radius:4px!important}
+      .explore-wrap{display:block!important;width:100%!important}
+      .explore-wrap button.btn-outline-solid{width:100%!important}
+    }
+
     /* 16. Input: prevent iOS zoom, full width */
     @media(max-width:768px){
       input,textarea,select{font-size:16px!important;max-width:100%!important}
@@ -9635,7 +9642,7 @@ export default function BricksyTravel() {
                         );
                       })()}
 
-                      <div style={{ position: "relative", display: "inline-block" }}>
+                      <div style={{ position: "relative", display: "inline-block" }} className="explore-wrap">
                         <button onClick={() => setExploreOpen(v => !v)} className="btn-outline-solid"
                           style={{ padding: "12px 30px", border: "1.5px solid #0d3b66", background: exploreOpen ? "#0d3b66" : "#fff",
                           fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700,
@@ -9645,7 +9652,7 @@ export default function BricksyTravel() {
                           Explore All <span style={{ fontSize: "0.6rem", transition: "transform .2s", display: "inline-block", transform: exploreOpen ? "rotate(180deg)" : "none" }}>▼</span>
                         </button>
                         {exploreOpen && (
-                          <div style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, background: "#fff",
+                          <div className="explore-dropdown" style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, background: "#fff",
                             border: "1.5px solid #0d3b66", borderRadius: 4, minWidth: 200, zIndex: 200,
                             boxShadow: "0 8px 32px rgba(13,59,102,.15)", overflow: "hidden" }}>
                             {[
@@ -9729,8 +9736,8 @@ export default function BricksyTravel() {
                       />
                     </div>
                     {/* Gradasi SOFT multi-layer kiri→kanan */}
-                    <div className="map-section-hide-mobile" style={{ position: "absolute", top: 0, left: "20%", width: "45%", height: "100%", zIndex: 2, pointerEvents: "none",
-                      background: "linear-gradient(to right, transparent 0%, rgba(4,8,15,.15) 20%, rgba(4,8,15,.45) 45%, rgba(4,8,15,.78) 70%, #04080f 100%)" }} />
+                    <div className="map-section-hide-mobile" style={{ position: "absolute", top: 0, left: "0%", width: "70%", height: "100%", zIndex: 2, pointerEvents: "none",
+                      background: "linear-gradient(to right, transparent 0%, rgba(4,8,15,.05) 30%, rgba(4,8,15,.18) 45%, rgba(4,8,15,.38) 57%, rgba(4,8,15,.60) 67%, rgba(4,8,15,.80) 76%, rgba(4,8,15,.93) 86%, #04080f 100%)" }} />
                     {/* Stars overlay di kanan */}
                     <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(1px 1px at 65% 15%, rgba(255,255,255,.7) 0%, transparent 100%), radial-gradient(1px 1px at 72% 40%, rgba(255,255,255,.5) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 80% 10%, rgba(255,255,255,.8) 0%, transparent 100%), radial-gradient(1px 1px at 88% 30%, rgba(255,255,255,.4) 0%, transparent 100%), radial-gradient(1px 1px at 92% 60%, rgba(255,255,255,.6) 0%, transparent 100%), radial-gradient(1.5px 1.5px at 96% 20%, rgba(255,255,255,.9) 0%, transparent 100%), radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,.3) 0%, transparent 100%), radial-gradient(1px 1px at 75% 85%, rgba(255,255,255,.4) 0%, transparent 100%)", zIndex: 3, pointerEvents: "none" }} />
 
@@ -9750,7 +9757,7 @@ export default function BricksyTravel() {
                             onChange={e => {
                               setMapQuery(e.target.value);
                               clearTimeout(mapDebounceRef.current);
-                              if (e.target.value.trim()) {
+                              if (e.target.value.trim() && window.innerWidth > 768) {
                                 mapDebounceRef.current = setTimeout(() => {
                                   setMapLocation(e.target.value.trim());
                                 }, 700);
@@ -9759,7 +9766,11 @@ export default function BricksyTravel() {
                             onKeyDown={e => {
                               if (e.key === "Enter" && mapQuery.trim()) {
                                 clearTimeout(mapDebounceRef.current);
-                                setMapLocation(mapQuery.trim());
+                                if (window.innerWidth <= 768) {
+                                  window.location.href = `https://maps.google.com/?q=${encodeURIComponent(mapQuery.trim())}`;
+                                } else {
+                                  setMapLocation(mapQuery.trim());
+                                }
                               }
                             }}
                             placeholder="Cari lokasi... (e.g. Bali, Raja Ampat)"
@@ -9771,7 +9782,11 @@ export default function BricksyTravel() {
                             onClick={() => {
                               if (mapQuery.trim()) {
                                 clearTimeout(mapDebounceRef.current);
-                                setMapLocation(mapQuery.trim());
+                                if (window.innerWidth <= 768) {
+                                  window.location.href = `https://maps.google.com/?q=${encodeURIComponent(mapQuery.trim())}`;
+                                } else {
+                                  setMapLocation(mapQuery.trim());
+                                }
                               }
                             }}
                             style={{ padding: "12px 20px", background: "#0891b2", color: "#fff", border: "none",
