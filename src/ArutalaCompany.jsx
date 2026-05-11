@@ -7277,12 +7277,23 @@ function HeroSlideshow({ data, navigateTo }) {
 }
 
 /* ─────────────── REVIEW FORM (Public, One-Time Token) ─────────────── */
-function ReviewForm({ token, onSubmitDone, data, save, notify }) {
+function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
   const [step, setStep] = useState("form"); // form | done | invalid
   const [form, setForm] = useState({ name: "", email: "", stars: 5, content: "", photo: "" });
   const [photoUploading, setPhotoUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [err, setErr] = useState("");
+
+  // Tunggu data selesai load dari Firestore sebelum validasi token
+  if (isLoading) return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#edfafc,#e8f4fd)" }}>
+      <div style={{ textAlign: "center" }}>
+        <div style={{ width: 56, height: 56, border: "4px solid #c0e8f0", borderTopColor: "#0891b2", borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 20px" }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        <p style={{ color: "#4a7f98", fontSize: "0.9375rem", fontWeight: 500 }}>Memuat form ulasan…</p>
+      </div>
+    </div>
+  );
 
   const tokenObj = (data.reviewTokens || []).find(t => t.token === token);
 
@@ -7668,11 +7679,13 @@ function AdminReviews({ data, save, notify }) {
   const [generatedLink, setGeneratedLink] = useState("");
 
   const generateToken = () => {
-    const token = Math.random().toString(36).slice(2, 11) + Math.random().toString(36).slice(2, 11);
+    // ID berurut berdasarkan jumlah token yang sudah ada
+    const nextId = (tokens.length + 1).toString().padStart(3, "0");
+    const token = nextId; // token = ID singkat, e.g. "001", "002"
     const label = newTokenLabel.trim() || "Tamu";
     const newToken = { id: Date.now().toString(), token, label, used: false, createdAt: new Date().toISOString().slice(0,10) };
     save({ ...data, reviewTokens: [...tokens, newToken] });
-    const link = `${window.location.origin}${window.location.pathname}?review=${token}`;
+    const link = `${window.location.origin}/UlasanPelayanan/${token}`;
     setGeneratedLink(link);
     setNewTokenLabel("");
     notify("✅ Link ulasan berhasil dibuat!");
@@ -7754,11 +7767,11 @@ function AdminReviews({ data, save, notify }) {
               <span style={{ fontSize: 16 }}>{tok.used ? "✅" : "🔑"}</span>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 13, fontWeight: 600, color: "#0d3b66" }}>{tok.label || "—"}</div>
-                <div style={{ fontSize: 11, color: "#5090aa", fontFamily: "monospace", wordBreak: "break-all" }}>{tok.token}</div>
+                <div style={{ fontSize: 11, color: "#5090aa", fontFamily: "monospace", wordBreak: "break-all" }}>/UlasanPelayanan/{tok.token}</div>
                 <div style={{ fontSize: 11, color: "#5090aa" }}>Dibuat: {tok.createdAt} · {tok.used ? "Sudah digunakan" : "Belum digunakan"}</div>
               </div>
               {!tok.used && (
-                <button onClick={() => { const l = `${window.location.origin}${window.location.pathname}?review=${tok.token}`; navigator.clipboard?.writeText(l); notify("Link disalin!"); }}
+                <button onClick={() => { const l = `${window.location.origin}/UlasanPelayanan/${tok.token}`; navigator.clipboard?.writeText(l); notify("Link disalin!"); }}
                   style={{ padding: "5px 10px", background: "#0ea5c5", color: "#fff", borderRadius: 5, fontSize: 11, border: "none" }}>📋</button>
               )}
               <button onClick={() => deleteToken(tok.id)}
@@ -7974,7 +7987,10 @@ export default function BricksyTravel() {
   const [profileEditMode, setProfileEditMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [reviewTokenParam, setReviewTokenParam] = useState(() => {
-    try { return new URLSearchParams(window.location.search).get("review") || ""; } catch { return ""; }
+    try {
+      const m = window.location.pathname.match(/^\/UlasanPelayanan\/(.+)$/);
+      return m ? m[1] : "";
+    } catch { return ""; }
   });
 
   /* ── Desktop cursor glow + scroll-reveal (pointer:fine only) ── */
@@ -7999,6 +8015,14 @@ export default function BricksyTravel() {
   useEffect(() => {
     const onPopState = (e) => {
       const pathname = window.location.pathname;
+      // /UlasanPelayanan/{token}
+      const reviewMatch = pathname.match(/^\/UlasanPelayanan\/(.+)$/);
+      if (reviewMatch) {
+        setReviewTokenParam(reviewMatch[1]);
+        setShowAdmin(false);
+        return;
+      }
+      setReviewTokenParam("");
       // /control-panel
       if (pathname === "/control-panel" || e.state?.admin) {
         setShowAdmin(true);
@@ -8459,7 +8483,7 @@ export default function BricksyTravel() {
       <GS />
 
       {/* ── LOADING SKELETON ── */}
-      {isLoading && (
+      {isLoading && !reviewTokenParam && (
         <div style={{ position: "fixed", inset: 0, zIndex: 9990, background: "#f0fbfd", display: "flex", flexDirection: "column" }}>
           <style>{`
             @keyframes shimmer { 0%{background-position:-800px 0} 100%{background-position:800px 0} }
@@ -8562,7 +8586,7 @@ export default function BricksyTravel() {
 
       {/* ══════ REVIEW FORM (token-based, public) ══════ */}
       {reviewTokenParam && (
-        <ReviewForm token={reviewTokenParam} data={data} save={save} notify={notify} />
+        <ReviewForm token={reviewTokenParam} data={data} save={save} notify={notify} isLoading={isLoading} />
       )}
 
       {/* ══════ PUBLIC WEBSITE ══════ */}
