@@ -6185,18 +6185,17 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
               {(svcForm.prices || []).map((p, i) => (
-                <div key={i} style={{ background: "#fff", borderRadius: 10, border: i === 0 ? "2px solid #0891b2" : "1.5px solid #b0dce8", padding: "14px 16px", paddingTop: 32, boxShadow: i === 0 ? "0 2px 10px rgba(8,145,178,.12)" : "none", position: "relative" }}>
-                  {/* Tombol hapus semua kendaraan */}
-                  <button onClick={() => {
-                    const newPrices = (svcForm.prices || []).filter((_, j) => j !== i);
-                    setSvcForm(s => ({ ...s, prices: newPrices }));
-                  }}
-                    style={{ position: "absolute", top: 8, right: 8, width: 22, height: 22, borderRadius: "50%", background: "#fee", color: "#e74c3c", border: "1px solid #fbb", fontSize: 11, fontWeight: 800, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}
-                    title="Hapus kendaraan ini">✕</button>
+                <div key={i} style={{ background: "#fff", borderRadius: 10, border: i === 0 ? "2px solid #0891b2" : "1.5px solid #b0dce8", padding: "14px 16px", boxShadow: i === 0 ? "0 2px 10px rgba(8,145,178,.12)" : "none", position: "relative" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                     <span style={{ fontSize: 18 }}>{p.icon}</span>
                     <span style={{ fontSize: 13, fontWeight: 700, color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
                     {i === 0 && <span style={{ fontSize: 9, background: "#0891b2", color: "#fff", borderRadius: 6, padding: "2px 7px", fontWeight: 800, letterSpacing: ".06em" }}>UTAMA</span>}
+                    <button onClick={() => {
+                      const newPrices = (svcForm.prices || []).filter((_, j) => j !== i);
+                      setSvcForm(s => ({ ...s, prices: newPrices }));
+                    }}
+                      style={{ width: 20, height: 20, borderRadius: "50%", background: "#fee", color: "#e74c3c", border: "1px solid #fbb", fontSize: 11, fontWeight: 800, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1, flexShrink: 0 }}
+                      title="Hapus kendaraan ini">✕</button>
                   </div>
                   <div style={{ fontSize: 10, color: "#5090aa", marginBottom: 6 }}>{p.capacity}</div>
                   <label style={{ display: "block", fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 5 }}>Harga / orang</label>
