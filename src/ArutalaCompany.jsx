@@ -5663,59 +5663,92 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
         <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #0891b2" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
             <div style={{ fontSize:12, fontWeight:800, color:"#0891b2", textTransform:"uppercase", letterSpacing:"1px" }}>🚌 Harga per Kendaraan</div>
-            <button onClick={() => setSvcForm(p => ({ ...p, prices: [...(p.prices||[]), { icon:"🚐", vehicle:"", capacity:"", price:"" }] }))}
+            <button onClick={() => setSvcForm(p => ({ ...p, prices: [...(p.prices||[]), { icon:"🚌", vehicle:"", capacity:"", price:"", specs:[] }] }))}
               style={{ fontSize:13, padding:"8px 16px", background:"#0891b2", color:"#fff", border:"none", borderRadius:7, cursor:"pointer", fontWeight:800, boxShadow:"0 2px 6px rgba(8,145,178,.35)" }}>+ Tambah</button>
           </div>
           <div style={{ fontSize:11, color:"#5090aa", marginBottom:14 }}>Kendaraan pertama = harga utama di kartu paket</div>
-          {/* Icon picker presets */}
-          <div style={{ display:"flex", gap:4, flexWrap:"wrap", marginBottom:12 }}>
-            {[["🚌","Bus"],["🚐","Minibus"],["🚑","Hiace"],["🏎","ELF"],["🚗","Avanza"],["🚙","Innova"],["🛻","Terios"],["✈","Pesawat"],["🚢","Kapal"],["🏍","Motor"]].map(([ic,nm])=>(
-              <button key={ic} title={nm} onClick={() => {
-                const cur = svcForm.prices||[];
-                if(cur.length===0) setSvcForm(p=>({...p,prices:[{icon:ic,vehicle:nm,capacity:"",price:""}]}));
-                else setSvcForm(p=>({...p,prices:[...p.prices,{icon:ic,vehicle:nm,capacity:"",price:""}]}));
-              }}
-                style={{ fontSize:18, padding:"4px 8px", borderRadius:7, border:"1px solid #d0eaf4", background:"#f5fdff", cursor:"pointer" }} title={nm}>{ic}</button>
-            ))}
-          </div>
-          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+          <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
             {(svcForm.prices||[]).length === 0 && (
-              <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"16px 0" }}>Belum ada kendaraan. Klik + Tambah atau pilih ikon di atas.</p>
+              <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"16px 0" }}>Belum ada kendaraan. Klik + Tambah.</p>
             )}
             {(svcForm.prices||[]).map((p,i)=>(
-              <div key={i} style={{ background: i===0?"#edfafc":"#f9fdff", borderRadius:8, border:i===0?"1.5px solid #0891b2":"1px solid #d0eaf4", padding:"12px 14px" }}>
-                {/* Row 1: icon + nama + kapasitas + hapus */}
-                <div style={{ display:"flex", gap:8, marginBottom:8, alignItems:"center" }}>
-                  <input value={p.icon||""} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],icon:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
-                    placeholder="🚌" maxLength={4}
-                    style={{ width:38, height:34, textAlign:"center", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:"1.1rem", outline:"none", flexShrink:0 }} />
+              <div key={i} style={{ background: i===0?"#edfafc":"#f9fdff", borderRadius:10, border:i===0?"1.5px solid #0891b2":"1px solid #d0eaf4", overflow:"hidden" }}>
+                {/* Header bar */}
+                <div style={{ display:"flex", alignItems:"center", gap:8, padding:"10px 14px", background: i===0?"rgba(8,145,178,.08)":"rgba(0,0,0,.02)", borderBottom:"1px solid rgba(8,145,178,.1)" }}>
+                  {/* Icon dropdown */}
+                  <select value={p.icon||"🚌"} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],icon:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
+                    style={{ fontSize:18, padding:"4px 6px", border:"1.5px solid #b0dce8", borderRadius:7, background:"#fff", cursor:"pointer", outline:"none", flexShrink:0 }}>
+                    {[["🚌","🚌 Bus"],["🚐","🚐 Minibus"],["🚑","🚑 Hiace"],["🏎","🏎 ELF"],["🚗","🚗 Avanza"],["🚙","🚙 Innova"],["🛻","🛻 Terios"],["✈","✈ Pesawat"],["🚢","🚢 Kapal"],["🏍","🏍 Motor"],["🚎","🚎 Bus Besar"],["🚁","🚁 Helikopter"]].map(([v,l])=>(
+                      <option key={v} value={v}>{l}</option>
+                    ))}
+                  </select>
                   <input value={p.vehicle||""} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],vehicle:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
-                    placeholder="Nama Kendaraan"
-                    style={{ flex:2, padding:"7px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none" }} />
-                  <input value={p.capacity||""} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],capacity:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
-                    placeholder="Kapasitas (mis: 35–60 org)"
-                    style={{ flex:2, padding:"7px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none" }} />
+                    placeholder="Nama Kendaraan (mis: Bus Executive)"
+                    style={{ flex:1, padding:"7px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none", fontWeight:700 }} />
                   {i===0
                     ? <span style={{ fontSize:9, background:"#0891b2", color:"#fff", borderRadius:5, padding:"3px 8px", fontWeight:800, flexShrink:0, whiteSpace:"nowrap" }}>UTAMA</span>
                     : <button onClick={()=>{ const np=(svcForm.prices||[]).filter((_,j)=>j!==i); setSvcForm(s=>({...s,prices:np})); }}
                         style={{ width:28, height:28, background:"#fee", color:"#e74c3c", border:"none", borderRadius:6, cursor:"pointer", flexShrink:0, fontWeight:700, fontSize:13 }}>✕</button>
                   }
                 </div>
-                {/* Row 2: harga */}
-                <div style={{ position:"relative" }}>
-                  <span style={{ position:"absolute", left:10, top:"50%", transform:"translateY(-50%)", fontSize:12, fontWeight:700, color:"#0891b2", pointerEvents:"none" }}>Rp</span>
-                  <input type="number" min="0" value={p.price||""} onChange={e=>{
-                    const np=[...(svcForm.prices||[])]; np[i]={...np[i],price:e.target.value};
-                    const ns={...svcForm,prices:np}; if(i===0)ns.price=formatRp(e.target.value); setSvcForm(ns);
-                  }} placeholder="500000"
-                    style={{ width:"100%", padding:"9px 10px 9px 30px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                {/* Fields */}
+                <div style={{ padding:"12px 14px", display:"flex", flexDirection:"column", gap:10 }}>
+                  {/* Kapasitas + Harga */}
+                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+                    <div>
+                      <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Kapasitas</label>
+                      <input value={p.capacity||""} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],capacity:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
+                        placeholder="mis: 35–60 orang"
+                        style={{ width:"100%", padding:"8px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none", boxSizing:"border-box" }} />
+                    </div>
+                    <div>
+                      <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Harga / orang (Rp)</label>
+                      <div style={{ position:"relative" }}>
+                        <span style={{ position:"absolute", left:8, top:"50%", transform:"translateY(-50%)", fontSize:11, fontWeight:700, color:"#0891b2", pointerEvents:"none" }}>Rp</span>
+                        <input type="number" min="0" value={p.price||""} onChange={e=>{
+                          const np=[...(svcForm.prices||[])]; np[i]={...np[i],price:e.target.value};
+                          const ns={...svcForm,prices:np}; if(i===0)ns.price=formatRp(e.target.value); setSvcForm(ns);
+                        }} placeholder="500000"
+                          style={{ width:"100%", padding:"8px 8px 8px 26px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none", boxSizing:"border-box" }} />
+                      </div>
+                      {p.price && !isNaN(p.price) && Number(p.price)>0 && <div style={{ fontSize:10, color:"#27ae60", fontWeight:700, marginTop:3 }}>✓ {formatRp(p.price)}</div>}
+                    </div>
+                  </div>
+                  {/* Spesifikasi */}
+                  <div>
+                    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:6 }}>
+                      <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px" }}>Spesifikasi Kendaraan</label>
+                      <button onClick={()=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],specs:[...(np[i].specs||[]),""]}; setSvcForm(s=>({...s,prices:np})); }}
+                        style={{ fontSize:11, padding:"3px 10px", background:"#0891b2", color:"#fff", border:"none", borderRadius:5, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
+                    </div>
+                    {/* Quick-add preset specs */}
+                    <div style={{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:8 }}>
+                      {["Full AC","Full Musik","Toilet","WiFi","Reclining Seat","Bantal & Selimut","TV LCD","Colokan Listrik","Charger USB","Bagasi Besar","Kursi VIP","Lampu LED","Supir Berpengalaman","Asuransi"].map(s=>(
+                        <button key={s} onClick={()=>{
+                          const np=[...(svcForm.prices||[])];
+                          const cur = np[i].specs||[];
+                          if(!cur.includes(s)){ np[i]={...np[i],specs:[...cur,s]}; setSvcForm(st=>({...st,prices:np})); }
+                        }}
+                          style={{ fontSize:10, padding:"3px 8px", background:(p.specs||[]).includes(s)?"#0891b2":"#edfafc", color:(p.specs||[]).includes(s)?"#fff":"#0891b2",
+                            border:`1px solid ${(p.specs||[]).includes(s)?"#0891b2":"#b0dce8"}`, borderRadius:20, cursor:"pointer", fontWeight:600, transition:"all .12s" }}>{s}</button>
+                      ))}
+                    </div>
+                    {/* Manual spec inputs */}
+                    <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
+                      {(p.specs||[]).map((sp,si)=>(
+                        <div key={si} style={{ display:"flex", gap:6, alignItems:"center" }}>
+                          <span style={{ color:"#0891b2", fontWeight:700, flexShrink:0, fontSize:12 }}>✓</span>
+                          <input value={sp} onChange={e=>{ const np=[...(svcForm.prices||[])]; const sps=[...(np[i].specs||[])]; sps[si]=e.target.value; np[i]={...np[i],specs:sps}; setSvcForm(s=>({...s,prices:np})); }}
+                            placeholder={`Spesifikasi ${si+1}`}
+                            style={{ flex:1, padding:"5px 8px", border:"1px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none" }} />
+                          <button onClick={()=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],specs:(np[i].specs||[]).filter((_,k)=>k!==si)}; setSvcForm(s=>({...s,prices:np})); }}
+                            style={{ width:22, height:22, background:"#fee", color:"#e74c3c", border:"none", borderRadius:4, cursor:"pointer", flexShrink:0, fontSize:11 }}>✕</button>
+                        </div>
+                      ))}
+                      {(p.specs||[]).length===0 && <p style={{ fontSize:11, color:"#a0c4d8", fontStyle:"italic" }}>Klik preset di atas atau + Tambah untuk menambah spesifikasi.</p>}
+                    </div>
+                  </div>
                 </div>
-                {p.price && !isNaN(p.price) && Number(p.price)>0 && (
-                  <div style={{ fontSize:11, color:"#27ae60", fontWeight:600, marginTop:4 }}>✓ {formatRp(p.price)}</div>
-                )}
-                {i===0 && (svcForm.prices||[]).length>1 && (
-                  <div style={{ fontSize:10, color:"#5090aa", marginTop:5, fontStyle:"italic" }}>💡 Seret ke atas/bawah untuk ubah urutan. Kendaraan pertama = harga tampil di kartu.</div>
-                )}
               </div>
             ))}
           </div>
@@ -6342,7 +6375,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                   <span style={{ fontSize: 11, background: cat.light, color: cat.color, border: `1px solid ${cat.border}`, borderRadius: 10, padding: "2px 10px", fontWeight: 700 }}>{catSvcs.length} paket</span>
                 </div>
                 {/* Package rows */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                   {catSvcs.map(svc => (
                     <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "14px 16px", boxShadow: "0 2px 8px rgba(0,0,0,.05)", display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: 12, borderLeft: `4px solid ${svc.highlight ? cat.color : cat.border}` }}>
                       {/* Left: thumbnail + info */}
@@ -9583,9 +9616,12 @@ export default function BricksyTravel() {
               {/* ── Profile card ── */}
               <div style={{ padding:"20px 16px 16px", borderBottom:"1px solid rgba(255,255,255,.08)" }}>
                 <div style={{ background:"linear-gradient(130deg,rgba(16,208,224,.12),rgba(8,145,178,.08))", borderRadius:14, padding:"16px 14px", display:"flex", flexDirection:"column", alignItems:"center", gap:10 }}>
-                  {/* Avatar */}
-                  <div style={{ width:72, height:72, borderRadius:"50%", background:"linear-gradient(130deg,#0891b2,#10d0e0)", border:"3px solid rgba(16,208,224,.5)", overflow:"hidden", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:26, color:"#fff", fontWeight:800, boxShadow:"0 4px 16px rgba(0,0,0,.3)" }}>
-                    {user.photo ? <img src={user.photo} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} onError={e=>e.target.style.display="none"} /> : (user.name?.[0]||user.username?.[0]||"A").toUpperCase()}
+                  {/* Avatar - Full Frame */}
+                  <div style={{ width:"100%", height:130, borderRadius:10, overflow:"hidden", flexShrink:0, position:"relative", background:"linear-gradient(130deg,#0891b2,#10d0e0)", boxShadow:"0 4px 16px rgba(0,0,0,.35)" }}>
+                    {user.photo
+                      ? <img src={user.photo} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top" }} onError={e=>e.target.style.display="none"} />
+                      : <div style={{ width:"100%", height:"100%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:48, color:"#fff", fontWeight:800, fontFamily:"'Playfair Display',serif" }}>{(user.name?.[0]||user.username?.[0]||"A").toUpperCase()}</div>
+                    }
                   </div>
                   {/* Name + Role */}
                   <div style={{ textAlign:"center" }}>
