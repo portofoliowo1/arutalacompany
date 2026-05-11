@@ -8038,25 +8038,69 @@ function WaPhoneDropdown({ admins, phone, msgText = "" }) {
 
 /* ─────────────── WA ADMIN MANAGER (Control Panel) ─────────────── */
 function WaAdminManager({ admins: adminsProp, onSave, notify }) {
-  const DEFAULT_LIST = [{ id: 1, name: "Admin 1 – Arutala", wa: "https://wa.me/6285745571442" }];
-  const admins = (adminsProp && adminsProp.length > 0) ? adminsProp : DEFAULT_LIST;
+  const DEFAULT_LIST = [{ id: 1, name: "Admin 1 – Arutala", wa: "https://wa.me/6285745571442", primary: true }];
+  const rawAdmins = (adminsProp && adminsProp.length > 0) ? adminsProp : DEFAULT_LIST;
+  // Pastikan selalu ada tepat 1 primary
+  const admins = rawAdmins.map((a, i) => ({ ...a, primary: a.primary || false }));
+  const primaryIdx = admins.findIndex(a => a.primary);
+  const normalizedAdmins = admins.map((a, i) => ({ ...a, primary: primaryIdx === -1 ? i === 0 : a.primary }));
+
   const [newName, setNewName] = useState("");
-  const [newWa,   setNewWa]   = useState("https://wa.me/62");
+  const [newPhone, setNewPhone] = useState(""); // user ketik nomor saja, misal 085745571442
+  const [editingId, setEditingId] = useState(null);
+  const [editName, setEditName] = useState("");
+  const [editPhone, setEditPhone] = useState("");
+
+  // Auto-generate WA link dari nomor: hapus angka 0 di depan, prefix 62
+  const phoneToWa = (num) => {
+    const clean = num.replace(/[^0-9]/g, "");
+    const normalized = clean.startsWith("0") ? "62" + clean.slice(1) : clean.startsWith("62") ? clean : "62" + clean;
+    return "https://wa.me/" + normalized;
+  };
+
+  const waToPhone = (wa) => {
+    const num = wa.replace("https://wa.me/", "");
+    return "0" + num.slice(2); // 62xxx -> 0xxx
+  };
 
   const addAdmin = () => {
     const trimName = newName.trim();
-    const trimWa   = newWa.trim();
+    const trimPhone = newPhone.replace(/[^0-9]/g, "");
     if (!trimName) return notify("Nama admin tidak boleh kosong.", "error");
-    if (!trimWa.startsWith("https://wa.me/62")) return notify("Link WA harus diawali https://wa.me/62...", "error");
-    onSave([...admins, { id: Date.now(), name: trimName, wa: trimWa }]);
-    setNewName(""); setNewWa("https://wa.me/62");
+    if (trimPhone.length < 9) return notify("Nomor HP tidak valid.", "error");
+    const waLink = phoneToWa(trimPhone);
+    onSave([...normalizedAdmins, { id: Date.now(), name: trimName, wa: waLink, primary: false }]);
+    setNewName(""); setNewPhone("");
   };
+
   const removeAdmin = (id) => {
-    if (admins.length <= 1) return notify("Minimal harus ada 1 admin WA.", "error");
-    onSave(admins.filter(a => a.id !== id));
+    if (normalizedAdmins.length <= 1) return notify("Minimal harus ada 1 admin WA.", "error");
+    const filtered = normalizedAdmins.filter(a => a.id !== id);
+    // Jika yang dihapus adalah primary, jadikan index 0 sebagai primary
+    const hasPrimary = filtered.some(a => a.primary);
+    const result = hasPrimary ? filtered : filtered.map((a, i) => ({ ...a, primary: i === 0 }));
+    onSave(result);
   };
-  const updateAdmin = (id, field, val) => {
-    onSave(admins.map(a => a.id === id ? { ...a, [field]: val } : a));
+
+  const setPrimary = (id) => {
+    onSave(normalizedAdmins.map(a => ({ ...a, primary: a.id === id })));
+    notify("✅ Nomor utama diperbarui!");
+  };
+
+  const startEdit = (admin) => {
+    setEditingId(admin.id);
+    setEditName(admin.name);
+    setEditPhone(waToPhone(admin.wa));
+  };
+
+  const saveEdit = (admin) => {
+    const trimName = editName.trim() || admin.name;
+    const trimPhone = editPhone.replace(/[^0-9]/g, "");
+    if (trimPhone.length < 9) return notify("Nomor HP tidak valid.", "error");
+    const waLink = phoneToWa(trimPhone);
+    onSave(normalizedAdmins.map(a => a.id === admin.id ? { ...a, name: trimName, wa: waLink } : a));
+    setEditingId(null);
+    notify("✅ Data admin diperbarui!");
   };
 
   return (
@@ -8071,32 +8115,55 @@ function WaAdminManager({ admins: adminsProp, onSave, notify }) {
 
       {/* Existing admins */}
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
-        {admins.map((admin, idx) => (
-          <div key={admin.id} style={{ display: "flex", gap: 8, alignItems: "center", background: "#f0fdf6", borderRadius: 8, padding: "10px 12px", border: "1px solid #b6f0d0" }}>
-            <div style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#25d366,#1aab52)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 13, flexShrink: 0 }}>
-              {admin.name.charAt(0).toUpperCase()}
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <input
-                key={`name-${admin.id}`}
-                defaultValue={admin.name}
-                onBlur={e => updateAdmin(admin.id, "name", e.target.value.trim() || admin.name)}
-                placeholder="Nama Admin"
-                style={{ width: "100%", border: "none", background: "transparent", fontSize: 13, fontWeight: 600, color: "#0d3b66", outline: "none", marginBottom: 3 }} />
-              <input
-                key={`wa-${admin.id}`}
-                defaultValue={admin.wa}
-                onBlur={e => updateAdmin(admin.id, "wa", e.target.value.trim() || admin.wa)}
-                placeholder="https://wa.me/628xxx"
-                style={{ width: "100%", border: "none", background: "transparent", fontSize: 11, color: "#5090aa", outline: "none" }} />
-            </div>
-            {idx === 0 && (
-              <span style={{ fontSize: 10, background: "#25d366", color: "#fff", borderRadius: 8, padding: "2px 8px", fontWeight: 700, flexShrink: 0 }}>UTAMA</span>
+        {normalizedAdmins.map((admin) => (
+          <div key={admin.id} style={{ background: admin.primary ? "#f0fdf6" : "#f8fbff", borderRadius: 8, padding: "12px 14px", border: admin.primary ? "1.5px solid #25d366" : "1px solid #d0e8f5", transition: "all .15s" }}>
+            {editingId === admin.id ? (
+              /* ── MODE EDIT ── */
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <input value={editName} onChange={e => setEditName(e.target.value)}
+                  placeholder="Nama Admin"
+                  style={{ padding: "8px 10px", border: "1.5px solid #25d366", borderRadius: 6, fontSize: 13, fontWeight: 600, outline: "none", color: "#0d3b66" }} />
+                <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+                  <span style={{ padding: "8px 10px", background: "#f0fdf6", border: "1.5px solid #25d366", borderRight: "none", borderRadius: "6px 0 0 6px", fontSize: 12, color: "#1aab52", fontWeight: 700, whiteSpace: "nowrap" }}>https://wa.me/62</span>
+                  <input value={editPhone.replace(/^0/, "")}
+                    onChange={e => setEditPhone(e.target.value.replace(/[^0-9]/g, ""))}
+                    placeholder="85745571442"
+                    style={{ flex: 1, padding: "8px 10px", border: "1.5px solid #25d366", borderLeft: "none", borderRadius: "0 6px 6px 0", fontSize: 13, outline: "none" }} />
+                </div>
+                <div style={{ fontSize: 11, color: "#5090aa" }}>Link: {phoneToWa(editPhone)}</div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button onClick={() => saveEdit(admin)}
+                    style={{ flex: 1, padding: "8px 0", background: "#25d366", color: "#fff", border: "none", borderRadius: 6, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>✅ Simpan</button>
+                  <button onClick={() => setEditingId(null)}
+                    style={{ padding: "8px 14px", background: "#f0f0f0", color: "#666", border: "none", borderRadius: 6, fontSize: 12, cursor: "pointer" }}>Batal</button>
+                </div>
+              </div>
+            ) : (
+              /* ── MODE VIEW ── */
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <div style={{ width: 34, height: 34, borderRadius: "50%", background: admin.primary ? "linear-gradient(135deg,#25d366,#1aab52)" : "linear-gradient(135deg,#0891b2,#0d3b66)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 14, flexShrink: 0 }}>
+                  {admin.name.charAt(0).toUpperCase()}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{admin.name}</div>
+                  <div style={{ fontSize: 11, color: "#5090aa", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{admin.wa}</div>
+                </div>
+                {/* Badge UTAMA */}
+                {admin.primary
+                  ? <span style={{ fontSize: 10, background: "#25d366", color: "#fff", borderRadius: 8, padding: "2px 8px", fontWeight: 700, flexShrink: 0 }}>UTAMA</span>
+                  : <button onClick={() => setPrimary(admin.id)} title="Jadikan nomor utama"
+                      style={{ fontSize: 10, background: "#edfafc", color: "#0891b2", border: "1px solid #b0dce8", borderRadius: 8, padding: "2px 8px", fontWeight: 700, cursor: "pointer", flexShrink: 0, whiteSpace: "nowrap" }}>
+                      Jadikan Utama
+                    </button>
+                }
+                {/* Edit */}
+                <button onClick={() => startEdit(admin)} title="Edit"
+                  style={{ background: "#fff8e1", border: "1px solid #ffc107", borderRadius: 6, color: "#f39c12", fontSize: 13, width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>✏</button>
+                {/* Hapus */}
+                <button onClick={() => removeAdmin(admin.id)} title="Hapus"
+                  style={{ background: normalizedAdmins.length <= 1 ? "#f0f0f0" : "#ffe4e4", border: "none", borderRadius: 6, color: normalizedAdmins.length <= 1 ? "#bbb" : "#e74c3c", fontSize: 17, width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", cursor: normalizedAdmins.length <= 1 ? "not-allowed" : "pointer", flexShrink: 0, fontWeight: 700 }}>×</button>
+              </div>
             )}
-            <button onClick={() => removeAdmin(admin.id)} title="Hapus admin"
-              style={{ background: admins.length <= 1 ? "#f0f0f0" : "#ffe4e4", border: "none", borderRadius: 6, color: admins.length <= 1 ? "#bbb" : "#e74c3c", fontSize: 18, width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", cursor: admins.length <= 1 ? "not-allowed" : "pointer", flexShrink: 0, fontWeight: 700 }}>
-              ×
-            </button>
           </div>
         ))}
       </div>
@@ -8108,9 +8175,16 @@ function WaAdminManager({ admins: adminsProp, onSave, notify }) {
           <input value={newName} onChange={e => setNewName(e.target.value)}
             placeholder="Nama Admin (contoh: Admin Booking)"
             style={{ padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }} />
-          <input value={newWa} onChange={e => setNewWa(e.target.value)}
-            placeholder="https://wa.me/628xxxxxxxxx"
-            style={{ padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }} />
+          {/* Nomor WA dengan prefix permanen */}
+          <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+            <span style={{ padding: "9px 12px", background: "#f0fdf6", border: "1px solid #b0dce8", borderRight: "none", borderRadius: "6px 0 0 6px", fontSize: 12, color: "#1aab52", fontWeight: 700, whiteSpace: "nowrap" }}>https://wa.me/62</span>
+            <input value={newPhone} onChange={e => setNewPhone(e.target.value.replace(/[^0-9]/g, ""))}
+              placeholder="85745571442"
+              style={{ flex: 1, padding: "9px 12px", border: "1px solid #b0dce8", borderLeft: "none", borderRadius: "0 6px 6px 0", fontSize: 13, outline: "none", background: "#fff" }} />
+          </div>
+          {newPhone.length >= 8 && (
+            <div style={{ fontSize: 11, color: "#1aab52", fontWeight: 600 }}>✓ Link: {phoneToWa(newPhone)}</div>
+          )}
           <button onClick={addAdmin}
             style={{ padding: "9px 0", background: "linear-gradient(135deg,#25d366,#1aab52)", color: "#fff", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
             ＋ Tambah Admin
@@ -8118,8 +8192,81 @@ function WaAdminManager({ admins: adminsProp, onSave, notify }) {
         </div>
       </div>
       <p style={{ fontSize: 11, color: "#7ab5cc", marginTop: 10, lineHeight: 1.5 }}>
-        ⓘ Minimal 1 admin. Admin pertama otomatis jadi nomor utama. Klik di luar kolom untuk menyimpan perubahan nama/nomor.
+        ⓘ Minimal 1 admin. Klik <strong>Jadikan Utama</strong> untuk memilih nomor utama. Klik ✏ untuk mengedit nama/nomor yang sudah tersimpan.
       </p>
+    </div>
+  );
+}
+
+/* ─────────────── SOSMED & CONTACT MANAGER ─────────────── */
+function SosmedManager({ content, onSave, notify }) {
+  const [editField, setEditField] = useState(null); // null | field key
+  const [editVal, setEditVal]     = useState("");
+
+  const fields = [
+    { key: "email",  icon: "✉️",  label: "Email",     prefix: "mailto:", placeholder: "arutala@gmail.com",          validate: v => v.includes("@"), errMsg: "Format email tidak valid." },
+    { key: "igLink", icon: "📸",  label: "Instagram", prefix: "",         placeholder: "https://instagram.com/username", validate: v => v.startsWith("http"), errMsg: "Masukkan URL lengkap (https://...)" },
+    { key: "fbLink", icon: "📘",  label: "Facebook",  prefix: "",         placeholder: "https://facebook.com/username",  validate: v => v.startsWith("http"), errMsg: "Masukkan URL lengkap (https://...)" },
+  ];
+
+  const startEdit = (f) => {
+    setEditField(f.key);
+    setEditVal(content[f.key] || "");
+  };
+
+  const saveEdit = (f) => {
+    const val = editVal.trim();
+    if (!val) return notify("Nilai tidak boleh kosong.", "error");
+    if (!f.validate(val)) return notify(f.errMsg, "error");
+    onSave({ [f.key]: val });
+    setEditField(null);
+    notify(`✅ ${f.label} disimpan!`);
+  };
+
+  return (
+    <div style={{ background: "#fff", borderRadius: 10, padding: "20px 22px", marginBottom: 14, boxShadow: "0 1px 4px rgba(0,0,0,.05)", border: "2px solid #e8f4fb" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+        <div style={{ width: 34, height: 34, borderRadius: "50%", background: "linear-gradient(135deg,#e1306c,#1877f2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 16, flexShrink: 0 }}>🔗</div>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 14, color: "#0d3b66" }}>Email & Media Sosial</div>
+          <div style={{ fontSize: 11, color: "#5090aa" }}>Kelola email dan link sosial media yang tampil di halaman kontak</div>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {fields.map(f => (
+          <div key={f.key} style={{ background: "#f8fbff", borderRadius: 8, padding: "12px 14px", border: "1px solid #d0e8f5" }}>
+            {editField === f.key ? (
+              /* ── MODE EDIT ── */
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <label style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: "1px" }}>{f.icon} {f.label}</label>
+                <input value={editVal} onChange={e => setEditVal(e.target.value)}
+                  placeholder={f.placeholder}
+                  style={{ padding: "9px 12px", border: "1.5px solid #0891b2", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }} />
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button onClick={() => saveEdit(f)}
+                    style={{ flex: 1, padding: "8px 0", background: "linear-gradient(130deg,#063d5c,#0891b2)", color: "#fff", border: "none", borderRadius: 6, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>✅ Simpan</button>
+                  <button onClick={() => setEditField(null)}
+                    style={{ padding: "8px 14px", background: "#f0f0f0", color: "#666", border: "none", borderRadius: 6, fontSize: 12, cursor: "pointer" }}>Batal</button>
+                </div>
+              </div>
+            ) : (
+              /* ── MODE VIEW ── */
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ fontSize: 20, flexShrink: 0 }}>{f.icon}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: ".05em", marginBottom: 2 }}>{f.label}</div>
+                  <div style={{ fontSize: 13, color: "#0d3b66", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontWeight: content[f.key] ? 500 : 400 }}>
+                    {content[f.key] || <span style={{ color: "#aaa", fontStyle: "italic" }}>Belum diset</span>}
+                  </div>
+                </div>
+                <button onClick={() => startEdit(f)} title="Edit"
+                  style={{ background: "#fff8e1", border: "1px solid #ffc107", borderRadius: 6, color: "#f39c12", fontSize: 13, width: 30, height: 30, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>✏</button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -10198,7 +10345,6 @@ export default function BricksyTravel() {
                         {[
                           { label: "Nama Lengkap", key: "name", placeholder: "Masukkan nama lengkap", type: "text" },
                           { label: "Nomor HP / WhatsApp", key: "phone", placeholder: "08xxxxxxxxxx", type: "tel" },
-                          { label: "Email", key: "email", placeholder: "nama@email.com", type: "email" },
                         ].map(f => (
                           <div key={f.key} style={{ marginBottom: 16 }}>
                             <label style={{ fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{f.label}</label>
@@ -10713,12 +10859,8 @@ export default function BricksyTravel() {
                     { label: "Newsletter Title", key: "newsletterTitle" },
                     { label: "Deskripsi Contact Us", key: "contactText", multiline: true },
                     { label: "About Text", key: "aboutText", multiline: true },
-                    { label: "📧 Email", key: "email" },
-                    { label: "📞 Nomor HP / WhatsApp", key: "phone" },
                     { label: "📍 Alamat", key: "address", multiline: true },
                     { label: "🕐 Jam Operasional", key: "hours" },
-                    { label: "📸 Link Instagram (https://instagram.com/xxx)", key: "igLink" },
-                    { label: "📘 Link Facebook (https://facebook.com/xxx)", key: "fbLink" },
                     { label: "Login Button Text", key: "loginBtnText" },
                     { label: "Nav: Home", key: "nav1" },
                     { label: "Nav: About", key: "nav2" },
@@ -10745,8 +10887,16 @@ export default function BricksyTravel() {
                   <WaAdminManager
                     admins={data.content.waAdmins}
                     onSave={(list) => {
-                      save({ ...data, content: { ...data.content, waAdmins: list, waLink: list[0]?.wa || data.content.waLink } });
+                      const primaryAdmin = list.find(a => a.primary) || list[0];
+                      save({ ...data, content: { ...data.content, waAdmins: list, waLink: primaryAdmin?.wa || data.content.waLink, phone: primaryAdmin?.wa?.replace("https://wa.me/", "+").replace(/^\+62(\d{3})(\d{4})(\d+)$/, "+62 $1 $2-$3") || data.content.phone } });
                       notify("✅ Daftar Admin WA disimpan!");
+                    }}
+                    notify={notify}
+                  />
+                  <SosmedManager
+                    content={data.content}
+                    onSave={(patch) => {
+                      save({ ...data, content: { ...data.content, ...patch } });
                     }}
                     notify={notify}
                   />
@@ -10906,7 +11056,6 @@ export default function BricksyTravel() {
                           { label: "Nama Lengkap", key: "name", placeholder: "Nama lengkap", type: "text" },
                           { label: "Username", key: "username", placeholder: "username (tanpa spasi)", type: "text" },
                           { label: "Password", key: "password", placeholder: "Min. 6 karakter", type: "password" },
-                          { label: "Email", key: "email", placeholder: "email@domain.com", type: "email" },
                         ].map(f => (
                           <div key={f.key}>
                             <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 5 }}>{f.label}</label>
