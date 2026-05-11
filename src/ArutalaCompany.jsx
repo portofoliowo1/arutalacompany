@@ -7987,14 +7987,18 @@ export default function BricksyTravel() {
             if (def.category === "traveling") {
               patched.category  = def.category;  // WAJIB: agar lolos filter Traveling
               patched.pkgId     = def.pkgId;      // WAJIB: agar tidak salah bucket
-              patched.highlight = def.highlight;
-              if (def.destinations) patched.destinations = def.destinations;
-              if (def.facilities)   patched.facilities   = def.facilities;
-              if (def.prices)       patched.prices       = def.prices;
-              if (def.services)     patched.services     = def.services;
+              // JANGAN overwrite destinations/facilities/prices jika user sudah punya data
+              if (!savedItem.destinations?.length && def.destinations) patched.destinations = def.destinations;
+              if (!savedItem.facilities?.length   && def.facilities)   patched.facilities   = def.facilities;
+              if (!savedItem.prices?.length        && def.prices)       patched.prices       = def.prices;
+              if (!savedItem.services?.length      && def.services)     patched.services     = def.services;
+              // highlight hanya inject jika belum pernah di-set user
+              if (savedItem.highlight === undefined) patched.highlight = def.highlight;
             }
             for (const field of ["facilities", "destinations", "services", "images", "prices", "pkgId", "tagline", "accent", "accentLight", "duration", "minPeserta", "description", "features", "highlight", "badge", "badgeColor", "priceNote", "category"]) {
-              if (patched[field] === undefined || patched[field] === null || patched[field] === "") {
+              // Hanya inject dari DEFAULT jika field benar-benar belum ada (undefined/null)
+              // Jangan overwrite array kosong [] karena user mungkin sengaja mengosongkan
+              if (patched[field] === undefined || patched[field] === null) {
                 if (def[field] !== undefined) patched[field] = def[field];
               }
             }
