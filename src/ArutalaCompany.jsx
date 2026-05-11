@@ -8142,8 +8142,13 @@ export default function BricksyTravel() {
   const [user, setUser] = useState(() => sessionLoad()); // ← restore session saat reload
   // Fix #3: gunakan lazy initializer agar window.location dibaca saat render, bukan module load
   const [page, setPage] = useState(() => getInitialPage()); // home | about | news | shop | destinations | services
-  const [historyStack, setHistoryStack] = useState(() => [getInitialPage()]); // SPA history
-  const [historyIdx, setHistoryIdx] = useState(0);            // current position in stack
+  // ── Native history tracking (tidak pakai custom stack) ──────────────────
+  // spaDepth: seberapa jauh dari entry awal (disimpan di pushState state.depth)
+  // spaMaxDepth: titik terjauh yang pernah dicapai → untuk canForward
+  const spaDepth    = useRef(0);
+  const spaMaxDepth = useRef(0);
+  const [canBack, setCanBack] = useState(false);
+  const [canFwd,  setCanFwd]  = useState(false);
   const [readPost, setReadPost] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
   const [comingSoon, setComingSoon] = useState(null); // null | "google" | "apple"
@@ -8225,8 +8230,7 @@ export default function BricksyTravel() {
         // Jika sedang dalam mode edit paket dan user tekan Back → keluar edit dulu
         if (e.state?.admin && servicesEditActiveRef.current && servicesExitEditRef.current) {
           servicesExitEditRef.current();
-          // Jangan setShowAdmin(false) — tetap di admin
-          window.history.pushState({ admin: true, adminTab: adminTabRef.current }, "", "/control-panel");
+          window.history.pushState({ admin: true, adminTab: adminTabRef.current, depth: (e.state?.depth ?? 0) }, "", "/control-panel");
           return;
         }
         setShowAdmin(true);
@@ -8235,6 +8239,7 @@ export default function BricksyTravel() {
           setAdminTab(e.state.adminTab);
           setCmsEditPost(null);
         }
+        _syncDepth(e.state?.depth);
         return;
       }
       setShowAdmin(false);
@@ -8245,6 +8250,7 @@ export default function BricksyTravel() {
         setActivePaket({ id: pkgParsed.id, category: pkgParsed.category });
         setMobileMenu(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
+        _syncDepth(e.state?.depth);
         return;
       }
       // /artikel/{section}/{slug}-{id} → buka detail artikel
@@ -8254,7 +8260,7 @@ export default function BricksyTravel() {
         setPage(sectionPage);
         setMobileMenu(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
-        // readPost di-resolve via useEffect [isLoading] jika data sudah ada
+        _syncDepth(e.state?.depth);
         return;
       }
       // Normal page — tutup detail paket & artikel jika ada
@@ -8264,10 +8270,19 @@ export default function BricksyTravel() {
       setPage(p);
       setMobileMenu(false);
       window.scrollTo({ top: 0, behavior: "smooth" });
+      _syncDepth(e.state?.depth);
     };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /** Helper: sync spaDepth + canBack/canFwd dari depth yang disimpan di history state */
+  const _syncDepth = (depth) => {
+    const d = depth ?? 0;
+    spaDepth.current = d;
+    setCanBack(d > 0);
+    setCanFwd(d < spaMaxDepth.current);
+  };
 
   /* ─── Deep-merge helper ──────────────────────────────────────────────────
      Menggabungkan data yang disimpan (saved) dengan DEFAULT_DATA sehingga:
@@ -8516,7 +8531,6 @@ export default function BricksyTravel() {
     setUser(null);
     sessionClear();
     closeAdmin();
-    window.history.pushState({ page: "home" }, "", "/");
     notify("Logged out.");
   };
 
@@ -8526,47 +8540,51 @@ export default function BricksyTravel() {
   const canCS = user?.role === "admin" || user?.role === "customer_services";
 
   const navigateTo = (p) => {
-    // Fix #1: pushState agar URL sync dengan page state
     const navPath = PAGE_TO_PATH[p] || "/";
-    window.history.pushState({ page: p }, "", navPath);
+    const newDepth = spaDepth.current + 1;
+    window.history.pushState({ page: p, depth: newDepth }, "", navPath);
+    spaDepth.current = newDepth;
+    spaMaxDepth.current = newDepth; // navigasi baru → hapus forward history
+    setCanBack(true);
+    setCanFwd(false);
     setPage(p); setReadPost(null); setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
-    setHistoryStack(prev => {
-      const trimmed = prev.slice(0, historyIdx + 1); // buang forward history
-      return [...trimmed, p];
-    });
-    setHistoryIdx(prev => prev + 1);
   };
 
   /** Buka artikel: push URL /artikel/{section}/{slug}-{id} + set state */
   const openArticle = (post) => {
     const url = articleUrl(post);
-    window.history.pushState({ artikelId: post.id, section: post.section }, "", url);
+    const newDepth = spaDepth.current + 1;
+    window.history.pushState({ artikelId: post.id, section: post.section, depth: newDepth }, "", url);
+    spaDepth.current = newDepth;
+    spaMaxDepth.current = newDepth;
+    setCanBack(true);
+    setCanFwd(false);
     setReadPost(post);
     setMobileMenu(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  /** Tutup artikel: kembali ke page aktif */
+  /** Tutup artikel: native back — biar onPopState yang atur state */
   const closeArticle = () => {
-    const navPath = PAGE_TO_PATH[page] || "/";
-    window.history.pushState({ page }, "", navPath);
-    setReadPost(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.history.back();
   };
 
   /** Buka admin panel: set state + sync URL ke /control-panel */
   const openAdmin = () => {
-    window.history.pushState({ admin: true, adminTab: "dashboard" }, "", "/control-panel");
+    const newDepth = spaDepth.current + 1;
+    window.history.pushState({ admin: true, adminTab: "dashboard", depth: newDepth }, "", "/control-panel");
+    spaDepth.current = newDepth;
+    spaMaxDepth.current = newDepth;
+    setCanBack(true);
+    setCanFwd(false);
     setShowAdmin(true);
     setAdminTab("dashboard");
   };
 
-  /** Tutup admin panel: kembali ke page aktif + sync URL */
+  /** Tutup admin panel: native back */
   const closeAdmin = () => {
-    const navPath = PAGE_TO_PATH[page] || "/";
-    window.history.pushState({ page }, "", navPath);
-    setShowAdmin(false);
+    window.history.back();
   };
 
   /** Navigasi antar tab admin — push ke browser history agar tombol ← browser bisa step-back */
@@ -8576,7 +8594,12 @@ export default function BricksyTravel() {
       servicesExitEditRef.current();
       return;
     }
-    window.history.pushState({ admin: true, adminTab: tab, ...extra }, "", "/control-panel");
+    const newDepth = spaDepth.current + 1;
+    window.history.pushState({ admin: true, adminTab: tab, depth: newDepth, ...extra }, "", "/control-panel");
+    spaDepth.current = newDepth;
+    spaMaxDepth.current = newDepth;
+    setCanBack(true);
+    setCanFwd(false);
     setAdminTab(tab);
     setCmsEditPost(null);
     setSidebarOpen(false);
@@ -8592,15 +8615,18 @@ export default function BricksyTravel() {
 
   const openPaket = (svc) => {
     const url = paketUrl(svc);
-    window.history.pushState({ paketId: svc.id, category: svc.category }, "", url);
+    const newDepth = spaDepth.current + 1;
+    window.history.pushState({ paketId: svc.id, category: svc.category, depth: newDepth }, "", url);
+    spaDepth.current = newDepth;
+    spaMaxDepth.current = newDepth;
+    setCanBack(true);
+    setCanFwd(false);
     setActivePaket({ id: svc.id, category: svc.category });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const closePaket = () => {
-    window.history.pushState({ page: "services" }, "", PAGE_TO_PATH["services"] || "/services");
-    setActivePaket(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.history.back();
   };
 
   // Ref untuk intercept spaBack saat ServicesAdmin sedang dalam mode edit
@@ -8609,28 +8635,16 @@ export default function BricksyTravel() {
   const adminTabRef = useRef("dashboard"); // selalu sync dengan adminTab untuk akses di popstate
 
   const spaBack = () => {
-    // Jika sedang di form edit paket → tutup form dulu, jangan pindah page
+    // Jika sedang di form edit paket → tutup form dulu, jangan mundur
     if (adminTab === "services" && servicesEditActiveRef.current && servicesExitEditRef.current) {
       servicesExitEditRef.current();
       return;
     }
-    if (historyIdx <= 0) return;
-    const newIdx = historyIdx - 1;
-    setHistoryIdx(newIdx);
-    const target = historyStack[newIdx];
-    window.history.pushState({ page: target }, "", PAGE_TO_PATH[target] || "/");
-    setPage(target); setReadPost(null); setMobileMenu(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.history.back(); // onPopState yang handle state React + _syncDepth
   };
 
   const spaForward = () => {
-    if (historyIdx >= historyStack.length - 1) return;
-    const newIdx = historyIdx + 1;
-    setHistoryIdx(newIdx);
-    const target = historyStack[newIdx];
-    window.history.pushState({ page: target }, "", PAGE_TO_PATH[target] || "/");
-    setPage(target); setReadPost(null); setMobileMenu(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.history.forward(); // onPopState yang handle state React + _syncDepth
   };
 
   // Post operations
@@ -9042,10 +9056,8 @@ export default function BricksyTravel() {
           {/* ── NAVIGASI MAJU / MUNDUR ── */}
           {(() => {
             const isMobileNav = window.innerWidth <= 768;
-            const canBack = historyIdx > 0;
-            const canFwd = historyIdx < historyStack.length - 1;
             const PAGE_LABELS = { home: "Beranda", about: "Tentang Kami", services: "Layanan", destinations: "Destinasi", news: "Berita", shop: "Toko" };
-            const currentLabel = PAGE_LABELS[historyStack[historyIdx]] || historyStack[historyIdx] || "Halaman";
+            const currentLabel = PAGE_LABELS[page] || page || "Halaman";
             if (isMobileNav) {
               /* ── MOBILE: bold rectangle pill di kiri bawah ── */
               return (
