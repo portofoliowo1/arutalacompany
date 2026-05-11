@@ -7899,7 +7899,7 @@ const sessionClear = () => {
 
 /* ── Mapping URL pathname ↔ page key ─────────────────────────────────────── */
 const PAGE_TO_PATH = {
-  home: "/", about: "/about", news: "/news", shop: "/shop",
+  home: "/", about: "/about", news: "/EventPlan", shop: "/Traveling",
   destinations: "/destinations", services: "/services",
 };
 const PATH_TO_PAGE = Object.fromEntries(Object.entries(PAGE_TO_PATH).map(([k, v]) => [v, k]));
@@ -8138,6 +8138,7 @@ function WaPickerModal({ admins, msgText, onClose }) {
 
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
+  const dataRef = useRef(DEFAULT_DATA); // selalu up-to-date, aman dipakai di closure stale (popstate)
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(() => sessionLoad()); // ← restore session saat reload
   // Fix #3: gunakan lazy initializer agar window.location dibaca saat render, bukan module load
@@ -8234,7 +8235,6 @@ export default function BricksyTravel() {
           return;
         }
         setShowAdmin(true);
-        // Restore tab dari browser history state
         if (e.state?.adminTab) {
           setAdminTab(e.state.adminTab);
           setCmsEditPost(null);
@@ -8258,12 +8258,16 @@ export default function BricksyTravel() {
       if (artParsed) {
         const sectionPage = { news: "news", shop: "shop", destinations: "destinations" }[artParsed.section] || "news";
         setPage(sectionPage);
+        // Restore readPost dari dataRef (selalu fresh, tidak stale)
+        const allP = Object.values(dataRef.current?.posts || {}).flat();
+        const found = allP.find(p => p.id === artParsed.id || String(p.id) === String(artParsed.id));
+        if (found) setReadPost(found);
         setMobileMenu(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
         _syncDepth(e.state?.depth);
         return;
       }
-      // Normal page — tutup detail paket & artikel jika ada
+      // Normal page — tutup detail paket & artikel
       setActivePaket(null);
       setReadPost(null);
       const p = e.state?.page || PATH_TO_PAGE[pathname] || "home";
@@ -8276,7 +8280,8 @@ export default function BricksyTravel() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  /** Helper: sync spaDepth + canBack/canFwd dari depth yang disimpan di history state */
+  /** Helper: sync spaDepth + canBack/canFwd dari depth yang disimpan di history state.
+   *  Gunakan spaMaxDepth (ref) langsung — tidak pernah stale. */
   const _syncDepth = (depth) => {
     const d = depth ?? 0;
     spaDepth.current = d;
@@ -8354,14 +8359,18 @@ export default function BricksyTravel() {
         if (fsData?.payload) {
           const parsed = JSON.parse(fsData.payload);
           // Deep-merge: data lama + field baru dari DEFAULT_DATA
-          setData(mergeWithDefaults(parsed, DEFAULT_DATA));
+          const merged = mergeWithDefaults(parsed, DEFAULT_DATA);
+          setData(merged);
+          dataRef.current = merged;
           return;
         }
         // 2. Fallback: window.storage (lokal backup)
         const r = await window.storage?.get("bricksy-v2");
         if (r?.value) {
           const parsed = JSON.parse(r.value);
-          setData(mergeWithDefaults(parsed, DEFAULT_DATA));
+          const merged = mergeWithDefaults(parsed, DEFAULT_DATA);
+          setData(merged);
+          dataRef.current = merged;
         }
       } catch (e) {
         console.warn("[Arutala] Gagal load data, pakai default.", e);
@@ -8431,6 +8440,7 @@ export default function BricksyTravel() {
     // field baru yang ditambahkan di kode (lewat git push) tidak akan hilang
     const safeData = mergeWithDefaults(d, DEFAULT_DATA);
     setData(safeData);
+    dataRef.current = safeData; // sync ref agar popstate closure selalu punya data terbaru
     const payload = JSON.stringify(safeData);
     // Simpan ke Firestore (cloud) + window.storage (lokal backup)
     await fsSet("main", { payload, updatedAt: Date.now() });
