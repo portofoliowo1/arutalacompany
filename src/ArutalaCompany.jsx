@@ -3990,7 +3990,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen }) {
       </div>
 
       {/* Description */}
-      <p style={{ fontSize: "0.8125rem", color: "#4a7f98", lineHeight: 1.6, padding: "8px 14px 10px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
+      <p style={{ fontSize: "0.8125rem", color: "#4a7f98", lineHeight: 1.6, padding: "8px 14px 10px" }}>{svc.description}</p>
 
       {/* Top features */}
       {(svc.features || []).length > 0 && (
@@ -4155,7 +4155,7 @@ function TravelPackageCard({ svc, onDetail, onWaOpen }) {
       </div>
 
       {/* Description */}
-      <p style={{ fontSize: "0.8125rem", color: "#4a7f98", lineHeight: 1.6, padding: "8px 16px 10px", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.description}</p>
+      <p style={{ fontSize: "0.8125rem", color: "#4a7f98", lineHeight: 1.6, padding: "8px 16px 10px" }}>{svc.description}</p>
 
       {/* Top facilities with icons */}
       {(svc.facilities || []).length > 0 && (
