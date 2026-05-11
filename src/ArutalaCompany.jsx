@@ -1665,7 +1665,7 @@ const GS = () => (
     @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
     @keyframes galScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     @keyframes navNamePulse{0%,100%{color:#fff}33%{color:#10d0e0}66%{color:#0d3b66}}
-    @keyframes navPulse{0%,100%{color:#fff}33%{color:#10d0e0}66%{color:#0d3b66}}
+    @keyframes navPulse{0%{color:#fff}30%{color:#fff}33%{color:#10d0e0}63%{color:#10d0e0}66%{color:#0d3b66}96%{color:#0d3b66}100%{color:#fff}}
 
     /* Gallery ticker — desktop only */
     .gal-ticker{overflow:hidden;margin-bottom:40px;mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%)}
@@ -1687,7 +1687,7 @@ const GS = () => (
     p{font-size:1rem;line-height:1.75;color:rgba(255,255,255,.8)}
     small{font-size:.875rem;line-height:1.5}
 
-    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:700;color:#fff;transition:color .2s;text-shadow:0 1px 4px rgba(0,80,120,.35),0 0 10px rgba(8,145,178,.18);animation:navPulse 8s ease-in-out infinite}
+    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:700;color:#fff;transition:color .2s;text-shadow:0 1px 4px rgba(0,80,120,.35),0 0 10px rgba(8,145,178,.18);animation:navPulse 90s ease-in-out infinite}
     .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,#fff,rgba(255,255,255,.4));transition:width .3s;border-radius:2px}
     .nav-link:hover{color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(0,80,120,.4),0 0 18px rgba(255,255,255,.25);animation:none}
     .nav-link:hover::after,.nav-link.active::after{width:100%}
@@ -9248,7 +9248,7 @@ export default function BricksyTravel() {
                         }
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 3 }}>
-                        <span style={{ fontSize: "0.8125rem", fontWeight: 700, lineHeight: 1.2, animation: "navPulse 8s ease-in-out infinite" }}>
+                        <span style={{ fontSize: "0.8125rem", fontWeight: 700, lineHeight: 1.2, animation: "navPulse 90s ease-in-out infinite" }}>
                           {user.name || user.username}
                         </span>
                         {/* CP button dengan border shape asimetris */}
