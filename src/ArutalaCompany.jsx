@@ -49,7 +49,7 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
             <div style={{ padding: "16px 20px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                 <span style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0d3b66" }}>Artikel Terbaru</span>
-                <button onClick={() => { setAdminTab("cms"); setCmsEditPost("new"); }}
+                <button onClick={() => { navigateAdminTab("cms"); setCmsEditPost("new"); }}
                   style={{ fontSize: "0.75rem", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 16, padding: "5px 14px", fontWeight: 600, cursor: "pointer" }}>+ Baru</button>
               </div>
               {allPosts.length === 0 ? (
@@ -176,7 +176,7 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
           </div>
           <div style={{ padding: "12px 16px", display: "flex", flexDirection: "column", gap: 8 }}>
             {[
-              ...(canEdit ? [{ label: "✏ Buat Artikel Baru", action: () => { setAdminTab("cms"); setCmsEditPost("new"); } }] : []),
+              ...(canEdit ? [{ label: "✏ Buat Artikel Baru", action: () => { navigateAdminTab("cms"); setCmsEditPost("new"); } }] : []),
               ...(canCS ? [{ label: `✉ Pesan (${data.messages.length})`, action: () => setAdminTab("messages") }] : []),
               ...(isAdmin ? [{ label: "🖼 Kelola Gambar", action: () => setAdminTab("images") }] : []),
               ...(isAdmin ? [{ label: "🔤 Konten Website", action: () => setAdminTab("content") }] : []),
@@ -5373,11 +5373,21 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 }
 
 /* ─────────────── SERVICES ADMIN PANEL ─────────────── */
-function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
+function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChange, onCancelEdit }) {
   const [editSvc, setEditSvc] = useState(null);
   const [svcForm, setSvcForm] = useState({});
   const [uploadProgresses, setUploadProgresses] = useState([]); // [{name, pct, done, error}]
   const svcs = data.services || [];
+
+  // Lapor ke parent setiap kali mode edit berubah
+  useEffect(() => {
+    if (onEditStateChange) onEditStateChange(editSvc !== null);
+  }, [editSvc]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Daftarkan cancelEdit ke parent agar bisa diintercept dari spaBack
+  useEffect(() => {
+    if (onCancelEdit) onCancelEdit(() => { setEditSvc(null); setSvcForm({}); setUploadProgresses([]); });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const openNew = () => {
     setSvcForm({
@@ -5791,10 +5801,10 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           <div style={{ gridColumn:"1 / -1", background:"#fff", borderRadius:12, padding:"22px 24px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:"3px solid #e8a020" }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
               <div style={{ fontSize:12, fontWeight:800, color:"#e8a020", textTransform:"uppercase", letterSpacing:"1px" }}>🗺 Destinasi Wisata / Itinerary</div>
-              <button onClick={addDest} style={{ fontSize:13, padding:"10px 20px", background:"#e8a020", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:800, boxShadow:"0 2px 8px rgba(232,160,32,.4)" }}>＋ Tambah Destinasi</button>
+              <button onClick={addDest} style={{ fontSize:13, padding:"10px 20px", background:"#e8a020", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:800, boxShadow:"0 2px 8px rgba(232,160,32,.4)" }}>{(svcForm.category==="event"||svcForm.category==="wedding") ? "＋ Tambah Foto Fasilitas" : "＋ Tambah Destinasi"}</button>
             </div>
             {(svcForm.destinations||[]).length===0
-              ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada destinasi. Klik + Tambah Destinasi.</p>
+              ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>{(svcForm.category==="event"||svcForm.category==="wedding") ? "Belum ada foto fasilitas. Klik + Tambah Foto Fasilitas." : "Belum ada destinasi. Klik + Tambah Destinasi."}</p>
               : <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
                   {(svcForm.destinations||[]).map((dest,di)=>(
                     <div key={di} style={{ background:"#fffbeb", borderRadius:10, border:"1.5px solid #fde68a", overflow:"hidden" }}>
@@ -6193,10 +6203,10 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                   <span style={{ fontSize: 18 }}>🗺</span>
                   <span style={{ fontSize: 14, fontWeight: 800, color: "#0d3b66" }}>Destinasi Wisata / Itinerary</span>
                 </div>
-                <button onClick={addDest} style={{ fontSize: 12, padding: "7px 16px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700 }}>＋ Tambah Destinasi</button>
+                <button onClick={addDest} style={{ fontSize: 12, padding: "7px 16px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700 }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "＋ Tambah Foto Fasilitas" : "＋ Tambah Destinasi"}</button>
               </div>
               {(svcForm.destinations || []).length === 0 ? (
-                <p style={{ fontSize: 12, color: "#a0c4d8", textAlign: "center", padding: "20px 0" }}>Belum ada destinasi. Klik + Tambah Destinasi.</p>
+                <p style={{ fontSize: 12, color: "#a0c4d8", textAlign: "center", padding: "20px 0" }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "Belum ada foto fasilitas. Klik + Tambah Foto Fasilitas." : "Belum ada destinasi. Klik + Tambah Destinasi."}</p>
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                   {(svcForm.destinations || []).map((dest, di) => (
@@ -8023,9 +8033,21 @@ export default function BricksyTravel() {
         return;
       }
       setReviewTokenParam("");
-      // /control-panel
+      // /control-panel — restore tab dari state jika ada
       if (pathname === "/control-panel" || e.state?.admin) {
+        // Jika sedang dalam mode edit paket dan user tekan Back → keluar edit dulu
+        if (e.state?.admin && servicesEditActiveRef.current && servicesExitEditRef.current) {
+          servicesExitEditRef.current();
+          // Jangan setShowAdmin(false) — tetap di admin
+          window.history.pushState({ admin: true, adminTab: adminTabRef.current }, "", "/control-panel");
+          return;
+        }
         setShowAdmin(true);
+        // Restore tab dari browser history state
+        if (e.state?.adminTab) {
+          setAdminTab(e.state.adminTab);
+          setCmsEditPost(null);
+        }
         return;
       }
       setShowAdmin(false);
@@ -8175,6 +8197,9 @@ export default function BricksyTravel() {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, (data.services || []).length]);
+
+  // Sync adminTabRef dengan adminTab state
+  useEffect(() => { adminTabRef.current = adminTab; }, [adminTab]);
 
   // Sync favicon with logo
   useEffect(() => {
@@ -8345,8 +8370,9 @@ export default function BricksyTravel() {
 
   /** Buka admin panel: set state + sync URL ke /control-panel */
   const openAdmin = () => {
-    window.history.pushState({ admin: true }, "", "/control-panel");
+    window.history.pushState({ admin: true, adminTab: "dashboard" }, "", "/control-panel");
     setShowAdmin(true);
+    setAdminTab("dashboard");
   };
 
   /** Tutup admin panel: kembali ke page aktif + sync URL */
@@ -8354,6 +8380,19 @@ export default function BricksyTravel() {
     const navPath = PAGE_TO_PATH[page] || "/";
     window.history.pushState({ page }, "", navPath);
     setShowAdmin(false);
+  };
+
+  /** Navigasi antar tab admin — push ke browser history agar tombol ← browser bisa step-back */
+  const navigateAdminTab = (tab, extra = {}) => {
+    // Jika sedang edit paket dan mau pindah tab → keluar edit dulu (tidak push)
+    if (adminTab === "services" && servicesEditActiveRef.current && servicesExitEditRef.current) {
+      servicesExitEditRef.current();
+      return;
+    }
+    window.history.pushState({ admin: true, adminTab: tab, ...extra }, "", "/control-panel");
+    setAdminTab(tab);
+    setCmsEditPost(null);
+    setSidebarOpen(false);
   };
 
   /** openPaket / closePaket — URL sync untuk halaman detail paket */
@@ -8377,7 +8416,17 @@ export default function BricksyTravel() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Ref untuk intercept spaBack saat ServicesAdmin sedang dalam mode edit
+  const servicesEditActiveRef = useRef(false);
+  const servicesExitEditRef = useRef(null); // callback keluar dari mode edit
+  const adminTabRef = useRef("dashboard"); // selalu sync dengan adminTab untuk akses di popstate
+
   const spaBack = () => {
+    // Jika sedang di form edit paket → tutup form dulu, jangan pindah page
+    if (adminTab === "services" && servicesEditActiveRef.current && servicesExitEditRef.current) {
+      servicesExitEditRef.current();
+      return;
+    }
     if (historyIdx <= 0) return;
     const newIdx = historyIdx - 1;
     setHistoryIdx(newIdx);
@@ -9655,7 +9704,7 @@ export default function BricksyTravel() {
                   </div>
                   {/* Edit Profil + Logout */}
                   <div style={{ display:"flex", gap:8, width:"100%" }}>
-                    <button onClick={() => { setAdminTab("profile"); setSidebarOpen(false); }}
+                    <button onClick={() => { navigateAdminTab("profile"); setSidebarOpen(false); }}
                       style={{ flex:1, padding:"7px 0", background:"rgba(255,255,255,.1)", color:"#fff", border:"1px solid rgba(255,255,255,.2)", borderRadius:8, fontSize:11, fontWeight:700, cursor:"pointer", transition:"all .15s" }}
                       onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,.2)"; e.currentTarget.style.transform="translateY(-1px)"; }}
                       onMouseLeave={e=>{ e.currentTarget.style.background="rgba(255,255,255,.1)"; e.currentTarget.style.transform=""; }}>
@@ -9690,7 +9739,7 @@ export default function BricksyTravel() {
                   { id: "settings", icon: "⚙", label: "Settings", access: isAdmin },
                 ].filter(t => t.access).map(tab => (
                   <button key={tab.id} className={`snav-btn${adminTab === tab.id ? " active" : ""}`}
-                    onClick={() => { setAdminTab(tab.id); setCmsEditPost(null); setSidebarOpen(false); }}>
+                    onClick={() => { navigateAdminTab(tab.id); setSidebarOpen(false); }}>
                     <span className="snav-icon">{tab.icon}</span>
                     <span>{tab.label}</span>
                     {tab.id === "messages" && data.messages.filter(m => !m.read).length > 0 && (
@@ -9721,7 +9770,7 @@ export default function BricksyTravel() {
                   <div style={{ background: "#fff", borderRadius: 12, padding: "28px 32px", boxShadow: "0 2px 12px rgba(0,0,0,.07)", marginBottom: 20 }} className="dash-profile-header">
                     {/* Avatar */}
                     <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, color: "#fff", fontWeight: 700, fontFamily: "'Playfair Display',serif", border: "3px solid #c0e8f0", overflow: "hidden", cursor: "pointer" }}
-                      onClick={() => setAdminTab("profile")} title="Edit Profil">
+                      onClick={() => navigateAdminTab("profile")} title="Edit Profil">
                       {user.photo
                         ? <img loading="lazy" src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         : (user.name || user.username).charAt(0).toUpperCase()}
@@ -9757,20 +9806,20 @@ export default function BricksyTravel() {
                     {/* Action Buttons */}
                     <div className="dash-action-btns">
                       {canEdit && (
-                        <button onClick={() => { setAdminTab("cms"); setCmsEditPost("new"); }}
+                        <button onClick={() => { navigateAdminTab("cms"); setCmsEditPost("new"); }}
                           style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "none", cursor: "pointer", letterSpacing: ".03em", transition: "background .2s" }}
                           onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
                           onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                           ✏ Buat Artikel
                         </button>
                       )}
-                      <button onClick={() => setAdminTab("messages")}
+                      <button onClick={() => navigateAdminTab("messages")}
                         style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "transparent", color: "#0d3b66", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "2px solid #c0e8f0", cursor: "pointer", letterSpacing: ".03em", transition: "all .2s" }}
                         onMouseEnter={e => { e.currentTarget.style.borderColor = "#0d3b66"; }}
                         onMouseLeave={e => { e.currentTarget.style.borderColor = "#c0e8f0"; }}>
                         🔔 Pesan Masuk {data.messages.filter(m => !m.read).length > 0 && <span style={{ background: "#e74c3c", color: "#fff", borderRadius: 10, padding: "1px 7px", fontSize: "0.6875rem", fontWeight: 700 }}>{data.messages.filter(m => !m.read).length}</span>}
                       </button>
-                      <button onClick={() => setAdminTab("profile")}
+                      <button onClick={() => navigateAdminTab("profile")}
                         style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 22px", background: "transparent", color: "#0d3b66", borderRadius: 24, fontSize: "0.8125rem", fontWeight: 700, border: "2px solid #c0e8f0", cursor: "pointer", letterSpacing: ".03em", transition: "all .2s" }}
                         onMouseEnter={e => { e.currentTarget.style.borderColor = "#0891b2"; e.currentTarget.style.color = "#0891b2"; }}
                         onMouseLeave={e => { e.currentTarget.style.borderColor = "#c0e8f0"; e.currentTarget.style.color = "#0d3b66"; }}>
@@ -9789,7 +9838,7 @@ export default function BricksyTravel() {
                     canEdit={canEdit}
                     canCS={canCS}
                     isAdmin={isAdmin}
-                    setAdminTab={setAdminTab}
+                    setAdminTab={navigateAdminTab}
                     setCmsEditPost={setCmsEditPost}
                     SECTION_LABELS={SECTION_LABELS}
                     SECTIONS={SECTIONS}
@@ -10396,6 +10445,8 @@ export default function BricksyTravel() {
                   save={save}
                   notify={notify}
                   uploadToCloudinary={uploadToCloudinary}
+                  onEditStateChange={(isEditing) => { servicesEditActiveRef.current = isEditing; }}
+                  onCancelEdit={(fn) => { servicesExitEditRef.current = fn; }}
                 />
               )}
 
