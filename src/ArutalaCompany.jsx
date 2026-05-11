@@ -1664,7 +1664,8 @@ const GS = () => (
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
     @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
     @keyframes galScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    @keyframes navNamePulse{0%,100%{color:#fff}50%{color:#10d0e0}}
+    @keyframes navNamePulse{0%,100%{color:#fff}33%{color:#10d0e0}66%{color:#0d3b66}}
+    @keyframes navPulse{0%,100%{color:#fff}33%{color:#10d0e0}66%{color:#0d3b66}}
 
     /* Gallery ticker — desktop only */
     .gal-ticker{overflow:hidden;margin-bottom:40px;mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%)}
@@ -1686,11 +1687,11 @@ const GS = () => (
     p{font-size:1rem;line-height:1.75;color:rgba(255,255,255,.8)}
     small{font-size:.875rem;line-height:1.5}
 
-    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:700;color:#fff;transition:color .2s;text-shadow:0 1px 4px rgba(0,80,120,.35),0 0 10px rgba(8,145,178,.18)}
+    .nav-link{position:relative;padding-bottom:3px;font-size:.875rem;letter-spacing:.04em;font-weight:700;color:#fff;transition:color .2s;text-shadow:0 1px 4px rgba(0,80,120,.35),0 0 10px rgba(8,145,178,.18);animation:navPulse 8s ease-in-out infinite}
     .nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:linear-gradient(90deg,#fff,rgba(255,255,255,.4));transition:width .3s;border-radius:2px}
-    .nav-link:hover{color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(0,80,120,.4),0 0 18px rgba(255,255,255,.25)}
+    .nav-link:hover{color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(0,80,120,.4),0 0 18px rgba(255,255,255,.25);animation:none}
     .nav-link:hover::after,.nav-link.active::after{width:100%}
-    .nav-link.active{color:#fff!important;text-shadow:0 1px 8px rgba(0,80,120,.45),0 0 20px rgba(255,255,255,.30)}
+    .nav-link.active{color:#fff!important;text-shadow:0 1px 8px rgba(0,80,120,.45),0 0 20px rgba(255,255,255,.30);animation:none}
 
     .hover-lift{transition:transform .3s,box-shadow .3s}
     .hover-lift:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(13,59,102,.12)}
@@ -6403,11 +6404,21 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
             if (catSvcs.length === 0) return null;
             return (
               <div key={cat.key}>
-                {/* Category Header */}
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, paddingBottom: 10, borderBottom: `2px solid ${cat.border}` }}>
-                  <span style={{ fontSize: 18 }}>{cat.icon}</span>
-                  <span style={{ fontSize: 15, fontWeight: 800, color: cat.color, letterSpacing: ".02em" }}>{cat.label}</span>
-                  <span style={{ fontSize: 11, background: cat.light, color: cat.color, border: `1px solid ${cat.border}`, borderRadius: 10, padding: "2px 10px", fontWeight: 700 }}>{catSvcs.length} paket</span>
+                {/* Category Header — full-width gradient banner */}
+                <div style={{
+                  display: "flex", alignItems: "center", gap: 12, marginBottom: 14,
+                  padding: "13px 22px",
+                  borderRadius: 10,
+                  background: `linear-gradient(130deg, ${cat.color} 0%, ${cat.color}cc 40%, ${cat.color}55 75%, transparent 100%)`,
+                  boxShadow: `0 4px 18px ${cat.color}33`,
+                  position: "relative", overflow: "hidden"
+                }}>
+                  {/* Shape dekoratif kanan */}
+                  <div style={{ position: "absolute", right: -20, top: -20, width: 100, height: 100, borderRadius: "50%", background: `${cat.color}22`, pointerEvents: "none" }} />
+                  <div style={{ position: "absolute", right: 30, bottom: -30, width: 80, height: 80, borderRadius: "50%", background: `${cat.color}18`, pointerEvents: "none" }} />
+                  <span style={{ fontSize: 22, position: "relative", zIndex: 1 }}>{cat.icon}</span>
+                  <span style={{ fontSize: 17, fontWeight: 900, color: "#fff", letterSpacing: ".04em", textTransform: "uppercase", textShadow: "0 2px 8px rgba(0,0,0,.2)", position: "relative", zIndex: 1 }}>{cat.label}</span>
+                  <span style={{ fontSize: 11, background: "rgba(255,255,255,.25)", color: "#fff", borderRadius: 10, padding: "3px 12px", fontWeight: 800, position: "relative", zIndex: 1, backdropFilter: "blur(4px)" }}>{catSvcs.length} paket</span>
                 </div>
                 {/* Package rows */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
@@ -8381,6 +8392,10 @@ function WaPickerModal({ admins, msgText, onClose }) {
 }
 
 export default function BricksyTravel() {
+  // Set judul tab browser ke loading saat pertama kali sebelum React hydrate
+  if (typeof document !== "undefined" && document.title.toLowerCase().includes("arutala")) {
+    document.title = "Tunggu Sebentar...";
+  }
   const [data, setData] = useState(DEFAULT_DATA);
   const dataRef = useRef(DEFAULT_DATA); // selalu up-to-date, aman dipakai di closure stale (popstate)
   const [isLoading, setIsLoading] = useState(true);
@@ -8697,13 +8712,18 @@ export default function BricksyTravel() {
 
   // Sync browser tab title — selalu satu baris, ikuti logoText
   useEffect(() => {
+    // Saat pertama load (sebelum data siap), tampilkan pesan loading dulu
+    if (isLoading) {
+      document.title = "Tunggu Sebentar...";
+      return;
+    }
     const oneLiner = (data.content.logoText || "Arutala Organizer")
       .replace(/\n/g, " ")   // hapus newline → spasi
       .replace(/\s+/g, " ")  // collapse spasi ganda
       .trim()
       .toUpperCase();         // bold effect tidak bisa di title, tapi uppercase memperkuat brand
     document.title = oneLiner;
-  }, [data.content.logoText]);
+  }, [data.content.logoText, isLoading]);
 
   const save = async (d) => {
     // Selalu merge dengan DEFAULT_DATA sebelum simpan:
@@ -9228,7 +9248,7 @@ export default function BricksyTravel() {
                         }
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 3 }}>
-                        <span style={{ fontSize: "0.8125rem", fontWeight: 700, lineHeight: 1.2, animation: "navNamePulse 8s ease-in-out infinite" }}>
+                        <span style={{ fontSize: "0.8125rem", fontWeight: 700, lineHeight: 1.2, animation: "navPulse 8s ease-in-out infinite" }}>
                           {user.name || user.username}
                         </span>
                         {/* CP button dengan border shape asimetris */}
