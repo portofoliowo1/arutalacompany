@@ -6185,7 +6185,14 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
               {(svcForm.prices || []).map((p, i) => (
-                <div key={i} style={{ background: "#fff", borderRadius: 10, border: i === 0 ? "2px solid #0891b2" : "1.5px solid #b0dce8", padding: "14px 16px", boxShadow: i === 0 ? "0 2px 10px rgba(8,145,178,.12)" : "none" }}>
+                <div key={i} style={{ background: "#fff", borderRadius: 10, border: i === 0 ? "2px solid #0891b2" : "1.5px solid #b0dce8", padding: "14px 16px", boxShadow: i === 0 ? "0 2px 10px rgba(8,145,178,.12)" : "none", position: "relative" }}>
+                  {/* Tombol hapus semua kendaraan */}
+                  <button onClick={() => {
+                    const newPrices = (svcForm.prices || []).filter((_, j) => j !== i);
+                    setSvcForm(s => ({ ...s, prices: newPrices }));
+                  }}
+                    style={{ position: "absolute", top: 8, right: 8, width: 22, height: 22, borderRadius: "50%", background: "#fee", color: "#e74c3c", border: "1px solid #fbb", fontSize: 11, fontWeight: 800, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}
+                    title="Hapus kendaraan ini">✕</button>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                     <span style={{ fontSize: 18 }}>{p.icon}</span>
                     <span style={{ fontSize: 13, fontWeight: 700, color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
@@ -8394,7 +8401,7 @@ function WaPickerModal({ admins, msgText, onClose }) {
 export default function BricksyTravel() {
   // Set judul tab browser ke loading saat pertama kali sebelum React hydrate
   if (typeof document !== "undefined" && document.title.toLowerCase().includes("arutala")) {
-    document.title = "Tunggu Sebentar...";
+    document.title = "...";
   }
   const [data, setData] = useState(DEFAULT_DATA);
   const dataRef = useRef(DEFAULT_DATA); // selalu up-to-date, aman dipakai di closure stale (popstate)
@@ -8712,18 +8719,13 @@ export default function BricksyTravel() {
 
   // Sync browser tab title — selalu satu baris, ikuti logoText
   useEffect(() => {
-    // Saat pertama load (sebelum data siap), tampilkan pesan loading dulu
-    if (isLoading) {
-      document.title = "Tunggu Sebentar...";
-      return;
-    }
     const oneLiner = (data.content.logoText || "Arutala Organizer")
-      .replace(/\n/g, " ")   // hapus newline → spasi
-      .replace(/\s+/g, " ")  // collapse spasi ganda
+      .replace(/\n/g, " ")
+      .replace(/\s+/g, " ")
       .trim()
-      .toUpperCase();         // bold effect tidak bisa di title, tapi uppercase memperkuat brand
+      .toUpperCase();
     document.title = oneLiner;
-  }, [data.content.logoText, isLoading]);
+  }, [data.content.logoText]);
 
   const save = async (d) => {
     // Selalu merge dengan DEFAULT_DATA sebelum simpan:
