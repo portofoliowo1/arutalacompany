@@ -5168,10 +5168,10 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                     style={{ width: "100%", padding: "15px 20px", background: "linear-gradient(135deg,#0891b2,#0ea5c5)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 10, transition: "background .2s", letterSpacing: ".01em" }}>
                     <span style={{ fontSize: "1.1rem" }}>💬</span> Pesan via WhatsApp
                   </button>
-                  <a href={`tel:${content.phone}`} className="mg-cta-tel"
-                    style={{ width: "100%", padding: "13px 20px", background: "#edf8fb", color: "#0d3b66", border: "1.5px solid #c0e8f0", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "background .2s" }}>
+                  <button onClick={() => onWaOpen && onWaOpen()} className="mg-cta-tel"
+                    style={{ width: "100%", padding: "13px 20px", background: "#edf8fb", color: "#0d3b66", border: "1.5px solid #c0e8f0", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "background .2s", cursor: "pointer" }}>
                     <span style={{ fontSize: "1rem" }}>📞</span> Hubungi Langsung
-                  </a>
+                  </button>
                 </div>
               </div>
 
@@ -6496,10 +6496,7 @@ function AboutPage({ content, images, teamMembers, onWaOpen }) {
                 onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                 💬 Hubungi Kami
               </button>
-              <a href={`tel:${content.phone}`}
-                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "transparent", color: "#fff", border: "1.5px solid rgba(255,255,255,.55)", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none" }}>
-                📞 {content.phone || "Telepon"}
-              </a>
+              <WaPhoneDropdown admins={content.waAdmins} phone={content.phone} />
             </div>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -7959,6 +7956,85 @@ const getInitialPage = () => {
 
 /** Cek apakah URL saat mount adalah /control-panel → tampilkan admin panel */
 const getInitialShowAdmin = () => window.location.pathname === "/control-panel";
+
+/* ─────────────── WA PHONE DROPDOWN (About page inline) ─────────────── */
+function WaPhoneDropdown({ admins, phone, msgText = "" }) {
+  const DEFAULT_ADMINS = [{ id: 1, name: "Admin – Arutala", wa: "https://wa.me/6285745571442" }];
+  const list = (admins && admins.length > 0) ? admins : DEFAULT_ADMINS;
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef(null);
+
+  // Tutup dropdown saat klik di luar
+  React.useEffect(() => {
+    const close = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, []);
+
+  // Jika hanya 1 admin, langsung buka WA tanpa dropdown
+  const handleClick = () => {
+    if (list.length === 1) {
+      window.open(list[0].wa + (msgText ? "?text=" + encodeURIComponent(msgText) : ""), "_blank");
+    } else {
+      setOpen(o => !o);
+    }
+  };
+
+  return (
+    <div ref={ref} style={{ position: "relative", display: "inline-block" }}>
+      <button onClick={handleClick}
+        style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px",
+          background: "transparent", color: "#fff", border: "1.5px solid rgba(255,255,255,.55)",
+          borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em",
+          textTransform: "uppercase", cursor: "pointer", transition: "border-color .2s, background .2s",
+          whiteSpace: "nowrap" }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,.9)"; e.currentTarget.style.background = "rgba(255,255,255,.08)"; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,.55)"; e.currentTarget.style.background = "transparent"; }}>
+        <svg width="15" height="15" viewBox="0 0 32 32" fill="none"><path d="M16 3C8.82 3 3 8.82 3 16c0 2.38.65 4.61 1.78 6.53L3 29l6.64-1.74A12.93 12.93 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3z" fill="#fff"/><path d="M16 5.5c-5.79 0-10.5 4.71-10.5 10.5 0 2.03.58 3.93 1.59 5.54l.28.45-.97 3.54 3.65-.95.43.25A10.44 10.44 0 0 0 16 26.5c5.79 0 10.5-4.71 10.5-10.5S21.79 5.5 16 5.5zm5.32 14.57c-.22.62-1.28 1.18-1.76 1.23-.45.05-.87.22-2.93-.61-2.49-1-4.07-3.54-4.2-3.7-.12-.17-.99-1.32-.99-2.52 0-1.2.63-1.79.85-2.03.22-.25.49-.31.65-.31l.47.01c.15.01.36-.06.56.43.21.5.72 1.76.78 1.89.07.13.11.28.02.45-.08.17-.13.28-.25.43l-.38.44c-.12.13-.25.26-.11.51.14.25.63 1.04 1.35 1.68.93.83 1.71 1.09 1.96 1.21.25.12.39.1.54-.06.15-.16.62-.72.78-.97.16-.25.33-.21.55-.13.22.08 1.41.67 1.65.79.24.12.4.18.46.28.06.1.06.58-.16 1.2z" fill="#25d366"/></svg>
+        {phone || "+62 xxx"}
+        {list.length > 1 && <span style={{ fontSize: 10, opacity: .75, marginLeft: 2 }}>▾</span>}
+      </button>
+
+      {/* Dropdown panel */}
+      {open && list.length > 1 && (
+        <div style={{
+          position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 9999,
+          background: "#fff", borderRadius: 12, boxShadow: "0 12px 40px rgba(13,59,102,.28)",
+          border: "1px solid #b6f0d0", minWidth: 240, overflow: "hidden",
+          animation: "waPop .18s cubic-bezier(.22,1,.36,1) both",
+        }}>
+          <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid #e8f8ef" }}>
+            <p style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#5090aa", letterSpacing: ".06em", textTransform: "uppercase", margin: 0 }}>
+              Pilih Admin WA
+            </p>
+          </div>
+          {list.map((admin, i) => (
+            <a key={admin.id || i}
+              href={admin.wa + (msgText ? "?text=" + encodeURIComponent(msgText) : "")}
+              target="_blank" rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              style={{ display: "flex", alignItems: "center", gap: 10, padding: "11px 14px",
+                textDecoration: "none", borderBottom: i < list.length - 1 ? "1px solid #f0fdf6" : "none",
+                transition: "background .12s", background: "transparent" }}
+              onMouseEnter={e => e.currentTarget.style.background = "#f0fdf6"}
+              onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+              <div style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#25d366,#1aab52)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 13, flexShrink: 0 }}>
+                {admin.name.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#0d3b66" }}>{admin.name}</div>
+                <div style={{ fontSize: "0.75rem", color: "#5090aa" }}>
+                  {admin.wa.replace("https://wa.me/", "+").replace(/^(\+62)(\d{3})(\d{4})(\d+)$/, "$1 $2 $3-$4")}
+                </div>
+              </div>
+              <div style={{ marginLeft: "auto", color: "#25d366", fontWeight: 700 }}>→</div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ─────────────── WA ADMIN MANAGER (Control Panel) ─────────────── */
 function WaAdminManager({ admins: adminsProp, onSave, notify }) {
@@ -9521,7 +9597,11 @@ export default function BricksyTravel() {
                         <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#0d3b66", marginBottom: 18 }}>Contact Us</h2>
                         <p style={{ fontSize: "0.9375rem", color: "#1a5a78", lineHeight: 1.85, marginBottom: 20, whiteSpace: "pre-line" }}>{data.content.contactText || data.content.aboutContactSub}</p>
                         <p style={{ fontSize: "0.9375rem", color: "#1a4a72", marginBottom: 8, fontWeight: 500 }}>✉ {data.content.email}</p>
-                        <p style={{ fontSize: "0.9375rem", color: "#1a4a72", fontWeight: 500 }}>📞 {data.content.phone}</p>
+                        <button onClick={() => openWaPicker()}
+                          style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: "0.9375rem", color: "#0891b2", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 3 }}>
+                          📞 {data.content.phone}
+                          {(data.content.waAdmins?.length > 1) && <span style={{ fontSize: "0.75rem", color: "#5090aa", textDecoration: "none" }}>▾ {data.content.waAdmins.length} admin</span>}
+                        </button>
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                         {["name", "email"].map(f => (
@@ -9553,7 +9633,7 @@ export default function BricksyTravel() {
                           <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#0d3b66", letterSpacing: ".06em", textTransform: "uppercase" }}>About Us</h3>
                           <p style={{ fontSize: "0.875rem", color: "#1a5a78", lineHeight: 1.8, marginBottom: 14, whiteSpace: "pre-line" }}>{data.content.aboutText}</p>
                           <p style={{ fontSize: "0.875rem", color: "#1a5a78" }}>email: <a href={`mailto:${data.content.email}`} style={{ color: "#0891b2", fontWeight: 500 }}>{data.content.email}</a></p>
-                          <p style={{ fontSize: "0.875rem", color: "#1a5a78", marginTop: 4 }}>phone: {data.content.phone}</p>
+                          <p style={{ fontSize: "0.875rem", color: "#1a5a78", marginTop: 4 }}>phone: <button onClick={() => openWaPicker()} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: "0.875rem", color: "#0891b2", fontWeight: 500, textDecoration: "underline", textUnderlineOffset: 2 }}>{data.content.phone}</button></p>
                         </div>
                         <div>
                           <h3 style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "0.8125rem", fontWeight: 700, marginBottom: 14, color: "#0d3b66", letterSpacing: ".06em", textTransform: "uppercase" }}>Our Gallery</h3>
