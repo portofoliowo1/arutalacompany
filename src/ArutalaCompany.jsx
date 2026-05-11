@@ -1636,6 +1636,19 @@ const DEFAULT_DATA = {
 const GS = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@700;900&family=Montserrat:wght@700;800;900&family=Raleway:wght@700;800;900&family=Oswald:wght@600;700&family=Bebas+Neue&family=Lora:wght@700&family=Josefin+Sans:wght@700&family=Inter:wght@700;800;900&display=swap');
+
+    /* ── FORCE LIGHT MODE — kebal dark mode OS/browser ── */
+    :root { color-scheme: only light !important; }
+    html, body, #root, [id], [class], *:not(style):not(script) {
+      forced-color-adjust: none !important;
+      -webkit-forced-color-adjust: none !important;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { color-scheme: only light !important; }
+      html { background: #063d5c !important; filter: none !important; }
+      * { color-scheme: light !important; }
+    }
+
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
     body{font-family:'DM Sans',sans-serif;background:#063d5c;color:#0d3b66;line-height:1.6;font-size:16px}
@@ -8384,6 +8397,8 @@ export default function BricksyTravel() {
   // Forgot password flow: null | "input_user" | "input_email" | "input_otp" | "input_newpass"
   const [forgotStep, setForgotStep] = useState(null);
   const [forgotUser, setForgotUser] = useState("");
+  const [forgotSearchBy, setForgotSearchBy] = useState("username"); // "username" | "email" | "phone"
+  const [forgotFoundUser, setForgotFoundUser] = useState(null); // username string found after step1
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotOTP, setForgotOTP] = useState({ code: "", input: "", expiry: 0, sending: false });
   const [forgotNewPass, setForgotNewPass] = useState({ val: "", confirm: "" });
@@ -8635,6 +8650,30 @@ export default function BricksyTravel() {
   // Sync adminTabRef dengan adminTab state
   useEffect(() => { adminTabRef.current = adminTab; }, [adminTab]);
 
+  // Force light mode — inject meta color-scheme ke <head> sekali saat mount
+  useEffect(() => {
+    // Meta color-scheme
+    let meta = document.querySelector("meta[name='color-scheme']");
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.name = "color-scheme";
+      document.head.appendChild(meta);
+    }
+    meta.content = "only light";
+    // Meta theme-color untuk address bar browser mobile
+    let themeMeta = document.querySelector("meta[name='theme-color']");
+    if (!themeMeta) {
+      themeMeta = document.createElement("meta");
+      themeMeta.name = "theme-color";
+      document.head.appendChild(themeMeta);
+    }
+    themeMeta.content = "#063d5c";
+    // Paksa html & body pakai color-scheme light
+    document.documentElement.style.colorScheme = "only light";
+    document.documentElement.setAttribute("data-color-scheme", "light");
+    document.body.style.colorScheme = "only light";
+  }, []);
+
   // Sync favicon with logo
   useEffect(() => {
     const favicon = document.querySelector("link[rel='icon']") || (() => {
@@ -8697,10 +8736,30 @@ export default function BricksyTravel() {
   };
 
   /* ── Forgot Password: Step 1 — cari username ── */
-  const forgotStep1 = () => {
-    if (!forgotUser.trim()) { setForgotErr("Masukkan username."); return; }
-    const u = HARDCODED_USERS.find(x => x.username === forgotUser.trim());
-    if (!u) { setForgotErr("Username tidak ditemukan."); return; }
+  const forgotStep1 = async () => {
+    if (!forgotUser.trim()) { setForgotErr(`Masukkan ${forgotSearchBy === "username" ? "username" : forgotSearchBy === "email" ? "email" : "nomor HP"}.`); return; }
+    let found = null;
+    // Search in HARDCODED_USERS first
+    if (forgotSearchBy === "username") {
+      found = HARDCODED_USERS.find(x => x.username === forgotUser.trim()) || null;
+    } else if (forgotSearchBy === "email") {
+      found = HARDCODED_USERS.find(x => x.email && x.email.toLowerCase() === forgotUser.trim().toLowerCase()) || null;
+    } else {
+      found = HARDCODED_USERS.find(x => x.phone && x.phone.replace(/\D/g,"") === forgotUser.trim().replace(/\D/g,"")) || null;
+    }
+    // If not found in hardcoded, also search Firestore profiles
+    if (!found) {
+      for (const u of HARDCODED_USERS) {
+        try {
+          const r = await fsGet(`profile-${u.username}`);
+          if (!r) continue;
+          if (forgotSearchBy === "email" && r.email && r.email.toLowerCase() === forgotUser.trim().toLowerCase()) { found = { ...u, email: r.email, phone: r.phone || u.phone }; break; }
+          if (forgotSearchBy === "phone" && r.phone && r.phone.replace(/\D/g,"") === forgotUser.trim().replace(/\D/g,"")) { found = { ...u, email: r.email || u.email, phone: r.phone }; break; }
+        } catch {}
+      }
+    }
+    if (!found) { setForgotErr("Akun tidak ditemukan. Periksa kembali data yang dimasukkan."); return; }
+    setForgotFoundUser(found.username);
     setForgotErr("");
     setForgotStep("input_email");
   };
@@ -8708,7 +8767,8 @@ export default function BricksyTravel() {
   /* ── Forgot Password: Step 2 — verifikasi email & kirim OTP ── */
   const forgotStep2 = async () => {
     setForgotErr("");
-    const u = HARDCODED_USERS.find(x => x.username === forgotUser.trim());
+    const targetUser = forgotFoundUser || forgotUser.trim();
+    const u = HARDCODED_USERS.find(x => x.username === targetUser);
     // Ambil email dari Firestore atau hardcoded
     let storedEmail = u?.email || "";
     try {
@@ -8743,12 +8803,14 @@ export default function BricksyTravel() {
   const forgotStep4 = async () => {
     if (forgotNewPass.val.length < 6) { setForgotErr("Password minimal 6 karakter."); return; }
     if (forgotNewPass.val !== forgotNewPass.confirm) { setForgotErr("Konfirmasi password tidak cocok."); return; }
+    const targetUser = forgotFoundUser || forgotUser.trim();
     try {
-      const prev = await fsGet(`profile-${forgotUser}`) || {};
-      await fsSet(`profile-${forgotUser}`, { ...prev, _password: forgotNewPass.val });
+      const prev = await fsGet(`profile-${targetUser}`) || {};
+      await fsSet(`profile-${targetUser}`, { ...prev, _password: forgotNewPass.val });
     } catch {}
     // Reset state
     setForgotStep(null); setForgotUser(""); setForgotEmail("");
+    setForgotFoundUser(null);
     setForgotOTP({ code: "", input: "", expiry: 0, sending: false });
     setForgotNewPass({ val: "", confirm: "" }); setForgotErr("");
     notify("Password berhasil direset! Silakan login.");
@@ -8756,6 +8818,7 @@ export default function BricksyTravel() {
 
   const closeForgot = () => {
     setForgotStep(null); setForgotUser(""); setForgotEmail("");
+    setForgotFoundUser(null); setForgotSearchBy("username");
     setForgotOTP({ code: "", input: "", expiry: 0, sending: false });
     setForgotNewPass({ val: "", confirm: "" }); setForgotErr("");
   };
@@ -10000,13 +10063,27 @@ export default function BricksyTravel() {
               })}
             </div>
 
-            {/* STEP 1 — Username */}
+            {/* STEP 1 — Cari Akun (via username / email / nomor HP) */}
             {forgotStep === "input_user" && (
               <>
                 <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>Lupa Sandi</h2>
-                <p style={{ fontSize: "0.875rem", color: "#4a7f98", marginBottom: 24 }}>Masukkan username akun Anda.</p>
+                <p style={{ fontSize: "0.875rem", color: "#4a7f98", marginBottom: 16 }}>Cari akun Anda menggunakan salah satu metode berikut.</p>
+                {/* Method selector */}
+                <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
+                  {[{ val: "username", label: "Username" }, { val: "email", label: "Email" }, { val: "phone", label: "No. HP" }].map(m => (
+                    <button key={m.val} onClick={() => { setForgotSearchBy(m.val); setForgotUser(""); setForgotErr(""); }}
+                      style={{ flex: 1, padding: "8px 4px", fontSize: 12, fontWeight: 700, borderRadius: 6, border: "none", cursor: "pointer", transition: "all .15s",
+                        background: forgotSearchBy === m.val ? "#0891b2" : "#edfafc",
+                        color: forgotSearchBy === m.val ? "#fff" : "#0891b2" }}>
+                      {m.label}
+                    </button>
+                  ))}
+                </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  <input placeholder="Username" value={forgotUser}
+                  <input
+                    placeholder={forgotSearchBy === "username" ? "Masukkan username" : forgotSearchBy === "email" ? "Masukkan email terdaftar" : "Masukkan nomor HP / WhatsApp"}
+                    type={forgotSearchBy === "email" ? "email" : forgotSearchBy === "phone" ? "tel" : "text"}
+                    value={forgotUser}
                     onChange={e => { setForgotUser(e.target.value); setForgotErr(""); }}
                     onKeyDown={e => e.key === "Enter" && forgotStep1()}
                     style={{ padding: "12px 14px", border: "1px solid #b0dce8", borderRadius: 4, fontSize: 14, outline: "none" }} />
@@ -10026,7 +10103,7 @@ export default function BricksyTravel() {
               <>
                 <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>Verifikasi Email</h2>
                 <p style={{ fontSize: "0.875rem", color: "#4a7f98", marginBottom: 24 }}>
-                  Masukkan email yang terdaftar untuk akun <strong style={{ color: "#0d3b66" }}>{forgotUser}</strong>.
+                  Masukkan email yang terdaftar untuk akun <strong style={{ color: "#0d3b66" }}>{forgotFoundUser || forgotUser}</strong>.
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   <input placeholder="Email terdaftar" type="email" value={forgotEmail}
@@ -10077,7 +10154,7 @@ export default function BricksyTravel() {
               <>
                 <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>Password Baru</h2>
                 <p style={{ fontSize: "0.875rem", color: "#4a7f98", marginBottom: 24 }}>
-                  OTP terverifikasi ✅. Buat password baru untuk <strong style={{ color: "#0d3b66" }}>{forgotUser}</strong>.
+                  OTP terverifikasi ✅. Buat password baru untuk <strong style={{ color: "#0d3b66" }}>{forgotFoundUser || forgotUser}</strong>.
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   <input placeholder="Password baru (min. 6 karakter)" type="password" value={forgotNewPass.val}
@@ -10110,7 +10187,11 @@ export default function BricksyTravel() {
               <button className="admin-hamburger" onClick={() => setSidebarOpen(v => !v)} aria-label="Toggle menu">
                 {sidebarOpen ? "✕" : "☰"}
               </button>
-              <span className="serif" style={{ fontSize: 18, fontWeight: 600 }}><LogoDisplay content={data.content} size="admin" /></span>
+              <button onClick={() => { navigateTo("home"); closeAdmin(); }}
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center" }}
+                title="Ke Halaman Utama">
+                <span className="serif" style={{ fontSize: 18, fontWeight: 600 }}><LogoDisplay content={data.content} size="admin" /></span>
+              </button>
               <span style={{ fontSize: 11, background: "rgba(255,255,255,.15)", padding: "3px 10px", borderRadius: 12, letterSpacing: ".5px" }}>
                 {ROLES[user.role]?.label}
               </span>
@@ -10121,7 +10202,7 @@ export default function BricksyTravel() {
           </div>
 
           {/* ── Floating ← Website button (permanent) ── */}
-          <button onClick={() => closeAdmin()}
+          <button onClick={() => { navigateTo("home"); closeAdmin(); }}
             style={{ position:"fixed", bottom:28, right:28, zIndex:9999, display:"flex", alignItems:"center", gap:10, padding:"14px 22px",
               background:"linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)",
               color:"#fff", border:"none", borderRadius:50, fontSize:14, fontWeight:800, cursor:"pointer",
@@ -10344,6 +10425,7 @@ export default function BricksyTravel() {
                         <h3 style={{ fontSize: 15, fontWeight: 600, color: "#0d3b66", marginBottom: 20 }}>✏ Edit Data Diri</h3>
                         {[
                           { label: "Nama Lengkap", key: "name", placeholder: "Masukkan nama lengkap", type: "text" },
+                          { label: "Email", key: "email", placeholder: "contoh@email.com", type: "email" },
                           { label: "Nomor HP / WhatsApp", key: "phone", placeholder: "08xxxxxxxxxx", type: "tel" },
                         ].map(f => (
                           <div key={f.key} style={{ marginBottom: 16 }}>
