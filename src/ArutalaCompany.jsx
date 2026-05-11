@@ -1664,6 +1664,7 @@ const GS = () => (
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
     @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
     @keyframes galScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes navNamePulse{0%,100%{color:#fff}50%{color:#10d0e0}}
 
     /* Gallery ticker — desktop only */
     .gal-ticker{overflow:hidden;margin-bottom:40px;mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%)}
@@ -9220,7 +9221,7 @@ export default function BricksyTravel() {
                         }
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 3 }}>
-                        <span style={{ fontSize: "0.8125rem", color: "#fff", fontWeight: 700, lineHeight: 1.2 }}>
+                        <span style={{ fontSize: "0.8125rem", fontWeight: 700, lineHeight: 1.2, animation: "navNamePulse 8s ease-in-out infinite" }}>
                           {user.name || user.username}
                         </span>
                         {/* CP button dengan border shape asimetris */}
@@ -10187,7 +10188,7 @@ export default function BricksyTravel() {
               <button className="admin-hamburger" onClick={() => setSidebarOpen(v => !v)} aria-label="Toggle menu">
                 {sidebarOpen ? "✕" : "☰"}
               </button>
-              <button onClick={() => { navigateTo("home"); closeAdmin(); }}
+              <button onClick={() => { setShowAdmin(false); setPage("home"); window.history.pushState({ page:"home", depth:0 }, "", "/"); window.scrollTo({ top:0, behavior:"smooth" }); }}
                 style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center" }}
                 title="Ke Halaman Utama">
                 <span className="serif" style={{ fontSize: 18, fontWeight: 600 }}><LogoDisplay content={data.content} size="admin" /></span>
@@ -10201,8 +10202,8 @@ export default function BricksyTravel() {
             </div>
           </div>
 
-          {/* ── Floating ← Website button (permanent) ── */}
-          <button onClick={() => { navigateTo("home"); closeAdmin(); }}
+          {/* ── Floating HOME button (permanent) ── */}
+          <button onClick={() => { setShowAdmin(false); setPage("home"); window.history.pushState({ page:"home", depth:0 }, "", "/"); window.scrollTo({ top:0, behavior:"smooth" }); }}
             style={{ position:"fixed", bottom:28, right:28, zIndex:9999, display:"flex", alignItems:"center", gap:10, padding:"14px 22px",
               background:"linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)",
               color:"#fff", border:"none", borderRadius:50, fontSize:14, fontWeight:800, cursor:"pointer",
@@ -10210,7 +10211,7 @@ export default function BricksyTravel() {
               transition:"transform .18s, box-shadow .18s", letterSpacing:".02em" }}
             onMouseEnter={e=>{ e.currentTarget.style.transform="translateY(-3px) scale(1.04)"; e.currentTarget.style.boxShadow="0 10px 32px rgba(8,145,178,.65), 0 4px 12px rgba(0,0,0,.3)"; }}
             onMouseLeave={e=>{ e.currentTarget.style.transform=""; e.currentTarget.style.boxShadow="0 6px 24px rgba(8,145,178,.55), 0 2px 8px rgba(0,0,0,.25)"; }}>
-            <span style={{ fontSize:18 }}>🌐</span> ← Ke Website
+            <span style={{ fontSize:18 }}>🏠</span> HOME
           </button>
 
           {/* Sidebar overlay – mobile tap to close */}
