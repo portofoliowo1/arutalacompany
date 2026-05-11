@@ -1885,13 +1885,20 @@ const GS = () => (
 
     /* Admin panel: sidebar + main */
     .admin-body{display:flex;flex:1;overflow:hidden}
-    .admin-sidebar{width:220px;background:#0d3b66;flex-shrink:0;overflow-y:auto;display:flex;flex-direction:column;transition:transform .25s}
+    .admin-sidebar{width:240px;background:linear-gradient(160deg,#04263d 0%,#063d5c 40%,#0a5278 100%);flex-shrink:0;overflow-y:auto;display:flex;flex-direction:column;transition:transform .25s;box-shadow:4px 0 24px rgba(0,0,0,.25)}
     .admin-main{flex:1;overflow-y:auto;padding:32px}
     @media(max-width:768px){
       .admin-sidebar{position:fixed;top:58px;left:0;bottom:0;z-index:200;transform:translateX(-100%)}
       .admin-sidebar.open{transform:translateX(0)}
       .admin-main{padding:20px 16px}
     }
+    /* Sidebar nav items */
+    .snav-btn{width:100%;padding:11px 20px;text-align:left;background:none;color:rgba(255,255,255,.6);font-size:13px;font-weight:700;letter-spacing:.2px;border:none;border-left:3px solid transparent;border-radius:0 10px 10px 0;cursor:pointer;display:flex;align-items:center;gap:11px;transition:all .18s cubic-bezier(.4,0,.2,1);margin-bottom:2px;position:relative;overflow:hidden}
+    .snav-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,208,224,.15),transparent);opacity:0;transition:opacity .18s}
+    .snav-btn:hover{color:#fff;background:rgba(255,255,255,.08);border-left-color:rgba(16,208,224,.5);transform:translateX(4px) scale(1.01);box-shadow:0 2px 12px rgba(0,0,0,.18)}
+    .snav-btn:hover::before{opacity:1}
+    .snav-btn.active{color:#10d0e0;background:rgba(16,208,224,.12);border-left-color:#10d0e0;font-weight:800;box-shadow:inset 0 0 0 1px rgba(16,208,224,.12),0 2px 12px rgba(0,0,0,.15)}
+    .snav-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0}
 
     /* Admin hamburger toggle — shown only on mobile */
     .admin-hamburger{display:none;background:none;border:none;color:rgba(255,255,255,.8);font-size:20px;padding:4px 8px;cursor:pointer;line-height:1}
@@ -4613,12 +4620,15 @@ function DestinationsSection({ svc, catInfo }) {
       {/* Destination card */}
       {dest ? (
         <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
-          <div style={{ width: "100%", background: `linear-gradient(135deg,${ac}22,#e8f4f8)`, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 280 }}>
+          <div style={{ width: "100%", position: "relative", height: 320, overflow: "hidden" }}>
             {dest.img ? (
-              <img loading="lazy" src={dest.img} alt={dest.name} style={{ width: "100%", maxHeight: 360, objectFit: "contain", display: "block" }}
+              <img loading="lazy" src={dest.img} alt={dest.name}
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block", transition: "transform .4s ease" }}
+                onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
+                onMouseLeave={e => e.target.style.transform = "scale(1)"}
                 onError={e => { e.target.style.display = "none"; }} />
             ) : (
-              <div style={{ padding: 40, color: ac, opacity: .4, fontSize: "3rem" }}>🏔</div>
+              <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,${ac}22,#e8f4f8)`, display: "flex", alignItems: "center", justifyContent: "center", color: ac, opacity: .4, fontSize: "3rem" }}>🏔</div>
             )}
             <div style={{ position: "absolute", top: 12, left: 12, background: ac, color: "#fff", borderRadius: "50%", width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6875rem", fontWeight: 800, zIndex: 2, boxShadow: "0 2px 8px rgba(0,0,0,.2)" }}>{dest.no}</div>
           </div>
@@ -5625,7 +5635,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           )}
           <label style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:6, padding:"16px 12px", border:"2px dashed #0ea5c5", borderRadius:10, background:"#f0fafe", cursor:"pointer" }}>
             <span style={{ fontSize:24 }}>🖼️</span>
-            <span style={{ fontSize:12, fontWeight:700, color:"#0891b2" }}>Klik Upload Foto</span>
+            <span style={{ fontSize:13, fontWeight:800, color:"#0891b2" }}>Klik Upload Foto</span>
             <span style={{ fontSize:10, color:"#5090aa", textAlign:"center" }}>JPG, PNG, WEBP · Multi-file</span>
             <input type="file" accept="image/*" multiple onChange={handleImageUpload} style={{ display:"none" }} />
           </label>
@@ -5635,9 +5645,9 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
         <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #e67e22" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
             <div style={{ fontSize:12, fontWeight:800, color:"#e67e22", textTransform:"uppercase", letterSpacing:"1px" }}>✅ Fitur Termasuk</div>
-            <button onClick={addFeature} style={{ fontSize:11, padding:"5px 12px", background:"#fff8e1", color:"#e67e22", border:"1px solid #fde68a", borderRadius:6, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
+            <button onClick={addFeature} style={{ fontSize:13, padding:"8px 16px", background:"#e67e22", color:"#fff", border:"none", borderRadius:7, cursor:"pointer", fontWeight:800, boxShadow:"0 2px 6px rgba(230,126,34,.35)" }}>+ Tambah</button>
           </div>
-          <div style={{ maxHeight:280, overflowY:"auto", display:"flex", flexDirection:"column", gap:8 }}>
+          <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {(svcForm.features||[]).map((feat,i)=>(
               <div key={i} style={{ display:"flex", gap:8 }}>
                 <input value={feat} onChange={e=>updateFeature(i,e.target.value)} placeholder={`Fitur ${i+1}...`}
@@ -5651,26 +5661,61 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
 
         {/* [2,2] Harga per Kendaraan */}
         <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #0891b2" }}>
-          <div style={{ fontSize:12, fontWeight:800, color:"#0891b2", textTransform:"uppercase", letterSpacing:"1px", marginBottom:4 }}>🚌 Harga per Kendaraan</div>
-          <div style={{ fontSize:11, color:"#5090aa", marginBottom:14 }}>Harga Bus = harga utama di kartu paket</div>
-          <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
+            <div style={{ fontSize:12, fontWeight:800, color:"#0891b2", textTransform:"uppercase", letterSpacing:"1px" }}>🚌 Harga per Kendaraan</div>
+            <button onClick={() => setSvcForm(p => ({ ...p, prices: [...(p.prices||[]), { icon:"🚐", vehicle:"", capacity:"", price:"" }] }))}
+              style={{ fontSize:13, padding:"8px 16px", background:"#0891b2", color:"#fff", border:"none", borderRadius:7, cursor:"pointer", fontWeight:800, boxShadow:"0 2px 6px rgba(8,145,178,.35)" }}>+ Tambah</button>
+          </div>
+          <div style={{ fontSize:11, color:"#5090aa", marginBottom:14 }}>Kendaraan pertama = harga utama di kartu paket</div>
+          {/* Icon picker presets */}
+          <div style={{ display:"flex", gap:4, flexWrap:"wrap", marginBottom:12 }}>
+            {[["🚌","Bus"],["🚐","Minibus"],["🚑","Hiace"],["🏎","ELF"],["🚗","Avanza"],["🚙","Innova"],["🛻","Terios"],["✈","Pesawat"],["🚢","Kapal"],["🏍","Motor"]].map(([ic,nm])=>(
+              <button key={ic} title={nm} onClick={() => {
+                const cur = svcForm.prices||[];
+                if(cur.length===0) setSvcForm(p=>({...p,prices:[{icon:ic,vehicle:nm,capacity:"",price:""}]}));
+                else setSvcForm(p=>({...p,prices:[...p.prices,{icon:ic,vehicle:nm,capacity:"",price:""}]}));
+              }}
+                style={{ fontSize:18, padding:"4px 8px", borderRadius:7, border:"1px solid #d0eaf4", background:"#f5fdff", cursor:"pointer" }} title={nm}>{ic}</button>
+            ))}
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+            {(svcForm.prices||[]).length === 0 && (
+              <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"16px 0" }}>Belum ada kendaraan. Klik + Tambah atau pilih ikon di atas.</p>
+            )}
             {(svcForm.prices||[]).map((p,i)=>(
               <div key={i} style={{ background: i===0?"#edfafc":"#f9fdff", borderRadius:8, border:i===0?"1.5px solid #0891b2":"1px solid #d0eaf4", padding:"12px 14px" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
-                  <span style={{ fontSize:16 }}>{p.icon}</span>
-                  <span style={{ fontWeight:700, color:"#0d3b66", fontSize:13, flex:1 }}>{p.vehicle}</span>
-                  <span style={{ fontSize:10, color:"#5090aa" }}>{p.capacity}</span>
-                  {i===0 && <span style={{ fontSize:9, background:"#0891b2", color:"#fff", borderRadius:5, padding:"2px 6px", fontWeight:800 }}>UTAMA</span>}
+                {/* Row 1: icon + nama + kapasitas + hapus */}
+                <div style={{ display:"flex", gap:8, marginBottom:8, alignItems:"center" }}>
+                  <input value={p.icon||""} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],icon:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
+                    placeholder="🚌" maxLength={4}
+                    style={{ width:38, height:34, textAlign:"center", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:"1.1rem", outline:"none", flexShrink:0 }} />
+                  <input value={p.vehicle||""} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],vehicle:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
+                    placeholder="Nama Kendaraan"
+                    style={{ flex:2, padding:"7px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none" }} />
+                  <input value={p.capacity||""} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],capacity:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
+                    placeholder="Kapasitas (mis: 35–60 org)"
+                    style={{ flex:2, padding:"7px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none" }} />
+                  {i===0
+                    ? <span style={{ fontSize:9, background:"#0891b2", color:"#fff", borderRadius:5, padding:"3px 8px", fontWeight:800, flexShrink:0, whiteSpace:"nowrap" }}>UTAMA</span>
+                    : <button onClick={()=>{ const np=(svcForm.prices||[]).filter((_,j)=>j!==i); setSvcForm(s=>({...s,prices:np})); }}
+                        style={{ width:28, height:28, background:"#fee", color:"#e74c3c", border:"none", borderRadius:6, cursor:"pointer", flexShrink:0, fontWeight:700, fontSize:13 }}>✕</button>
+                  }
                 </div>
+                {/* Row 2: harga */}
                 <div style={{ position:"relative" }}>
                   <span style={{ position:"absolute", left:10, top:"50%", transform:"translateY(-50%)", fontSize:12, fontWeight:700, color:"#0891b2", pointerEvents:"none" }}>Rp</span>
                   <input type="number" min="0" value={p.price||""} onChange={e=>{
-                    const newPrices=[...(svcForm.prices||[])]; newPrices[i]={...newPrices[i],price:e.target.value};
-                    const ns={...svcForm,prices:newPrices}; if(i===0)ns.price=formatRp(e.target.value); setSvcForm(ns);
+                    const np=[...(svcForm.prices||[])]; np[i]={...np[i],price:e.target.value};
+                    const ns={...svcForm,prices:np}; if(i===0)ns.price=formatRp(e.target.value); setSvcForm(ns);
                   }} placeholder="500000"
                     style={{ width:"100%", padding:"9px 10px 9px 30px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:13, outline:"none", boxSizing:"border-box" }} />
                 </div>
-                {p.price && !isNaN(p.price) && Number(p.price)>0 && <div style={{ fontSize:11, color:"#27ae60", fontWeight:600, marginTop:4 }}>✓ {formatRp(p.price)}</div>}
+                {p.price && !isNaN(p.price) && Number(p.price)>0 && (
+                  <div style={{ fontSize:11, color:"#27ae60", fontWeight:600, marginTop:4 }}>✓ {formatRp(p.price)}</div>
+                )}
+                {i===0 && (svcForm.prices||[]).length>1 && (
+                  <div style={{ fontSize:10, color:"#5090aa", marginTop:5, fontStyle:"italic" }}>💡 Seret ke atas/bawah untuk ubah urutan. Kendaraan pertama = harga tampil di kartu.</div>
+                )}
               </div>
             ))}
           </div>
@@ -5680,11 +5725,11 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
         <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #1abc9c" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
             <div style={{ fontSize:12, fontWeight:800, color:"#1abc9c", textTransform:"uppercase", letterSpacing:"1px" }}>🎒 Fasilitas</div>
-            <button onClick={addFac} style={{ fontSize:11, padding:"5px 12px", background:"#e8f8f5", color:"#1abc9c", border:"1px solid #a8e6db", borderRadius:6, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
+            <button onClick={addFac} style={{ fontSize:13, padding:"8px 16px", background:"#1abc9c", color:"#fff", border:"none", borderRadius:7, cursor:"pointer", fontWeight:800, boxShadow:"0 2px 6px rgba(26,188,156,.35)" }}>+ Tambah</button>
           </div>
           {(svcForm.facilities||[]).length===0
             ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada fasilitas.</p>
-            : <div style={{ maxHeight:280, overflowY:"auto", display:"flex", flexDirection:"column", gap:10 }}>
+            : <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
                 {(svcForm.facilities||[]).map((fac,fi)=>(
                   <div key={fi} style={{ background:"#f5fffe", borderRadius:8, border:"1px solid #b0dce8", padding:"10px 12px" }}>
                     <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
@@ -5713,7 +5758,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           <div style={{ gridColumn:"1 / -1", background:"#fff", borderRadius:12, padding:"22px 24px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:"3px solid #e8a020" }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
               <div style={{ fontSize:12, fontWeight:800, color:"#e8a020", textTransform:"uppercase", letterSpacing:"1px" }}>🗺 Destinasi Wisata / Itinerary</div>
-              <button onClick={addDest} style={{ fontSize:12, padding:"7px 16px", background:"#e8a020", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:700 }}>＋ Tambah Destinasi</button>
+              <button onClick={addDest} style={{ fontSize:13, padding:"10px 20px", background:"#e8a020", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:800, boxShadow:"0 2px 8px rgba(232,160,32,.4)" }}>＋ Tambah Destinasi</button>
             </div>
             {(svcForm.destinations||[]).length===0
               ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada destinasi. Klik + Tambah Destinasi.</p>
@@ -5797,7 +5842,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                           <div>
                             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
                               <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px" }}>Highlight (✓)</label>
-                              <button onClick={()=>addDestPoint(di)} style={{ fontSize:10, padding:"2px 8px", background:"#e8f8ef", color:"#27ae60", border:"none", borderRadius:5, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
+                              <button onClick={()=>addDestPoint(di)} style={{ fontSize:12, padding:"5px 12px", background:"#27ae60", color:"#fff", border:"none", borderRadius:6, cursor:"pointer", fontWeight:800 }}>+ Tambah</button>
                             </div>
                             <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
                               {(dest.points||[]).map((pt,pi)=>(
@@ -5840,8 +5885,8 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
           <p style={{ fontSize: 12, color: "#5090aa" }}>Kelola paket layanan yang tampil di halaman Layanan Kami.</p>
         </div>
         <button onClick={openNew}
-          style={{ padding: "9px 20px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
-          + Tambah Paket
+          style={{ padding: "11px 24px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 800, cursor: "pointer", boxShadow: "0 3px 12px rgba(8,145,178,.4)", letterSpacing:".02em" }}>
+          ➕ Tambah Paket
         </button>
       </div>
 
@@ -6299,22 +6344,26 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary }) {
                 {/* Package rows */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {catSvcs.map(svc => (
-                    <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "16px 18px", boxShadow: "0 2px 8px rgba(0,0,0,.05)", display: "flex", gap: 14, alignItems: "flex-start", borderLeft: `4px solid ${svc.highlight ? cat.color : cat.border}` }}>
-                      {svc.image && (
-                        <img loading="lazy" src={svc.image} alt={svc.title} style={{ width: 72, height: 54, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
-                      )}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 3 }}>
-                          <span style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66" }}>{svc.title}</span>
-                          {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor || cat.color, color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
-                          {svc.highlight && <span style={{ fontSize: 10, background: cat.color, color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
+                    <div key={svc.id} style={{ background: "#fff", borderRadius: 10, padding: "14px 16px", boxShadow: "0 2px 8px rgba(0,0,0,.05)", display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: 12, borderLeft: `4px solid ${svc.highlight ? cat.color : cat.border}` }}>
+                      {/* Left: thumbnail + info */}
+                      <div style={{ display: "flex", gap: 12, alignItems: "center", minWidth: 0 }}>
+                        {svc.image && (
+                          <img loading="lazy" src={svc.image} alt={svc.title} style={{ width: 64, height: 48, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
+                        )}
+                        <div style={{ minWidth: 0 }}>
+                          <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap", marginBottom: 2 }}>
+                            <span style={{ fontSize: 13, fontWeight: 700, color: "#0d3b66" }}>{svc.title}</span>
+                            {svc.badge && <span style={{ fontSize: 10, background: svc.badgeColor || cat.color, color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>{svc.badge}</span>}
+                            {svc.highlight && <span style={{ fontSize: 10, background: cat.color, color: "#fff", borderRadius: 10, padding: "2px 8px", fontWeight: 700 }}>⭐ Pilihan Utama</span>}
+                          </div>
+                          <div style={{ fontSize: 12, fontWeight: 700, color: cat.color }}>{formatRp(svc.price) || svc.price}<span style={{ color: "#5090aa", fontWeight: 400 }}> {svc.priceNote}</span></div>
+                          <div style={{ fontSize: 11, color: "#5090aa", marginTop: 1 }}>{(svc.features || []).length} fitur termasuk</div>
                         </div>
-                        <div style={{ fontSize: 13, fontWeight: 700, color: cat.color }}>{formatRp(svc.price) || svc.price}<span style={{ color: "#5090aa", fontWeight: 400 }}> {svc.priceNote}</span></div>
-                        <div style={{ fontSize: 12, color: "#5090aa", marginTop: 2 }}>{(svc.features || []).length} fitur termasuk</div>
                       </div>
-                      <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
-                        <button onClick={() => openEdit(svc)} style={{ padding: "6px 14px", background: cat.light, color: cat.color, border: `1px solid ${cat.border}`, borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>✏ Edit</button>
-                        <button onClick={() => deleteSvc(svc.id)} style={{ padding: "6px 14px", background: "#fee", color: "#e74c3c", border: "1px solid #fecaca", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>🗑 Hapus</button>
+                      {/* Right: Edit + Hapus stacked */}
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}>
+                        <button onClick={() => openEdit(svc)} style={{ padding: "8px 18px", background: cat.color, color: "#fff", border: "none", borderRadius: 7, fontSize: 13, fontWeight: 800, cursor: "pointer", letterSpacing: ".03em", boxShadow: `0 2px 8px ${cat.color}55` }}>✏ Edit</button>
+                        <button onClick={() => deleteSvc(svc.id)} style={{ padding: "8px 18px", background: "#e74c3c", color: "#fff", border: "none", borderRadius: 7, fontSize: 13, fontWeight: 800, cursor: "pointer", boxShadow: "0 2px 8px rgba(231,76,60,.35)" }}>🗑 Hapus</button>
                       </div>
                     </div>
                   ))}
@@ -6524,8 +6573,8 @@ function AboutPage({ content, images, teamMembers }) {
       <div style={{ padding: "80px 5%", background: "linear-gradient(130deg,#0a5c88 0%,#0d95b8 55%,#12c8dc 100%)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Apa yang Kami Tawarkan</div>
-            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#0d3b66" }}>Layanan Lengkap Kami</h2>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "rgba(255,255,255,.75)", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Apa yang Kami Tawarkan</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#fff" }}>Layanan Lengkap Kami</h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 28 }}>
             {[
@@ -6557,9 +6606,9 @@ function AboutPage({ content, images, teamMembers }) {
       <div style={{ background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", padding: "80px 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
-            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "#0891b2", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Hubungi Kami</div>
-            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#0d3b66" }}>Contact Us</h2>
-            <p style={{ fontSize: "1rem", color: "#1a5a78", marginTop: 12, maxWidth: 480, margin: "12px auto 0" }}>Siap membantu Anda merencanakan momen terbaik. Hubungi kami sekarang!</p>
+            <div style={{ fontSize: "0.6875rem", letterSpacing: "2px", color: "rgba(255,255,255,.75)", textTransform: "uppercase", fontWeight: 700, marginBottom: 12 }}>Hubungi Kami</div>
+            <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.75rem)", fontWeight: 900, color: "#fff" }}>Contact Us</h2>
+            <p style={{ fontSize: "1rem", color: "rgba(255,255,255,.85)", marginTop: 12, maxWidth: 480, margin: "12px auto 0" }}>Siap membantu Anda merencanakan momen terbaik. Hubungi kami sekarang!</p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 48 }} className="contact-grid">
             {/* Info kontak */}
@@ -9509,68 +9558,96 @@ export default function BricksyTravel() {
             </div>
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
               <span style={{ fontSize: 12, color: "rgba(255,255,255,.6)" }} className="hide-sm">{user.username}</span>
-              <button onClick={() => closeAdmin()} style={{ padding: "6px 14px", border: "1px solid rgba(255,255,255,.3)", borderRadius: 4, color: "rgba(255,255,255,.8)", fontSize: 12, background: "none" }}>← Website</button>
             </div>
           </div>
+
+          {/* ── Floating ← Website button (permanent) ── */}
+          <button onClick={() => closeAdmin()}
+            style={{ position:"fixed", bottom:28, right:28, zIndex:9999, display:"flex", alignItems:"center", gap:10, padding:"14px 22px",
+              background:"linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)",
+              color:"#fff", border:"none", borderRadius:50, fontSize:14, fontWeight:800, cursor:"pointer",
+              boxShadow:"0 6px 24px rgba(8,145,178,.55), 0 2px 8px rgba(0,0,0,.25)",
+              transition:"transform .18s, box-shadow .18s", letterSpacing:".02em" }}
+            onMouseEnter={e=>{ e.currentTarget.style.transform="translateY(-3px) scale(1.04)"; e.currentTarget.style.boxShadow="0 10px 32px rgba(8,145,178,.65), 0 4px 12px rgba(0,0,0,.3)"; }}
+            onMouseLeave={e=>{ e.currentTarget.style.transform=""; e.currentTarget.style.boxShadow="0 6px 24px rgba(8,145,178,.55), 0 2px 8px rgba(0,0,0,.25)"; }}>
+            <span style={{ fontSize:18 }}>🌐</span> ← Ke Website
+          </button>
 
           {/* Sidebar overlay – mobile tap to close */}
           <div className={`sidebar-overlay${sidebarOpen ? " open" : ""}`} onClick={() => setSidebarOpen(false)} />
 
           <div className="admin-body">
-            {/* Sidebar */}
+            {/* ── SIDEBAR ── */}
             <div className={`admin-sidebar${sidebarOpen ? " open" : ""}`}>
-              <div style={{ padding: "24px 0", flex: 1 }}>
-              {[
-                { id: "dashboard", icon: "◈", label: "Dashboard", access: true },
-                { id: "profile", icon: "👤", label: "Profil Saya", access: true },
-                { id: "cms", icon: "✎", label: "Posts / CMS", access: canEdit },
-                { id: "images", icon: "🖼", label: "Images", access: canEdit },
-                { id: "about", icon: "🏢", label: "About Us", access: isAdmin },
-                { id: "team", icon: "👥", label: "Susunan Tim", access: isAdmin },
-                { id: "services", icon: "🛎", label: "Layanan / Paket", access: isAdmin },
-                { id: "content", icon: "🔤", label: "Site Content", access: isAdmin },
-                { id: "reviews", icon: "⭐", label: "Ulasan", access: isAdmin },
-                { id: "messages", icon: "✉", label: "Messages", access: canCS },
-                { id: "users", icon: "◎", label: "Users", access: isAdmin },
-                { id: "settings", icon: "⚙", label: "Settings", access: isAdmin },
-              ].filter(t => t.access).map(tab => (
-                <button key={tab.id} onClick={() => { setAdminTab(tab.id); setCmsEditPost(null); setSidebarOpen(false); }} style={{
-                  width: "100%", padding: "12px 24px", textAlign: "left", background: adminTab === tab.id ? "rgba(61,143,171,.25)" : "none",
-                  color: adminTab === tab.id ? "#7dc8de" : "rgba(255,255,255,.6)", fontSize: 13,
-                  borderLeft: adminTab === tab.id ? "3px solid #0ea5c5" : "3px solid transparent",
-                  transition: "all .15s", display: "flex", alignItems: "center", gap: 10, border: "none",
-                }}>
-                  <span style={{ fontSize: 14 }}>{tab.icon}</span> {tab.label}
-                  {tab.id === "messages" && data.messages.filter(m => !m.read).length > 0 && (
-                    <span style={{ marginLeft: "auto", background: "#e74c3c", borderRadius: 10, padding: "1px 7px", fontSize: 10, color: "#fff" }}>
-                      {data.messages.filter(m => !m.read).length}
-                    </span>
-                  )}
-                  {tab.id === "cms" && draftCount > 0 && (
-                    <span style={{ marginLeft: "auto", background: "#f39c12", borderRadius: 10, padding: "1px 7px", fontSize: 10, color: "#fff" }}>{draftCount}</span>
-                  )}
-                </button>
-              ))}
+
+              {/* ── Profile card ── */}
+              <div style={{ padding:"20px 16px 16px", borderBottom:"1px solid rgba(255,255,255,.08)" }}>
+                <div style={{ background:"linear-gradient(130deg,rgba(16,208,224,.12),rgba(8,145,178,.08))", borderRadius:14, padding:"16px 14px", display:"flex", flexDirection:"column", alignItems:"center", gap:10 }}>
+                  {/* Avatar */}
+                  <div style={{ width:72, height:72, borderRadius:"50%", background:"linear-gradient(130deg,#0891b2,#10d0e0)", border:"3px solid rgba(16,208,224,.5)", overflow:"hidden", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:26, color:"#fff", fontWeight:800, boxShadow:"0 4px 16px rgba(0,0,0,.3)" }}>
+                    {user.photo ? <img src={user.photo} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} onError={e=>e.target.style.display="none"} /> : (user.name?.[0]||user.username?.[0]||"A").toUpperCase()}
+                  </div>
+                  {/* Name + Role */}
+                  <div style={{ textAlign:"center" }}>
+                    <div style={{ fontSize:14, fontWeight:800, color:"#fff", lineHeight:1.3, marginBottom:4 }}>{user.name || user.username}</div>
+                    <div style={{ fontSize:10, color:"#10d0e0", fontWeight:700, letterSpacing:"1px", textTransform:"uppercase", background:"rgba(16,208,224,.15)", borderRadius:20, padding:"3px 10px", display:"inline-block" }}>{ROLES[user.role]?.label || user.role}</div>
+                    <div style={{ fontSize:11, color:"rgba(255,255,255,.45)", marginTop:5 }}>@{user.username}</div>
+                  </div>
+                  {/* Edit Profil + Logout */}
+                  <div style={{ display:"flex", gap:8, width:"100%" }}>
+                    <button onClick={() => { setAdminTab("profile"); setSidebarOpen(false); }}
+                      style={{ flex:1, padding:"7px 0", background:"rgba(255,255,255,.1)", color:"#fff", border:"1px solid rgba(255,255,255,.2)", borderRadius:8, fontSize:11, fontWeight:700, cursor:"pointer", transition:"all .15s" }}
+                      onMouseEnter={e=>{ e.currentTarget.style.background="rgba(255,255,255,.2)"; e.currentTarget.style.transform="translateY(-1px)"; }}
+                      onMouseLeave={e=>{ e.currentTarget.style.background="rgba(255,255,255,.1)"; e.currentTarget.style.transform=""; }}>
+                      ✏ Edit Profil
+                    </button>
+                    <button onClick={logout}
+                      style={{ flex:1, padding:"7px 0", background:"rgba(231,76,60,.15)", color:"#ff8a80", border:"1px solid rgba(231,76,60,.3)", borderRadius:8, fontSize:11, fontWeight:700, cursor:"pointer", transition:"all .15s" }}
+                      onMouseEnter={e=>{ e.currentTarget.style.background="rgba(231,76,60,.3)"; e.currentTarget.style.transform="translateY(-1px)"; }}
+                      onMouseLeave={e=>{ e.currentTarget.style.background="rgba(231,76,60,.15)"; e.currentTarget.style.transform=""; }}>
+                      ⏻ Logout
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              {/* Bottom: Power + Copyright */}
-              <div style={{ borderTop: "1px solid rgba(255,255,255,.07)", padding: "16px 20px" }}>
-                <button onClick={logout}
-                  style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "9px 14px",
-                    background: "rgba(231,76,60,.12)", border: "1px solid rgba(231,76,60,.25)", borderRadius: 8,
-                    color: "rgba(231,76,60,.85)", fontSize: 12, fontWeight: 600, cursor: "pointer", marginBottom: 10,
-                    transition: "all .15s" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(231,76,60,.22)"; e.currentTarget.style.borderColor = "rgba(231,76,60,.5)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(231,76,60,.12)"; e.currentTarget.style.borderColor = "rgba(231,76,60,.25)"; }}>
-                  {/* Power icon */}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                    <path d="M18.36 6.64A9 9 0 1 1 5.64 6.64"/><line x1="12" y1="2" x2="12" y2="12"/>
-                  </svg>
-                  Keluar / Logout
-                </button>
-                <div style={{ fontSize: 10, color: "rgba(255,255,255,.25)", textAlign: "center", letterSpacing: ".3px" }}>
-                  © 2026 Arutala
-                </div>
+              {/* ── Nav items ── */}
+              <div style={{ padding:"12px 8px", flex:1 }}>
+                {/* Section label */}
+                <div style={{ fontSize:9, fontWeight:800, color:"rgba(255,255,255,.3)", letterSpacing:"1.5px", textTransform:"uppercase", padding:"4px 14px 8px" }}>MENU</div>
+                {[
+                  { id: "dashboard", icon: "◈", label: "Dashboard", access: true },
+                  { id: "profile", icon: "👤", label: "Profil Saya", access: true },
+                  { id: "cms", icon: "✎", label: "Posts / CMS", access: canEdit },
+                  { id: "images", icon: "🖼", label: "Images", access: canEdit },
+                  { id: "about", icon: "🏢", label: "About Us", access: isAdmin },
+                  { id: "team", icon: "👥", label: "Susunan Tim", access: isAdmin },
+                  { id: "services", icon: "🛎", label: "Layanan / Paket", access: isAdmin },
+                  { id: "content", icon: "🔤", label: "Site Content", access: isAdmin },
+                  { id: "reviews", icon: "⭐", label: "Ulasan", access: isAdmin },
+                  { id: "messages", icon: "✉", label: "Messages", access: canCS },
+                  { id: "users", icon: "◎", label: "Users", access: isAdmin },
+                  { id: "settings", icon: "⚙", label: "Settings", access: isAdmin },
+                ].filter(t => t.access).map(tab => (
+                  <button key={tab.id} className={`snav-btn${adminTab === tab.id ? " active" : ""}`}
+                    onClick={() => { setAdminTab(tab.id); setCmsEditPost(null); setSidebarOpen(false); }}>
+                    <span className="snav-icon">{tab.icon}</span>
+                    <span>{tab.label}</span>
+                    {tab.id === "messages" && data.messages.filter(m => !m.read).length > 0 && (
+                      <span style={{ marginLeft:"auto", background:"#e74c3c", borderRadius:10, padding:"2px 8px", fontSize:10, color:"#fff", fontWeight:800 }}>
+                        {data.messages.filter(m => !m.read).length}
+                      </span>
+                    )}
+                    {tab.id === "cms" && draftCount > 0 && (
+                      <span style={{ marginLeft:"auto", background:"#f39c12", borderRadius:10, padding:"2px 8px", fontSize:10, color:"#fff", fontWeight:800 }}>{draftCount}</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {/* Bottom: Copyright */}
+              <div style={{ padding:"12px 16px 16px", borderTop:"1px solid rgba(255,255,255,.06)" }}>
+                <div style={{ fontSize:10, color:"rgba(255,255,255,.2)", textAlign:"center", letterSpacing:".3px" }}>© 2026 Arutala</div>
               </div>
             </div>
 
