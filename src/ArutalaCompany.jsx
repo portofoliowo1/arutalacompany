@@ -8715,13 +8715,10 @@ export default function BricksyTravel() {
 
   // Sync browser tab title — selalu satu baris, ikuti logoText
   useEffect(() => {
-    const oneLiner = (data.content.logoText || "Arutala Organizer")
-      .replace(/\n/g, " ")
-      .replace(/\s+/g, " ")
-      .trim()
-      .toUpperCase();
+    const raw = data.content.logoText || "ARUTALA ORGANIZER";
+    const oneLiner = raw.replace(/\n/g, " ").replace(/\s+/g, " ").trim().toUpperCase();
     document.title = oneLiner;
-  }, [data.content.logoText]);
+  }); // tanpa dependency array → jalan setiap render, selalu up-to-date
 
   const save = async (d) => {
     // Selalu merge dengan DEFAULT_DATA sebelum simpan:
