@@ -659,6 +659,10 @@ const DEFAULT_DATA = {
     phone: "+62 857 4557 1442",
     address: "Malang, Jawa Timur, Indonesia",
     hours: "Senin – Sabtu: 08.00 – 20.00 WIB",
+    waAdmins: [
+      { id: 1, name: "Admin 1 – Arutala", wa: "https://wa.me/6285745571442" },
+      { id: 2, name: "Admin 2 – CS",      wa: "https://wa.me/6282234651413" },
+    ],
     waLink: "https://wa.me/6285745571442",
     igLink: "https://instagram.com/arutalaorganizer",
     fbLink: "https://facebook.com/arutalaorganizer",
@@ -3856,7 +3860,7 @@ function useIsMobile() {
 }
 
 /* ── WIDE CARD for Custom Event / Wedding Package — full width horizontal layout ── */
-function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
+function EventWeddingCustomCardWide({ svc, onDetail, onWaOpen }) {
   const [hovered, setHovered] = useState(false);
   const isMobile = useIsMobile();
   const ac = svc.badgeColor || "#7c3aed";
@@ -3916,12 +3920,12 @@ function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
             onMouseLeave={e => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "scale(1)"; }}>
             Lihat Detail &amp; Konsultasi
           </button>
-          <a href={waLink || "https://wa.me/6285745571442"} target="_blank" rel="noreferrer"
-            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, textDecoration: "none", transition: "opacity .2s", width: isMobile ? "100%" : "auto" }}
+          <button onClick={() => onWaOpen && onWaOpen(`Halo Arutala Organizer! 👋\n\nSaya tertarik dengan paket:\n*${svc.title}*\n\nMohon informasi lebih lanjut. Terima kasih!`)}
+            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, border: "none", transition: "opacity .2s", width: isMobile ? "100%" : "auto" }}
             onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
             &#128172; WhatsApp Sekarang
-          </a>
+          </button>
         </div>
       </div>
     </div>
@@ -3930,7 +3934,7 @@ function EventWeddingCustomCardWide({ svc, onDetail, waLink }) {
 
 /* ── WIDE CARD for Custom Package — full width horizontal layout ── */
 /* ─────────────── EVENT / WEDDING PACKAGE CARD (Traveling-style) ─────────────── */
-function EventWeddingPackageCard({ svc, onDetail, waLink }) {
+function EventWeddingPackageCard({ svc, onDetail, onWaOpen }) {
   const [hovered, setHovered] = useState(false);
   const ac = svc.accent || (svc.category === "wedding" ? "#db2777" : "#0891b2");
   const al = svc.accentLight || (svc.category === "wedding" ? "#fff0f7" : "#edfafc");
@@ -4022,7 +4026,7 @@ function EventWeddingPackageCard({ svc, onDetail, waLink }) {
       {/* Footer CTA */}
       <div style={{ padding: "10px 12px 12px", background: al, borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderBottom: `1px solid ${ac}25`, borderRadius: "0 0 14px 14px", display: "flex", gap: 8 }}>
         <button
-          onClick={() => window.open(`${waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(`Halo, saya tertarik dengan ${svc.title}`)}`, "_blank")}
+          onClick={() => onWaOpen && onWaOpen(`Halo, saya tertarik dengan ${svc.title}`)}
           style={{ flex: 1, padding: "10px 0", background: "#25D366", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
           💬 WA
         </button>
@@ -4037,7 +4041,7 @@ function EventWeddingPackageCard({ svc, onDetail, waLink }) {
   );
 }
 
-function TravelPackageCardWide({ svc, onDetail, waLink }) {
+function TravelPackageCardWide({ svc, onDetail, onWaOpen }) {
   const [hovered, setHovered] = useState(false);
   const isMobile = useIsMobile();
   const ac = svc.accent || "#7c3aed";
@@ -4095,19 +4099,19 @@ function TravelPackageCardWide({ svc, onDetail, waLink }) {
             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
             Lihat Detail &amp; Konsultasi
           </button>
-          <a href={svc.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noreferrer"
-            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, textDecoration: "none", transition: "opacity .2s", width: isMobile ? "100%" : "auto" }}
+          <button onClick={() => onWaOpen && onWaOpen(`Halo Arutala Organizer! 👋\n\nSaya tertarik dengan paket:\n*${svc.title}*\n\nMohon informasi lebih lanjut. Terima kasih!`)}
+            style={{ padding: "12px 24px", background: "#25d366", color: "#fff", borderRadius: 10, fontSize: "0.9375rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, border: "none", transition: "opacity .2s", width: isMobile ? "100%" : "auto" }}
             onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
             onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
             💬 WhatsApp Sekarang
-          </a>
+          </button>
         </div>
       </div>
     </div>
   );
 }
 
-function TravelPackageCard({ svc, onDetail, waLink }) {
+function TravelPackageCard({ svc, onDetail, onWaOpen }) {
   const [openIdx, setOpenIdx] = useState(null);
   const [hovered, setHovered] = useState(false);
   const [priceOpen, setPriceOpen] = useState(false);
@@ -4276,7 +4280,7 @@ function TravelPackageCard({ svc, onDetail, waLink }) {
       {/* Footer CTA */}
       <div style={{ padding: "12px 14px 14px", background: al, borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderBottom: `1px solid ${ac}25`, borderRadius: "0 0 14px 14px", display: "flex", gap: 8 }}>
         <button
-          onClick={() => window.open(`${waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(`Halo, saya tertarik dengan ${svc.title}`)}`, "_blank")}
+          onClick={() => onWaOpen && onWaOpen(`Halo, saya tertarik dengan ${svc.title}`)}
           style={{ flex: 1, padding: "9px 0", background: "#25D366", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.75rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
           💬 WA
         </button>
@@ -4337,7 +4341,7 @@ function TravelDetailPriceBlock({ svc }) {
 }
 
 /* ─────────────── TRAVEL PACKAGE DETAIL MODAL ─────────────── */
-function TravelPackageDetailModal({ svc, onClose, waLink }) {
+function TravelPackageDetailModal({ svc, onClose, onWaOpen }) {
   const [priceIdx, setPriceIdx] = useState(null);
   const [destIdx, setDestIdx] = useState(0);
   const ac = svc.accent || "#e8a020";
@@ -4565,7 +4569,7 @@ function TravelPackageDetailModal({ svc, onClose, waLink }) {
             <p style={{ color: "rgba(255,255,255,.8)", fontSize: "0.875rem", marginBottom: 16, lineHeight: 1.65 }}>Tertarik dengan paket ini? Hubungi kami untuk konsultasi gratis dan penawaran terbaik!</p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <button
-                onClick={() => window.open(`${waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(`Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut. Terima kasih!`)}`, "_blank")}
+                onClick={() => onWaOpen && onWaOpen(`Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut. Terima kasih!`)}
                 style={{ padding: "11px 28px", background: "#25D366", color: "#fff", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
                 💬 WhatsApp Sekarang
               </button>
@@ -4904,7 +4908,7 @@ function PaketBackBar({ svc, onClose }) {
 }
 
 /* ─────────────── SERVICES PAGE ─────────────── */
-function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket, onClosePaket }) {
+function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket, onClosePaket, onWaOpen }) {
   const [selectedService, setSelectedService] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
 
@@ -4938,7 +4942,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 
   const handleBook = (svc) => {
     const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
-    window.open(`${content.waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(text)}`, "_blank");
+    if (onWaOpen) onWaOpen(text);
   };
 
   /* ── Service Detail Page — Magazine Aesthetic ── */
@@ -5310,12 +5314,12 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   <div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 28 }}>
                       {regularPkgs.map(svc => (
-                        <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} waLink={content.waLink} />
+                        <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} />
                       ))}
                     </div>
                     {customPkg && (
                       <div style={{ marginTop: 28 }}>
-                        <TravelPackageCardWide svc={customPkg} onDetail={() => openDetail(customPkg)} waLink={content.waLink} />
+                        <TravelPackageCardWide svc={customPkg} onDetail={() => openDetail(customPkg)} onWaOpen={onWaOpen} />
                       </div>
                     )}
                   </div>
@@ -5330,12 +5334,12 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   <div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
                       {regularSvcs.map(svc => (
-                        <EventWeddingPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} waLink={content.waLink} />
+                        <EventWeddingPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} />
                       ))}
                     </div>
                     {customPkg && (
                       <div style={{ marginTop: 28 }}>
-                        <EventWeddingCustomCardWide svc={customPkg} onDetail={() => openDetail(customPkg)} waLink={content.waLink} />
+                        <EventWeddingCustomCardWide svc={customPkg} onDetail={() => openDetail(customPkg)} onWaOpen={onWaOpen} />
                       </div>
                     )}
                   </div>
@@ -5352,7 +5356,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
           <h2 className="display" style={{ fontSize: "clamp(1.75rem,4vw,2.5rem)", fontWeight: 900, color: "#fff", marginBottom: 16, lineHeight: 1.15 }}>Tidak Menemukan Paket yang Cocok?</h2>
           <p style={{ color: "rgba(255,255,255,.75)", fontSize: "1rem", marginBottom: 36, lineHeight: 1.7 }}>Kami siap membuat paket khusus sesuai kebutuhan dan budget Anda.</p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <button onClick={() => window.open(content.waLink || "https://wa.me/6285745571442", "_blank")}
+            <button onClick={() => onWaOpen && onWaOpen()}
               style={{ padding: "14px 32px", background: "#fff", color: "#0d3b66", border: "none", borderRadius: 8, fontSize: "0.875rem", fontWeight: 700, cursor: "pointer", transition: "background .2s" }}
               onMouseEnter={e => e.currentTarget.style.background = "#c5dde9"}
               onMouseLeave={e => e.currentTarget.style.background = "#fff"}>
@@ -6421,7 +6425,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
 }
 
 /* ─────────────── ABOUT PAGE ─────────────── */
-function AboutPage({ content, images, teamMembers }) {
+function AboutPage({ content, images, teamMembers, onWaOpen }) {
   const [contactForm, setContactForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
   const [contactSent, setContactSent] = useState(false);
 
@@ -6438,7 +6442,7 @@ function AboutPage({ content, images, teamMembers }) {
       "Pesan:",
       contactForm.message,
     ].join("\n");
-    window.open((content.waLink || "https://wa.me/6285745571442") + "?text=" + encodeURIComponent(lines), "_blank");
+    if (onWaOpen) onWaOpen(lines);
     setContactSent(true);
     setTimeout(() => { setContactSent(false); setContactForm({ name: "", email: "", phone: "", subject: "", message: "" }); }, 4000);
   };
@@ -6486,12 +6490,12 @@ function AboutPage({ content, images, teamMembers }) {
               {content.aboutHeroSub || content.aboutText || "Mitra terpercaya Anda untuk perjalanan wisata, pernikahan impian, dan event berkesan. Kami hadir untuk mewujudkan setiap momen menjadi kenangan tak terlupakan."}
             </p>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-              <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
-                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none", transition: "background .2s" }}
+              <button onClick={() => onWaOpen && onWaOpen()}
+                style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", border: "none", cursor: "pointer", transition: "background .2s" }}
                 onMouseEnter={e => e.currentTarget.style.background = "#0891b2"}
                 onMouseLeave={e => e.currentTarget.style.background = "#0d3b66"}>
                 💬 Hubungi Kami
-              </a>
+              </button>
               <a href={`tel:${content.phone}`}
                 style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "13px 28px", background: "transparent", color: "#fff", border: "1.5px solid rgba(255,255,255,.55)", borderRadius: 4, fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", textDecoration: "none" }}>
                 📞 {content.phone || "Telepon"}
@@ -6657,7 +6661,7 @@ function AboutPage({ content, images, teamMembers }) {
             {/* Info kontak */}
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               {[
-                { icon: "📞", label: "Telepon / WhatsApp", value: content.phone, href: content.waLink || `https://wa.me/6285745571442`, type: "link" },
+                { icon: "📞", label: "Telepon / WhatsApp", value: content.phone, href: "#wa-picker", type: "link", onClick: (e) => { e.preventDefault(); if (onWaOpen) onWaOpen(); } },
                 { icon: "✉️", label: "Email", value: content.email, href: `mailto:${content.email}`, type: "link" },
                 { icon: "📍", label: "Alamat", value: content.address || "Malang, Jawa Timur, Indonesia", type: "text" },
                 { icon: "🕐", label: "Jam Operasional", value: content.hours || "Senin – Sabtu: 08.00 – 20.00 WIB", type: "text" },
@@ -6667,7 +6671,7 @@ function AboutPage({ content, images, teamMembers }) {
                   <div>
                     <div style={{ fontSize: "0.75rem", color: "#5090aa", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 4 }}>{info.label}</div>
                     {info.type === "link"
-                      ? <a href={info.href} target={info.href.startsWith("https") ? "_blank" : "_self"} rel="noopener noreferrer" style={{ fontSize: "0.9375rem", color: "#0891b2", fontWeight: 600, textDecoration: "none" }}>{info.value}</a>
+                      ? <a href={info.href} onClick={info.onClick} target={info.href.startsWith("https") ? "_blank" : "_self"} rel="noopener noreferrer" style={{ fontSize: "0.9375rem", color: "#0891b2", fontWeight: 600, textDecoration: "none" }}>{info.value}</a>
                       : <div style={{ fontSize: "0.9375rem", color: "#0d3b66", fontWeight: 500 }}>{info.value}</div>
                     }
                   </div>
@@ -6679,7 +6683,6 @@ function AboutPage({ content, images, teamMembers }) {
                 <div style={{ fontSize: "0.75rem", color: "#5090aa", fontWeight: 700, letterSpacing: ".05em", textTransform: "uppercase", marginBottom: 14 }}>Media Sosial</div>
                 <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                   {[
-                    { label: "WhatsApp", icon: "💬", href: content.waLink || "https://wa.me/6285745571442", color: "#25d366" },
                     { label: "Instagram", icon: "📷", href: content.igLink || "https://instagram.com", color: "#e1306c" },
                     { label: "Facebook", icon: "📘", href: content.fbLink || "https://facebook.com", color: "#1877f2" },
                   ].map(s => (
@@ -6690,6 +6693,12 @@ function AboutPage({ content, images, teamMembers }) {
                       {s.icon} {s.label}
                     </a>
                   ))}
+                  <button onClick={() => onWaOpen && onWaOpen()}
+                    style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 16px", background: "#25d366", color: "#fff", borderRadius: 20, fontSize: "0.8125rem", fontWeight: 600, border: "none", cursor: "pointer", transition: "opacity .2s" }}
+                    onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                    onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                    💬 WhatsApp
+                  </button>
                 </div>
               </div>
             </div>
@@ -7951,6 +7960,182 @@ const getInitialPage = () => {
 /** Cek apakah URL saat mount adalah /control-panel → tampilkan admin panel */
 const getInitialShowAdmin = () => window.location.pathname === "/control-panel";
 
+/* ─────────────── WA ADMIN MANAGER (Control Panel) ─────────────── */
+function WaAdminManager({ admins: adminsProp, onSave, notify }) {
+  const DEFAULT_LIST = [{ id: 1, name: "Admin 1 – Arutala", wa: "https://wa.me/6285745571442" }];
+  const admins = (adminsProp && adminsProp.length > 0) ? adminsProp : DEFAULT_LIST;
+  const [newName, setNewName] = useState("");
+  const [newWa,   setNewWa]   = useState("https://wa.me/62");
+
+  const addAdmin = () => {
+    const trimName = newName.trim();
+    const trimWa   = newWa.trim();
+    if (!trimName) return notify("Nama admin tidak boleh kosong.", "error");
+    if (!trimWa.startsWith("https://wa.me/62")) return notify("Link WA harus diawali https://wa.me/62...", "error");
+    onSave([...admins, { id: Date.now(), name: trimName, wa: trimWa }]);
+    setNewName(""); setNewWa("https://wa.me/62");
+  };
+  const removeAdmin = (id) => {
+    if (admins.length <= 1) return notify("Minimal harus ada 1 admin WA.", "error");
+    onSave(admins.filter(a => a.id !== id));
+  };
+  const updateAdmin = (id, field, val) => {
+    onSave(admins.map(a => a.id === id ? { ...a, [field]: val } : a));
+  };
+
+  return (
+    <div style={{ background: "#fff", borderRadius: 10, padding: "20px 22px", marginBottom: 14, boxShadow: "0 1px 4px rgba(0,0,0,.05)", border: "2px solid #e8f8ef" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+        <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#25d366", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 18, flexShrink: 0 }}>💬</div>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 14, color: "#0d3b66" }}>Admin WhatsApp</div>
+          <div style={{ fontSize: 11, color: "#5090aa" }}>Kelola daftar admin yang muncul di pop-up WhatsApp saat pengunjung klik Hubungi Kami</div>
+        </div>
+      </div>
+
+      {/* Existing admins */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 16 }}>
+        {admins.map((admin, idx) => (
+          <div key={admin.id} style={{ display: "flex", gap: 8, alignItems: "center", background: "#f0fdf6", borderRadius: 8, padding: "10px 12px", border: "1px solid #b6f0d0" }}>
+            <div style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#25d366,#1aab52)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 800, fontSize: 13, flexShrink: 0 }}>
+              {admin.name.charAt(0).toUpperCase()}
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <input
+                key={`name-${admin.id}`}
+                defaultValue={admin.name}
+                onBlur={e => updateAdmin(admin.id, "name", e.target.value.trim() || admin.name)}
+                placeholder="Nama Admin"
+                style={{ width: "100%", border: "none", background: "transparent", fontSize: 13, fontWeight: 600, color: "#0d3b66", outline: "none", marginBottom: 3 }} />
+              <input
+                key={`wa-${admin.id}`}
+                defaultValue={admin.wa}
+                onBlur={e => updateAdmin(admin.id, "wa", e.target.value.trim() || admin.wa)}
+                placeholder="https://wa.me/628xxx"
+                style={{ width: "100%", border: "none", background: "transparent", fontSize: 11, color: "#5090aa", outline: "none" }} />
+            </div>
+            {idx === 0 && (
+              <span style={{ fontSize: 10, background: "#25d366", color: "#fff", borderRadius: 8, padding: "2px 8px", fontWeight: 700, flexShrink: 0 }}>UTAMA</span>
+            )}
+            <button onClick={() => removeAdmin(admin.id)} title="Hapus admin"
+              style={{ background: admins.length <= 1 ? "#f0f0f0" : "#ffe4e4", border: "none", borderRadius: 6, color: admins.length <= 1 ? "#bbb" : "#e74c3c", fontSize: 18, width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center", cursor: admins.length <= 1 ? "not-allowed" : "pointer", flexShrink: 0, fontWeight: 700 }}>
+              ×
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Add new admin */}
+      <div style={{ background: "#f5fdff", borderRadius: 8, padding: "14px 16px", border: "1.5px dashed #b0dce8" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 10 }}>＋ Tambah Admin Baru</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <input value={newName} onChange={e => setNewName(e.target.value)}
+            placeholder="Nama Admin (contoh: Admin Booking)"
+            style={{ padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }} />
+          <input value={newWa} onChange={e => setNewWa(e.target.value)}
+            placeholder="https://wa.me/628xxxxxxxxx"
+            style={{ padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", background: "#fff" }} />
+          <button onClick={addAdmin}
+            style={{ padding: "9px 0", background: "linear-gradient(135deg,#25d366,#1aab52)", color: "#fff", border: "none", borderRadius: 6, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+            ＋ Tambah Admin
+          </button>
+        </div>
+      </div>
+      <p style={{ fontSize: 11, color: "#7ab5cc", marginTop: 10, lineHeight: 1.5 }}>
+        ⓘ Minimal 1 admin. Admin pertama otomatis jadi nomor utama. Klik di luar kolom untuk menyimpan perubahan nama/nomor.
+      </p>
+    </div>
+  );
+}
+
+/* ─────────────── WA PICKER MODAL ─────────────── */
+function WaPickerModal({ admins, msgText, onClose }) {
+  const DEFAULT_ADMINS = [{ id: 1, name: "Admin – Arutala", wa: "https://wa.me/6285745571442" }];
+  const list = (admins && admins.length > 0) ? admins : DEFAULT_ADMINS;
+  return (
+    <div
+      onClick={e => { if (e.target === e.currentTarget) onClose(); }}
+      style={{
+        position: "fixed", inset: 0, zIndex: 99999,
+        background: "rgba(13,59,102,0.55)", backdropFilter: "blur(4px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "20px",
+      }}>
+      <div style={{
+        background: "#fff", borderRadius: 16, padding: "32px 28px",
+        width: "100%", maxWidth: 400, boxShadow: "0 24px 60px rgba(13,59,102,.25)",
+        position: "relative", animation: "waPop .22s cubic-bezier(.22,1,.36,1) both",
+      }}>
+        <style>{`
+          @keyframes waPop { from { opacity:0; transform:scale(.92) translateY(12px); } to { opacity:1; transform:none; } }
+          .wa-admin-btn { transition: background .15s, transform .12s; }
+          .wa-admin-btn:hover { background: #e8f8f0 !important; transform: translateX(4px); }
+        `}</style>
+
+        {/* Close */}
+        <button onClick={onClose}
+          style={{ position: "absolute", top: 14, right: 16, background: "none", border: "none",
+            fontSize: 22, color: "#4a7f98", cursor: "pointer", lineHeight: 1 }}>×</button>
+
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <div style={{ width: 52, height: 52, borderRadius: "50%", background: "#25d366",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            margin: "0 auto 12px", boxShadow: "0 4px 16px rgba(37,211,102,.4)" }}>
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <path d="M16 3C8.82 3 3 8.82 3 16c0 2.38.65 4.61 1.78 6.53L3 29l6.64-1.74A12.93 12.93 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3z" fill="#fff"/>
+              <path d="M16 5.5c-5.79 0-10.5 4.71-10.5 10.5 0 2.03.58 3.93 1.59 5.54l.28.45-.97 3.54 3.65-.95.43.25A10.44 10.44 0 0 0 16 26.5c5.79 0 10.5-4.71 10.5-10.5S21.79 5.5 16 5.5zm5.32 14.57c-.22.62-1.28 1.18-1.76 1.23-.45.05-.87.22-2.93-.61-2.49-1-4.07-3.54-4.2-3.7-.12-.17-.99-1.32-.99-2.52 0-1.2.63-1.79.85-2.03.22-.25.49-.31.65-.31l.47.01c.15.01.36-.06.56.43.21.5.72 1.76.78 1.89.07.13.11.28.02.45-.08.17-.13.28-.25.43l-.38.44c-.12.13-.25.26-.11.51.14.25.63 1.04 1.35 1.68.93.83 1.71 1.09 1.96 1.21.25.12.39.1.54-.06.15-.16.62-.72.78-.97.16-.25.33-.21.55-.13.22.08 1.41.67 1.65.79.24.12.4.18.46.28.06.1.06.58-.16 1.2z" fill="#25d366"/>
+            </svg>
+          </div>
+          <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", marginBottom: 4 }}>
+            Hubungi via WhatsApp
+          </h3>
+          <p style={{ fontSize: "0.8125rem", color: "#5090aa", lineHeight: 1.5 }}>
+            Pilih admin yang ingin Anda hubungi
+          </p>
+        </div>
+
+        {/* Admin list */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {list.map((admin, i) => (
+            <a key={admin.id || i}
+              href={admin.wa + (msgText ? "?text=" + encodeURIComponent(msgText) : "")}
+              target="_blank" rel="noopener noreferrer"
+              onClick={onClose}
+              className="wa-admin-btn"
+              style={{
+                display: "flex", alignItems: "center", gap: 14,
+                padding: "14px 18px", borderRadius: 10,
+                background: "#f0fdf6", border: "1.5px solid #b6f0d0",
+                textDecoration: "none", cursor: "pointer",
+              }}>
+              <div style={{
+                width: 40, height: 40, borderRadius: "50%",
+                background: "linear-gradient(135deg,#25d366,#1aab52)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#fff", fontWeight: 800, fontSize: "1rem", flexShrink: 0,
+              }}>
+                {admin.name.charAt(0).toUpperCase()}
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 700, fontSize: "0.9375rem", color: "#0d3b66" }}>{admin.name}</div>
+                <div style={{ fontSize: "0.75rem", color: "#5090aa", marginTop: 2 }}>
+                  {admin.wa.replace("https://wa.me/", "+").replace(/^(\+62)(\d{2,3})(\d{4})(\d+)$/, "$1 $2 $3-$4")}
+                </div>
+              </div>
+              <div style={{ color: "#25d366", fontWeight: 700, fontSize: "1.1rem" }}>→</div>
+            </a>
+          ))}
+        </div>
+
+        <p style={{ fontSize: "0.75rem", color: "#7ab5cc", textAlign: "center", marginTop: 18 }}>
+          Klik nama admin untuk membuka WhatsApp
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
   const [isLoading, setIsLoading] = useState(true);
@@ -7979,6 +8164,8 @@ export default function BricksyTravel() {
   const [editImg, setEditImg] = useState({ group: null, idx: null, url: "" });
   const [editContent, setEditContent] = useState({});
   const [contact, setContact] = useState({ name: "", email: "", message: "" });
+  const [waPicker, setWaPicker] = useState(null); // null | { msgText: "" }
+  const openWaPicker = (msgText = "") => setWaPicker({ msgText });
   const [replyTo, setReplyTo] = useState(null);
   const [replyText, setReplyText] = useState("");
   const [emailSub, setEmailSub] = useState("");
@@ -8481,7 +8668,7 @@ export default function BricksyTravel() {
     save({ ...data, messages: [...data.messages, msg] });
     // Redirect to WhatsApp
     const text = `Halo Arutala Organizer! 👋\n\nNama: ${contact.name}\nEmail: ${contact.email}\n\nPesan:\n${contact.message}\n\nSalam,\n${contact.name}`;
-    window.open(`${content.waLink || "https://wa.me/6285745571442"}?text=${encodeURIComponent(text)}`, "_blank");
+    openWaPicker(text);
     setContact({ name: "", email: "", message: "" });
     notify("Mengarahkan ke WhatsApp...");
   };
@@ -8962,8 +9149,17 @@ export default function BricksyTravel() {
             );
           })()}
 
+          {/* ── WA PICKER MODAL ── */}
+          {waPicker && (
+            <WaPickerModal
+              admins={content.waAdmins}
+              msgText={waPicker.msgText}
+              onClose={() => setWaPicker(null)}
+            />
+          )}
+
           {/* ── WHATSAPP FLOATING BUTTON ── */}
-          <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
+          <button onClick={() => openWaPicker()}
             title="Hubungi Kami via WhatsApp"
             style={{
               position: "fixed", bottom: 24, right: 20, zIndex: 9990,
@@ -8971,7 +9167,7 @@ export default function BricksyTravel() {
               background: "#25d366",
               display: "flex", alignItems: "center", justifyContent: "center",
               boxShadow: "0 4px 20px rgba(37,211,102,.5), 0 2px 8px rgba(0,0,0,.2)",
-              textDecoration: "none", transition: "transform .2s, box-shadow .2s",
+              border: "none", cursor: "pointer", transition: "transform .2s, box-shadow .2s",
             }}
             onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.12)"; e.currentTarget.style.boxShadow = "0 6px 28px rgba(37,211,102,.65), 0 4px 12px rgba(0,0,0,.25)"; }}
             onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(37,211,102,.5), 0 2px 8px rgba(0,0,0,.2)"; }}>
@@ -8995,7 +9191,7 @@ export default function BricksyTravel() {
               @media(max-width:768px){ .hero-arrow{ display:none !important; } }
             `}</style>
             <div className="wa-float-ring" />
-          </a>
+          </button>
 
           {/* ── ARTICLE DETAIL ── */}
           {readPost && (
@@ -9182,13 +9378,13 @@ export default function BricksyTravel() {
                           {data.content.bookTitle}
                         </h2>
                         <p style={{ fontSize: "0.9375rem", color: "#4a7f98", lineHeight: 1.85, marginBottom: 28, maxWidth: 340, whiteSpace: "pre-line" }}>{data.content.bookSub}</p>
-                        <a href={content.waLink || "https://wa.me/6285745571442"} target="_blank" rel="noopener noreferrer"
+                        <button onClick={() => openWaPicker()}
                           style={{ display: "inline-block", padding: "12px 30px", border: "1.5px solid #0d3b66", background: "#0d3b66",
-                          fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700, color: "#fff", transition: "all .2s", textDecoration: "none", borderRadius: 4 }}
+                          fontSize: "0.75rem", letterSpacing: ".12em", textTransform: "uppercase", fontWeight: 700, color: "#fff", transition: "all .2s", borderRadius: 4, cursor: "pointer" }}
                           onMouseEnter={e => { e.currentTarget.style.background = "linear-gradient(130deg,#063d5c,#0891b2)"; e.currentTarget.style.borderColor = "#0891b2"; }}
                           onMouseLeave={e => { e.currentTarget.style.background = "#0d3b66"; e.currentTarget.style.borderColor = "#0d3b66"; }}>
                           Book Now
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </section>
@@ -9379,10 +9575,10 @@ export default function BricksyTravel() {
               )}
 
               {/* ABOUT PAGE */}
-              {page === "about" && <AboutPage content={data.content} images={data.images} teamMembers={data.teamMembers || []} />}
+              {page === "about" && <AboutPage content={data.content} images={data.images} teamMembers={data.teamMembers || []} onWaOpen={openWaPicker} />}
 
               {/* SERVICES PAGE */}
-              {(page === "services" || activePaket) && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} activePaket={activePaket} onOpenPaket={openPaket} onClosePaket={closePaket} />}
+              {(page === "services" || activePaket) && <ServicesPage content={data.content} services={data.services || []} navigateTo={navigateTo} activePaket={activePaket} onOpenPaket={openPaket} onClosePaket={closePaket} onWaOpen={openWaPicker} />}
 
               {/* NEWS / SHOP / DESTINATIONS */}
               {["news", "shop", "destinations"].includes(page) && (
@@ -10411,7 +10607,6 @@ export default function BricksyTravel() {
                     { label: "📞 Nomor HP / WhatsApp", key: "phone" },
                     { label: "📍 Alamat", key: "address", multiline: true },
                     { label: "🕐 Jam Operasional", key: "hours" },
-                    { label: "💬 Link WhatsApp (https://wa.me/628xxx)", key: "waLink" },
                     { label: "📸 Link Instagram (https://instagram.com/xxx)", key: "igLink" },
                     { label: "📘 Link Facebook (https://facebook.com/xxx)", key: "fbLink" },
                     { label: "Login Button Text", key: "loginBtnText" },
@@ -10435,6 +10630,16 @@ export default function BricksyTravel() {
                       />
                     </div>
                   ))}
+
+                  {/* ── WA ADMIN MANAGER ── */}
+                  <WaAdminManager
+                    admins={data.content.waAdmins}
+                    onSave={(list) => {
+                      save({ ...data, content: { ...data.content, waAdmins: list, waLink: list[0]?.wa || data.content.waLink } });
+                      notify("✅ Daftar Admin WA disimpan!");
+                    }}
+                    notify={notify}
+                  />
                 </div>
               )}
 
