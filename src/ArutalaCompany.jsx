@@ -5800,7 +5800,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
         {(svcForm.category==="traveling"||svcForm.category==="event"||svcForm.category==="wedding") && (
           <div style={{ gridColumn:"1 / -1", background:"#fff", borderRadius:12, padding:"22px 24px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:"3px solid #e8a020" }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
-              <div style={{ fontSize:12, fontWeight:800, color:"#e8a020", textTransform:"uppercase", letterSpacing:"1px" }}>🗺 Destinasi Wisata / Itinerary</div>
+              <div style={{ fontSize:12, fontWeight:800, color:"#e8a020", textTransform:"uppercase", letterSpacing:"1px" }}>{(svcForm.category==="event"||svcForm.category==="wedding") ? "🖼 Foto Fasilitas" : "🗺 Destinasi Wisata / Itinerary"}</div>
               <button onClick={addDest} style={{ fontSize:13, padding:"10px 20px", background:"#e8a020", color:"#fff", border:"none", borderRadius:8, cursor:"pointer", fontWeight:800, boxShadow:"0 2px 8px rgba(232,160,32,.4)" }}>{(svcForm.category==="event"||svcForm.category==="wedding") ? "＋ Tambah Foto Fasilitas" : "＋ Tambah Destinasi"}</button>
             </div>
             {(svcForm.destinations||[]).length===0
@@ -5810,13 +5810,13 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                     <div key={di} style={{ background:"#fffbeb", borderRadius:10, border:"1.5px solid #fde68a", overflow:"hidden" }}>
                       <div style={{ background:"linear-gradient(90deg,#fffbeb,#fff8dc)", padding:"10px 14px", display:"flex", alignItems:"center", gap:10, borderBottom:"1px solid #fde68a" }}>
                         <span style={{ background:"#e8a020", color:"#fff", borderRadius:"50%", width:26, height:26, display:"flex", alignItems:"center", justifyContent:"center", fontSize:11, fontWeight:800, flexShrink:0 }}>{dest.no||di+1}</span>
-                        <span style={{ fontWeight:700, color:"#0d3b66", fontSize:13, flex:1 }}>{dest.name||`Destinasi ${di+1}`}</span>
+                        <span style={{ fontWeight:700, color:"#0d3b66", fontSize:13, flex:1 }}>{dest.name||((svcForm.category==="event"||svcForm.category==="wedding") ? `Fasilitas ${di+1}` : `Destinasi ${di+1}`)}</span>
                         <button onClick={()=>removeDest(di)} style={{ padding:"4px 10px", background:"#fee", color:"#e74c3c", border:"none", borderRadius:5, cursor:"pointer", fontSize:12, fontWeight:700 }}>✕</button>
                       </div>
                       <div style={{ padding:"14px 16px", display:"flex", flexDirection:"column", gap:10 }}>
                         {/* Row 1: No + Nama Tab */}
                         <div style={{ display:"grid", gridTemplateColumns:"100px 1fr", gap:10 }}>
-                          {[["no","No.","01"],["name","Nama Tab","Tanah Lot"]].map(([k,lbl,ph])=>(
+                          {[["no","No.","01"],["name",(svcForm.category==="event"||svcForm.category==="wedding") ? "Nama Fasilitas" : "Nama Tab",(svcForm.category==="event"||svcForm.category==="wedding") ? "Aula Utama" : "Tanah Lot"]].map(([k,lbl,ph])=>(
                             <div key={k}>
                               <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>{lbl}</label>
                               <input value={dest[k]||""} onChange={e=>updateDest(di,k,e.target.value)} placeholder={ph}
@@ -5826,19 +5826,19 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                         </div>
                         {/* Row 2: Tag full width */}
                         <div>
-                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Tag / Kategori</label>
-                          <input value={dest.tag||""} onChange={e=>updateDest(di,"tag",e.target.value)} placeholder="Pura Hindu · Keindahan Alam"
+                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>{(svcForm.category==="event"||svcForm.category==="wedding") ? "Kategori" : "Tag / Kategori"}</label>
+                          <input value={dest.tag||""} onChange={e=>updateDest(di,"tag",e.target.value)} placeholder={(svcForm.category==="event"||svcForm.category==="wedding") ? "Dekorasi · Sound System" : "Pura Hindu · Keindahan Alam"}
                             style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", boxSizing:"border-box" }} />
                         </div>
                         {/* Row 3: Judul Lengkap full width */}
                         <div>
-                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Judul Lengkap</label>
-                          <input value={dest.title||""} onChange={e=>updateDest(di,"title",e.target.value)} placeholder="Pura Megah di Atas Batu Karang"
+                          <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>{(svcForm.category==="event"||svcForm.category==="wedding") ? "Keterangan" : "Judul Lengkap"}</label>
+                          <input value={dest.title||""} onChange={e=>updateDest(di,"title",e.target.value)} placeholder={(svcForm.category==="event"||svcForm.category==="wedding") ? "Tersedia sound system profesional" : "Pura Megah di Atas Batu Karang"}
                             style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", boxSizing:"border-box" }} />
                         </div>
                         {/* Row 4: Lokasi + Durasi */}
                         <div style={{ display:"grid", gridTemplateColumns:"1fr 120px", gap:10 }}>
-                          {[["sub","Lokasi","Tabanan, Bali"],["duration","Durasi","2–3 jam"]].map(([k,lbl,ph])=>(
+                          {[["sub",(svcForm.category==="event"||svcForm.category==="wedding") ? "Area / Ruang" : "Lokasi",(svcForm.category==="event"||svcForm.category==="wedding") ? "Ballroom Lantai 2" : "Tabanan, Bali"],["duration",(svcForm.category==="event"||svcForm.category==="wedding") ? "Kapasitas" : "Durasi",(svcForm.category==="event"||svcForm.category==="wedding") ? "500 pax" : "2–3 jam"]].map(([k,lbl,ph])=>(
                             <div key={k}>
                               <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>{lbl}</label>
                               <input value={dest[k]||""} onChange={e=>updateDest(di,k,e.target.value)} placeholder={ph}
@@ -5849,13 +5849,13 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                         {/* Row 5: Deskripsi full width */}
                         <div>
                           <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Deskripsi</label>
-                          <textarea value={dest.desc||""} onChange={e=>updateDest(di,"desc",e.target.value)} rows={4} placeholder="Deskripsi destinasi..."
+                          <textarea value={dest.desc||""} onChange={e=>updateDest(di,"desc",e.target.value)} rows={4} placeholder={(svcForm.category==="event"||svcForm.category==="wedding") ? "Deskripsi fasilitas..." : "Deskripsi destinasi..."}
                             style={{ width:"100%", padding:"7px 9px", border:"1.5px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none", resize:"vertical", lineHeight:1.6, boxSizing:"border-box" }} />
                         </div>
                         {/* Row 6: Foto + Highlight side by side */}
                         <div style={{ display:"grid", gridTemplateColumns:"140px 1fr", gap:12 }}>
                           <div>
-                            <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Foto Destinasi</label>
+                            <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>{(svcForm.category==="event"||svcForm.category==="wedding") ? "Foto Fasilitas" : "Foto Destinasi"}</label>
                             {/* Progress bar */}
                             {destUploadProgress[di] && !destUploadProgress[di].done && !destUploadProgress[di].error && (
                               <div style={{ marginBottom:6, background:"#f0fafe", border:"1px solid #b0dce8", borderRadius:7, padding:"8px 10px" }}>
@@ -5884,7 +5884,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                           </div>
                           <div>
                             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
-                              <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px" }}>Highlight (✓)</label>
+                              <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px" }}>{(svcForm.category==="event"||svcForm.category==="wedding") ? "Keunggulan (✓)" : "Highlight (✓)"}</label>
                               <button onClick={()=>addDestPoint(di)} style={{ fontSize:12, padding:"5px 12px", background:"#27ae60", color:"#fff", border:"none", borderRadius:6, cursor:"pointer", fontWeight:800 }}>+ Tambah</button>
                             </div>
                             <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
@@ -6201,7 +6201,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <span style={{ fontSize: 18 }}>🗺</span>
-                  <span style={{ fontSize: 14, fontWeight: 800, color: "#0d3b66" }}>Destinasi Wisata / Itinerary</span>
+                  <span style={{ fontSize: 14, fontWeight: 800, color: "#0d3b66" }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "Foto Fasilitas" : "Destinasi Wisata / Itinerary"}</span>
                 </div>
                 <button onClick={addDest} style={{ fontSize: 12, padding: "7px 16px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700 }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "＋ Tambah Foto Fasilitas" : "＋ Tambah Destinasi"}</button>
               </div>
@@ -6214,7 +6214,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                       {/* Dest header */}
                       <div style={{ background: "linear-gradient(90deg,#fffbeb,#fff8dc)", padding: "10px 16px", display: "flex", alignItems: "center", gap: 10, borderBottom: "1px solid #fde68a" }}>
                         <span style={{ background: "#e8a020", color: "#fff", borderRadius: "50%", width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, flexShrink: 0 }}>{dest.no || di+1}</span>
-                        <span style={{ fontWeight: 700, color: "#0d3b66", fontSize: 13, flex: 1 }}>{dest.name || `Destinasi ${di+1}`}</span>
+                        <span style={{ fontWeight: 700, color: "#0d3b66", fontSize: 13, flex: 1 }}>{dest.name || ((svcForm.category === "event" || svcForm.category === "wedding") ? `Fasilitas ${di+1}` : `Destinasi ${di+1}`)}</span>
                         <button onClick={() => removeDest(di)} style={{ padding: "5px 12px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 6, cursor: "pointer", fontSize: 12, fontWeight: 700 }}>✕ Hapus</button>
                       </div>
                       {/* Dest body */}
@@ -6226,43 +6226,43 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                               style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                           </div>
                           <div>
-                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Nama Tab</label>
-                            <input value={dest.name||""} onChange={e=>updateDest(di,"name",e.target.value)} placeholder="Tanah Lot"
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "Nama Fasilitas" : "Nama Tab"}</label>
+                            <input value={dest.name||""} onChange={e=>updateDest(di,"name",e.target.value)} placeholder={(svcForm.category === "event" || svcForm.category === "wedding") ? "Aula Utama" : "Tanah Lot"}
                               style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                           </div>
                           <div>
-                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Tag / Kategori</label>
-                            <input value={dest.tag||""} onChange={e=>updateDest(di,"tag",e.target.value)} placeholder="Pura Hindu · Keindahan Alam"
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "Kategori" : "Tag / Kategori"}</label>
+                            <input value={dest.tag||""} onChange={e=>updateDest(di,"tag",e.target.value)} placeholder={(svcForm.category === "event" || svcForm.category === "wedding") ? "Dekorasi · Sound System" : "Pura Hindu · Keindahan Alam"}
                               style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                           </div>
                         </div>
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 120px", gap: 10, marginBottom: 10 }}>
                           <div>
-                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Judul Lengkap</label>
-                            <input value={dest.title||""} onChange={e=>updateDest(di,"title",e.target.value)} placeholder="Pura Megah di Atas Batu Karang"
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "Keterangan" : "Judul Lengkap"}</label>
+                            <input value={dest.title||""} onChange={e=>updateDest(di,"title",e.target.value)} placeholder={(svcForm.category === "event" || svcForm.category === "wedding") ? "Tersedia sound system profesional" : "Pura Megah di Atas Batu Karang"}
                               style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                           </div>
                           <div>
-                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Lokasi</label>
-                            <input value={dest.sub||""} onChange={e=>updateDest(di,"sub",e.target.value)} placeholder="Tabanan, Bali"
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "Area / Ruang" : "Lokasi"}</label>
+                            <input value={dest.sub||""} onChange={e=>updateDest(di,"sub",e.target.value)} placeholder={(svcForm.category === "event" || svcForm.category === "wedding") ? "Ballroom Lantai 2" : "Tabanan, Bali"}
                               style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                           </div>
                           <div>
-                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Durasi</label>
-                            <input value={dest.duration||""} onChange={e=>updateDest(di,"duration",e.target.value)} placeholder="2–3 jam"
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "Kapasitas" : "Durasi"}</label>
+                            <input value={dest.duration||""} onChange={e=>updateDest(di,"duration",e.target.value)} placeholder={(svcForm.category === "event" || svcForm.category === "wedding") ? "500 pax" : "2–3 jam"}
                               style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                           </div>
                         </div>
                         <div style={{ marginBottom: 10 }}>
                           <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Deskripsi</label>
-                          <textarea value={dest.desc||""} onChange={e=>updateDest(di,"desc",e.target.value)} rows={3} placeholder="Deskripsi destinasi..."
+                          <textarea value={dest.desc||""} onChange={e=>updateDest(di,"desc",e.target.value)} rows={3} placeholder={(svcForm.category === "event" || svcForm.category === "wedding") ? "Deskripsi fasilitas..." : "Deskripsi destinasi..."}
                             style={{ width: "100%", padding: "8px 10px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", resize: "vertical", boxSizing: "border-box" }} />
                         </div>
                         {/* Foto & Points side by side */}
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                           {/* Foto */}
                           <div>
-                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>Foto Destinasi</label>
+                            <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 6 }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "Foto Fasilitas" : "Foto Destinasi"}</label>
                             <label style={{ cursor: "pointer", display: "block" }}>
                               <div style={{ height: 120, border: "2px dashed #fde68a", borderRadius: 8, background: "#fffbeb", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", position: "relative" }}>
                                 {dest.img ? (
@@ -6283,7 +6283,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                           {/* Points */}
                           <div>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-                              <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Highlight (✓)</label>
+                              <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>{(svcForm.category === "event" || svcForm.category === "wedding") ? "Keunggulan (✓)" : "Highlight (✓)"}</label>
                               <button onClick={()=>addDestPoint(di)} style={{ fontSize: 11, padding: "3px 10px", background: "#e8f8ef", color: "#27ae60", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 700 }}>+ Tambah</button>
                             </div>
                             <div style={{ display: "flex", flexDirection: "column", gap: 6, maxHeight: 140, overflowY: "auto" }}>
