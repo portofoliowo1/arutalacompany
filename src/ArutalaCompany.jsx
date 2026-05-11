@@ -7961,11 +7961,11 @@ const getInitialShowAdmin = () => window.location.pathname === "/control-panel";
 function WaPhoneDropdown({ admins, phone, msgText = "" }) {
   const DEFAULT_ADMINS = [{ id: 1, name: "Admin – Arutala", wa: "https://wa.me/6285745571442" }];
   const list = (admins && admins.length > 0) ? admins : DEFAULT_ADMINS;
-  const [open, setOpen] = React.useState(false);
-  const ref = React.useRef(null);
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
 
   // Tutup dropdown saat klik di luar
-  React.useEffect(() => {
+  useEffect(() => {
     const close = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
@@ -9597,11 +9597,19 @@ export default function BricksyTravel() {
                         <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#0d3b66", marginBottom: 18 }}>Contact Us</h2>
                         <p style={{ fontSize: "0.9375rem", color: "#1a5a78", lineHeight: 1.85, marginBottom: 20, whiteSpace: "pre-line" }}>{data.content.contactText || data.content.aboutContactSub}</p>
                         <p style={{ fontSize: "0.9375rem", color: "#1a4a72", marginBottom: 8, fontWeight: 500 }}>✉ {data.content.email}</p>
-                        <button onClick={() => openWaPicker()}
-                          style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: "0.9375rem", color: "#0891b2", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 3 }}>
-                          📞 {data.content.phone}
-                          {(data.content.waAdmins?.length > 1) && <span style={{ fontSize: "0.75rem", color: "#5090aa", textDecoration: "none" }}>▾ {data.content.waAdmins.length} admin</span>}
-                        </button>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                          {(data.content.waAdmins?.length > 0 ? data.content.waAdmins : [{ id: 1, name: "Admin", wa: "https://wa.me/6285745571442" }]).map(admin => (
+                            <a key={admin.id}
+                              href={admin.wa}
+                              target="_blank" rel="noopener noreferrer"
+                              style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: "0.9375rem", color: "#0891b2", fontWeight: 600, textDecoration: "none" }}
+                              onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
+                              onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}>
+                              📞 {admin.wa.replace("https://wa.me/", "+").replace(/^(\+62)(\d{3})(\d{4})(\d+)$/, "$1 $2 $3-$4")}
+                              <span style={{ fontSize: "0.8125rem", color: "#5090aa", fontWeight: 400 }}>– {admin.name}</span>
+                            </a>
+                          ))}
+                        </div>
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                         {["name", "email"].map(f => (
