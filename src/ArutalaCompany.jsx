@@ -8990,90 +8990,64 @@ export default function BricksyTravel() {
     document.body.style.filter = "none";
   }, []);
 
-  // ── Rainbow Cursor Trail ──────────────────────────────────────────────────
+  // ── Static Glitch Pixel Cursor ───────────────────────────────────────────
   useEffect(() => {
-    // Sembunyikan cursor asli di seluruh halaman
+    const S = 2; // ukuran 1 pixel art = 2px
+    const size = 64;
+    const c = document.createElement("canvas");
+    c.width = size; c.height = size;
+    const ctx = c.getContext("2d");
+
+    // Helper
+    const px = (x, y, col) => { ctx.fillStyle = col; ctx.fillRect(x*S, y*S, S, S); };
+
+    // Outline hitam
+    const outline = [
+      [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],[0,10],[0,11],[0,12],
+      [1,0],[1,13],[2,13],[3,13],[4,13],
+      [1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10],[11,11],
+      [2,12],[3,11],[4,10],[5,9],[6,8],[7,7],
+      [5,13],[5,14],[6,14],[6,15],[7,14],[7,15],[4,14],
+      [6,12],[7,12],[8,12],[8,11],[9,11],[9,10],
+    ];
+    outline.forEach(([x,y]) => px(x,y,"#111111"));
+
+    // Fill putih
+    const fill = [
+      [1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],[1,9],[1,10],[1,11],[1,12],
+      [2,3],[2,4],[2,5],[2,6],[2,7],[2,8],[2,9],[2,10],[2,11],
+      [3,4],[3,5],[3,6],[3,7],[3,8],[3,9],[3,10],
+      [4,5],[4,6],[4,7],[4,8],[4,9],
+      [5,6],[5,7],[5,8],
+      [6,7],
+      [5,10],[5,11],[5,12],[6,11],[6,12],[6,13],[7,13],
+    ];
+    fill.forEach(([x,y]) => px(x,y,"#ffffff"));
+
+    // Glitch merah (chromatic aberration kiri)
+    const red = [
+      [-1,0],[-1,1],[-1,2],[-1,3],[0,-1],
+      [-1,7],[-1,8],
+      [4,13],[4,14],[5,14],[5,15],
+    ];
+    red.forEach(([x,y]) => { if(x*S>=0 && y*S>=0 && (x+1)*S<=size && (y+1)*S<=size) px(x,y,"#ff2020"); });
+
+    // Glitch cyan (chromatic aberration kanan)
+    const cyan = [
+      [1,0],[12,10],[13,10],[14,10],
+      [12,11],[13,11],[14,11],
+      [8,14],[9,14],[10,13],[10,14],
+    ];
+    cyan.forEach(([x,y]) => { if(x*S>=0 && y*S>=0 && (x+1)*S<=size && (y+1)*S<=size) px(x,y,"#00e5ff"); });
+
+    const dataUrl = c.toDataURL("image/png");
     const styleEl = document.createElement("style");
-    styleEl.id = "rainbow-cursor-style";
-    styleEl.textContent = `
-      *, *::before, *::after { cursor: none !important; }
-    `;
+    styleEl.id = "glitch-cursor-style";
+    // hotspot 0,0 = ujung panah di kiri atas
+    styleEl.textContent = `*, *::before, *::after { cursor: url('${dataUrl}') 0 0, auto !important; }`;
     document.head.appendChild(styleEl);
 
-    // Canvas overlay transparan di atas segalanya
-    const canvas = document.createElement("canvas");
-    canvas.id = "rainbow-cursor-canvas";
-    Object.assign(canvas.style, {
-      position: "fixed", inset: "0", width: "100vw", height: "100vh",
-      pointerEvents: "none", zIndex: "999999", display: "block",
-    });
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    document.body.appendChild(canvas);
-    const ctx = canvas.getContext("2d");
-
-    // Resize handler
-    const onResize = () => {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", onResize);
-
-    // State
-    const COLORS = [
-      "#ff0000","#ff4500","#ff8c00","#ffd700",
-      "#7fff00","#00e676","#00bcd4","#2196f3",
-      "#9c27b0","#e91e63","#ff0000",
-    ];
-
-    let mx = -200, my = -200;
-    let hue = 0;
-    let raf;
-
-    const onMove = (e) => { mx = e.clientX; my = e.clientY; };
-    document.addEventListener("mousemove", onMove);
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Gambar kursor panah lancip rainbow
-      const mainColorIdx = Math.floor((hue % 360) / (360 / COLORS.length));
-      const arrowColor = COLORS[mainColorIdx % COLORS.length];
-      ctx.globalAlpha = 1;
-      ctx.shadowColor = arrowColor;
-      ctx.shadowBlur  = 8;
-      ctx.save();
-      ctx.translate(mx, my);
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(0, 16);
-      ctx.lineTo(4, 12);
-      ctx.lineTo(8, 20);
-      ctx.lineTo(10, 19);
-      ctx.lineTo(6, 11);
-      ctx.lineTo(11, 11);
-      ctx.closePath();
-      ctx.fillStyle = arrowColor;
-      ctx.fill();
-      ctx.shadowBlur = 0;
-      ctx.strokeStyle = "#fff";
-      ctx.lineWidth = 1.5;
-      ctx.lineJoin = "round";
-      ctx.stroke();
-      ctx.restore();
-
-      hue = (hue + 2.5) % 360;
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(raf);
-      document.removeEventListener("mousemove", onMove);
-      window.removeEventListener("resize", onResize);
-      canvas.remove();
-      styleEl.remove();
-    };
+    return () => { styleEl.remove(); };
   }, []);
   useEffect(() => {
     const favicon = document.querySelector("link[rel='icon']") || (() => {
