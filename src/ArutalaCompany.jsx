@@ -4766,15 +4766,19 @@ function ServiceHeroSlideshow({ slides, catColor }) {
   const [cur, setCur] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
+  const pausedRef = useRef(false);
+  pausedRef.current = paused;
 
   const next = useCallback(() => setCur(c => (c + 1) % slides.length), [slides.length]);
   const back = useCallback(() => setCur(c => (c - 1 + slides.length) % slides.length), [slides.length]);
 
   useEffect(() => {
-    if (paused || slides.length <= 1) return;
-    timerRef.current = setInterval(next, 3500);
+    if (slides.length <= 1) return;
+    timerRef.current = setInterval(() => {
+      if (!pausedRef.current) setCur(c => (c + 1) % slides.length);
+    }, 3500);
     return () => clearInterval(timerRef.current);
-  }, [paused, next, slides.length]);
+  }, [slides.length]);
 
   if (!slides.length) return null;
   const slide = slides[cur];
@@ -4842,6 +4846,9 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
 
+  const pausedRef = useRef(false);
+  pausedRef.current = paused;
+
   const goTo = useCallback((idx, direction) => {
     setPrev(cur);
     setDir(direction);
@@ -4852,10 +4859,16 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
   const back = useCallback(() => goTo((cur - 1 + slides.length) % slides.length, -1), [cur, slides.length, goTo]);
 
   useEffect(() => {
-    if (paused || slides.length <= 1) return;
-    timerRef.current = setInterval(next, 4000);
+    if (slides.length <= 1) return;
+    timerRef.current = setInterval(() => {
+      if (!pausedRef.current) setCur(c => {
+        const n = (c + 1) % slides.length;
+        setPrev(c); setDir(1);
+        return n;
+      });
+    }, 4000);
     return () => clearInterval(timerRef.current);
-  }, [paused, next, slides.length]);
+  }, [slides.length]);
 
   const slide = slides[cur];
 
@@ -4978,6 +4991,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 
   const [activeCategory, setActiveCategory] = useState("traveling"); // Default: tab Traveling langsung aktif
   const [activeImg, setActiveImg] = useState(0);
+  const [colLayout, setColLayout] = useState(2); // 1 | 2 | 3
 
   const CATEGORIES = [
     { key: "traveling", label: "✈️ Traveling", color: "#27ae60" },
@@ -5361,11 +5375,37 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
         {/* Cards Grid */}
         {activeCategory && (
           <div style={{ animation: "fadeIn .35s ease" }}>
-            <div style={{ marginBottom: 32 }}>
-              <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>
-                {CATEGORIES.find(c => c.key === activeCategory)?.label}
-              </h2>
-              <p style={{ fontSize: "0.9375rem", color: "#4a7f98" }}>{filteredServices.length} paket tersedia</p>
+            {/* Header row: judul + toggle kolom */}
+            <div style={{ marginBottom: 32, display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+              <div>
+                <h2 className="display" style={{ fontSize: "1.5rem", fontWeight: 900, color: "#0d3b66", marginBottom: 6 }}>
+                  {CATEGORIES.find(c => c.key === activeCategory)?.label}
+                </h2>
+                <p style={{ fontSize: "0.9375rem", color: "#4a7f98" }}>{filteredServices.length} paket tersedia</p>
+              </div>
+              {/* Toggle Kolom */}
+              <div style={{ display: "flex", gap: 4, background: "#e4f4f8", borderRadius: 10, padding: 4 }}>
+                {[
+                  { cols: 1, icon: "▬", title: "1 kartu / baris" },
+                  { cols: 2, icon: "⊟", title: "2 kartu / baris" },
+                  { cols: 3, icon: "⊞", title: "3 kartu / baris" },
+                ].map(({ cols, icon, title }) => (
+                  <button key={cols} onClick={() => setColLayout(cols)} title={title}
+                    style={{
+                      width: 38, height: 38, borderRadius: 7, border: "none", cursor: "pointer",
+                      fontSize: cols === 3 ? "1.05rem" : cols === 2 ? "1.1rem" : "1.25rem",
+                      background: colLayout === cols
+                        ? (CATEGORIES.find(c => c.key === activeCategory)?.color || "#0891b2")
+                        : "transparent",
+                      color: colLayout === cols ? "#fff" : "#4a7f98",
+                      fontWeight: 700, transition: "all .18s",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      boxShadow: colLayout === cols ? "0 2px 8px rgba(0,0,0,.15)" : "none",
+                    }}>
+                    {icon}
+                  </button>
+                ))}
+              </div>
             </div>
             {filteredServices.length === 0 ? (
               <div style={{ textAlign: "center", padding: "60px 0", color: "#5090aa" }}>Belum ada paket untuk kategori ini.</div>
@@ -5376,7 +5416,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 const regularPkgs = filteredServices.filter(s => s.pkgId !== "custom");
                 return (
                   <div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 28 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(3, 1fr)" : "repeat(auto-fill, minmax(340px, 1fr))", gap: colLayout === 1 ? 20 : 28 }}>
                       {regularPkgs.map(svc => (
                         <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} />
                       ))}
@@ -5396,7 +5436,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 const regularSvcs = filteredServices.filter(s => s.pkgId !== "custom");
                 return (
                   <div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 24 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(3, 1fr)" : "repeat(auto-fill, minmax(300px, 1fr))", gap: colLayout === 1 ? 20 : 24 }}>
                       {regularSvcs.map(svc => (
                         <EventWeddingPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} />
                       ))}
@@ -7205,31 +7245,50 @@ function HeroSlideshow({ data, navigateTo }) {
   const [current, setCurrent] = useState(0);
   const [prev, setPrev] = useState(null);
   const [anim, setAnim] = useState("fade");
-  const [animating, setAnimating] = useState(false);
+  const animatingRef = useRef(false);
   const timerRef = useRef(null);
+  const currentRef = useRef(0);
+  const slidesLenRef = useRef(slides.length);
+  slidesLenRef.current = slides.length;
+
+  const startTimer = useCallback(() => {
+    clearInterval(timerRef.current);
+    if (slidesLenRef.current < 2) return;
+    timerRef.current = setInterval(() => {
+      if (animatingRef.current) return;
+      const randomAnim = TRANSITIONS[Math.floor(Math.random() * TRANSITIONS.length)];
+      const nextIdx = (currentRef.current + 1) % slidesLenRef.current;
+      setAnim(randomAnim);
+      setPrev(currentRef.current);
+      animatingRef.current = true;
+      setTimeout(() => {
+        setCurrent(nextIdx);
+        currentRef.current = nextIdx;
+        setPrev(null);
+        animatingRef.current = false;
+      }, 700);
+    }, 4500);
+  }, []);
 
   const goTo = useCallback((idx) => {
-    if (animating || slides.length < 2) return;
+    if (animatingRef.current || slidesLenRef.current < 2) return;
     const randomAnim = TRANSITIONS[Math.floor(Math.random() * TRANSITIONS.length)];
     setAnim(randomAnim);
-    setPrev(current);
-    setAnimating(true);
+    setPrev(currentRef.current);
+    animatingRef.current = true;
     setTimeout(() => {
       setCurrent(idx);
+      currentRef.current = idx;
       setPrev(null);
-      setAnimating(false);
+      animatingRef.current = false;
+      startTimer();
     }, 700);
-  }, [animating, current, slides.length]);
-
-  const next = useCallback(() => {
-    goTo((current + 1) % slides.length);
-  }, [current, slides.length, goTo]);
+  }, [startTimer]);
 
   useEffect(() => {
-    if (slides.length < 2) return;
-    timerRef.current = setInterval(next, 4500);
+    startTimer();
     return () => clearInterval(timerRef.current);
-  }, [next, slides.length]);
+  }, [startTimer, slides.length]);
 
   if (slides.length === 0) return null;
 
@@ -7264,6 +7323,7 @@ function HeroSlideshow({ data, navigateTo }) {
 
   const sl = slides[current];
   const prevSl = prev !== null ? slides[prev] : null;
+  const animating = prev !== null; // derived — true selama transisi berlangsung
 
   return (
     <section style={{ position: "relative", width: "100%", height: "clamp(560px,88vh,800px)", overflow: "hidden", background: "#04080f" }}>
