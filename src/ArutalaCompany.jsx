@@ -1637,16 +1637,58 @@ const GS = () => (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@700;900&family=Montserrat:wght@700;800;900&family=Raleway:wght@700;800;900&family=Oswald:wght@600;700&family=Bebas+Neue&family=Lora:wght@700&family=Josefin+Sans:wght@700&family=Inter:wght@700;800;900&display=swap');
 
-    /* ── FORCE LIGHT MODE — kebal dark mode OS/browser ── */
-    :root { color-scheme: only light !important; }
-    html, body, #root, [id], [class], *:not(style):not(script) {
+    /* ── FORCE LIGHT MODE — kebal dark mode OS/browser (semua platform) ── */
+    :root {
+      color-scheme: only light !important;
       forced-color-adjust: none !important;
       -webkit-forced-color-adjust: none !important;
     }
+    html {
+      color-scheme: only light !important;
+      forced-color-adjust: none !important;
+      -webkit-forced-color-adjust: none !important;
+      background-color: #063d5c !important;
+      filter: none !important;
+    }
+    body {
+      color-scheme: only light !important;
+      forced-color-adjust: none !important;
+      -webkit-forced-color-adjust: none !important;
+      background-color: #063d5c !important;
+      color: #0d3b66 !important;
+      filter: none !important;
+    }
+    /* Semua elemen tidak boleh dibalik warnanya oleh browser/OS */
+    *, *::before, *::after {
+      forced-color-adjust: none !important;
+      -webkit-forced-color-adjust: none !important;
+    }
+    /* Override media query dark mode — paksa tetap light */
     @media (prefers-color-scheme: dark) {
-      :root { color-scheme: only light !important; }
-      html { background: #063d5c !important; filter: none !important; }
-      * { color-scheme: light !important; }
+      :root {
+        color-scheme: only light !important;
+        forced-color-adjust: none !important;
+        -webkit-forced-color-adjust: none !important;
+      }
+      html {
+        color-scheme: only light !important;
+        background-color: #063d5c !important;
+        filter: none !important;
+        -webkit-filter: none !important;
+      }
+      body {
+        color-scheme: only light !important;
+        background-color: #063d5c !important;
+        color: #0d3b66 !important;
+        filter: none !important;
+        -webkit-filter: none !important;
+      }
+      *, *::before, *::after {
+        color-scheme: light !important;
+        forced-color-adjust: none !important;
+        -webkit-forced-color-adjust: none !important;
+        /* Tidak pakai filter invert — biarkan inline style yang mengatur warna */
+      }
     }
 
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -8693,10 +8735,15 @@ export default function BricksyTravel() {
       document.head.appendChild(themeMeta);
     }
     themeMeta.content = "#063d5c";
-    // Paksa html & body pakai color-scheme light
+    // Paksa html & body pakai color-scheme light — kebal dark mode
     document.documentElement.style.colorScheme = "only light";
+    document.documentElement.style.forcedColorAdjust = "none";
+    document.documentElement.style.webkitForcedColorAdjust = "none";
+    document.documentElement.style.filter = "none";
     document.documentElement.setAttribute("data-color-scheme", "light");
     document.body.style.colorScheme = "only light";
+    document.body.style.forcedColorAdjust = "none";
+    document.body.style.filter = "none";
   }, []);
 
   // Sync favicon with logo
