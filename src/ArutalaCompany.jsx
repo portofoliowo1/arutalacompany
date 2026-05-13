@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo, Suspense, lazy } from "react";
 
 /* ─────────────── DASHBOARD TABS SUB-COMPONENT ─────────────── */
 function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, canCS, isAdmin, setAdminTab, setCmsEditPost, SECTION_LABELS, SECTIONS, formatDate }) {
@@ -2405,6 +2405,140 @@ const GS = () => (
   `}</style>
 );
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   PERFORMANCE UTILITIES (dari refactor)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/** withMemo: HOC untuk membungkus komponen dengan React.memo + custom comparator */
+function withMemo(Component, propsAreEqual) {
+  return React.memo(Component, propsAreEqual);
+}
+
+/** useStableCallback: useCallback tanpa dependencies — aman untuk event handler */
+function useStableCallback(fn) {
+  const fnRef = useRef(fn);
+  useEffect(() => { fnRef.current = fn; });
+  return useCallback((...args) => fnRef.current(...args), []);
+}
+
+/** useDebounce: Debounce nilai untuk menghindari frequent re-renders */
+function useDebounce(value, delay = 300) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedValue(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debouncedValue;
+}
+
+/** useIntersection: Deteksi elemen masuk viewport — fire sekali */
+function useIntersection(ref, options = {}) {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsIntersecting(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, ...options }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [ref]); // eslint-disable-line react-hooks/exhaustive-deps
+  return isIntersecting;
+}
+
+/** LazySection: Render children hanya saat terlihat di viewport */
+const LazySection = React.memo(function LazySection({ children, fallback = null, style = {} }) {
+  const ref = useRef(null);
+  const isVisible = useIntersection(ref);
+  return (
+    <div ref={ref} style={style}>
+      {isVisible ? children : fallback}
+    </div>
+  );
+});
+
+/** VirtualList: Render hanya item yang terlihat — untuk daftar panjang */
+const VirtualList = React.memo(function VirtualList({
+  items, itemHeight, renderItem, containerHeight = 600, overscan = 3,
+}) {
+  const [scrollTop, setScrollTop] = useState(0);
+  const containerRef = useRef(null);
+  const visibleCount = Math.ceil(containerHeight / itemHeight);
+  const startIdx = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
+  const endIdx   = Math.min(items.length - 1, startIdx + visibleCount + overscan * 2);
+  const visibleItems = items.slice(startIdx, endIdx + 1);
+  const totalHeight  = items.length * itemHeight;
+  const offsetY      = startIdx * itemHeight;
+  return (
+    <div ref={containerRef}
+      style={{ height: containerHeight, overflow: "auto", position: "relative" }}
+      onScroll={(e) => setScrollTop(e.currentTarget.scrollTop)}>
+      <div style={{ height: totalHeight, position: "relative" }}>
+        <div style={{ position: "absolute", top: offsetY, width: "100%" }}>
+          {visibleItems.map((item, i) => renderItem(item, startIdx + i))}
+        </div>
+      </div>
+    </div>
+  );
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LAZY IMAGE — Native lazy loading + skeleton placeholder (dari refactor)
+   ═══════════════════════════════════════════════════════════════════════════ */
+const LazyImage = React.memo(function LazyImage({
+  src, alt = "", style = {}, className = "",
+  placeholderColor = "#edfafc", onError,
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError]   = useState(false);
+  const handleError = useCallback((e) => {
+    setError(true);
+    if (onError) onError(e);
+  }, [onError]);
+  if (!src || error) {
+    return (
+      <div style={{
+        background: placeholderColor,
+        display: "flex", alignItems: "center",
+        justifyContent: "center", fontSize: 28,
+        ...style,
+      }} className={className}>🖼</div>
+    );
+  }
+  return (
+    <div style={{ position: "relative", ...style }} className={className}>
+      {!loaded && (
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "linear-gradient(90deg,#dff0f5 25%,#edfafc 50%,#dff0f5 75%)",
+          backgroundSize: "800px 100%",
+          animation: "shimmer 1.5s infinite",
+        }} />
+      )}
+      <img
+        loading="lazy"
+        decoding="async"
+        src={src}
+        alt={alt}
+        style={{
+          width: "100%", height: "100%",
+          objectFit: "cover", display: "block",
+          opacity: loaded ? 1 : 0,
+          transition: "opacity 0.3s ease",
+          ...style,
+        }}
+        onLoad={() => setLoaded(true)}
+        onError={handleError}
+      />
+    </div>
+  );
+});
+
 /* ─────────────── CEF: Content Edit Field (outside main to prevent remount) ─────────────── */
 function CEF({ val, multiline, onChange, onSave }) {
   return (
@@ -3308,7 +3442,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
 }
 
 /* ─────────────── POST CARD ─────────────── */
-function PostCard({ post, onClick, view = "grid" }) {
+const PostCard = React.memo(function PostCard({ post, onClick, view = "grid" }) {
   const firstImg = (post.content || []).find(b => b.type === "image")?.value;
 
   if (view === "list") return (
@@ -3370,6 +3504,7 @@ function PostCard({ post, onClick, view = "grid" }) {
     </article>
   );
 }
+);
 
 /* ─────────────── ARTICLE DETAIL VIEW ─────────────── */
 function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
@@ -7196,7 +7331,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
 }
 
 /* ─────────────── ADV SECTION (puzzle + quote slideshow) ─────────────── */
-function AdvSection({ data, navigateTo }) {
+const AdvSection = React.memo(function AdvSection({ data, navigateTo }) {
   const [advQ, setAdvQ] = useState(0);
   const quotes = (data.content.advQuote || "").split(/\n+/).filter(Boolean);
   const safeQuotes = quotes.length ? quotes : [data.content.advQuote || ""];
@@ -7289,9 +7424,10 @@ function AdvSection({ data, navigateTo }) {
     </section>
   );
 }
+);
 
 /* ─────────────── HOME INTRO SLIDESHOW (panel kiri beranda) ─────────────── */
-function HomeIntroSlideshow({ data }) {
+const HomeIntroSlideshow = React.memo(function HomeIntroSlideshow({ data }) {
   // Kumpulkan SEMUA foto dari seluruh sumber di website
   const seen = new Set();
   const allImgs = [];
@@ -7364,9 +7500,10 @@ function HomeIntroSlideshow({ data }) {
     </div>
   );
 }
+);
 
 /* ─────────────── HERO SLIDESHOW ─────────────── */
-function HeroSlideshow({ data, navigateTo }) {
+const HeroSlideshow = React.memo(function HeroSlideshow({ data, navigateTo }) {
   const heroMode = data.content?.heroMode || "slideshow";
 
   // ── MODE STATIC: tampilkan satu gambar diam ──
@@ -7613,6 +7750,7 @@ function HeroSlideshow({ data, navigateTo }) {
     </section>
   );
 }
+);
 
 /* ─────────────── REVIEW FORM (Public, One-Time Token) ─────────────── */
 function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
@@ -7815,7 +7953,7 @@ function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
 }
 
 /* ─────────────── REVIEW SLIDESHOW (Home Page) ─────────────── */
-function ReviewSlideshow({ reviews }) {
+const ReviewSlideshow = React.memo(function ReviewSlideshow({ reviews }) {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef(null);
@@ -7971,8 +8109,9 @@ function ReviewSlideshow({ reviews }) {
     </section>
   );
 }
+);
 
-function ReviewCard({ review }) {
+const ReviewCard = React.memo(function ReviewCard({ review }) {
   const stars = review.stars || 5;
   return (
     <div style={{ background: "#fff", borderRadius: 16, padding: "28px 24px", boxShadow: "0 4px 24px rgba(13,59,102,.08)", border: "1px solid #e0f7fa", height: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
@@ -8005,6 +8144,7 @@ function ReviewCard({ review }) {
     </div>
   );
 }
+);
 
 
 /* ─────────────── ADMIN REVIEWS COMPONENT ─────────────── */
@@ -8718,7 +8858,7 @@ export default function BricksyTravel() {
   const [editContent, setEditContent] = useState({});
   const [contact, setContact] = useState({ name: "", email: "", message: "" });
   const [waPicker, setWaPicker] = useState(null); // null | { msgText: "" }
-  const openWaPicker = (msgText = "") => setWaPicker({ msgText });
+  const openWaPicker = useCallback((msgText = "") => setWaPicker({ msgText }), []);
   const [replyTo, setReplyTo] = useState(null);
   const [replyText, setReplyText] = useState("");
   const [emailSub, setEmailSub] = useState("");
@@ -8902,6 +9042,16 @@ export default function BricksyTravel() {
     // Langsung selesaikan loading dengan DEFAULT_DATA agar halaman langsung tampil
     setIsLoading(false);
 
+    // Fast path: baca localStorage synchronously sebelum async ops
+    try {
+      const lsCache = localStorage.getItem("arutala-cache-v2");
+      if (lsCache) {
+        const merged = mergeWithDefaults(JSON.parse(lsCache), DEFAULT_DATA);
+        setData(merged);
+        dataRef.current = merged;
+      }
+    } catch {}
+
     (async () => {
       try {
         // 1. Load dari cache lokal dulu (lebih cepat)
@@ -8922,6 +9072,8 @@ export default function BricksyTravel() {
           const merged = mergeWithDefaults(parsed, DEFAULT_DATA);
           setData(merged);
           dataRef.current = merged;
+          // Sync ke localStorage untuk fast-path berikutnya
+          try { localStorage.setItem("arutala-cache-v2", fsData.payload); } catch {}
         }
       } catch (e) {
         console.warn("[Arutala] Gagal load data, pakai default.", e);
@@ -9068,7 +9220,7 @@ export default function BricksyTravel() {
     document.title = oneLiner;
   }); // tanpa dependency array → jalan setiap render, selalu up-to-date
 
-  const save = async (d) => {
+  const save = useCallback(async (d) => {
     // Selalu merge dengan DEFAULT_DATA sebelum simpan:
     // field baru yang ditambahkan di kode (lewat git push) tidak akan hilang
     const safeData = mergeWithDefaults(d, DEFAULT_DATA);
@@ -9078,12 +9230,13 @@ export default function BricksyTravel() {
     // Simpan ke Firestore (cloud) + window.storage (lokal backup)
     await fsSet("main", { payload, updatedAt: Date.now() });
     try { await window.storage?.set("bricksy-v2", payload); } catch {}
-  };
+    try { localStorage.setItem("arutala-cache-v2", payload); } catch {}
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const notify = (msg, type = "success") => {
+  const notify = useCallback((msg, type = "success") => {
     setNotif({ msg, type });
     setTimeout(() => setNotif(null), 3200);
-  };
+  }, []);
 
   const login = async () => {
     const u = HARDCODED_USERS.find(x => x.username === loginForm.username);
@@ -9194,17 +9347,17 @@ export default function BricksyTravel() {
     setForgotNewPass({ val: "", confirm: "" }); setForgotErr("");
   };
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null);
     sessionClear();
     closeAdmin();
     notify("Logged out.");
-  };
+  }, [notify]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const content = data.content; // shorthand alias
-  const isAdmin = user?.role === "admin";
-  const canEdit = user?.role === "admin" || user?.role === "content_writer";
-  const canCS = user?.role === "admin" || user?.role === "customer_services";
+  const content  = data.content || {}; // shorthand alias (guard untuk undefined)
+  const isAdmin  = useMemo(() => user?.role === "admin", [user?.role]);
+  const canEdit  = useMemo(() => user?.role === "admin" || user?.role === "content_writer", [user?.role]);
+  const canCS    = useMemo(() => user?.role === "admin" || user?.role === "customer_services", [user?.role]);
 
   const navigateTo = (p) => {
     const navPath = PAGE_TO_PATH[p] || "/";
@@ -9316,7 +9469,7 @@ export default function BricksyTravel() {
 
   // Post operations
   // silent=true → auto-save, tetap di editor, tanpa notif
-  const savePost = (post, silent = false) => {
+  const savePost = useCallback((post, silent = false) => {
     const section = post.section;
     const existing = (data.posts[section] || []);
     const idx = existing.findIndex(p => p.id === post.id);
@@ -9329,17 +9482,17 @@ export default function BricksyTravel() {
       setCmsEditPost(null);
       notify(post.status === "published" ? "Post published!" : "Saved as draft.");
     }
-  };
+  }, [data, save, notify]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const deletePost = (section, id) => {
+  const deletePost = useCallback((section, id) => {
     const newPosts = { ...data.posts, [section]: (data.posts[section] || []).filter(p => p.id !== id) };
     save({ ...data, posts: newPosts });
     notify("Post deleted.");
-  };
+  }, [data, save, notify]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const allPosts = Object.values(data.posts || {}).flat();
-  const publishedCount = allPosts.filter(p => p.status === "published").length;
-  const draftCount = allPosts.filter(p => p.status === "draft").length;
+  const allPosts       = useMemo(() => Object.values(data.posts || {}).flat(), [data.posts]);
+  const publishedCount = useMemo(() => allPosts.filter(p => p.status === "published").length, [allPosts]);
+  const draftCount     = useMemo(() => allPosts.filter(p => p.status === "draft").length, [allPosts]);
 
   // Contacts
   const submitMsg = () => {
