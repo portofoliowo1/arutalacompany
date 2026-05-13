@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
 /* ─────────────── DASHBOARD TABS SUB-COMPONENT ─────────────── */
-function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, canCS, isAdmin, setAdminTab, setCmsEditPost, SECTION_LABELS, SECTIONS, formatDate }) {
+const DashTabs = React.memo(function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, canCS, isAdmin, setAdminTab, setCmsEditPost, SECTION_LABELS, SECTIONS, formatDate }) {
   const [dashTab, setDashTab] = useState("notifications");
   const tabs = [
     { id: "notifications", label: "Notifikasi" },
@@ -57,7 +57,7 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
               ) : allPosts.slice(-5).reverse().map(p => (
                 <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 0", borderBottom: "1px solid #edfafc" }}>
                   <div style={{ width: 42, height: 42, borderRadius: 6, overflow: "hidden", flexShrink: 0, background: "#edfafc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
-                    {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img ? <img loading="lazy" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} onError={e=>e.target.style.display="none"} /> : "📄"; })()}
+                    {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img ? <img loading="lazy" decoding="async" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} onError={e=>e.target.style.display="none"} /> : "📄"; })()}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.title}</p>
@@ -194,7 +194,7 @@ function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, c
       </div>
     </div>
   );
-}
+});
 
 /* ─────────────── CONSTANTS ─────────────── */
 const ROLES = {
@@ -301,7 +301,7 @@ function uploadWithProgress(file, onProgress) {
 /**
  * GalleryImageTile — thumbnail gambar galeri dengan tombol URL & Upload + progress bar inline.
  */
-function GalleryImageTile({ src, onUrlEdit, onUploaded, onError }) {
+const GalleryImageTile = React.memo(function GalleryImageTile({ src, onUrlEdit, onUploaded, onError }) {
   const [item, setItem] = useState(null); // {name, pct, done, error} | null
   const inputRef = useRef();
 
@@ -325,7 +325,7 @@ function GalleryImageTile({ src, onUrlEdit, onUploaded, onError }) {
   return (
     <div style={{ width: 140 }}>
       <div style={{ position: "relative" }}>
-        <img loading="lazy" src={src} alt="" style={{ width: 140, height: 95, objectFit: "cover", borderRadius: 6, display: "block",
+        <img loading="lazy" decoding="async" src={src} alt="" style={{ width: 140, height: 95, objectFit: "cover", borderRadius: 6, display: "block",
           opacity: isUploading ? 0.5 : 1, transition: "opacity .2s" }} />
         {isUploading && (
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
@@ -366,20 +366,12 @@ function GalleryImageTile({ src, onUrlEdit, onUploaded, onError }) {
       </div>
     </div>
   );
-}
+});
 
 /**
  * UploadButton — tombol upload foto dengan progress bar inline.
- * Props:
- *   accept        string   (default "image/*")
- *   multiple      bool
- *   label         string   (teks tombol)
- *   onDone        (urls: string[]) => void
- *   onError       (msg: string) => void
- *   style         object   (override style tombol/label)
- *   dropZone      bool     (tampilkan sebagai drop zone besar)
  */
-function UploadButton({ accept = "image/*", multiple = false, label = "📁 Upload Gambar", onDone, onError, style: styleProp = {}, dropZone = false }) {
+const UploadButton = React.memo(function UploadButton({ accept = "image/*", multiple = false, label = "📁 Upload Gambar", onDone, onError, style: styleProp = {}, dropZone = false }) {
   const [items, setItems] = useState([]); // [{name, pct, done, error}]
   const inputRef = useRef();
   const isUploading = items.some(it => !it.done && !it.error);
@@ -471,7 +463,7 @@ function UploadButton({ accept = "image/*", multiple = false, label = "📁 Uplo
       {progressArea}
     </div>
   );
-}
+});
 
 /* ─── EmailJS Config ─── */
 const EJS = {
@@ -1634,8 +1626,11 @@ const DEFAULT_DATA = {
 
 /* ─────────────── GLOBAL STYLES ─────────────── */
 const GS = () => (
+  <>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@700;900&family=Montserrat:wght@700;800;900&family=Raleway:wght@700;800;900&family=Oswald:wght@600;700&family=Bebas+Neue&family=Lora:wght@700&family=Josefin+Sans:wght@700&family=Inter:wght@700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@700;900&family=Montserrat:wght@700;800;900&family=Raleway:wght@700;800;900&family=Oswald:wght@600;700&family=Bebas+Neue&family=Lora:wght@700&family=Josefin+Sans:wght@700&family=Inter:wght@700;800;900&display=swap&font-display=swap');
 
     /* ── FORCE LIGHT MODE — kebal dark mode OS/browser (semua platform) ── */
     :root {
@@ -1789,9 +1784,9 @@ const GS = () => (
     @media(max-width:768px){.hero-section{padding:48px 5% 52px}}
 
     /* Section padding */
-    .section-lg{padding:90px 0;position:relative;overflow:hidden}
+    .section-lg{padding:90px 0;position:relative;overflow:hidden;content-visibility:auto;contain-intrinsic-size:0 600px}
     .section-lg .section-inner{max-width:1340px;margin:0 auto;padding:0 72px}
-    .section-md{padding:80px 5%}
+    .section-md{padding:80px 5%;content-visibility:auto;contain-intrinsic-size:0 500px}
     @media(max-width:768px){.section-lg{padding:52px 0}.section-lg .section-inner{padding:0 20px}.section-md{padding:44px 5%}}
 
     /* Hero images grid: hide on mobile to prioritize text */
@@ -2018,6 +2013,13 @@ const GS = () => (
       input,textarea,select{font-size:16px!important} /* prevent iOS zoom */
     }
 
+    /* ── Performance: GPU-accelerated transitions & paint layers ── */
+    .hero-slide-item{will-change:opacity,transform}
+    .img-zoom img{will-change:transform}
+    .hover-lift{will-change:transform,box-shadow}
+    /* content-visibility: skip rendering off-screen sections */
+    .cv-auto{content-visibility:auto;contain-intrinsic-size:0 500px}
+
     /* Reduced motion */
     @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
@@ -2025,9 +2027,6 @@ const GS = () => (
        MOBILE OPTIMISATION — COMPREHENSIVE OVERHAUL
     ══════════════════════════════════════════════ */
 
-    /* 0. Base: box-sizing, no horizontal overflow */
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{overflow-x:hidden;width:100%;-webkit-text-size-adjust:100%}
     img,video,iframe{max-width:100%;height:auto;display:block}
 
     /* 1. Navbar — compact on mobile, fully opaque */
@@ -2229,9 +2228,6 @@ const GS = () => (
     /* ══════════════════════════════════════
        MOBILE FIRST — GLOBAL FIXES
     ══════════════════════════════════════ */
-    *{box-sizing:border-box}
-    html{overflow-x:hidden}
-    body{overflow-x:hidden;width:100%}
 
     /* Safe area for notch phones */
     @supports(padding:max(0px)){
@@ -2403,6 +2399,7 @@ const GS = () => (
       h1{font-size:clamp(1.6rem,9vw,2.2rem)!important}
     }
   `}</style>
+  </>
 );
 
 /* ─────────────── CEF: Content Edit Field (outside main to prevent remount) ─────────────── */
@@ -2422,7 +2419,7 @@ function CEF({ val, multiline, onChange, onSave }) {
 }
 
 /* ─────────────── LOGO DISPLAY ─────────────── */
-function LogoDisplay({ content, size = "nav" }) {
+const LogoDisplay = React.memo(function LogoDisplay({ content, size = "nav" }) {
   const rawText = content.logoText || "";
   const singleLine = content.logoSingleLine;
   const lines = singleLine ? [rawText.replace(/\n/g, " ")] : rawText.split("\n");
@@ -2441,7 +2438,7 @@ function LogoDisplay({ content, size = "nav" }) {
   if (content.logoImage) {
     return (
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <img src={content.logoImage} alt={content.logoText}
+        <img decoding="async" src={content.logoImage} alt={content.logoText}
           style={{ height: size === "nav" ? 88 : size === "footer" ? 64 : iconSz, maxWidth: size === "nav" ? 180 : size === "footer" ? 140 : 120, objectFit: "contain", display: "block" }} />
         <span className={brandClass} style={dynStyle}>
           {lines.map((line, i) => <span key={i} style={{ display: singleLine ? "inline" : "block" }}>{line}</span>)}
@@ -2469,7 +2466,7 @@ function LogoDisplay({ content, size = "nav" }) {
       </span>
     </div>
   );
-}
+});
 
 
 const slugify = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -2480,7 +2477,7 @@ const formatDate = (d) => {
 };
 
 /* ─────────────── RICH TEXT RENDERER ─────────────── */
-function RichRenderer({ blocks }) {
+const RichRenderer = React.memo(function RichRenderer({ blocks }) {
   if (!blocks || !blocks.length) return <p style={{ color: "#4a7f98", fontStyle: "italic" }}>No content yet.</p>;
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
@@ -2494,7 +2491,7 @@ function RichRenderer({ blocks }) {
         );
         if (b.type === "image") return (
           <figure key={i} style={{ margin: "10px 0" }}>
-            <img loading="lazy" src={b.value} alt={b.caption || ""} style={{ width: "100%", maxHeight: 460, objectFit: "cover", borderRadius: 8 }} />
+            <img loading="lazy" decoding="async" src={b.value} alt={b.caption || ""} style={{ width: "100%", maxHeight: 460, objectFit: "cover", borderRadius: 8 }} />
             {b.caption && <figcaption style={{ fontSize: "0.8125rem", color: "#1a5a78", textAlign: "center", marginTop: 10, fontStyle: "italic", lineHeight: 1.5 }}>{b.caption}</figcaption>}
           </figure>
         );
@@ -2533,14 +2530,14 @@ function RichRenderer({ blocks }) {
               <div style={{ fontSize: "0.6875rem", fontWeight: 700, color: "#0891b2", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 4 }}>Baca Juga</div>
               <div style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#0d3b66", lineHeight: 1.4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.title}</div>
             </div>
-            {b.coverImage && <img loading="lazy" src={b.coverImage} alt="" style={{ width: 64, height: 48, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
+            {b.coverImage && <img loading="lazy" decoding="async" src={b.coverImage} alt="" style={{ width: 64, height: 48, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
           </div>
         );
         return null;
       })}
     </div>
   );
-}
+});
 
 /* ─────────────── RICH PARAGRAPH EDITOR ─────────────── */
 function RichParagraphEditor({ value, onChange, placeholder = "Write your content here..." }) {
@@ -3041,7 +3038,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                   </div>
                 ) : b.type === "image" ? (
                   <div>
-                    <img loading="lazy" src={b.value} alt="" style={{ width: "100%", maxHeight: 480, objectFit: "contain", borderRadius: 6, background: "#f5fdff" }} onError={e => { e.target.style.display = "none"; }} />
+                    <img loading="lazy" decoding="async" src={b.value} alt="" style={{ width: "100%", maxHeight: 480, objectFit: "contain", borderRadius: 6, background: "#f5fdff" }} onError={e => { e.target.style.display = "none"; }} />
                     {b.caption && <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4, fontStyle: "italic" }}>{b.caption}</p>}
                   </div>
                 ) : b.type === "divider" ? (
@@ -3053,7 +3050,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                       <div style={{ fontSize: 10, fontWeight: 700, color: "#0891b2", textTransform: "uppercase", letterSpacing: ".06em" }}>Baca Juga</div>
                       <div style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.title}</div>
                     </div>
-                    {b.coverImage && <img loading="lazy" src={b.coverImage} alt="" style={{ width: 40, height: 30, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
+                    {b.coverImage && <img loading="lazy" decoding="async" src={b.coverImage} alt="" style={{ width: 40, height: 30, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
                   </div>
                 ) : b.type === "paragraph" ? (
                   <div style={{ fontSize: 13, color: "#4a6680", lineHeight: 1.6, wordBreak: "break-word" }}
@@ -3124,7 +3121,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                         </div>
                       </div>
                     ))}
-                    {addVal && <img loading="lazy" src={addVal} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 6, marginBottom: 8 }} />}
+                    {addVal && <img loading="lazy" decoding="async" src={addVal} alt="" style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: 6, marginBottom: 8 }} />}
                   </div>
                 ) : addType === "paragraph" ? (
                   <div style={{ marginBottom: 8 }}>
@@ -3176,7 +3173,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                   />
                   {bacaJugaSelected ? (
                     <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", background: "#e8f9fc", borderRadius: 8, border: "1.5px solid #0ea5c5" }}>
-                      {bacaJugaSelected.coverImage && <img loading="lazy" src={bacaJugaSelected.coverImage} alt="" style={{ width: 48, height: 36, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
+                      {bacaJugaSelected.coverImage && <img loading="lazy" decoding="async" src={bacaJugaSelected.coverImage} alt="" style={{ width: 48, height: 36, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
                       <span style={{ fontSize: 13, fontWeight: 600, color: "#0d3b66", flex: 1 }}>{bacaJugaSelected.title}</span>
                       <button onClick={() => setBacaJugaSelected(null)} style={{ fontSize: 11, color: "#e74c3c", background: "none", border: "none", cursor: "pointer", fontWeight: 700 }}>✕</button>
                     </div>
@@ -3191,7 +3188,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                           style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", cursor: "pointer", borderBottom: "1px solid #edfafc", transition: "background .12s" }}
                           onMouseEnter={e => e.currentTarget.style.background = "#edfafc"}
                           onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                          {p.coverImage && <img loading="lazy" src={p.coverImage} alt="" style={{ width: 40, height: 30, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
+                          {p.coverImage && <img loading="lazy" decoding="async" src={p.coverImage} alt="" style={{ width: 40, height: 30, objectFit: "cover", borderRadius: 4, flexShrink: 0 }} onError={e => e.target.style.display = "none"} />}
                           <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontSize: 13, fontWeight: 600, color: "#0d3b66", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.title}</div>
                             <div style={{ fontSize: 11, color: "#4a7f98" }}>{p.section}</div>
@@ -3308,7 +3305,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
 }
 
 /* ─────────────── POST CARD ─────────────── */
-function PostCard({ post, onClick, view = "grid" }) {
+const PostCard = React.memo(function PostCard({ post, onClick, view = "grid" }) {
   const firstImg = (post.content || []).find(b => b.type === "image")?.value;
 
   if (view === "list") return (
@@ -3317,7 +3314,7 @@ function PostCard({ post, onClick, view = "grid" }) {
         cursor: "pointer", boxShadow: "0 2px 10px rgba(0,0,0,.06)", marginBottom: 16 }}>
       {firstImg && (
         <div className="post-thumb" style={{ flexShrink: 0, width: 180, height: 130, overflow: "hidden" }}>
-          <img loading="lazy" src={firstImg} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
+          <img loading="lazy" decoding="async" src={firstImg} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s" }}
             onError={e => e.target.style.display = "none"} />
         </div>
       )}
@@ -3340,7 +3337,7 @@ function PostCard({ post, onClick, view = "grid" }) {
         boxShadow: "0 2px 10px rgba(0,0,0,.06)" }}>
       {firstImg && (
         <div className="img-zoom" style={{ height: 200, overflow: "hidden" }}>
-          <img loading="lazy" src={firstImg} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          <img loading="lazy" decoding="async" src={firstImg} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }}
             onError={e => e.target.style.display = "none"} />
         </div>
       )}
@@ -3369,10 +3366,10 @@ function PostCard({ post, onClick, view = "grid" }) {
       </div>
     </article>
   );
-}
+});
 
 /* ─────────────── ARTICLE DETAIL VIEW ─────────────── */
-function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
+const ArticleDetail = React.memo(function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
   const [copied, setCopied] = useState(false);
 
   /* Related: same category/section */
@@ -3539,7 +3536,7 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                 {artikelTerkait.map(p => (
                   <div key={p.id} className="art-terkait-card" onClick={() => handlePost(p)}>
                     {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img
-                      ? <div style={{ height: 120, overflow: "hidden" }}><img loading="lazy" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform .3s" }} onMouseEnter={e=>e.target.style.transform="scale(1.05)"} onMouseLeave={e=>e.target.style.transform="scale(1)"} onError={e=>e.target.style.display="none"} /></div>
+                      ? <div style={{ height: 120, overflow: "hidden" }}><img loading="lazy" decoding="async" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform .3s" }} onMouseEnter={e=>e.target.style.transform="scale(1.05)"} onMouseLeave={e=>e.target.style.transform="scale(1)"} onError={e=>e.target.style.display="none"} /></div>
                       : <div style={{ height: 120, background: "linear-gradient(135deg,#edfafc,#c0e8f0)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28 }}>📄</div>;
                     })()}
                     <div style={{ padding: "10px 12px 14px" }}>
@@ -3565,7 +3562,7 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                 {pilihanUntukmu.map(p => (
                   <div key={p.id} className="art-pilihan-card" onClick={() => handlePost(p)}>
                     {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img
-                      ? <div style={{ height: 140, overflow: "hidden" }}><img loading="lazy" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform .3s" }} onMouseEnter={e=>e.target.style.transform="scale(1.05)"} onMouseLeave={e=>e.target.style.transform="scale(1)"} onError={e=>e.target.style.display="none"} /></div>
+                      ? <div style={{ height: 140, overflow: "hidden" }}><img loading="lazy" decoding="async" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform .3s" }} onMouseEnter={e=>e.target.style.transform="scale(1.05)"} onMouseLeave={e=>e.target.style.transform="scale(1)"} onError={e=>e.target.style.display="none"} /></div>
                       : <div style={{ height: 140, background: "linear-gradient(135deg,#f5fdff,#edfafc)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}>🌟</div>;
                     })()}
                     <div style={{ padding: "12px 14px 16px" }}>
@@ -3612,7 +3609,7 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                   <div key={p.id} className="art-sb-card" onClick={() => handlePost(p)}>
                     <div className="art-sb-thumb">
                       {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img
-                        ? <img loading="lazy" src={img} alt="" onError={e=>e.target.style.display="none"} />
+                        ? <img loading="lazy" decoding="async" src={img} alt="" onError={e=>e.target.style.display="none"} />
                         : <div style={{ width:"100%", height:"100%", background:"#edfafc", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18 }}>📄</div>;
                       })()}
                     </div>
@@ -3670,7 +3667,7 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
                     onMouseEnter={e => e.currentTarget.style.background = "#f5fdff"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     {(() => { const img = (p.content||[]).find(b=>b.type==="image")?.value; return img
-                      ? <div style={{ width:36, height:36, borderRadius:6, overflow:"hidden", flexShrink:0 }}><img loading="lazy" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} onError={e=>e.target.style.display="none"} /></div>
+                      ? <div style={{ width:36, height:36, borderRadius:6, overflow:"hidden", flexShrink:0 }}><img loading="lazy" decoding="async" src={img} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }} onError={e=>e.target.style.display="none"} /></div>
                       : <div style={{ width:36, height:36, borderRadius:6, background:"#edfafc", flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>📄</div>;
                     })()}
                     <div style={{ flex: 1, minWidth: 0 }}>
@@ -3729,10 +3726,10 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
       </div>
     </div>
   );
-}
+});
 
 /* ─────────────── SECTION PAGE ─────────────── */
-function SectionPage({ section, posts, onReadPost }) {
+const SectionPage = React.memo(function SectionPage({ section, posts, onReadPost }) {
   const [filter, setFilter] = useState("All");
   const [viewMode, setViewMode] = useState("grid");
   const published = (posts[section] || []).filter(p => p.status === "published");
@@ -3850,7 +3847,7 @@ function SectionPage({ section, posts, onReadPost }) {
       </div>
     </div>
   );
-}
+});
 
 /* ─────────────── TRAVEL PACKAGE CARD (accordion price) ─────────────── */
 
@@ -3859,14 +3856,14 @@ function useIsMobile() {
   const [mobile, setMobile] = useState(() => window.innerWidth <= 640);
   useEffect(() => {
     const handler = () => setMobile(window.innerWidth <= 640);
-    window.addEventListener("resize", handler);
+    window.addEventListener("resize", handler, { passive: true });
     return () => window.removeEventListener("resize", handler);
   }, []);
   return mobile;
 }
 
 /* ── WIDE CARD for Custom Event / Wedding Package — full width horizontal layout ── */
-function EventWeddingCustomCardWide({ svc, onDetail, onWaOpen }) {
+const EventWeddingCustomCardWide = React.memo(function EventWeddingCustomCardWide({ svc, onDetail, onWaOpen }) {
   const [hovered, setHovered] = useState(false);
   const isMobile = useIsMobile();
   const ac = svc.badgeColor || "#7c3aed";
@@ -3894,7 +3891,7 @@ function EventWeddingCustomCardWide({ svc, onDetail, onWaOpen }) {
       <div style={{ position: "absolute", right: 100, bottom: -80, width: 180, height: 180, borderRadius: "50%", background: "rgba(255,255,255,.04)", pointerEvents: "none" }} />
       {/* Image */}
       <div style={{ position: "relative", width: isMobile ? "100%" : 320, height: isMobile ? 200 : "auto", flexShrink: 0, overflow: "hidden", borderRadius: isMobile ? "16px 16px 0 0" : "16px 0 0 16px" }}>
-        <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
+        <img loading="lazy" decoding="async" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.07)" : "scale(1)", opacity: 0.75 }}
           onError={e => { e.target.src = ""; }} />
         <div style={{ position: "absolute", inset: 0, background: isMobile ? "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.5) 100%)" : "linear-gradient(90deg,transparent 50%, rgba(0,0,0,.4) 100%)" }} />
@@ -3936,11 +3933,11 @@ function EventWeddingCustomCardWide({ svc, onDetail, onWaOpen }) {
       </div>
     </div>
   );
-}
+});
 
 /* ── WIDE CARD for Custom Package — full width horizontal layout ── */
 /* ─────────────── EVENT / WEDDING PACKAGE CARD (Traveling-style) ─────────────── */
-function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
+const EventWeddingPackageCard = React.memo(function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
   const [hovered, setHovered] = useState(false);
   const ac = svc.accent || (svc.category === "wedding" ? "#db2777" : "#0891b2");
   const al = svc.accentLight || (svc.category === "wedding" ? "#fff0f7" : "#edfafc");
@@ -3964,7 +3961,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
         }}>
         {/* Gambar kiri full height */}
         <div style={{ position: "relative", width: "40%", flexShrink: 0, overflow: "hidden" }}>
-          <img loading="lazy" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
+          <img loading="lazy" decoding="async" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block",
               transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
             onError={e => { e.target.src = ""; }} />
@@ -4046,7 +4043,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
 
       {/* Hero image with overlay title */}
       <div style={{ position: "relative", height: 190, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
-        <img loading="lazy" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
+        <img loading="lazy" decoding="async" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
           onError={e => { e.target.src = ""; }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 35%,rgba(0,0,0,.65) 100%)" }} />
@@ -4130,9 +4127,9 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
       </div>
     </div>
   );
-}
+});
 
-function TravelPackageCardWide({ svc, onDetail, onWaOpen }) {
+const TravelPackageCardWide = React.memo(function TravelPackageCardWide({ svc, onDetail, onWaOpen }) {
   const [hovered, setHovered] = useState(false);
   const isMobile = useIsMobile();
   const ac = svc.accent || "#7c3aed";
@@ -4153,7 +4150,7 @@ function TravelPackageCardWide({ svc, onDetail, onWaOpen }) {
       }}>
       {/* Image */}
       <div style={{ position: "relative", width: isMobile ? "100%" : 340, height: isMobile ? 210 : "auto", flexShrink: 0, overflow: "hidden" }}>
-        <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
+        <img loading="lazy" decoding="async" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.07)" : "scale(1)" }}
           onError={e => { e.target.src = ""; }} />
         <div style={{ position: "absolute", inset: 0, background: isMobile ? "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.4) 100%)" : "linear-gradient(90deg,transparent 60%,rgba(0,0,0,.35) 100%)" }} />
@@ -4200,9 +4197,9 @@ function TravelPackageCardWide({ svc, onDetail, onWaOpen }) {
       </div>
     </div>
   );
-}
+});
 
-function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
+const TravelPackageCard = React.memo(function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
   const [openIdx, setOpenIdx] = useState(null);
   const [hovered, setHovered] = useState(false);
   const [priceOpen, setPriceOpen] = useState(false);
@@ -4230,7 +4227,7 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
 
         {/* Gambar kiri — full height */}
         <div style={{ position: "relative", width: "42%", flexShrink: 0, overflow: "hidden" }}>
-          <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
+          <img loading="lazy" decoding="async" src={svc.images?.[0] || svc.image} alt={svc.title}
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block",
               transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
             onError={e => { e.target.src = ""; }} />
@@ -4375,7 +4372,7 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
 
       {/* Hero image */}
       <div style={{ position: "relative", height: 180, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
-        <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
+        <img loading="lazy" decoding="async" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
           onError={e => { e.target.src = ""; }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,transparent 40%,rgba(0,0,0,.55) 100%)" }} />
@@ -4539,7 +4536,7 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
       </div>
     </div>
   );
-}
+});
 
 /* ─────────────── TRAVEL DETAIL PRICE BLOCK (for service detail page) ─────────────── */
 function TravelDetailPriceBlock({ svc }) {
@@ -4632,7 +4629,7 @@ function TravelPackageDetailModal({ svc, onClose, onWaOpen }) {
         {/* ── Header with hero image ── */}
         <div style={{ position: "relative", flexShrink: 0 }}>
           <div style={{ height: 200, position: "relative", overflow: "hidden" }}>
-            <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
+            <img loading="lazy" decoding="async" src={svc.images?.[0] || svc.image} alt={svc.title}
               style={{ width: "100%", height: "100%", objectFit: "cover", opacity: .5 }}
               onError={e => { e.target.style.opacity = 0; }} />
             <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg,#0d3b66ee,${ac}bb)` }} />
@@ -4647,7 +4644,7 @@ function TravelPackageDetailModal({ svc, onClose, onWaOpen }) {
               <div style={{ position: "absolute", bottom: 12, left: 20, display: "flex", gap: 6 }}>
                 {svc.images.slice(0, 4).map((img, i) => (
                   <div key={i} style={{ width: 44, height: 32, borderRadius: 5, overflow: "hidden", border: `2px solid rgba(255,255,255,.4)`, flexShrink: 0, opacity: .85 }}>
-                    <img loading="lazy" src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
+                    <img loading="lazy" decoding="async" src={img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
                   </div>
                 ))}
               </div>
@@ -4689,7 +4686,7 @@ function TravelPackageDetailModal({ svc, onClose, onWaOpen }) {
                 <div style={{ background: "#fff", borderRadius: 13, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 3px 16px ${ac}12` }}>
                   <div style={{ display: "flex", flexWrap: "wrap", minHeight: 200 }}>
                     <div style={{ width: "clamp(130px,34%,220px)", flexShrink: 0, position: "relative", overflow: "hidden", background: `linear-gradient(135deg,${ac}55,#c5e8f0)`, alignSelf: "stretch", minHeight: 200 }}>
-                      <img loading="lazy" src={dest.img} alt={dest.name}
+                      <img loading="lazy" decoding="async" src={dest.img} alt={dest.name}
                         style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                         onLoad={e => { e.target.style.opacity = "1"; }}
                         onError={e => { e.target.style.opacity = "0"; }} />
@@ -4872,7 +4869,7 @@ function DestinationsSection({ svc, catInfo }) {
         <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
           <div style={{ width: "100%", position: "relative", height: 320, overflow: "hidden" }}>
             {dest.img ? (
-              <img loading="lazy" src={dest.img} alt={dest.name}
+              <img loading="lazy" decoding="async" src={dest.img} alt={dest.name}
                 style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block", transition: "transform .4s ease" }}
                 onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
                 onMouseLeave={e => e.target.style.transform = "scale(1)"}
@@ -4979,7 +4976,7 @@ function ServiceHeroSlideshow({ slides, catColor }) {
 
       <div style={{ flex: 1, position: "relative", minHeight: 400 }}>
         {/* Slide image */}
-        <img key={cur} loading="lazy" src={slide.img} alt={slide.name}
+        <img key={cur} loading="lazy" decoding="async" src={slide.img} alt={slide.name}
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", position: "absolute", inset: 0, animation: "heroFadeIn .6s ease both" }}
           onError={e => { e.target.src = ""; }} />
 
@@ -5079,7 +5076,7 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
         onMouseLeave={() => setPaused(false)}
       >
         {/* Current slide */}
-        <img key={`cur-${cur}`} loading="lazy" src={slide.img} alt={slide.name}
+        <img key={`cur-${cur}`} loading="lazy" decoding="async" src={slide.img} alt={slide.name}
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block",
             animation: `slideIn${dir > 0 ? "R" : "L"} .55s cubic-bezier(.22,1,.36,1) both` }}
           onError={e => { e.target.src = ""; }} />
@@ -5135,7 +5132,7 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
               style={{ flexShrink: 0, width: 72, height: 50, borderRadius: 7, overflow: "hidden", cursor: "pointer",
                 border: i === cur ? `2.5px solid ${catColor}` : "2.5px solid transparent",
                 opacity: i === cur ? 1 : 0.55, transition: "all .25s", boxShadow: i === cur ? `0 0 0 1px ${catColor}55` : "none" }}>
-              <img loading="lazy" src={s.img} alt={s.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              <img loading="lazy" decoding="async" src={s.img} alt={s.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                 onError={e => e.target.src = ""} />
             </div>
           ))}
@@ -5485,7 +5482,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                     onMouseEnter={e => e.currentTarget.style.boxShadow = "0 8px 28px rgba(13,59,102,.14)"}
                     onMouseLeave={e => e.currentTarget.style.boxShadow = "0 2px 10px rgba(13,59,102,.07)"}>
                     <div style={{ width: 90, flexShrink: 0, overflow: "hidden" }}>
-                      <img loading="lazy" src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
+                      <img loading="lazy" decoding="async" src={s.images?.[0] || s.image} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .3s" }}
                         onError={e => e.target.src = ""} />
                     </div>
                     <div style={{ width: 3, flexShrink: 0, background: `linear-gradient(to bottom, ${s.badgeColor || "#0891b2"}, transparent)` }} />
@@ -5922,7 +5919,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                 const isCover=(svcForm.coverIndex||0)===i;
                 return (
                   <div key={i} style={{ position:"relative", borderRadius:7, overflow:"hidden", border:isCover?"3px solid #0891b2":"2px solid #c0e8f0" }}>
-                    <img loading="lazy" src={img} alt="" style={{ width:"100%", height:68, objectFit:"cover", display:"block" }} />
+                    <img loading="lazy" decoding="async" src={img} alt="" style={{ width:"100%", height:68, objectFit:"cover", display:"block" }} />
                     {isCover && <div style={{ position:"absolute", top:0, left:0, right:0, background:"rgba(8,145,178,.85)", color:"#fff", fontSize:9, fontWeight:800, textAlign:"center", padding:"2px 0" }}>✔ COVER</div>}
                     <div style={{ position:"absolute", bottom:0, left:0, right:0, display:"flex", gap:2, padding:"4px", background:"linear-gradient(0deg,rgba(0,0,0,.65),transparent)" }}>
                       {!isCover && <button onClick={()=>setSvcForm(p=>({...p,coverIndex:i,image:p.images[i]}))} style={{ flex:1, fontSize:8, fontWeight:800, background:"#0891b2", color:"#fff", border:"none", borderRadius:3, padding:"3px 1px", cursor:"pointer" }}>📌</button>}
@@ -6166,7 +6163,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                             )}
                             <label style={{ cursor:"pointer", display:"block" }}>
                               <div style={{ height:100, border:"2px dashed #fde68a", borderRadius:7, background:"#fffdf0", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden" }}>
-                                {dest.img ? <img src={dest.img} alt="" style={{ width:"100%", height:"100%", objectFit:"contain" }} /> : <div style={{ textAlign:"center", color:"#e8a020", opacity:.7 }}><div style={{ fontSize:"1.4rem" }}>📷</div><div style={{ fontSize:10, fontWeight:600, marginTop:2 }}>Upload</div></div>}
+                                {dest.img ? <img decoding="async" src={dest.img} alt="" style={{ width:"100%", height:"100%", objectFit:"contain" }} /> : <div style={{ textAlign:"center", color:"#e8a020", opacity:.7 }}><div style={{ fontSize:"1.4rem" }}>📷</div><div style={{ fontSize:10, fontWeight:600, marginTop:2 }}>Upload</div></div>}
                               </div>
                               <input type="file" accept="image/*" onChange={e=>handleDestImg(di,e)} style={{ display:"none" }} />
                             </label>
@@ -6367,7 +6364,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                           border: isCover ? "3px solid #0891b2" : "2px solid #c0e8f0",
                           boxShadow: isCover ? "0 0 0 2px rgba(8,145,178,.2)" : "none",
                           transition: "border .15s" }}>
-                          <img loading="lazy" src={img} alt="" style={{ width: "100%", height: 84, objectFit: "cover", display: "block" }} />
+                          <img loading="lazy" decoding="async" src={img} alt="" style={{ width: "100%", height: 84, objectFit: "cover", display: "block" }} />
                           {isCover && (
                             <div style={{ position: "absolute", top: 0, left: 0, right: 0, background: "rgba(8,145,178,.85)", color: "#fff", fontSize: 9, fontWeight: 800, textAlign: "center", padding: "3px 0", letterSpacing: "1px" }}>
                               ✔ COVER
@@ -6562,7 +6559,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                             <label style={{ cursor: "pointer", display: "block" }}>
                               <div style={{ height: 120, border: "2px dashed #fde68a", borderRadius: 8, background: "#fffbeb", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", position: "relative" }}>
                                 {dest.img ? (
-                                  <img src={dest.img} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                  <img decoding="async" src={dest.img} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                                 ) : (
                                   <div style={{ textAlign: "center", color: "#e8a020", opacity: .7 }}>
                                     <div style={{ fontSize: "1.5rem" }}>📷</div>
@@ -6697,7 +6694,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                       {/* Left: thumbnail + info */}
                       <div style={{ display: "flex", gap: 12, alignItems: "center", minWidth: 0 }}>
                         {svc.image && (
-                          <img loading="lazy" src={svc.image} alt={svc.title} style={{ width: 64, height: 48, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
+                          <img loading="lazy" decoding="async" src={svc.image} alt={svc.title} style={{ width: 64, height: 48, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
                         )}
                         <div style={{ minWidth: 0 }}>
                           <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap", marginBottom: 2 }}>
@@ -6804,7 +6801,7 @@ function AboutPage({ content, images, teamMembers, onWaOpen }) {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             {images.hero.slice(0, 4).map((src, i) => (
               <div key={i} className="img-zoom" style={{ borderRadius: 8, overflow: "hidden", aspectRatio: "4/3", boxShadow: "0 8px 24px rgba(13,59,102,.15)" }}>
-                <img loading="lazy" src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <img loading="lazy" decoding="async" src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             ))}
           </div>
@@ -6888,7 +6885,7 @@ function AboutPage({ content, images, teamMembers, onWaOpen }) {
                   {/* Photo */}
                   <div style={{ height: 220, overflow: "hidden", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", position: "relative" }}>
                     {member.photo ? (
-                      <img loading="lazy" src={member.photo} alt={member.name}
+                      <img loading="lazy" decoding="async" src={member.photo} alt={member.name}
                         style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block", transition: "transform .4s ease" }}
                         onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
                         onMouseLeave={e => e.target.style.transform = "scale(1)"}
@@ -7149,7 +7146,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
           </div>
           <div style={{ marginBottom: 20 }}>
             <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Foto</label>
-            {form.photo && <img loading="lazy" src={form.photo} alt="preview" style={{ height: 80, width: 80, objectFit: "cover", borderRadius: "50%", marginBottom: 10, border: "2px solid #c0e8f0" }} />}
+            {form.photo && <img loading="lazy" decoding="async" src={form.photo} alt="preview" style={{ height: 80, width: 80, objectFit: "cover", borderRadius: "50%", marginBottom: 10, border: "2px solid #c0e8f0" }} />}
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <UploadButton label="📁 Upload Foto Tim"
                 onDone={urls => { setForm(p => ({ ...p, photo: urls[0] })); notify("Foto berhasil diupload!"); }}
@@ -7171,7 +7168,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
         {members.map(m => (
           <div key={m.id} style={{ background: "#fff", borderRadius: 12, padding: "20px", boxShadow: "0 2px 8px rgba(0,0,0,.06)", display: "flex", flexDirection: "column", gap: 12, alignItems: "center", textAlign: "center" }}>
             <div style={{ width: 72, height: 72, borderRadius: "50%", overflow: "hidden", background: "#edfafc", border: "2px solid #c0e8f0", flexShrink: 0 }}>
-              {m.photo ? <img loading="lazy" src={m.photo} alt={m.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>👤</div>}
+              {m.photo ? <img loading="lazy" decoding="async" src={m.photo} alt={m.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30 }}>👤</div>}
             </div>
             <div>
               <div style={{ fontWeight: 700, color: "#0d3b66", fontSize: 14 }}>{m.name}</div>
@@ -7196,7 +7193,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
 }
 
 /* ─────────────── ADV SECTION (puzzle + quote slideshow) ─────────────── */
-function AdvSection({ data, navigateTo }) {
+const AdvSection = React.memo(function AdvSection({ data, navigateTo }) {
   const [advQ, setAdvQ] = useState(0);
   const quotes = (data.content.advQuote || "").split(/\n+/).filter(Boolean);
   const safeQuotes = quotes.length ? quotes : [data.content.advQuote || ""];
@@ -7271,27 +7268,27 @@ function AdvSection({ data, navigateTo }) {
         {/* KANAN: Puzzle grid gambar */}
         <div className="adv2-puzzle">
           <div className="adv2-puzzle-a">
-            <img loading="lazy" src={puzzleImgs[0]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+            <img loading="lazy" decoding="async" src={puzzleImgs[0]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
           </div>
           <div className="adv2-puzzle-b">
-            <img loading="lazy" src={puzzleImgs[1]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+            <img loading="lazy" decoding="async" src={puzzleImgs[1]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
           </div>
           <div className="adv2-puzzle-c">
             <div className="adv2-puzzle-c-sm">
-              <img loading="lazy" src={puzzleImgs[2]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+              <img loading="lazy" decoding="async" src={puzzleImgs[2]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
             </div>
             <div className="adv2-puzzle-c-sm">
-              <img loading="lazy" src={puzzleImgs[3]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
+              <img loading="lazy" decoding="async" src={puzzleImgs[3]} alt="Destinasi" style={{ width:"100%",height:"100%",objectFit:"cover" }} />
             </div>
           </div>
         </div>
       </div>
     </section>
   );
-}
+});
 
 /* ─────────────── HOME INTRO SLIDESHOW (panel kiri beranda) ─────────────── */
-function HomeIntroSlideshow({ data }) {
+const HomeIntroSlideshow = React.memo(function HomeIntroSlideshow({ data }) {
   // Kumpulkan SEMUA foto dari seluruh sumber di website
   const seen = new Set();
   const allImgs = [];
@@ -7343,7 +7340,7 @@ function HomeIntroSlideshow({ data }) {
       <style>{`@keyframes introImgSlide { from { opacity:0; transform:scale(1.05); } to { opacity:1; transform:scale(1); } }`}</style>
       {allImgs.map((img, i) => (
         i === cur ? (
-          <img key={i} src={img.src} alt={img.label}
+          <img decoding="async" key={i} src={img.src} alt={img.label}
             style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", display: "block", animation: "introImgSlide .7s cubic-bezier(.22,1,.36,1) both", zIndex: 1 }}
             onError={e => { e.target.style.opacity = "0"; }} />
         ) : null
@@ -7363,10 +7360,10 @@ function HomeIntroSlideshow({ data }) {
       )}
     </div>
   );
-}
+});
 
 /* ─────────────── HERO SLIDESHOW ─────────────── */
-function HeroSlideshow({ data, navigateTo }) {
+const HeroSlideshow = React.memo(function HeroSlideshow({ data, navigateTo }) {
   const heroMode = data.content?.heroMode || "slideshow";
 
   // ── MODE STATIC: tampilkan satu gambar diam ──
@@ -7375,7 +7372,7 @@ function HeroSlideshow({ data, navigateTo }) {
     return (
       <section style={{ position: "relative", width: "100%", height: "clamp(560px,88vh,800px)", overflow: "hidden", background: "#04080f" }}>
         {staticSrc && (
-          <img src={staticSrc} alt="Hero" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          <img decoding="async" src={staticSrc} alt="Hero" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
         )}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.35) 0%, rgba(10,20,35,.78) 100%)" }} />
         <div style={{ position: "absolute", inset: 0, zIndex: 10, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 6%", textAlign: "center" }}>
@@ -7530,13 +7527,13 @@ function HeroSlideshow({ data, navigateTo }) {
         {/* Prev slide (exit) */}
         {animating && prevSl && (
           <div style={getExitStyle(anim)}>
-            <img loading="lazy" src={prevSl.src} alt="" className="hero-slide-img-exit" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            <img loading="lazy" decoding="async" src={prevSl.src} alt="" className="hero-slide-img-exit" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.5) 0%, rgba(10,20,35,.75) 100%)" }} />
           </div>
         )}
         {/* Current slide (enter) */}
         <div style={getEnterStyle(anim)}>
-          <img loading="lazy" src={sl.src} alt={sl.title} className="hero-slide-img-idle" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+          <img loading="eager" decoding="async" fetchPriority="high" src={sl.src} alt={sl.title} className="hero-slide-img-idle" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.35) 0%, rgba(10,20,35,.78) 100%)" }} />
         </div>
       </div>
@@ -7612,7 +7609,7 @@ function HeroSlideshow({ data, navigateTo }) {
       </div>
     </section>
   );
-}
+});
 
 /* ─────────────── REVIEW FORM (Public, One-Time Token) ─────────────── */
 function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
@@ -7627,7 +7624,6 @@ function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#edfafc,#e8f4fd)" }}>
       <div style={{ textAlign: "center" }}>
         <div style={{ width: 56, height: 56, border: "4px solid #c0e8f0", borderTopColor: "#0891b2", borderRadius: "50%", animation: "spin 0.8s linear infinite", margin: "0 auto 20px" }} />
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
         <p style={{ color: "#4a7f98", fontSize: "0.9375rem", fontWeight: 500 }}>Memuat form ulasan…</p>
       </div>
     </div>
@@ -7731,7 +7727,7 @@ function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
             <label style={{ fontSize: "0.75rem", fontWeight: 700, color: "#4a7f98", letterSpacing: ".08em", textTransform: "uppercase" }}>Foto Profil (Opsional)</label>
             <div style={{ display: "flex", alignItems: "flex-start", gap: 16 }}>
               <div style={{ width: 60, height: 60, borderRadius: "50%", background: form.photo ? "transparent" : "linear-gradient(135deg,#c0e8f0,#c5dde9)", border: "2px solid #c0e8f0", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {form.photo ? <img loading="lazy" src={form.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ fontSize: 24 }}>👤</span>}
+                {form.photo ? <img loading="lazy" decoding="async" src={form.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ fontSize: 24 }}>👤</span>}
               </div>
               <div style={{ flex: 1 }}>
                 <input type="file" accept="image/*" onChange={e => handlePhotoUpload(e.target.files?.[0])}
@@ -7815,7 +7811,7 @@ function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
 }
 
 /* ─────────────── REVIEW SLIDESHOW (Home Page) ─────────────── */
-function ReviewSlideshow({ reviews }) {
+const ReviewSlideshow = React.memo(function ReviewSlideshow({ reviews }) {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef(null);
@@ -7970,9 +7966,9 @@ function ReviewSlideshow({ reviews }) {
       )}
     </section>
   );
-}
+});
 
-function ReviewCard({ review }) {
+const ReviewCard = React.memo(function ReviewCard({ review }) {
   const stars = review.stars || 5;
   return (
     <div style={{ background: "#fff", borderRadius: 16, padding: "28px 24px", boxShadow: "0 4px 24px rgba(13,59,102,.08)", border: "1px solid #e0f7fa", height: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
@@ -7990,7 +7986,7 @@ function ReviewCard({ review }) {
       <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 12, borderTop: "1px solid #f0f4f8" }}>
         <div style={{ width: 44, height: 44, borderRadius: "50%", overflow: "hidden", flexShrink: 0, background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>
           {review.photo
-            ? <img loading="lazy" src={review.photo} alt={review.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            ? <img loading="lazy" decoding="async" src={review.photo} alt={review.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             : <span style={{ color: "#fff", fontWeight: 700, fontSize: "1rem" }}>{review.name?.charAt(0)?.toUpperCase() || "?"}</span>
           }
         </div>
@@ -8004,7 +8000,7 @@ function ReviewCard({ review }) {
       </div>
     </div>
   );
-}
+});
 
 
 /* ─────────────── ADMIN REVIEWS COMPONENT ─────────────── */
@@ -8138,7 +8134,7 @@ function AdminReviews({ data, save, notify }) {
             <div key={r.id} style={{ border: "1px solid #e0f7fa", borderRadius: 10, overflow: "hidden" }}>
               <div style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "16px 20px" }}>
                 <div style={{ width: 48, height: 48, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18 }}>
-                  {r.photo ? <img loading="lazy" src={r.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : r.name?.charAt(0)?.toUpperCase()}
+                  {r.photo ? <img loading="lazy" decoding="async" src={r.photo} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : r.name?.charAt(0)?.toUpperCase()}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
@@ -8902,6 +8898,16 @@ export default function BricksyTravel() {
     // Langsung selesaikan loading dengan DEFAULT_DATA agar halaman langsung tampil
     setIsLoading(false);
 
+    // FAST PATH: baca localStorage synchronously untuk zero-wait data restore
+    try {
+      const lsCache = localStorage.getItem("arutala-cache-v2");
+      if (lsCache) {
+        const merged = mergeWithDefaults(JSON.parse(lsCache), DEFAULT_DATA);
+        setData(merged);
+        dataRef.current = merged;
+      }
+    } catch {}
+
     (async () => {
       try {
         // 1. Load dari cache lokal dulu (lebih cepat)
@@ -8922,6 +8928,8 @@ export default function BricksyTravel() {
           const merged = mergeWithDefaults(parsed, DEFAULT_DATA);
           setData(merged);
           dataRef.current = merged;
+          // Sync ke localStorage agar next load lebih cepat
+          try { localStorage.setItem("arutala-cache-v2", fsData.payload); } catch {}
         }
       } catch (e) {
         console.warn("[Arutala] Gagal load data, pakai default.", e);
@@ -8990,8 +8998,10 @@ export default function BricksyTravel() {
     document.body.style.filter = "none";
   }, []);
 
-  // ── Static Glitch Pixel Cursor ───────────────────────────────────────────
+  // ── Static Glitch Pixel Cursor — desktop pointer:fine only ──────────────
   useEffect(() => {
+    // Skip entirely on touch/mobile — saves canvas + style injection cost
+    if (!window.matchMedia("(pointer:fine)").matches) return;
     const S = 2; // ukuran 1 pixel art = 2px
     const size = 64;
     const c = document.createElement("canvas");
@@ -9066,9 +9076,9 @@ export default function BricksyTravel() {
     const raw = data.content.logoText || "ARUTALA ORGANIZER";
     const oneLiner = raw.replace(/\n/g, " ").replace(/\s+/g, " ").trim().toUpperCase();
     document.title = oneLiner;
-  }); // tanpa dependency array → jalan setiap render, selalu up-to-date
+  }, [data.content.logoText]); // hanya jalankan saat logoText berubah
 
-  const save = async (d) => {
+  const save = useCallback(async (d) => {
     // Selalu merge dengan DEFAULT_DATA sebelum simpan:
     // field baru yang ditambahkan di kode (lewat git push) tidak akan hilang
     const safeData = mergeWithDefaults(d, DEFAULT_DATA);
@@ -9078,12 +9088,13 @@ export default function BricksyTravel() {
     // Simpan ke Firestore (cloud) + window.storage (lokal backup)
     await fsSet("main", { payload, updatedAt: Date.now() });
     try { await window.storage?.set("bricksy-v2", payload); } catch {}
-  };
+    try { localStorage.setItem("arutala-cache-v2", payload); } catch {}
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const notify = (msg, type = "success") => {
+  const notify = useCallback((msg, type = "success") => {
     setNotif({ msg, type });
     setTimeout(() => setNotif(null), 3200);
-  };
+  }, []);
 
   const login = async () => {
     const u = HARDCODED_USERS.find(x => x.username === loginForm.username);
@@ -9202,9 +9213,9 @@ export default function BricksyTravel() {
   };
 
   const content = data.content; // shorthand alias
-  const isAdmin = user?.role === "admin";
-  const canEdit = user?.role === "admin" || user?.role === "content_writer";
-  const canCS = user?.role === "admin" || user?.role === "customer_services";
+  const isAdmin = useMemo(() => user?.role === "admin", [user?.role]);
+  const canEdit = useMemo(() => user?.role === "admin" || user?.role === "content_writer", [user?.role]);
+  const canCS   = useMemo(() => user?.role === "admin" || user?.role === "customer_services", [user?.role]);
 
   const navigateTo = (p) => {
     const navPath = PAGE_TO_PATH[p] || "/";
@@ -9337,9 +9348,9 @@ export default function BricksyTravel() {
     notify("Post deleted.");
   };
 
-  const allPosts = Object.values(data.posts || {}).flat();
-  const publishedCount = allPosts.filter(p => p.status === "published").length;
-  const draftCount = allPosts.filter(p => p.status === "draft").length;
+  const allPosts = useMemo(() => Object.values(data.posts || {}).flat(), [data.posts]);
+  const publishedCount = useMemo(() => allPosts.filter(p => p.status === "published").length, [allPosts]);
+  const draftCount = useMemo(() => allPosts.filter(p => p.status === "draft").length, [allPosts]);
 
   // Contacts
   const submitMsg = () => {
@@ -9586,7 +9597,7 @@ export default function BricksyTravel() {
                         onMouseEnter={e => { e.currentTarget.style.borderRadius = "50%"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(34,211,238,.6), 0 6px 20px rgba(0,0,0,.3)"; }}
                         onMouseLeave={e => { e.currentTarget.style.borderRadius = "30% 70% 70% 30% / 30% 30% 70% 70%"; e.currentTarget.style.boxShadow = "0 0 0 3px rgba(8,145,178,.4), 0 4px 14px rgba(0,0,0,.22)"; }}>
                         {user.photo
-                          ? <img loading="lazy" src={user.photo} alt={user.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                          ? <img loading="lazy" decoding="async" src={user.photo} alt={user.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                           : <span style={{ color: "#fff", fontWeight: 800, fontSize: "1rem" }}>{(user.name || user.username || "?")[0].toUpperCase()}</span>
                         }
                       </div>
@@ -9997,7 +10008,7 @@ export default function BricksyTravel() {
                                 <div key={i} className="gal-ticker-item hover-lift"
                                   onClick={() => { if (item.post) openArticle(item.post); }}
                                   style={{ cursor: item.post ? "pointer" : "default" }}>
-                                  <img loading="lazy" src={item.src} alt={item.title || ""} />
+                                  <img loading="lazy" decoding="async" src={item.src} alt={item.title || ""} />
                                 </div>
                               ))}
                             </div>
@@ -10043,13 +10054,13 @@ export default function BricksyTravel() {
                     <div style={{ maxWidth: 1200, margin: "0 auto" }} className="grid-2">
                       <div className="book-img-grid">
                         <div className="img-zoom" style={{ gridColumn: "span 2", borderRadius: 4, overflow: "hidden" }}>
-                          <img loading="lazy" src={data.images.adv[1]} alt="" style={{ width: "100%", height: 200, objectFit: "cover" }} />
+                          <img loading="lazy" decoding="async" src={data.images.adv[1]} alt="" style={{ width: "100%", height: 200, objectFit: "cover" }} />
                         </div>
                         <div className="img-zoom" style={{ borderRadius: 4, overflow: "hidden" }}>
-                          <img loading="lazy" src={data.images.adv[0]} alt="" style={{ width: "100%", height: 150, objectFit: "cover" }} />
+                          <img loading="lazy" decoding="async" src={data.images.adv[0]} alt="" style={{ width: "100%", height: 150, objectFit: "cover" }} />
                         </div>
                         <div className="img-zoom" style={{ borderRadius: 4, overflow: "hidden" }}>
-                          <img loading="lazy" src={data.images.gal[2]} alt="" style={{ width: "100%", height: 150, objectFit: "cover" }} />
+                          <img loading="lazy" decoding="async" src={data.images.gal[2]} alt="" style={{ width: "100%", height: 150, objectFit: "cover" }} />
                         </div>
                       </div>
                       <div>
@@ -10294,7 +10305,7 @@ export default function BricksyTravel() {
                           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                             {data.images.gal.slice(0, 6).map((src, i) => (
                               <div key={i} style={{ borderRadius: 4, overflow: "hidden" }}>
-                                <img loading="lazy" src={src} alt="" style={{ width: "100%", height: 56, objectFit: "cover" }} />
+                                <img loading="lazy" decoding="async" src={src} alt="" style={{ width: "100%", height: 56, objectFit: "cover" }} />
                               </div>
                             ))}
                           </div>
@@ -10662,7 +10673,7 @@ export default function BricksyTravel() {
                   {/* Avatar - Full Frame */}
                   <div style={{ width:"100%", height:130, borderRadius:10, overflow:"hidden", flexShrink:0, position:"relative", background:"linear-gradient(130deg,#0891b2,#10d0e0)", boxShadow:"0 4px 16px rgba(0,0,0,.35)" }}>
                     {user.photo
-                      ? <img src={user.photo} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top" }} onError={e=>e.target.style.display="none"} />
+                      ? <img decoding="async" src={user.photo} alt="" style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center top" }} onError={e=>e.target.style.display="none"} />
                       : <div style={{ width:"100%", height:"100%", display:"flex", alignItems:"center", justifyContent:"center", fontSize:48, color:"#fff", fontWeight:800, fontFamily:"'Playfair Display',serif" }}>{(user.name?.[0]||user.username?.[0]||"A").toUpperCase()}</div>
                     }
                   </div>
@@ -10742,7 +10753,7 @@ export default function BricksyTravel() {
                     <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28, color: "#fff", fontWeight: 700, fontFamily: "'Playfair Display',serif", border: "3px solid #c0e8f0", overflow: "hidden", cursor: "pointer" }}
                       onClick={() => navigateAdminTab("profile")} title="Edit Profil">
                       {user.photo
-                        ? <img loading="lazy" src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        ? <img loading="lazy" decoding="async" src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         : (user.name || user.username).charAt(0).toUpperCase()}
                     </div>
                     {/* Info */}
@@ -10826,7 +10837,7 @@ export default function BricksyTravel() {
                     <div style={{ background: "#fff", borderRadius: 12, padding: "28px 24px", boxShadow: "0 2px 12px rgba(0,0,0,.07)", textAlign: "center" }}>
                       <div style={{ width: 100, height: 100, borderRadius: "50%", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 50%,#0aa8bf 100%)", margin: "0 auto 16px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 36, color: "#fff", fontWeight: 700, overflow: "hidden", border: "3px solid #c0e8f0" }}>
                         {user.photo
-                          ? <img loading="lazy" src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                          ? <img loading="lazy" decoding="async" src={user.photo} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                           : (user.name || user.username).charAt(0).toUpperCase()}
                       </div>
                       <p style={{ fontSize: 14, fontWeight: 700, color: "#0d3b66", marginBottom: 2 }}>{user.name || user.username}</p>
@@ -11064,7 +11075,7 @@ export default function BricksyTravel() {
                         <button onClick={() => setEditImg({ group: null, idx: null, url: "" })}
                           style={{ padding: "10px 20px", background: "#eee", borderRadius: 6, fontSize: 13, border: "none" }}>Cancel</button>
                       </div>
-                      {editImg.url && <img loading="lazy" src={editImg.url} alt="" style={{ width: 200, height: 130, objectFit: "cover", borderRadius: 6, marginTop: 12 }} />}
+                      {editImg.url && <img loading="lazy" decoding="async" src={editImg.url} alt="" style={{ width: 200, height: 130, objectFit: "cover", borderRadius: 6, marginTop: 12 }} />}
                     </div>
                   )}
                   {[
@@ -11730,7 +11741,7 @@ export default function BricksyTravel() {
                     <div style={{ display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
                       {data.content.logoImage && (
                         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
-                          <img src={data.content.logoImage} alt="Logo" style={{ height: 60, maxWidth: 180, objectFit: "contain", border: "1px solid #e0f7fa", borderRadius: 6, padding: 8, background: "#edfafc" }} />
+                          <img decoding="async" src={data.content.logoImage} alt="Logo" style={{ height: 60, maxWidth: 180, objectFit: "contain", border: "1px solid #e0f7fa", borderRadius: 6, padding: 8, background: "#edfafc" }} />
                           <button onClick={() => { save({ ...data, content: { ...data.content, logoImage: "" } }); notify("Logo removed."); }}
                             style={{ fontSize: 11, padding: "4px 12px", background: "#fee", color: "#e74c3c", borderRadius: 6, border: "none" }}>Remove Logo</button>
                         </div>
@@ -11844,7 +11855,7 @@ export default function BricksyTravel() {
                           onError={() => notify("Gagal upload. Coba lagi.", "error")} />
                         {/* Preview */}
                         {data.content.heroStaticImage && (
-                          <img src={data.content.heroStaticImage} alt="Hero Preview"
+                          <img decoding="async" src={data.content.heroStaticImage} alt="Hero Preview"
                             style={{ width: "100%", maxHeight: 180, objectFit: "cover", borderRadius: 8, border: "1px solid #d8b4fe" }}
                             onError={e => e.target.style.display = "none"} />
                         )}
