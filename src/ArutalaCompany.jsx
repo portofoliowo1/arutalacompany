@@ -3442,7 +3442,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
 }
 
 /* ─────────────── POST CARD ─────────────── */
-const PostCard = React.memo(function PostCard({ post, onClick, view = "grid" }) {
+function PostCard({ post, onClick, view = "grid" }) {
   const firstImg = (post.content || []).find(b => b.type === "image")?.value;
 
   if (view === "list") return (
@@ -3504,7 +3504,6 @@ const PostCard = React.memo(function PostCard({ post, onClick, view = "grid" }) 
     </article>
   );
 }
-);
 
 /* ─────────────── ARTICLE DETAIL VIEW ─────────────── */
 function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
@@ -7331,7 +7330,7 @@ function TeamAdmin({ data, save, notify, uploadToCloudinary }) {
 }
 
 /* ─────────────── ADV SECTION (puzzle + quote slideshow) ─────────────── */
-const AdvSection = React.memo(function AdvSection({ data, navigateTo }) {
+function AdvSection({ data, navigateTo }) {
   const [advQ, setAdvQ] = useState(0);
   const quotes = (data.content.advQuote || "").split(/\n+/).filter(Boolean);
   const safeQuotes = quotes.length ? quotes : [data.content.advQuote || ""];
@@ -7424,10 +7423,9 @@ const AdvSection = React.memo(function AdvSection({ data, navigateTo }) {
     </section>
   );
 }
-);
 
 /* ─────────────── HOME INTRO SLIDESHOW (panel kiri beranda) ─────────────── */
-const HomeIntroSlideshow = React.memo(function HomeIntroSlideshow({ data }) {
+function HomeIntroSlideshow({ data }) {
   // Kumpulkan SEMUA foto dari seluruh sumber di website
   const seen = new Set();
   const allImgs = [];
@@ -7500,10 +7498,9 @@ const HomeIntroSlideshow = React.memo(function HomeIntroSlideshow({ data }) {
     </div>
   );
 }
-);
 
 /* ─────────────── HERO SLIDESHOW ─────────────── */
-const HeroSlideshow = React.memo(function HeroSlideshow({ data, navigateTo }) {
+function HeroSlideshow({ data, navigateTo }) {
   const heroMode = data.content?.heroMode || "slideshow";
 
   // ── MODE STATIC: tampilkan satu gambar diam ──
@@ -7750,7 +7747,6 @@ const HeroSlideshow = React.memo(function HeroSlideshow({ data, navigateTo }) {
     </section>
   );
 }
-);
 
 /* ─────────────── REVIEW FORM (Public, One-Time Token) ─────────────── */
 function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
@@ -7953,7 +7949,7 @@ function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
 }
 
 /* ─────────────── REVIEW SLIDESHOW (Home Page) ─────────────── */
-const ReviewSlideshow = React.memo(function ReviewSlideshow({ reviews }) {
+function ReviewSlideshow({ reviews }) {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef(null);
@@ -8109,9 +8105,8 @@ const ReviewSlideshow = React.memo(function ReviewSlideshow({ reviews }) {
     </section>
   );
 }
-);
 
-const ReviewCard = React.memo(function ReviewCard({ review }) {
+function ReviewCard({ review }) {
   const stars = review.stars || 5;
   return (
     <div style={{ background: "#fff", borderRadius: 16, padding: "28px 24px", boxShadow: "0 4px 24px rgba(13,59,102,.08)", border: "1px solid #e0f7fa", height: "100%", display: "flex", flexDirection: "column", gap: 16 }}>
@@ -8144,7 +8139,6 @@ const ReviewCard = React.memo(function ReviewCard({ review }) {
     </div>
   );
 }
-);
 
 
 /* ─────────────── ADMIN REVIEWS COMPONENT ─────────────── */
@@ -9490,9 +9484,9 @@ export default function BricksyTravel() {
     notify("Post deleted.");
   };
 
-  const allPosts       = useMemo(() => Object.values(data.posts || {}).flat(), [data.posts]);
-  const publishedCount = useMemo(() => allPosts.filter(p => p.status === "published").length, [allPosts]);
-  const draftCount     = useMemo(() => allPosts.filter(p => p.status === "draft").length, [allPosts]);
+  const allPosts       = Object.values(data.posts || {}).flat();
+  const publishedCount = allPosts.filter(p => p.status === "published").length;
+  const draftCount     = allPosts.filter(p => p.status === "draft").length;
 
   // Contacts
   const submitMsg = () => {
