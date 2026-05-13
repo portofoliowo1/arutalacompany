@@ -8858,7 +8858,6 @@ export default function BricksyTravel() {
   const [editContent, setEditContent] = useState({});
   const [contact, setContact] = useState({ name: "", email: "", message: "" });
   const [waPicker, setWaPicker] = useState(null); // null | { msgText: "" }
-  const openWaPicker = useCallback((msgText = "") => setWaPicker({ msgText }), []);
   const [replyTo, setReplyTo] = useState(null);
   const [replyText, setReplyText] = useState("");
   const [emailSub, setEmailSub] = useState("");
@@ -8869,6 +8868,7 @@ export default function BricksyTravel() {
   const [mapQuery, setMapQuery] = useState("");
   const [mapLocation, setMapLocation] = useState("Malang, Jawa Timur, Indonesia");
   const mapDebounceRef = useRef(null);
+  const openWaPicker = (msgText = "") => setWaPicker({ msgText });
   // Profile editing state
   const [profileEdit, setProfileEdit] = useState({ name: "", phone: "", email: "", desc: "", photo: "", oldPass: "", newPass: "", confirmPass: "" });
   const [userMgmtForm, setUserMgmtForm] = useState({ username: "", password: "", role: "content_writer", email: "", name: "" });
@@ -9220,7 +9220,7 @@ export default function BricksyTravel() {
     document.title = oneLiner;
   }); // tanpa dependency array → jalan setiap render, selalu up-to-date
 
-  const save = useCallback(async (d) => {
+  const save = async (d) => {
     // Selalu merge dengan DEFAULT_DATA sebelum simpan:
     // field baru yang ditambahkan di kode (lewat git push) tidak akan hilang
     const safeData = mergeWithDefaults(d, DEFAULT_DATA);
@@ -9231,12 +9231,12 @@ export default function BricksyTravel() {
     await fsSet("main", { payload, updatedAt: Date.now() });
     try { await window.storage?.set("bricksy-v2", payload); } catch {}
     try { localStorage.setItem("arutala-cache-v2", payload); } catch {}
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
-  const notify = useCallback((msg, type = "success") => {
+  const notify = (msg, type = "success") => {
     setNotif({ msg, type });
     setTimeout(() => setNotif(null), 3200);
-  }, []);
+  };
 
   const login = async () => {
     const u = HARDCODED_USERS.find(x => x.username === loginForm.username);
@@ -9347,17 +9347,17 @@ export default function BricksyTravel() {
     setForgotNewPass({ val: "", confirm: "" }); setForgotErr("");
   };
 
-  const logout = useCallback(() => {
+  const logout = () => {
     setUser(null);
     sessionClear();
     closeAdmin();
     notify("Logged out.");
-  }, [notify]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
   const content  = data.content || {}; // shorthand alias (guard untuk undefined)
-  const isAdmin  = useMemo(() => user?.role === "admin", [user?.role]);
-  const canEdit  = useMemo(() => user?.role === "admin" || user?.role === "content_writer", [user?.role]);
-  const canCS    = useMemo(() => user?.role === "admin" || user?.role === "customer_services", [user?.role]);
+  const isAdmin = user?.role === "admin";
+  const canEdit = user?.role === "admin" || user?.role === "content_writer";
+  const canCS   = user?.role === "admin" || user?.role === "customer_services";
 
   const navigateTo = (p) => {
     const navPath = PAGE_TO_PATH[p] || "/";
@@ -9469,7 +9469,7 @@ export default function BricksyTravel() {
 
   // Post operations
   // silent=true → auto-save, tetap di editor, tanpa notif
-  const savePost = useCallback((post, silent = false) => {
+  const savePost = (post, silent = false) => {
     const section = post.section;
     const existing = (data.posts[section] || []);
     const idx = existing.findIndex(p => p.id === post.id);
@@ -9482,13 +9482,13 @@ export default function BricksyTravel() {
       setCmsEditPost(null);
       notify(post.status === "published" ? "Post published!" : "Saved as draft.");
     }
-  }, [data, save, notify]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
-  const deletePost = useCallback((section, id) => {
+  const deletePost = (section, id) => {
     const newPosts = { ...data.posts, [section]: (data.posts[section] || []).filter(p => p.id !== id) };
     save({ ...data, posts: newPosts });
     notify("Post deleted.");
-  }, [data, save, notify]); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
   const allPosts       = useMemo(() => Object.values(data.posts || {}).flat(), [data.posts]);
   const publishedCount = useMemo(() => allPosts.filter(p => p.status === "published").length, [allPosts]);
