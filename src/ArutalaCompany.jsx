@@ -3998,7 +3998,7 @@ function EventWeddingCustomCardWide({ svc, onDetail, onWaOpen }) {
 
 /* ── WIDE CARD for Custom Package — full width horizontal layout ── */
 /* ─────────────── EVENT / WEDDING PACKAGE CARD (Traveling-style) ─────────────── */
-function EventWeddingPackageCard({ svc, onDetail, onWaOpen }) {
+function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
   const [hovered, setHovered] = useState(false);
   const ac = svc.accent || (svc.category === "wedding" ? "#db2777" : "#0891b2");
   const al = svc.accentLight || (svc.category === "wedding" ? "#fff0f7" : "#edfafc");
@@ -4006,6 +4006,91 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen }) {
   /* image gallery — pakai images[] jika ada, fallback image */
   const imgs = (svc.images && svc.images.length > 0) ? svc.images : [svc.image].filter(Boolean);
   const [imgIdx, setImgIdx] = useState(0);
+
+  if (isWide) {
+    return (
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          background: "#fff", borderRadius: 16, overflow: "hidden",
+          boxShadow: hovered ? "0 20px 56px rgba(13,59,102,.2)" : "0 4px 24px rgba(13,59,102,.1)",
+          border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "#e8f4f8"}`,
+          fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)",
+          transform: hovered ? "translateY(-4px)" : "none",
+          display: "flex", flexDirection: "row", minHeight: 260,
+        }}>
+        {/* Gambar kiri full height */}
+        <div style={{ position: "relative", width: "40%", flexShrink: 0, overflow: "hidden" }}>
+          <img loading="lazy" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block",
+              transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
+            onError={e => { e.target.src = ""; }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 60%, rgba(255,255,255,.1) 100%)" }} />
+          {svc.badge && (
+            <div style={{ position: "absolute", top: 14, left: 14, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>{svc.badge}</div>
+          )}
+          {svc.highlight && (
+            <div style={{ position: "absolute", top: 14, right: 0, background: "linear-gradient(130deg,#063d5c,#0891b2)", color: "#fff", borderRadius: "20px 0 0 20px", padding: "4px 12px 4px 14px", fontSize: "0.625rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
+          )}
+          {/* Dots navigasi gambar */}
+          {imgs.length > 1 && (
+            <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 5 }}>
+              {imgs.map((_, i) => (
+                <button key={i} onClick={e => { e.stopPropagation(); setImgIdx(i); }}
+                  style={{ width: i === imgIdx ? 18 : 6, height: 6, borderRadius: 3, border: "none", background: i === imgIdx ? "#fff" : "rgba(255,255,255,.5)", cursor: "pointer", padding: 0, transition: "all .2s" }} />
+              ))}
+            </div>
+          )}
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "28px 16px 14px", background: "linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 100%)" }}>
+            <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, textShadow: "0 2px 12px rgba(0,0,0,.8)" }}>{svc.title}</h3>
+          </div>
+        </div>
+        {/* Konten kanan */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
+          <div style={{ padding: "16px 20px 8px", display: "flex", gap: 14, flexWrap: "wrap" }}>
+            {imgs.length > 1 && <span style={{ fontSize: "0.8125rem", color: "#4a7f98" }}>🖼 {imgs.length} Foto Kegiatan</span>}
+            <span style={{ fontSize: "0.8125rem", color: "#4a7f98" }}>{svc.category === "wedding" ? "💍 Wedding Organizer" : "📅 Event Organizer"}</span>
+          </div>
+          <p style={{ fontSize: "0.875rem", color: "#4a7f98", lineHeight: 1.65, padding: "0 20px 12px" }}>{svc.description}</p>
+          {(svc.features || []).length > 0 && (
+            <div style={{ padding: "0 20px 14px", display: "flex", flexWrap: "wrap", gap: "5px 18px" }}>
+              {(svc.features || []).slice(0, 4).map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 5, alignItems: "center" }}>
+                  <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem" }}>✓</span>
+                  <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 500 }}>{f}</span>
+                </div>
+              ))}
+              {(svc.features || []).length > 4 && <span style={{ fontSize: "0.75rem", color: "#0891b2", fontWeight: 600 }}>+{svc.features.length - 4} lainnya</span>}
+            </div>
+          )}
+          <div style={{ flex: 1 }} />
+          <div style={{ display: "flex", alignItems: "stretch", borderTop: "1px solid #edf5f8" }}>
+            <div style={{ flex: 1, padding: "14px 20px", background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`, position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", right: -12, top: -12, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
+              <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Mulai Dari</p>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#fff", textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{formatRp(svc.price) || svc.price}</span>
+                <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>{svc.priceNote}</span>
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", flexShrink: 0 }}>
+              <button onClick={() => onWaOpen && onWaOpen(`Halo, saya tertarik dengan ${svc.title}`)}
+                style={{ flex: 1, padding: "0 24px", background: "#25D366", color: "#fff", border: "none", fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 5, borderBottom: "1px solid rgba(255,255,255,.2)" }}>
+                💬 WA
+              </button>
+              <button onClick={onDetail}
+                style={{ flex: 1, padding: "0 24px", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s" }}
+                onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                Lihat Detail →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -4175,7 +4260,7 @@ function TravelPackageCardWide({ svc, onDetail, onWaOpen }) {
   );
 }
 
-function TravelPackageCard({ svc, onDetail, onWaOpen }) {
+function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
   const [openIdx, setOpenIdx] = useState(null);
   const [hovered, setHovered] = useState(false);
   const [priceOpen, setPriceOpen] = useState(false);
@@ -4185,6 +4270,161 @@ function TravelPackageCard({ svc, onDetail, onWaOpen }) {
     if (!n || isNaN(String(n).replace(/\./g, ""))) return n;
     return Number(String(n).replace(/\./g, "")).toLocaleString("id-ID");
   };
+
+  // ── MODE WIDE (1 kolom): layout landscape — gambar kiri full, konten kanan ──
+  if (isWide) {
+    return (
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          background: "#fff", borderRadius: 16, overflow: "hidden",
+          boxShadow: hovered ? "0 20px 56px rgba(13,59,102,.2)" : "0 4px 24px rgba(13,59,102,.1)",
+          border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "#e8f4f8"}`,
+          fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)",
+          transform: hovered ? "translateY(-4px)" : "none",
+          display: "flex", flexDirection: "row", minHeight: 280,
+        }}>
+
+        {/* Gambar kiri — full height */}
+        <div style={{ position: "relative", width: "42%", flexShrink: 0, overflow: "hidden" }}>
+          <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block",
+              transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
+            onError={e => { e.target.src = ""; }} />
+          {/* Gradient overlay kanan */}
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent 60%, rgba(255,255,255,.12) 100%)" }} />
+          {/* Badge kiri atas */}
+          {svc.badge && (
+            <div style={{ position: "absolute", top: 14, left: 14, background: svc.badgeColor || ac, color: "#fff", borderRadius: 20, padding: "4px 14px", fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase" }}>
+              {svc.badge}
+            </div>
+          )}
+          {svc.highlight && (
+            <div style={{ position: "absolute", top: 14, right: 0, background: "linear-gradient(130deg,#063d5c,#0891b2)", color: "#fff", borderRadius: "20px 0 0 20px", padding: "4px 12px 4px 14px", fontSize: "0.625rem", fontWeight: 700 }}>⭐ Pilihan Utama</div>
+          )}
+          {/* Judul di atas gambar bawah kiri */}
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "32px 16px 16px", background: "linear-gradient(to top, rgba(0,0,0,.72) 0%, transparent 100%)" }}>
+            <h3 style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.25rem", fontWeight: 700, color: "#fff", lineHeight: 1.2, marginBottom: 3, textShadow: "0 2px 12px rgba(0,0,0,.8)" }}>{svc.title}</h3>
+            {svc.tagline && <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,.85)", lineHeight: 1.4, textShadow: "0 1px 8px rgba(0,0,0,.7)" }}>{svc.tagline}</p>}
+          </div>
+        </div>
+
+        {/* Konten kanan */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
+          {/* Info row */}
+          <div style={{ padding: "18px 20px 8px", display: "flex", gap: 16, flexWrap: "wrap" }}>
+            {[`⏱ ${svc.duration}`, `👥 Min. ${svc.minPeserta} peserta`, ...(svc.destinations?.length ? [`🗺 ${svc.destinations.length} Destinasi`] : [])].map(m => (
+              <span key={m} style={{ fontSize: "0.8125rem", color: "#4a7f98" }}>{m}</span>
+            ))}
+          </div>
+          {/* Description */}
+          <p style={{ fontSize: "0.875rem", color: "#4a7f98", lineHeight: 1.65, padding: "0 20px 12px" }}>{svc.description}</p>
+          {/* Facilities */}
+          {(svc.facilities || []).length > 0 && (
+            <div style={{ padding: "0 20px 14px", display: "flex", flexWrap: "wrap", gap: "6px 20px" }}>
+              {(svc.facilities || []).slice(0, 4).map((f, i) => (
+                <div key={i} style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                  <span style={{ fontSize: 14 }}>{f.icon}</span>
+                  <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 500 }}>{f.label}</span>
+                </div>
+              ))}
+              {(svc.facilities || []).length > 4 && (
+                <span style={{ fontSize: "0.75rem", color: "#0891b2", fontWeight: 600 }}>+{svc.facilities.length - 4} lainnya</span>
+              )}
+            </div>
+          )}
+          {/* Spacer */}
+          <div style={{ flex: 1 }} />
+          {/* Price + CTA bar di bawah */}
+          <div style={{ display: "flex", alignItems: "stretch", borderTop: "1px solid #edf5f8" }}>
+            {/* Price block */}
+            <div onClick={() => setPriceOpen(o => !o)}
+              style={{
+                flex: 1, padding: "14px 20px", cursor: "pointer",
+                background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`,
+                position: "relative", overflow: "hidden",
+                boxShadow: priceOpen ? "inset 0 4px 16px rgba(0,0,0,.35)" : "none",
+                transition: "all .18s",
+              }}>
+              <div style={{ position: "absolute", right: -12, top: -12, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,.06)" }} />
+              <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Harga Mulai Dari</p>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 4, flexWrap: "wrap" }}>
+                {(() => {
+                  const rawPrice = svc.prices?.[0]?.price ?? svc.price;
+                  const isContact = String(rawPrice).toLowerCase().includes("hubungi");
+                  const numericPrice = !isContact && rawPrice ? Number(String(rawPrice).replace(/[^0-9]/g, "")) : 0;
+                  return isContact ? (
+                    <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 700, color: "#fff" }}>Hubungi Kami</span>
+                  ) : numericPrice > 0 ? (
+                    <>
+                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.8125rem", color: "rgba(255,255,255,.7)" }}>Rp</span>
+                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 700, color: "#fff", textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{fmt(rawPrice)}</span>
+                      <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>/ orang</span>
+                    </>
+                  ) : (
+                    <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 700, color: "rgba(255,255,255,.6)" }}>Rp 0</span>
+                  );
+                })()}
+                <span style={{ marginLeft: 6, fontSize: "0.625rem", color: "rgba(255,255,255,.5)", display: "flex", alignItems: "center", gap: 3 }}>
+                  <span style={{ display: "inline-block", transition: "transform .3s", transform: priceOpen ? "rotate(180deg)" : "none" }}>▼</span>
+                  {priceOpen ? "tutup" : "lihat per kendaraan"}
+                </span>
+              </div>
+            </div>
+            {/* CTA buttons */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 0, flexShrink: 0 }}>
+              <button onClick={() => onWaOpen && onWaOpen(`Halo, saya tertarik dengan ${svc.title}`)}
+                style={{ flex: 1, padding: "0 24px", background: "#25D366", color: "#fff", border: "none", fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 5, borderBottom: "1px solid rgba(255,255,255,.2)" }}>
+                💬 WA
+              </button>
+              <button onClick={onDetail}
+                style={{ flex: 1, padding: "0 24px", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s" }}
+                onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                Lihat Detail →
+              </button>
+            </div>
+          </div>
+          {/* Price accordion */}
+          <div style={{ maxHeight: priceOpen ? "400px" : "0", overflow: "hidden", transition: "max-height .4s cubic-bezier(.22,1,.36,1)" }}>
+            <div style={{ background: al, padding: "14px 20px 14px", borderTop: `1px solid ${ac}25` }}>
+              <p style={{ fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Harga per Kendaraan</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 8 }}>
+                {(svc.prices || []).map((p, i) => {
+                  const isOpen = openIdx === i;
+                  return (
+                    <div key={i} style={{ background: "#fff", borderRadius: 9, border: `1px solid ${isOpen ? ac : ac + "20"}`, overflow: "hidden", transition: "border-color .2s", boxShadow: isOpen ? `0 3px 12px ${ac}25` : "none" }}>
+                      <div onClick={e => { e.stopPropagation(); setOpenIdx(isOpen ? null : i); }} style={{ padding: "9px 10px", cursor: "pointer" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                          <span style={{ fontSize: 15 }}>{p.icon}</span>
+                          <span style={{ fontWeight: 600, fontSize: "0.75rem", color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
+                          <span style={{ fontSize: "0.5625rem", color: ac, fontWeight: 700, display: "inline-block", transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "none" }}>▼</span>
+                        </div>
+                        <div style={{ fontSize: "0.625rem", color: "#888", margin: "2px 0" }}>{p.capacity}</div>
+                        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 700, color: ac }}>{p.price === "Hubungi kami" ? p.price : `Rp ${fmt(p.price)}`}</div>
+                      </div>
+                      <div style={{ maxHeight: isOpen ? "200px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
+                        <ul style={{ listStyle: "none", padding: "0 10px 9px", display: "flex", flexDirection: "column", gap: 3, borderTop: `1px solid ${ac}15` }}>
+                          {(p.points || []).map((pt, pi) => (
+                            <li key={pi} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.6875rem", color: "#3a5266", marginTop: pi === 0 ? 6 : 0 }}>
+                              <span style={{ width: 4, height: 4, borderRadius: "50%", background: ac, flexShrink: 0, display: "inline-block" }} />{pt}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── MODE NORMAL (2 / 3 kolom): layout vertikal default ──
   return (
     <div
       onMouseEnter={() => setHovered(true)}
@@ -5418,7 +5658,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   <div>
                     <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(3, 1fr)" : "repeat(auto-fill, minmax(340px, 1fr))", gap: colLayout === 1 ? 20 : 28 }}>
                       {regularPkgs.map(svc => (
-                        <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} />
+                        <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} isWide={colLayout === 1} />
                       ))}
                     </div>
                     {customPkg && (
@@ -5438,7 +5678,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   <div>
                     <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(3, 1fr)" : "repeat(auto-fill, minmax(300px, 1fr))", gap: colLayout === 1 ? 20 : 24 }}>
                       {regularSvcs.map(svc => (
-                        <EventWeddingPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} />
+                        <EventWeddingPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} isWide={colLayout === 1} />
                       ))}
                     </div>
                     {customPkg && (
@@ -8837,7 +9077,6 @@ export default function BricksyTravel() {
 
     // State
     const TRAIL_LEN  = 28;   // jumlah titik ekor
-    const CURSOR_R   = 10;   // radius lingkaran utama
     const TRAIL_R    = 6;    // radius awal ekor
     const COLORS     = [
       "#ff0000","#ff4500","#ff8c00","#ffd700",
@@ -8882,22 +9121,33 @@ export default function BricksyTravel() {
         ctx.fill();
       }
 
-      // Gambar kursor utama — lingkaran rainbow solid
+      // Gambar kursor utama — panah lancip rainbow
       const mainColorIdx = Math.floor((hue % 360) / (360 / COLORS.length));
+      const arrowColor = COLORS[mainColorIdx % COLORS.length];
       ctx.globalAlpha = 1;
-      // Glow
-      ctx.shadowColor = COLORS[mainColorIdx % COLORS.length];
-      ctx.shadowBlur  = 12;
+      ctx.shadowColor = arrowColor;
+      ctx.shadowBlur  = 8;
+      ctx.save();
+      ctx.translate(mx, my);
+      // Panah lancip: titik ujung di (0,0), badan ke bawah-kanan
       ctx.beginPath();
-      ctx.arc(mx, my, CURSOR_R, 0, Math.PI * 2);
-      ctx.fillStyle = COLORS[mainColorIdx % COLORS.length];
+      ctx.moveTo(0, 0);          // ujung lancip atas kiri
+      ctx.lineTo(0, 16);         // bawah kiri
+      ctx.lineTo(4, 12);         // lekukan dalam
+      ctx.lineTo(8, 20);         // ekor kanan bawah
+      ctx.lineTo(10, 19);        // sisi kanan ekor
+      ctx.lineTo(6, 11);         // kembali ke dalam
+      ctx.lineTo(11, 11);        // kanan atas
+      ctx.closePath();
+      // Fill rainbow + outline putih tipis
+      ctx.fillStyle = arrowColor;
       ctx.fill();
-      // Inner dot putih
       ctx.shadowBlur = 0;
-      ctx.beginPath();
-      ctx.arc(mx, my, 3.5, 0, Math.PI * 2);
-      ctx.fillStyle = "#fff";
-      ctx.fill();
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 1.5;
+      ctx.lineJoin = "round";
+      ctx.stroke();
+      ctx.restore();
 
       hue = (hue + 2.5) % 360;
       raf = requestAnimationFrame(draw);
