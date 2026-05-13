@@ -343,10 +343,13 @@ export function useNotify() {
 }
 
 /** Hook: Data persistence dengan multi-layer caching */
+const SAFE_DATA_DEFAULTS = { content: {}, posts: {}, services: [], images: [], teamMembers: [] };
+
 export function useArutalaData(DEFAULT_DATA) {
-  const [data, setDataState] = useState(DEFAULT_DATA);
+  const safeDefault = { ...SAFE_DATA_DEFAULTS, ...DEFAULT_DATA };
+  const [data, setDataState] = useState(safeDefault);
   const [isLoading, setIsLoading] = useState(true);
-  const dataRef = useRef(DEFAULT_DATA);
+  const dataRef = useRef(safeDefault);
 
   // Deep merge helper — gabungkan data tersimpan dengan DEFAULT agar field baru muncul
   const mergeWithDefaults = useCallback((saved, defaults) => {
@@ -553,7 +556,7 @@ function AppShell({ DEFAULT_DATA, originalComponents }) {
   const isAdmin  = useMemo(() => user?.role === "admin", [user?.role]);
   const canEdit  = useMemo(() => user?.role === "admin" || user?.role === "content_writer", [user?.role]);
   const canCS    = useMemo(() => user?.role === "admin" || user?.role === "customer_services", [user?.role]);
-  const content  = data.content;
+  const content  = data.content || {};
 
   const allPosts        = useMemo(() => Object.values(data.posts || {}).flat(), [data.posts]);
   const publishedCount  = useMemo(() => allPosts.filter(p => p.status === "published").length, [allPosts]);
@@ -626,9 +629,9 @@ function AppShell({ DEFAULT_DATA, originalComponents }) {
 
   // ── Browser title sync ────────────────────────────────────────────────────
   useEffect(() => {
-    const raw = data.content.logoText || "ARUTALA ORGANIZER";
+    const raw = data.content?.logoText || "ARUTALA ORGANIZER";
     document.title = raw.replace(/\n/g," ").replace(/\s+/g," ").trim().toUpperCase();
-  }, [data.content.logoText]);
+  }, [data.content?.logoText]);
 
   // ── Scroll reveal (desktop only) ─────────────────────────────────────────
   useEffect(() => {
