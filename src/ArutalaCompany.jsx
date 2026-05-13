@@ -8806,7 +8806,112 @@ export default function BricksyTravel() {
     document.body.style.filter = "none";
   }, []);
 
-  // Sync favicon with logo
+  // ── Rainbow Cursor Trail ──────────────────────────────────────────────────
+  useEffect(() => {
+    // Sembunyikan cursor asli di seluruh halaman
+    const styleEl = document.createElement("style");
+    styleEl.id = "rainbow-cursor-style";
+    styleEl.textContent = `
+      *, *::before, *::after { cursor: none !important; }
+    `;
+    document.head.appendChild(styleEl);
+
+    // Canvas overlay transparan di atas segalanya
+    const canvas = document.createElement("canvas");
+    canvas.id = "rainbow-cursor-canvas";
+    Object.assign(canvas.style, {
+      position: "fixed", inset: "0", width: "100vw", height: "100vh",
+      pointerEvents: "none", zIndex: "999999", display: "block",
+    });
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext("2d");
+
+    // Resize handler
+    const onResize = () => {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", onResize);
+
+    // State
+    const TRAIL_LEN  = 28;   // jumlah titik ekor
+    const CURSOR_R   = 10;   // radius lingkaran utama
+    const TRAIL_R    = 6;    // radius awal ekor
+    const COLORS     = [
+      "#ff0000","#ff4500","#ff8c00","#ffd700",
+      "#7fff00","#00e676","#00bcd4","#2196f3",
+      "#9c27b0","#e91e63","#ff0000",
+    ]; // loop rainbow
+
+    let mx = -200, my = -200;
+    const trail = Array.from({ length: TRAIL_LEN }, () => ({ x: -200, y: -200 }));
+    let hue = 0;
+    let raf;
+
+    const onMove = (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+    };
+    document.addEventListener("mousemove", onMove);
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Geser trail — tiap titik mengejar titik sebelumnya (smooth follow)
+      trail[0].x = lerp(trail[0].x, mx, 0.35);
+      trail[0].y = lerp(trail[0].y, my, 0.35);
+      for (let i = 1; i < TRAIL_LEN; i++) {
+        trail[i].x = lerp(trail[i].x, trail[i - 1].x, 0.55);
+        trail[i].y = lerp(trail[i].y, trail[i - 1].y, 0.55);
+      }
+
+      // Gambar ekor (dari belakang ke depan agar yang depan di atas)
+      for (let i = TRAIL_LEN - 1; i >= 1; i--) {
+        const ratio = 1 - i / TRAIL_LEN;
+        const r = Math.max(1, TRAIL_R * ratio);
+        const alpha = ratio * 0.75;
+        const colorIdx = Math.floor(((hue + i * (360 / TRAIL_LEN)) % 360) / (360 / COLORS.length));
+        ctx.beginPath();
+        ctx.arc(trail[i].x, trail[i].y, r, 0, Math.PI * 2);
+        ctx.fillStyle = COLORS[colorIdx % COLORS.length];
+        ctx.globalAlpha = alpha;
+        ctx.fill();
+      }
+
+      // Gambar kursor utama — lingkaran rainbow solid
+      const mainColorIdx = Math.floor((hue % 360) / (360 / COLORS.length));
+      ctx.globalAlpha = 1;
+      // Glow
+      ctx.shadowColor = COLORS[mainColorIdx % COLORS.length];
+      ctx.shadowBlur  = 12;
+      ctx.beginPath();
+      ctx.arc(mx, my, CURSOR_R, 0, Math.PI * 2);
+      ctx.fillStyle = COLORS[mainColorIdx % COLORS.length];
+      ctx.fill();
+      // Inner dot putih
+      ctx.shadowBlur = 0;
+      ctx.beginPath();
+      ctx.arc(mx, my, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = "#fff";
+      ctx.fill();
+
+      hue = (hue + 2.5) % 360;
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", onResize);
+      canvas.remove();
+      styleEl.remove();
+    };
+  }, []);
   useEffect(() => {
     const favicon = document.querySelector("link[rel='icon']") || (() => {
       const l = document.createElement("link"); l.rel = "icon"; document.head.appendChild(l); return l;
