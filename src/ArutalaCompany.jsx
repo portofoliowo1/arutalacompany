@@ -3400,7 +3400,7 @@ function ArticleDetail({ post, onBack, allPosts = [], onReadPost }) {
     .slice(0, 6);
 
   const handlePost = (p) => {
-    if (onReadPost) { onReadPost(p); window.scrollTo({ top: 0, behavior: "smooth" }); }
+    if (onReadPost) { onReadPost(p); window.scrollTo(0, 0); }
   };
 
   // Gunakan URL canonical artikel, bukan window.location.href yang bisa berubah
@@ -5183,7 +5183,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 
   const openDetail = (svc) => {
     if (onOpenPaket) onOpenPaket(svc);   // push URL ke parent
-    setSelectedService(svc); setActiveImg(0); window.scrollTo({ top: 0, behavior: "smooth" });
+    setSelectedService(svc); setActiveImg(0); window.scrollTo(0, 0);
   };
   const closeDetail = () => {
     if (onClosePaket) onClosePaket();   // restore URL di parent
@@ -8796,7 +8796,7 @@ export default function BricksyTravel() {
         setPage("services");
         setActivePaket({ id: pkgParsed.id, category: pkgParsed.category });
         setMobileMenu(false);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo(0, 0);
         _syncDepth(e.state?.depth);
         return;
       }
@@ -8810,7 +8810,7 @@ export default function BricksyTravel() {
         const found = allP.find(p => p.id === artParsed.id || String(p.id) === String(artParsed.id));
         if (found) setReadPost(found);
         setMobileMenu(false);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo(0, 0);
         _syncDepth(e.state?.depth);
         return;
       }
@@ -8820,7 +8820,7 @@ export default function BricksyTravel() {
       const p = e.state?.page || PATH_TO_PAGE[pathname] || "home";
       setPage(p);
       setMobileMenu(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo(0, 0);
       _syncDepth(e.state?.depth);
     };
     window.addEventListener("popstate", onPopState);
@@ -8899,30 +8899,32 @@ export default function BricksyTravel() {
   };
 
   useEffect(() => {
+    // Langsung selesaikan loading dengan DEFAULT_DATA agar halaman langsung tampil
+    setIsLoading(false);
+
     (async () => {
       try {
-        // 1. Coba load dari Firestore (cloud, utama)
+        // 1. Load dari cache lokal dulu (lebih cepat)
+        try {
+          const r = await window.storage?.get("bricksy-v2");
+          if (r?.value) {
+            const parsed = JSON.parse(r.value);
+            const merged = mergeWithDefaults(parsed, DEFAULT_DATA);
+            setData(merged);
+            dataRef.current = merged;
+          }
+        } catch {}
+
+        // 2. Load Firestore di background → update data jika lebih baru
         const fsData = await fsGet("main");
         if (fsData?.payload) {
           const parsed = JSON.parse(fsData.payload);
-          // Deep-merge: data lama + field baru dari DEFAULT_DATA
-          const merged = mergeWithDefaults(parsed, DEFAULT_DATA);
-          setData(merged);
-          dataRef.current = merged;
-          return;
-        }
-        // 2. Fallback: window.storage (lokal backup)
-        const r = await window.storage?.get("bricksy-v2");
-        if (r?.value) {
-          const parsed = JSON.parse(r.value);
           const merged = mergeWithDefaults(parsed, DEFAULT_DATA);
           setData(merged);
           dataRef.current = merged;
         }
       } catch (e) {
         console.warn("[Arutala] Gagal load data, pakai default.", e);
-      } finally {
-        setIsLoading(false);
       }
     })();
   }, []);
@@ -9238,8 +9240,8 @@ export default function BricksyTravel() {
     spaMaxDepth.current = newDepth; // navigasi baru → hapus forward history
     setCanBack(true);
     setCanFwd(false);
-    setPage(p); setReadPost(null); setMobileMenu(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setPage(p); setReadPost(null); setActivePaket(null); setMobileMenu(false);
+    window.scrollTo(0, 0);
   };
 
   /** Buka artikel: push URL /artikel/{section}/{slug}-{id} + set state */
@@ -9253,7 +9255,7 @@ export default function BricksyTravel() {
     setCanFwd(false);
     setReadPost(post);
     setMobileMenu(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo(0, 0);
   };
 
   /** Tutup artikel: native back — biar onPopState yang atur state */
@@ -9313,7 +9315,7 @@ export default function BricksyTravel() {
     setCanBack(true);
     setCanFwd(false);
     setActivePaket({ id: svc.id, category: svc.category });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo(0, 0);
   };
 
   const closePaket = () => {
@@ -10647,7 +10649,7 @@ export default function BricksyTravel() {
               <button className="admin-hamburger" onClick={() => setSidebarOpen(v => !v)} aria-label="Toggle menu">
                 {sidebarOpen ? "✕" : "☰"}
               </button>
-              <button onClick={() => { setShowAdmin(false); setPage("home"); window.history.pushState({ page:"home", depth:0 }, "", "/"); window.scrollTo({ top:0, behavior:"smooth" }); }}
+              <button onClick={() => { setShowAdmin(false); setPage("home"); window.history.pushState({ page:"home", depth:0 }, "", "/"); window.scrollTo(0, 0); }}
                 style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center" }}
                 title="Ke Halaman Utama">
                 <span className="serif" style={{ fontSize: 18, fontWeight: 600 }}><LogoDisplay content={data.content} size="admin" /></span>
@@ -10662,7 +10664,7 @@ export default function BricksyTravel() {
           </div>
 
           {/* ── Floating HOME button (permanent) ── */}
-          <button onClick={() => { setShowAdmin(false); setPage("home"); window.history.pushState({ page:"home", depth:0 }, "", "/"); window.scrollTo({ top:0, behavior:"smooth" }); }}
+          <button onClick={() => { setShowAdmin(false); setPage("home"); window.history.pushState({ page:"home", depth:0 }, "", "/"); window.scrollTo(0, 0); }}
             style={{ position:"fixed", bottom:28, right:28, zIndex:9999, display:"flex", alignItems:"center", gap:10, padding:"14px 22px",
               background:"linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)",
               color:"#fff", border:"none", borderRadius:50, fontSize:14, fontWeight:800, cursor:"pointer",
