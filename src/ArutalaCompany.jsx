@@ -3297,64 +3297,6 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
             <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4 }}>Separate with commas</p>
           </div>
 
-          {/* Cover Image */}
-          <div style={{ background: "#fff", border: "1px solid #e0f7fa", borderRadius: 8, overflow: "hidden" }}>
-            <div style={{ background: "#edfafc", padding: "12px 16px", borderBottom: "1px solid #e0f7fa", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66", letterSpacing: ".5px" }}>COVER IMAGE</span>
-              <div style={{ display: "flex", gap: 4 }}>
-                {["url", "upload"].map(m => (
-                  <button key={m} onClick={() => setCoverUploadMode(m)} style={{ padding: "2px 10px", fontSize: 10, borderRadius: 4, border: "none",
-                    background: coverUploadMode === m ? "#0d3b66" : "#d0eef5", color: coverUploadMode === m ? "#fff" : "#4a7f98", fontWeight: 600, cursor: "pointer" }}>
-                    {m === "url" ? "URL" : "⬆ Upload"}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div style={{ padding: "12px 14px" }}>
-              {coverUploadMode === "upload" ? (
-                <div>
-                  <input ref={coverFileRef} type="file" accept="image/*" onChange={handleCoverUpload} style={{ display: "none" }} />
-                  <button onClick={() => coverFileRef.current?.click()} disabled={coverUploading}
-                    style={{ width: "100%", padding: "10px", border: "1.5px dashed #0ea5c5", borderRadius: 8,
-                      color: coverUploading ? "#aaa" : "#0ea5c5", fontSize: 12, background: "#e8f9fc",
-                      cursor: coverUploading ? "not-allowed" : "pointer", fontWeight: 600 }}>
-                    {coverUploading ? "⏳ Mengupload..." : "📁 Pilih File Gambar"}
-                  </button>
-                  {coverUploadItems.length > 0 && coverUploadItems.map((it, i) => (
-                    <div key={i} style={{ marginTop: 8 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                        <span style={{ fontSize: 11, fontWeight: 600, color: it.error ? "#e74c3c" : "#0d3b66", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                          {it.error ? "❌ " : it.done ? "✅ " : "📤 "}{it.name}
-                        </span>
-                        <span style={{ fontSize: 11, fontWeight: 800, color: it.error ? "#e74c3c" : it.done ? "#27ae60" : "#0891b2" }}>
-                          {it.error ? "Gagal" : it.done ? "Selesai" : `${it.pct}%`}
-                        </span>
-                      </div>
-                      <div style={{ height: 6, background: "#c0e8f0", borderRadius: 3, overflow: "hidden" }}>
-                        <div style={{ height: "100%", borderRadius: 3, width: `${it.pct}%`,
-                          background: it.error ? "#e74c3c" : it.done ? "#27ae60" : "linear-gradient(90deg,#0891b2,#10d0e0)",
-                          transition: "width .2s ease" }} />
-                      </div>
-                    </div>
-                  ))}
-                  <p style={{ fontSize: 10, color: "#5090aa", marginTop: 6 }}>JPG/PNG/WEBP · Maks 10MB · Otomatis ke Cloudinary</p>
-                </div>
-              ) : (
-                <input value={form.coverImage || ""} onChange={e => setForm(p => ({ ...p, coverImage: e.target.value }))}
-                  placeholder="https://..."
-                  style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none", boxSizing: "border-box" }} />
-              )}
-              {form.coverImage && (
-                <div style={{ marginTop: 10, position: "relative" }}>
-                  <img loading="lazy" src={form.coverImage} alt="" style={{ width: "100%", height: 110, objectFit: "cover", borderRadius: 6, display: "block" }}
-                    onError={e => { e.target.style.display = "none"; }} />
-                  <button onClick={() => setForm(p => ({ ...p, coverImage: "" }))}
-                    style={{ position: "absolute", top: 6, right: 6, background: "rgba(231,76,60,.85)", color: "#fff", border: "none", borderRadius: 4, fontSize: 10, padding: "3px 7px", cursor: "pointer", fontWeight: 700 }}>✕ Hapus</button>
-                </div>
-              )}
-            </div>
-          </div>
-
           {/* Section badge */}
           <div style={{ fontSize: 11, color: "#5090aa", fontStyle: "italic", textAlign: "center", paddingTop: 4 }}>
             Posting to: <strong style={{ color: "#0ea5c5" }}>{SECTION_LABELS[section] || section}</strong>
@@ -10181,22 +10123,79 @@ export default function BricksyTravel() {
                     </div>
                   </section>
 
-                  {/* Latest News Preview */}
-                  <section className="section-md" style={{ background: "#fff" }}>
-                    <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 36 }}>
-                        <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#0d3b66" }}>Latest News</h2>
-                        <button onClick={() => navigateTo("news")} style={{ fontSize: "0.875rem", color: "#0891b2", border: "none", background: "none", fontWeight: 600 }}>
-                          View all →
-                        </button>
-                      </div>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 28 }}>
-                        {(data.posts?.news || []).filter(p => p.status === "published").slice(0, 3).map(post => (
-                          <PostCard key={post.id} post={post} onClick={() => openArticle(post)} view="grid" />
-                        ))}
-                      </div>
-                    </div>
-                  </section>
+                  {/* Our Portofolio — 3 kartu random auto-rotate dari semua post */}
+                  {(() => {
+                    const allPosts = [
+                      ...(data.posts?.news || []),
+                      ...(data.posts?.shop || []),
+                      ...(data.posts?.destinations || []),
+                    ].filter(p => p.status === "published");
+
+                    const [slots, setSlots] = React.useState(() => {
+                      if (allPosts.length === 0) return [];
+                      const shuffled = [...allPosts].sort(() => Math.random() - 0.5);
+                      return shuffled.slice(0, Math.min(3, shuffled.length));
+                    });
+                    const [fadingIdx, setFadingIdx] = React.useState(null);
+                    const usedIdsRef = React.useRef(new Set(slots.map(p => p.id)));
+
+                    React.useEffect(() => {
+                      if (allPosts.length <= 3) return;
+                      const tick = () => {
+                        const replaceIdx = Math.floor(Math.random() * 3);
+                        setFadingIdx(replaceIdx);
+                        setTimeout(() => {
+                          setSlots(prev => {
+                            const currentIds = new Set(prev.map(p => p.id));
+                            const pool = allPosts.filter(p => !currentIds.has(p.id));
+                            if (pool.length === 0) {
+                              // reset pool jika habis
+                              const any = allPosts.filter(p => p.id !== prev[replaceIdx]?.id);
+                              if (!any.length) return prev;
+                              const pick = any[Math.floor(Math.random() * any.length)];
+                              const next = [...prev];
+                              next[replaceIdx] = pick;
+                              return next;
+                            }
+                            const pick = pool[Math.floor(Math.random() * pool.length)];
+                            const next = [...prev];
+                            next[replaceIdx] = pick;
+                            return next;
+                          });
+                          setFadingIdx(null);
+                        }, 500);
+                      };
+                      const interval = setInterval(tick, 3000);
+                      return () => clearInterval(interval);
+                    }, [allPosts.length]);
+
+                    if (allPosts.length === 0) return null;
+                    return (
+                      <section className="section-md" style={{ background: "#fff" }}>
+                        <style>{`
+                          @keyframes portCardIn  { from { opacity:0; transform:translateY(14px) scale(.97); } to { opacity:1; transform:none; } }
+                          @keyframes portCardOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateY(-10px) scale(.97); } }
+                          .port-card-enter { animation: portCardIn  .5s cubic-bezier(.22,1,.36,1) both; }
+                          .port-card-exit  { animation: portCardOut .45s ease both; pointer-events:none; }
+                        `}</style>
+                        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 36 }}>
+                            <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#0d3b66" }}>Our Portofolio</h2>
+                            <button onClick={() => navigateTo("news")} style={{ fontSize: "0.875rem", color: "#0891b2", border: "none", background: "none", fontWeight: 600 }}>
+                              View all →
+                            </button>
+                          </div>
+                          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
+                            {slots.map((post, i) => (
+                              <div key={post.id} className={fadingIdx === i ? "port-card-exit" : "port-card-enter"}>
+                                <PostCard post={post} onClick={() => openArticle(post)} view="grid" />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </section>
+                    );
+                  })()}
 
                   {/* Globe / Maps Search Section */}
                   <section style={{ padding: "0", background: "#04080f", overflow: "hidden", position: "relative", minHeight: 420 }}>
