@@ -5698,9 +5698,10 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   {/* Header label */}
                   <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "rgba(255,255,255,.35)", textTransform: "uppercase", fontWeight: 700, textAlign: "center", marginBottom: 14 }}>— Penawaran Spesial —</div>
 
-                  {/* ── SELECTOR PAKET (event & wedding & traveling) ── */}
-                  {allCatPackages.length > 1 && (() => {
-                    const activePkg = allCatPackages.find(p => p.id === (selectedPkgId || svc.id)) || allCatPackages[0];
+                  {/* ── SELECTOR PAKET (paketTypes A/B/C/D) ── */}
+                  {paketTypes.length > 0 && (() => {
+                    const activePt2 = paketTypes.find(pt => pt.id === resolvedActiveId) || paketTypes[0];
+                    const isUtamaActive = activePt2?.id === (svc.utamaTipeId || paketTypes[0]?.id);
                     return (
                       <div style={{ marginBottom: 16, position: "relative" }}>
                         <div style={{ fontSize: "0.5625rem", letterSpacing: "2px", color: "rgba(255,255,255,.45)", textTransform: "uppercase", fontWeight: 700, marginBottom: 8, textAlign: "center" }}>Pilih Paket</div>
@@ -5717,15 +5718,13 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                           onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.08)"}
                         >
                           <div style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
-                            {activePkg.badge && (
-                              <span style={{
-                                fontSize: "0.5rem", fontWeight: 800, letterSpacing: ".07em",
-                                textTransform: "uppercase", padding: "2px 7px", borderRadius: 20,
-                                background: activePkg.badgeColor || catInfo.color || "#0891b2",
-                                color: "#fff", flexShrink: 0,
-                              }}>{activePkg.badge}</span>
+                            {isUtamaActive && (
+                              <span style={{ fontSize: "0.4375rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "2px 7px", borderRadius: 20, background: "#10d0e0", color: "#0d3b66", flexShrink: 0 }}>UTAMA</span>
                             )}
-                            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{activePkg.title}</span>
+                            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{activePt2?.name}</span>
+                            {activePt2?.price && (
+                              <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "rgba(255,255,255,.75)", fontFamily: "'Playfair Display',serif", flexShrink: 0 }}>{formatRp(activePt2.price) || activePt2.price}</span>
+                            )}
                           </div>
                           <span style={{ color: "rgba(255,255,255,.55)", fontSize: "0.75rem", flexShrink: 0, marginLeft: 6, display: "inline-block", transform: pkgDropOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform .2s" }}>▾</span>
                         </button>
@@ -5740,17 +5739,18 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                             border: "1px solid rgba(255,255,255,.1)",
                             animation: "mgFadeUp .18s cubic-bezier(.22,1,.36,1) both",
                           }}>
-                            {allCatPackages.map((pkg, idx) => {
-                              const isActive = (selectedPkgId || svc.id) === pkg.id;
-                              const pkgRawPrice = activePt?.price || pkg.price;
-                              const isContact = String(pkgRawPrice || "").toLowerCase().includes("hubungi");
+                            {paketTypes.map((pt, idx) => {
+                              const isActive = pt.id === resolvedActiveId;
+                              const isUtama = pt.id === (svc.utamaTipeId || paketTypes[0]?.id);
+                              const ptRawPrice = pt.price;
+                              const isContact = String(ptRawPrice || "").toLowerCase().includes("hubungi");
                               return (
-                                <button key={pkg.id}
-                                  onClick={() => { setSelectedPkgId(pkg.id); setPkgDropOpen(false); }}
+                                <button key={pt.id}
+                                  onClick={() => { setActivePaketTypeId(pt.id); setPkgDropOpen(false); }}
                                   style={{
                                     width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
                                     padding: "10px 14px", border: "none", cursor: "pointer",
-                                    borderBottom: idx < allCatPackages.length - 1 ? "1px solid rgba(255,255,255,.06)" : "none",
+                                    borderBottom: idx < paketTypes.length - 1 ? "1px solid rgba(255,255,255,.06)" : "none",
                                     background: isActive
                                       ? `linear-gradient(135deg,${catInfo.color || "#0891b2"}cc,${catInfo.color || "#0891b2"}66)`
                                       : "transparent",
@@ -5759,18 +5759,13 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                                   onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,.08)"; }}
                                   onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}>
                                   <div style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
-                                    {pkg.badge && (
-                                      <span style={{
-                                        fontSize: "0.5rem", fontWeight: 800, letterSpacing: ".07em",
-                                        textTransform: "uppercase", padding: "2px 7px", borderRadius: 20,
-                                        background: isActive ? "rgba(255,255,255,.25)" : (pkg.badgeColor || catInfo.color || "#0891b2"),
-                                        color: "#fff", flexShrink: 0,
-                                      }}>{pkg.badge}</span>
+                                    {isUtama && (
+                                      <span style={{ fontSize: "0.4375rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "2px 7px", borderRadius: 20, background: isActive ? "rgba(255,255,255,.25)" : "#10d0e0", color: isActive ? "#fff" : "#0d3b66", flexShrink: 0 }}>UTAMA</span>
                                     )}
-                                    <span style={{ fontSize: "0.8rem", fontWeight: isActive ? 700 : 500, color: isActive ? "#fff" : "rgba(255,255,255,.75)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 130 }}>{pkg.title}</span>
+                                    <span style={{ fontSize: "0.8rem", fontWeight: isActive ? 700 : 500, color: isActive ? "#fff" : "rgba(255,255,255,.75)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 130 }}>{pt.name}</span>
                                   </div>
                                   <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.875rem", fontWeight: 800, color: isActive ? "#fff" : "rgba(255,255,255,.55)", flexShrink: 0, marginLeft: 8 }}>
-                                    {isContact ? "Konsultasi" : formatRp(pkgRawPrice) || pkgRawPrice}
+                                    {isContact ? "Konsultasi" : (formatRp(ptRawPrice) || ptRawPrice || "")}
                                   </span>
                                 </button>
                               );
@@ -5783,44 +5778,10 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 
                   <div style={{ height: 1, background: "rgba(255,255,255,.08)", margin: "6px 0 16px" }} />
 
-                  {/* ── PAKET TYPE PILLS (jika paketTypes ada) ── */}
-                  {paketTypes.length > 0 && (
-                    <div style={{ marginBottom: 14 }}>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "2px", color: "rgba(255,255,255,.45)", textTransform: "uppercase", fontWeight: 700, marginBottom: 8, textAlign: "center" }}>Tipe Paket</div>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center" }}>
-                        {paketTypes.map(pt => {
-                          const isAct = pt.id === resolvedActiveId;
-                          const isUtama = pt.id === (svc.utamaTipeId || paketTypes[0]?.id);
-                          return (
-                            <button key={pt.id}
-                              onClick={() => setActivePaketTypeId(pt.id)}
-                              style={{
-                                display: "flex", alignItems: "center", gap: 5,
-                                padding: "5px 11px", borderRadius: 18, border: "none", cursor: "pointer",
-                                background: isAct
-                                  ? `linear-gradient(135deg,${catInfo.color || "#0891b2"},${catInfo.color || "#0ea5c5"}aa)`
-                                  : "rgba(255,255,255,.09)",
-                                transition: "all .18s",
-                                boxShadow: isAct ? `0 3px 10px ${catInfo.color || "#0891b2"}55` : "none",
-                              }}
-                              onMouseEnter={e => { if (!isAct) e.currentTarget.style.background = "rgba(255,255,255,.16)"; }}
-                              onMouseLeave={e => { if (!isAct) e.currentTarget.style.background = "rgba(255,255,255,.09)"; }}>
-                              {isUtama && <span style={{ fontSize: "0.4375rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 5px", borderRadius: 6, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
-                              <span style={{ fontSize: "0.75rem", fontWeight: isAct ? 700 : 500, color: isAct ? "#fff" : "rgba(255,255,255,.65)" }}>{pt.name}</span>
-                              {isAct && pt.price && (
-                                <span style={{ fontSize: "0.625rem", fontWeight: 700, color: "rgba(255,255,255,.85)", fontFamily: "'Playfair Display',serif" }}>{formatRp(pt.price) || pt.price}</span>
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-
                   {/* Harga aktif — besar di tengah */}
                   <div style={{ textAlign: "center", marginBottom: 14 }}>
                     <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: "rgba(255,255,255,.38)", fontWeight: 700, textTransform: "uppercase", marginBottom: 6 }}>Harga Mulai</div>
-                    <div key={`${selectedPkgId}-${resolvedActiveId}`} style={{
+                    <div key={resolvedActiveId} style={{
                       fontFamily: "'Playfair Display',serif",
                       fontSize: "2.6rem", fontWeight: 900, color: "#fff",
                       lineHeight: 1, marginBottom: 4,
