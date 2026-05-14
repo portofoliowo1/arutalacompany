@@ -7505,60 +7505,23 @@ function HomeIntroSlideshow({ data }) {
 function HeroSlideshow({ data, navigateTo }) {
   const heroMode = data.content?.heroMode || "slideshow";
 
-  // ── MODE STATIC: tampilkan satu gambar diam ──
-  if (heroMode === "static") {
-    const staticSrc = data.content?.heroStaticImage || (data.images?.hero?.[0] || "");
-    return (
-      <section style={{ position: "relative", width: "100%", height: "clamp(560px,88vh,800px)", overflow: "hidden", background: "#04080f" }}>
-        {staticSrc && (
-          <img src={staticSrc} alt="Hero" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        )}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.35) 0%, rgba(10,20,35,.78) 100%)" }} />
-        <div style={{ position: "absolute", inset: 0, zIndex: 10, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 6%", textAlign: "center" }}>
-          <div style={{ maxWidth: 780 }}>
-            <div style={{ display: "inline-block", background: "#e8a020", color: "#fff", fontSize: "0.6875rem", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: 2, marginBottom: 18 }}>
-              Arutala Organizer
-            </div>
-            <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.75rem,4.2vw,2.8rem)", fontWeight: 900, color: "#fff", lineHeight: 1.18, marginBottom: 18, textShadow: "0 2px 16px rgba(0,0,0,.5)" }}>
-              {data.content?.heroTitle || "Travel & Relax"}
-            </h1>
-            {data.content?.heroSub && (
-              <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.82)", lineHeight: 1.8, marginBottom: 32 }}>
-                {data.content.heroSub.length > 120 ? data.content.heroSub.slice(0, 120) + "…" : data.content.heroSub}
-              </p>
-            )}
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
-              <button onClick={() => navigateTo("services")} style={{ padding: "13px 30px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>Read More →</button>
-              <button onClick={() => navigateTo("about")} style={{ padding: "13px 30px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "2px solid rgba(255,255,255,.55)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>About Us →</button>
-            </div>
-          </div>
-        </div>
-        {/* Side gradients */}
-        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "18%", background: "linear-gradient(to right, rgba(4,8,15,.82) 0%, rgba(4,8,15,0) 100%)", zIndex: 15, pointerEvents: "none" }} />
-        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "18%", background: "linear-gradient(to left, rgba(4,8,15,.82) 0%, rgba(4,8,15,0) 100%)", zIndex: 15, pointerEvents: "none" }} />
-      </section>
-    );
-  }
-
-  // ── MODE SLIDESHOW: lanjutkan logika slideshow ──
-  // Kumpulkan semua posts published — src = gambar pertama dari content blocks
+  // ── Compute slides (needed for slidesLenRef initialisation below) ──
   const allSections = ["news", "shop", "destinations"];
   const slides = [];
   allSections.forEach(sec => {
     (data.posts?.[sec] || []).filter(p => p.status === "published").forEach(p => {
-      // Cari block image pertama dari konten artikel
       const firstImageBlock = (p.content || []).find(b => b.type === "image" && b.value);
       const src = firstImageBlock?.value || p.coverImage;
       if (src) slides.push({ src, title: p.title, section: sec, excerpt: p.excerpt || "" });
     });
   });
-  // Fallback: gunakan hero images jika belum ada post
   if (slides.length === 0) {
-    (data.images?.hero || []).forEach((src, i) => {
+    (data.images?.hero || []).forEach((src) => {
       slides.push({ src, title: data.content.heroTitle, section: "home", excerpt: data.content.heroSub });
     });
   }
 
+  // ── ALL HOOKS must come before any conditional return (Rules of Hooks) ──
   const TRANSITIONS = ["fade", "slideLeft", "slideUp", "zoomIn", "zoomOut", "flipX"];
   const [current, setCurrent] = useState(0);
   const [prev, setPrev] = useState(null);
@@ -7608,6 +7571,44 @@ function HeroSlideshow({ data, navigateTo }) {
     return () => clearInterval(timerRef.current);
   }, [startTimer, slides.length]);
 
+  // ── Conditional renders AFTER all hooks ──
+
+  // MODE STATIC: tampilkan satu gambar diam
+  if (heroMode === "static") {
+    const staticSrc = data.content?.heroStaticImage || (data.images?.hero?.[0] || "");
+    return (
+      <section style={{ position: "relative", width: "100%", height: "clamp(560px,88vh,800px)", overflow: "hidden", background: "#04080f" }}>
+        {staticSrc && (
+          <img src={staticSrc} alt="Hero" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        )}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(10,20,35,.35) 0%, rgba(10,20,35,.78) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, zIndex: 10, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 6%", textAlign: "center" }}>
+          <div style={{ maxWidth: 780 }}>
+            <div style={{ display: "inline-block", background: "#e8a020", color: "#fff", fontSize: "0.6875rem", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", padding: "5px 14px", borderRadius: 2, marginBottom: 18 }}>
+              Arutala Organizer
+            </div>
+            <h1 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.75rem,4.2vw,2.8rem)", fontWeight: 900, color: "#fff", lineHeight: 1.18, marginBottom: 18, textShadow: "0 2px 16px rgba(0,0,0,.5)" }}>
+              {data.content?.heroTitle || "Travel & Relax"}
+            </h1>
+            {data.content?.heroSub && (
+              <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,.82)", lineHeight: 1.8, marginBottom: 32 }}>
+                {data.content.heroSub.length > 120 ? data.content.heroSub.slice(0, 120) + "…" : data.content.heroSub}
+              </p>
+            )}
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+              <button onClick={() => navigateTo("services")} style={{ padding: "13px 30px", background: "#e8a020", color: "#fff", border: "none", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>Read More →</button>
+              <button onClick={() => navigateTo("about")} style={{ padding: "13px 30px", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", color: "#fff", border: "2px solid rgba(255,255,255,.55)", borderRadius: 3, fontSize: "0.8125rem", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", cursor: "pointer" }}>About Us →</button>
+            </div>
+          </div>
+        </div>
+        {/* Side gradients */}
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "18%", background: "linear-gradient(to right, rgba(4,8,15,.82) 0%, rgba(4,8,15,0) 100%)", zIndex: 15, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "18%", background: "linear-gradient(to left, rgba(4,8,15,.82) 0%, rgba(4,8,15,0) 100%)", zIndex: 15, pointerEvents: "none" }} />
+      </section>
+    );
+  }
+
+  // MODE SLIDESHOW
   if (slides.length === 0) return null;
 
   const SECTION_LABEL = { news: "Event Plan", shop: "Traveling", destinations: "Wedding Organizer", home: "Travel & Organizer" };
