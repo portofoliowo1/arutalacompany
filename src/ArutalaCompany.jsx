@@ -4076,10 +4076,21 @@ function EventWeddingCustomCardWide({ svc, onDetail, onWaOpen }) {
 
 /* ── WIDE CARD for Custom Package — full width horizontal layout ── */
 /* ─────────────── EVENT / WEDDING PACKAGE CARD (Traveling-style) ─────────────── */
-function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
+function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPackages = [] }) {
   const [hovered, setHovered] = useState(false);
+  const [priceOpen, setPriceOpen] = useState(false);
+  const [openPkgIdx, setOpenPkgIdx] = useState(null);
   const ac = svc.accent || (svc.category === "wedding" ? "#db2777" : "#0891b2");
   const al = svc.accentLight || (svc.category === "wedding" ? "#fff0f7" : "#edfafc");
+  const fmt = n => {
+    if (!n) return n;
+    const str = String(n);
+    if (str.toLowerCase().includes("hubungi")) return str;
+    const num = Number(str.replace(/[^0-9]/g, ""));
+    return isNaN(num) || num === 0 ? str : num.toLocaleString("id-ID");
+  };
+  // Semua paket dalam kategori untuk dropdown (exclude custom, termasuk diri sendiri)
+  const allCatPkgs = categoryPackages.filter(s => s.pkgId !== "custom");
 
   /* image gallery — pakai images[] jika ada, fallback image */
   const imgs = (svc.images && svc.images.length > 0) ? svc.images : [svc.image].filter(Boolean);
@@ -4143,27 +4154,83 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
             </div>
           )}
           <div style={{ flex: 1 }} />
-          <div style={{ display: "flex", alignItems: "stretch", borderTop: "1px solid #edf5f8" }}>
-            <div style={{ flex: 1, padding: "14px 20px", background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`, position: "relative", overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "stretch", borderTop: "1px solid #edf5f8", flexDirection: "column" }}>
+            <div onClick={() => allCatPkgs.length > 0 && setPriceOpen(o => !o)}
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                padding: "14px 20px", background: priceOpen
+                  ? `linear-gradient(135deg,#0a2e52 0%,#1a5a78 55%,${ac} 100%)`
+                  : `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`,
+                position: "relative", overflow: "hidden",
+                cursor: allCatPkgs.length > 0 ? "pointer" : "default",
+                boxShadow: priceOpen ? "inset 0 4px 16px rgba(0,0,0,.35)" : "none",
+                transition: "all .18s",
+              }}>
               <div style={{ position: "absolute", right: -12, top: -12, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
-              <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Mulai Dari</p>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#fff", textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{formatRp(svc.price) || svc.price}</span>
-                <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>{svc.priceNote}</span>
+              <div>
+                <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Harga Mulai Dari</p>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.75rem", fontWeight: 900, color: "#fff", textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{formatRp(svc.price) || svc.price}</span>
+                  <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>{svc.priceNote}</span>
+                </div>
+                {allCatPkgs.length > 0 && (
+                  <span style={{ fontSize: "0.5625rem", color: "rgba(255,255,255,.5)", display: "flex", alignItems: "center", gap: 3, marginTop: 3 }}>
+                    <span style={{ display: "inline-block", transition: "transform .3s", transform: priceOpen ? "rotate(180deg)" : "none" }}>▼</span>
+                    {priceOpen ? "tutup" : "lihat semua paket"}
+                  </span>
+                )}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", flexShrink: 0, gap: 0 }}>
+                <button onClick={e => { e.stopPropagation(); onWaOpen && onWaOpen(`Halo, saya tertarik dengan ${svc.title}`); }}
+                  style={{ padding: "8px 20px", background: "#25D366", color: "#fff", border: "none", fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 5, borderBottom: "1px solid rgba(255,255,255,.2)" }}>
+                  💬 WA
+                </button>
+                <button onClick={e => { e.stopPropagation(); onDetail(); }}
+                  style={{ padding: "8px 20px", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s" }}
+                  onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
+                  onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                  Lihat Detail →
+                </button>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", flexShrink: 0 }}>
-              <button onClick={() => onWaOpen && onWaOpen(`Halo, saya tertarik dengan ${svc.title}`)}
-                style={{ flex: 1, padding: "0 24px", background: "#25D366", color: "#fff", border: "none", fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 5, borderBottom: "1px solid rgba(255,255,255,.2)" }}>
-                💬 WA
-              </button>
-              <button onClick={onDetail}
-                style={{ flex: 1, padding: "0 24px", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", fontSize: "0.8125rem", fontWeight: 700, cursor: "pointer", transition: "opacity .2s" }}
-                onMouseEnter={e => e.currentTarget.style.opacity = ".85"}
-                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-                Lihat Detail →
-              </button>
-            </div>
+            {/* Price accordion dropdown */}
+            {allCatPkgs.length > 0 && (
+              <div style={{ maxHeight: priceOpen ? "400px" : "0", overflow: "hidden", transition: "max-height .4s cubic-bezier(.22,1,.36,1)" }}>
+                <div style={{ background: al, padding: "14px 20px 14px", borderTop: `1px solid ${ac}25` }}>
+                  <p style={{ fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Harga per Paket</p>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 8 }}>
+                    {allCatPkgs.map((pkg, i) => {
+                      const isOpen = openPkgIdx === i;
+                      const isCurrent = pkg.id === svc.id;
+                      const isContact = String(pkg.price || "").toLowerCase().includes("hubungi");
+                      return (
+                        <div key={pkg.id} style={{ background: isCurrent ? `${ac}18` : "#fff", borderRadius: 9, border: `1px solid ${isCurrent ? ac : isOpen ? ac + "80" : ac + "20"}`, overflow: "hidden", transition: "border-color .2s", boxShadow: isOpen ? `0 3px 12px ${ac}25` : "none" }}>
+                          <div onClick={e => { e.stopPropagation(); setOpenPkgIdx(isOpen ? null : i); }} style={{ padding: "9px 10px", cursor: "pointer" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
+                              <span style={{ fontWeight: 600, fontSize: "0.75rem", color: "#0d3b66", flex: 1, lineHeight: 1.3 }}>{pkg.title}</span>
+                              {isCurrent && <span style={{ fontSize: "0.5rem", background: ac, color: "#fff", borderRadius: 6, padding: "1px 5px", fontWeight: 700, flexShrink: 0 }}>INI</span>}
+                              <span style={{ fontSize: "0.5625rem", color: ac, fontWeight: 700, transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "none", flexShrink: 0 }}>▼</span>
+                            </div>
+                            <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 700, color: ac }}>{isContact ? "Hubungi Kami" : formatRp(pkg.price) || pkg.price}</div>
+                            <div style={{ fontSize: "0.5625rem", color: "#888", marginTop: 1 }}>{pkg.priceNote}</div>
+                          </div>
+                          <div style={{ maxHeight: isOpen ? "200px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
+                            <div style={{ borderTop: `1px solid ${ac}15`, padding: "7px 10px 9px" }}>
+                              {(pkg.features || []).slice(0, 4).map((f, fi) => (
+                                <div key={fi} style={{ display: "flex", gap: 5, fontSize: "0.625rem", color: "#3a5266", marginBottom: 3 }}>
+                                  <span style={{ color: "#27ae60", fontWeight: 800, flexShrink: 0 }}>✓</span>{f}
+                                </div>
+                              ))}
+                              {(pkg.features || []).length > 4 && <div style={{ fontSize: "0.5625rem", color: ac, fontWeight: 600, marginTop: 3 }}>+{pkg.features.length - 4} fitur lainnya</div>}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -4234,21 +4301,105 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
         </div>
       )}
 
-      {/* Price block */}
-      <div style={{
-        background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`,
-        padding: "14px 14px 16px", overflow: "hidden", position: "relative",
-        borderTop: "3px solid rgba(255,255,255,.15)",
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,.18)",
-      }}>
+      {/* Price block — clickable, buka dropdown semua paket kategori */}
+      <div
+        onClick={() => allCatPkgs.length > 0 && setPriceOpen(o => !o)}
+        style={{
+          background: priceOpen
+            ? `linear-gradient(135deg,#0a2e52 0%,#1a5a78 50%,${ac} 100%)`
+            : `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`,
+          padding: "14px 14px 16px", overflow: "hidden", position: "relative",
+          borderTop: "3px solid rgba(255,255,255,.15)",
+          boxShadow: priceOpen ? "inset 0 4px 16px rgba(0,0,0,.35)" : "inset 0 1px 0 rgba(255,255,255,.18)",
+          cursor: allCatPkgs.length > 0 ? "pointer" : "default",
+          transition: "all .18s",
+          userSelect: "none",
+        }}>
         <div style={{ position: "absolute", right: -16, top: -16, width: 100, height: 100, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
-        <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Mulai Dari</p>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-          <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff", lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{formatRp(svc.price) || svc.price}</span>
-          <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>{svc.priceNote}</span>
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+          <div>
+            <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Harga Mulai Dari</p>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+              {(() => {
+                const rawPrice = svc.price;
+                const isContact = String(rawPrice || "").toLowerCase().includes("hubungi");
+                return isContact ? (
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 700, color: "#fff" }}>Hubungi Kami</span>
+                ) : (
+                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff", lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{formatRp(rawPrice) || rawPrice}</span>
+                );
+              })()}
+              <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>{svc.priceNote}</span>
+            </div>
+          </div>
+          {allCatPkgs.length > 0 && (
+            <div style={{
+              width: 28, height: 28, borderRadius: "50%",
+              background: "rgba(255,255,255,.15)", border: "1.5px solid rgba(255,255,255,.25)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "0.625rem", color: "#fff", fontWeight: 700, flexShrink: 0, marginTop: 2,
+              transform: priceOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform .3s ease",
+            }}>▼</div>
+          )}
         </div>
-        <p style={{ color: "rgba(255,255,255,.5)", fontSize: "0.6rem", marginTop: 4, fontStyle: "italic" }}>Nego / Konsultasi dulu</p>
+        <p style={{ color: "rgba(255,255,255,.45)", fontSize: "0.6rem", marginTop: 4, letterSpacing: ".04em" }}>
+          {allCatPkgs.length > 0 ? (priceOpen ? "Klik untuk tutup harga paket" : "Klik untuk lihat semua harga paket") : "Nego / Konsultasi dulu"}
+        </p>
       </div>
+
+      {/* Price accordion — semua paket dalam kategori */}
+      {allCatPkgs.length > 0 && (
+        <div style={{ maxHeight: priceOpen ? "600px" : "0", overflow: "hidden", transition: "max-height .4s cubic-bezier(.22,1,.36,1)" }}>
+          <div style={{ background: al, padding: "14px 12px 12px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderTop: `1px solid ${ac}20` }}>
+            <p style={{ fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 10 }}>Harga per Paket</p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 8 }}>
+              {allCatPkgs.map((pkg, i) => {
+                const isOpen = openPkgIdx === i;
+                const isCurrent = pkg.id === svc.id;
+                const rawPkgPrice = pkg.price;
+                const isContact = String(rawPkgPrice || "").toLowerCase().includes("hubungi");
+                return (
+                  <div key={pkg.id} style={{
+                    background: isCurrent ? `${ac}18` : "#fff",
+                    borderRadius: 9,
+                    border: `1px solid ${isCurrent ? ac : isOpen ? ac + "80" : ac + "20"}`,
+                    overflow: "hidden", transition: "border-color .2s",
+                    boxShadow: isOpen ? `0 3px 12px ${ac}25` : "none",
+                  }}>
+                    <div onClick={e => { e.stopPropagation(); setOpenPkgIdx(isOpen ? null : i); }}
+                      style={{ padding: "9px 10px", cursor: "pointer" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 3 }}>
+                        <span style={{ fontWeight: 700, fontSize: "0.6875rem", color: "#0d3b66", flex: 1, lineHeight: 1.3 }}>{pkg.title}</span>
+                        {isCurrent && <span style={{ fontSize: "0.5rem", background: ac, color: "#fff", borderRadius: 6, padding: "1px 5px", fontWeight: 700, flexShrink: 0 }}>INI</span>}
+                        <span style={{ fontSize: "0.5625rem", color: ac, fontWeight: 700, display: "inline-block", transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "none", flexShrink: 0 }}>▼</span>
+                      </div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.875rem", fontWeight: 700, color: ac }}>
+                        {isContact ? "Hubungi Kami" : formatRp(rawPkgPrice) || rawPkgPrice}
+                      </div>
+                      <div style={{ fontSize: "0.5625rem", color: "#888", marginTop: 1 }}>{pkg.priceNote}</div>
+                    </div>
+                    <div style={{ maxHeight: isOpen ? "200px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
+                      <div style={{ borderTop: `1px solid ${ac}15`, padding: "7px 10px 9px" }}>
+                        {(pkg.features || []).slice(0, 4).map((f, fi) => (
+                          <div key={fi} style={{ display: "flex", alignItems: "flex-start", gap: 5, fontSize: "0.625rem", color: "#3a5266", marginBottom: 3 }}>
+                            <span style={{ color: "#27ae60", fontWeight: 800, flexShrink: 0 }}>✓</span>{f}
+                          </div>
+                        ))}
+                        {(pkg.features || []).length > 4 && (
+                          <div style={{ fontSize: "0.5625rem", color: ac, fontWeight: 600, marginTop: 3 }}>+{pkg.features.length - 4} fitur lainnya</div>
+                        )}
+                        <button onClick={e => { e.stopPropagation(); onDetail(); }} style={{ marginTop: 7, width: "100%", padding: "5px 0", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", borderRadius: 5, fontSize: "0.625rem", fontWeight: 700, cursor: "pointer" }}>
+                          Lihat Detail →
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Footer CTA */}
       <div style={{ padding: "10px 12px 12px", background: al, borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderBottom: `1px solid ${ac}25`, borderRadius: "0 0 14px 14px", display: "flex", gap: 8 }}>
@@ -5303,6 +5454,185 @@ function PaketBackBar({ svc, onClose }) {
   );
 }
 
+/* ─────────────── PAKET TYPES A/B/C SECTION ─────────────── */
+/**
+ * Menampilkan tipe paket A, B, C, … di halaman detail.
+ * Paket A (index 0) selalu tampil sebagai "UTAMA".
+ * Berlaku untuk kategori: traveling, event, wedding.
+ */
+function PaketTypesSection({ svc, catInfo, activePaketTypeId, onSelectPaketType }) {
+  const paketTypes = svc.paketTypes || [];
+  if (!paketTypes.length) return null;
+
+  const ac = svc.accent || (svc.category === "wedding" ? "#db2777" : svc.category === "event" ? "#0891b2" : "#e8a020");
+  const features   = svc.features   || [];
+  const facilities = svc.facilities || [];
+
+  const utamaId = svc.utamaTipeId || paketTypes[0]?.id;
+
+  return (
+    <div className="mg-fade-3" style={{ marginBottom: 48 }}>
+      {/* ── Section header ── */}
+      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
+        <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || ac}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+        <div>
+          <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: catInfo.color || ac, fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Pilihan Paket</div>
+          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Tipe Paket Tersedia</div>
+        </div>
+        <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
+      </div>
+
+      {/* ── Cards grid ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 16 }}>
+        {paketTypes.map((pt, idx) => {
+          const isUtama = pt.id === utamaId;
+          const isActive = pt.id === activePaketTypeId;
+          const filteredFeats = features.filter((_, i) => (pt.featureChecks || [])[i] !== false);
+          const filteredFacs  = facilities.filter((_, i) => (pt.facilityChecks || [])[i] !== false);
+
+          return (
+            <div key={pt.id}
+              onClick={() => onSelectPaketType && onSelectPaketType(pt.id)}
+              style={{
+                background: isUtama
+                  ? "linear-gradient(145deg,#0d3b66 0%,#0875a8 55%,#0aa8bf 100%)"
+                  : "#fff",
+                borderRadius: 14,
+                boxShadow: isActive
+                  ? `0 0 0 3px ${ac}, 0 12px 40px ${ac}40`
+                  : isUtama
+                    ? "0 12px 40px rgba(8,117,168,.32)"
+                    : "0 4px 18px rgba(13,59,102,.09)",
+                border: isActive
+                  ? `2px solid ${ac}`
+                  : isUtama ? "none" : `1.5px solid ${ac}28`,
+                position: "relative",
+                overflow: "hidden",
+                transition: "transform .2s, box-shadow .2s",
+                cursor: "pointer",
+              }}>
+              {/* Top colour bar */}
+              <div style={{ height: 4, background: `linear-gradient(to right, ${ac}, ${isUtama ? "#10d0e0" : ac + "70"})` }} />
+
+              {/* DIPILIH badge — kartu yang sedang aktif */}
+              {isActive && (
+                <div style={{
+                  position: "absolute", top: 14, left: 14,
+                  background: ac, color: "#fff",
+                  borderRadius: 20, padding: "3px 12px",
+                  fontSize: "0.5625rem", fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase",
+                  boxShadow: `0 2px 10px ${ac}55`,
+                }}>✔ DIPILIH</div>
+              )}
+
+              {/* UTAMA badge */}
+              {isUtama && !isActive && (
+                <div style={{
+                  position: "absolute", top: 14, right: 14,
+                  background: "#10d0e0", color: "#0d3b66",
+                  borderRadius: 20, padding: "3px 12px",
+                  fontSize: "0.5625rem", fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase",
+                  boxShadow: "0 2px 10px rgba(16,208,224,.35)",
+                }}>⭐ UTAMA</div>
+              )}
+              {isUtama && isActive && (
+                <div style={{
+                  position: "absolute", top: 14, right: 14,
+                  background: "#10d0e0", color: "#0d3b66",
+                  borderRadius: 20, padding: "3px 12px",
+                  fontSize: "0.5625rem", fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase",
+                  boxShadow: "0 2px 10px rgba(16,208,224,.35)",
+                }}>⭐ UTAMA</div>
+              )}
+
+              <div style={{ padding: "18px 20px 22px" }}>
+                {/* Name */}
+                <div style={{
+                  fontFamily: "'Playfair Display',serif",
+                  fontSize: "1.1875rem", fontWeight: 900,
+                  color: isUtama ? "#fff" : "#0d3b66",
+                  marginBottom: 6,
+                  paddingRight: isUtama ? 80 : 0,
+                }}>{pt.name}</div>
+
+                {/* Price */}
+                <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 14 }}>
+                  <span style={{
+                    fontFamily: "'Playfair Display',serif",
+                    fontSize: "1.6rem", fontWeight: 900,
+                    color: isUtama ? "#fff" : "#0d3b66",
+                    lineHeight: 1,
+                  }}>{formatRp(pt.price) || pt.price || "—"}</span>
+                  <span style={{ fontSize: "0.75rem", color: isUtama ? "rgba(255,255,255,.55)" : "#7ab5cc" }}>
+                    {pt.priceNote}
+                  </span>
+                </div>
+
+                {/* Divider */}
+                <div style={{ height: 1, background: isUtama ? "rgba(255,255,255,.12)" : "#e8f4f8", marginBottom: 14 }} />
+
+                {/* Features */}
+                {filteredFeats.length > 0 && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 7, marginBottom: filteredFacs.length > 0 ? 12 : 0 }}>
+                    {filteredFeats.map((feat, i) => (
+                      <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+                        <span style={{
+                          color: isUtama ? "#10d0e0" : "#27ae60",
+                          fontWeight: 800, fontSize: "0.875rem",
+                          flexShrink: 0, marginTop: 1,
+                        }}>✓</span>
+                        <span style={{
+                          fontSize: "0.8125rem",
+                          color: isUtama ? "rgba(255,255,255,.82)" : "#1a3a50",
+                          lineHeight: 1.45,
+                        }}>{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Facilities */}
+                {filteredFacs.length > 0 && (
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 8px", marginTop: 10 }}>
+                    {filteredFacs.map((fac, i) => (
+                      <div key={i} style={{
+                        display: "flex", gap: 4, alignItems: "center",
+                        background: isUtama ? "rgba(255,255,255,.1)" : "#f0f9fc",
+                        borderRadius: 6, padding: "3px 9px",
+                        border: isUtama ? "1px solid rgba(255,255,255,.12)" : `1px solid ${ac}20`,
+                      }}>
+                        {fac.icon && <span style={{ fontSize: 13 }}>{fac.icon}</span>}
+                        <span style={{ fontSize: "0.6875rem", color: isUtama ? "rgba(255,255,255,.82)" : "#0d3b66", fontWeight: 600 }}>{fac.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {/* Pilih paket button */}
+                <div style={{ marginTop: 16, paddingTop: 14, borderTop: isUtama ? "1px solid rgba(255,255,255,.1)" : "1px solid #e8f4f8" }}>
+                  <div style={{
+                    width: "100%", padding: "9px 0", borderRadius: 8, textAlign: "center",
+                    fontSize: "0.8125rem", fontWeight: 700, letterSpacing: ".02em",
+                    background: isActive
+                      ? (isUtama ? "rgba(255,255,255,.18)" : ac)
+                      : (isUtama ? "rgba(255,255,255,.1)" : `${ac}15`),
+                    color: isActive
+                      ? (isUtama ? "#fff" : "#fff")
+                      : (isUtama ? "rgba(255,255,255,.75)" : ac),
+                    border: isActive ? "none" : `1px solid ${isUtama ? "rgba(255,255,255,.15)" : ac + "40"}`,
+                    transition: "all .15s",
+                  }}>
+                    {isActive ? "✔ Harga Ditampilkan" : "Lihat Harga Ini"}
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /* ─────────────── SERVICES PAGE ─────────────── */
 function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket, onClosePaket, onWaOpen }) {
   const [selectedService, setSelectedService] = useState(null);
@@ -5311,6 +5641,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
   const [activeCategory, setActiveCategory] = useState("traveling"); // Default: tab Traveling langsung aktif
   const [activeImg, setActiveImg] = useState(0);
   const [colLayout, setColLayout] = useState(2); // 1 | 2 | 3
+  const [activePaketTypeId, setActivePaketTypeId] = useState(null);
 
   const CATEGORIES = [
     { key: "traveling", label: "✈️ Traveling", color: "#27ae60" },
@@ -5319,8 +5650,13 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
   ];
 
   const openDetail = (svc) => {
-    if (onOpenPaket) onOpenPaket(svc);   // push URL ke parent
+    if (onOpenPaket) onOpenPaket(svc);
     setSelectedService(svc); setActiveImg(0); window.scrollTo(0, 0);
+    // Set default ke tipe utama
+    const utamaId = svc.utamaTipeId || (svc.paketTypes && svc.paketTypes[0]?.id) || null;
+    setActivePaketTypeId(utamaId);
+    setSelectedVehicleIdx(0);
+    setSelectedPkgId(svc.id);
   };
   const closeDetail = () => {
     if (onClosePaket) onClosePaket();   // restore URL di parent
@@ -5338,9 +5674,13 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
   }, [activePaket, services.length]);
 
   const handleBook = (svc) => {
-    const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
+    const text = `Halo Arutala Organizer! 👋\n\nSaya tertarik dengan:\n*${svc.title}*\nHarga: ${svc.price} ${svc.priceNote}${svc._extraMsg || ""}\n\nMohon informasi lebih lanjut.\n\nTerima kasih!`;
     if (onWaOpen) onWaOpen(text);
   };
+
+  // ── State untuk selector kendaraan (traveling) dan selector paket (event/wedding) di sidebar
+  const [selectedVehicleIdx, setSelectedVehicleIdx] = useState(0);
+  const [selectedPkgId, setSelectedPkgId] = useState(null); // id paket aktif di sidebar
 
   /* ── Service Detail Page — Magazine Aesthetic ── */
   if (selectedService) {
@@ -5348,6 +5688,31 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
     const imgs = (svc.images?.length ? svc.images : [svc.image]).filter(Boolean);
     const catInfo = CATEGORIES.find(c => c.key === svc.category) || {};
     const relatedSvcs = services.filter(s => s.id !== svc.id && s.category === svc.category);
+
+    // Semua paket dalam kategori yang sama (termasuk paket ini sendiri, exclude custom)
+    const allCatPackages = services.filter(s => s.category === svc.category && s.pkgId !== "custom");
+
+    // Paket terpilih di sidebar (default = paket yang sedang dibuka)
+    const activeSidebarPkg = allCatPackages.find(s => s.id === selectedPkgId) || svc;
+
+    // Harga aktif: dari tipe paket yang dipilih, fallback ke harga global
+    const paketTypes = svc.paketTypes || [];
+    const utamaId = svc.utamaTipeId || (paketTypes[0]?.id) || null;
+    const resolvedActiveId = activePaketTypeId || utamaId;
+    const activePt = paketTypes.find(pt => pt.id === resolvedActiveId) || paketTypes[0] || null;
+
+    // Untuk traveling: harga berdasarkan kendaraan yang dipilih di sidebar
+    // Untuk event/wedding: harga berdasarkan paket yang dipilih di sidebar
+    const sidebarPrices = activeSidebarPkg.prices || [];
+    const sidebarVehicle = sidebarPrices[selectedVehicleIdx] || sidebarPrices[0] || null;
+
+    const activePrice = svc.category === "traveling"
+      ? (sidebarVehicle?.price || activePt?.price || activeSidebarPkg.price)
+      : (activeSidebarPkg.price || activePt?.price || svc.price);
+    const activePriceNote = svc.category === "traveling"
+      ? (sidebarVehicle ? `/ orang · ${sidebarVehicle.vehicle}` : activePt?.priceNote || activeSidebarPkg.priceNote)
+      : (activeSidebarPkg.priceNote || activePt?.priceNote || svc.priceNote);
+    const activeMinPeserta = activePt?.minPeserta || svc.minPeserta;
 
     return (
       <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#e8f7fc 0%,#f0fbfd 100%)", fontFamily: "'DM Sans', sans-serif" }}>
@@ -5416,8 +5781,10 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   <div>
                     <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: "rgba(255,255,255,.65)", fontWeight: 700, textTransform: "uppercase", marginBottom: 5 }}>Harga Mulai</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{formatRp(svc.price) || svc.price}</span>
-                      <span style={{ fontSize: "0.875rem", color: "rgba(255,255,255,.68)", fontWeight: 500 }}>{svc.priceNote}</span>
+                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>
+                        {(() => { const raw = activePrice; const isC = String(raw||"").toLowerCase().includes("hubungi"); return isC ? "Hubungi Kami" : (formatRp(raw)||raw); })()}
+                      </span>
+                      <span style={{ fontSize: "0.875rem", color: "rgba(255,255,255,.68)", fontWeight: 500 }}>{activePriceNote}</span>
                     </div>
                   </div>
                   <div style={{ padding: "6px 14px", background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.14)", borderRadius: 20, fontSize: "0.75rem", color: "rgba(255,255,255,.72)", fontStyle: "italic", marginBottom: 4 }}>Nego &amp; Konsultasi</div>
@@ -5516,6 +5883,13 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 <FacilitiesSection svc={svc} />
               )}
 
+              {/* PAKET A/B/C — untuk event plan & wedding (dan traveling jika ada paketTypes) */}
+              {(svc.paketTypes || []).length > 0 && (
+                <PaketTypesSection svc={svc} catInfo={catInfo}
+                  activePaketTypeId={resolvedActiveId}
+                  onSelectPaketType={id => { setActivePaketTypeId(id); window.scrollTo({top:0,behavior:"smooth"}); }} />
+              )}
+
               {/* PRICE ACCORDION — only for traveling packages */}
               {svc.category === "traveling" && svc.prices?.length > 0 && (
                 <div className="mg-fade-3" style={{ marginBottom: 48 }}>
@@ -5536,37 +5910,126 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
             <div style={{ position: "sticky", top: 128 }}>
 
               {/* Price Card */}
-              <div className="mg-fade-2" style={{ background: svc.highlight ? "linear-gradient(145deg,#1a1a1a 0%,#0d3b66 55%,#0891b2 100%)" : "#fff", borderRadius: 16, overflow: "hidden", boxShadow: svc.highlight ? "0 24px 64px rgba(12,26,40,.5)" : "0 8px 32px rgba(13,59,102,.11)", border: svc.highlight ? "none" : "1px solid #c8eaf2", marginBottom: 18 }}>
+              <div className="mg-fade-2" style={{ background: "linear-gradient(145deg,#0d1f35 0%,#0d3b66 55%,#0875a8 100%)", borderRadius: 16, overflow: "hidden", boxShadow: "0 24px 64px rgba(12,26,40,.5)", marginBottom: 18 }}>
                 {/* Top gradient bar */}
-                <div style={{ height: 4, background: `linear-gradient(to right, ${catInfo.color || "#0891b2"}, ${svc.badgeColor || catInfo.color || "#0d3b66"})` }} />
-                {/* Deco border inner */}
-                <div style={{ margin: "16px 16px 0", border: `1px solid ${svc.highlight ? "rgba(255,255,255,.07)" : "#f0e8df"}`, borderRadius: 10, padding: "20px 18px 24px", position: "relative", overflow: "hidden" }}>
-                  {/* BG shape */}
-                  <div style={{ position: "absolute", bottom: -20, right: -20, width: 80, height: 80, borderRadius: "50%", background: svc.highlight ? "rgba(255,255,255,.04)" : `${catInfo.color || "#0891b2"}08`, pointerEvents: "none" }} />
-                  <div style={{ position: "relative" }}>
-                    <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: svc.highlight ? "rgba(255,255,255,.3)" : "#b8a898", textTransform: "uppercase", fontWeight: 700, marginBottom: 16, textAlign: "center" }}>— Penawaran Spesial —</div>
-                    {/* Harga */}
-                    <div style={{ textAlign: "center", marginBottom: 10 }}>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: svc.highlight ? "rgba(255,255,255,.38)" : "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 8 }}>Harga Mulai</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.6rem", fontWeight: 900, color: svc.highlight ? "#fff" : "#0d3b66", lineHeight: 1, marginBottom: 4 }}>{formatRp(svc.price) || svc.price}</div>
-                      <div style={{ fontSize: "0.875rem", color: svc.highlight ? "rgba(255,255,255,.45)" : "#7ab5cc", fontWeight: 500 }}>{svc.priceNote}</div>
+                <div style={{ height: 4, background: `linear-gradient(to right, ${catInfo.color || "#0891b2"}, ${svc.badgeColor || catInfo.color || "#10d0e0"})` }} />
+
+                <div style={{ padding: "20px 18px 0" }}>
+                  {/* Header label */}
+                  <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "rgba(255,255,255,.35)", textTransform: "uppercase", fontWeight: 700, textAlign: "center", marginBottom: 14 }}>— Penawaran Spesial —</div>
+
+                  {/* ── SELECTOR PAKET (event & wedding & traveling) ── */}
+                  {allCatPackages.length > 1 && (
+                    <div style={{ marginBottom: 16 }}>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "2px", color: "rgba(255,255,255,.45)", textTransform: "uppercase", fontWeight: 700, marginBottom: 8, textAlign: "center" }}>Pilih Paket</div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                        {allCatPackages.map(pkg => {
+                          const isActive = (selectedPkgId || svc.id) === pkg.id;
+                          const pkgRawPrice = svc.category === "traveling" && pkg.prices?.[selectedVehicleIdx]
+                            ? pkg.prices[selectedVehicleIdx].price
+                            : pkg.price;
+                          const isContact = String(pkgRawPrice || "").toLowerCase().includes("hubungi");
+                          return (
+                            <button key={pkg.id}
+                              onClick={() => setSelectedPkgId(pkg.id)}
+                              style={{
+                                display: "flex", alignItems: "center", justifyContent: "space-between",
+                                padding: "8px 12px", borderRadius: 9, border: "none", cursor: "pointer",
+                                background: isActive
+                                  ? `linear-gradient(135deg,${catInfo.color || "#0891b2"},${catInfo.color || "#0891b2"}aa)`
+                                  : "rgba(255,255,255,.07)",
+                                transition: "all .18s",
+                                boxShadow: isActive ? `0 4px 14px ${catInfo.color || "#0891b2"}55` : "none",
+                              }}
+                              onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,.13)"; }}
+                              onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,.07)"; }}>
+                              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", minWidth: 0 }}>
+                                {pkg.badge && (
+                                  <span style={{ fontSize: "0.5rem", fontWeight: 800, color: isActive ? "rgba(255,255,255,.8)" : pkg.badgeColor || catInfo.color || "#0891b2", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 1 }}>{pkg.badge}</span>
+                                )}
+                                <span style={{ fontSize: "0.75rem", fontWeight: isActive ? 700 : 500, color: isActive ? "#fff" : "rgba(255,255,255,.72)", lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 140 }}>{pkg.title}</span>
+                              </div>
+                              <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 800, color: isActive ? "#fff" : "rgba(255,255,255,.6)", flexShrink: 0, marginLeft: 8 }}>
+                                {isContact ? "Konsultasi" : formatRp(pkgRawPrice) || pkgRawPrice}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
-                    <div style={{ height: 1, background: svc.highlight ? "rgba(255,255,255,.08)" : "#f0e8df", margin: "18px 0" }} />
-                    {/* Nego */}
-                    <div style={{ display: "flex", alignItems: "flex-start", gap: 8, background: svc.highlight ? "rgba(255,255,255,.05)" : "#faf7f4", borderRadius: 8, padding: "10px 12px", marginBottom: 20, border: `1px solid ${svc.highlight ? "rgba(255,255,255,.07)" : "#ede5da"}` }}>
-                      <span style={{ fontSize: "1rem", flexShrink: 0, marginTop: 1 }}>💬</span>
-                      <span style={{ fontSize: "0.8rem", color: svc.highlight ? "rgba(255,255,255,.6)" : "#7a8f99", fontStyle: "italic", lineHeight: 1.45 }}>Harga dapat disesuaikan dengan kebutuhan dan budget Anda</span>
+                  )}
+
+                  {/* ── SELECTOR KENDARAAN (traveling saja) ── */}
+                  {svc.category === "traveling" && sidebarPrices.length > 0 && (
+                    <div style={{ marginBottom: 16 }}>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "2px", color: "rgba(255,255,255,.45)", textTransform: "uppercase", fontWeight: 700, marginBottom: 8, textAlign: "center" }}>Pilih Armada</div>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                        {sidebarPrices.map((p, i) => {
+                          const isActive = selectedVehicleIdx === i;
+                          return (
+                            <button key={i}
+                              onClick={() => setSelectedVehicleIdx(i)}
+                              style={{
+                                padding: "8px 8px", borderRadius: 8, border: "none", cursor: "pointer",
+                                background: isActive
+                                  ? `linear-gradient(135deg,${svc.accent || "#e8a020"},${svc.accent || "#e8a020"}aa)`
+                                  : "rgba(255,255,255,.07)",
+                                transition: "all .18s",
+                                boxShadow: isActive ? `0 4px 14px ${svc.accent || "#e8a020"}55` : "none",
+                                display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+                              }}
+                              onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,.13)"; }}
+                              onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,.07)"; }}>
+                              <span style={{ fontSize: "1.1rem" }}>{p.icon}</span>
+                              <span style={{ fontSize: "0.625rem", fontWeight: 700, color: isActive ? "#fff" : "rgba(255,255,255,.65)", lineHeight: 1.2, textAlign: "center" }}>{p.vehicle}</span>
+                              <span style={{ fontSize: "0.5625rem", color: isActive ? "rgba(255,255,255,.8)" : "rgba(255,255,255,.4)" }}>{p.capacity}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
+                  )}
+
+                  <div style={{ height: 1, background: "rgba(255,255,255,.08)", margin: "6px 0 16px" }} />
+
+                  {/* Harga aktif — besar di tengah */}
+                  <div style={{ textAlign: "center", marginBottom: 14 }}>
+                    <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: "rgba(255,255,255,.38)", fontWeight: 700, textTransform: "uppercase", marginBottom: 6 }}>Harga Mulai</div>
+                    <div key={`${selectedPkgId}-${selectedVehicleIdx}`} style={{
+                      fontFamily: "'Playfair Display',serif",
+                      fontSize: "2.6rem", fontWeight: 900, color: "#fff",
+                      lineHeight: 1, marginBottom: 4,
+                      animation: "mgFadeUp .3s cubic-bezier(.22,1,.36,1) both",
+                    }}>
+                      {(() => {
+                        const raw = activePrice;
+                        const isContact = String(raw || "").toLowerCase().includes("hubungi");
+                        return isContact ? "Hubungi Kami" : (formatRp(raw) || raw || "—");
+                      })()}
+                    </div>
+                    <div style={{ fontSize: "0.875rem", color: "rgba(255,255,255,.45)", fontWeight: 500 }}>{activePriceNote}</div>
+                  </div>
+
+                  {/* Nego info */}
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 8, background: "rgba(255,255,255,.06)", borderRadius: 8, padding: "10px 12px", marginBottom: 4, border: "1px solid rgba(255,255,255,.07)" }}>
+                    <span style={{ fontSize: "1rem", flexShrink: 0, marginTop: 1 }}>💬</span>
+                    <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,.55)", fontStyle: "italic", lineHeight: 1.45 }}>Harga dapat disesuaikan dengan kebutuhan dan budget Anda</span>
                   </div>
                 </div>
+
                 {/* CTA Buttons */}
                 <div style={{ padding: "16px" }}>
-                  <button className="mg-cta-wa" onClick={() => handleBook(svc)}
-                    style={{ width: "100%", padding: "15px 20px", background: "linear-gradient(135deg,#0891b2,#0ea5c5)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 10, transition: "background .2s", letterSpacing: ".01em" }}>
+                  <button className="mg-cta-wa" onClick={() => {
+                    const pkgTitle = activeSidebarPkg.title;
+                    const priceStr = (() => { const raw = activePrice; const isC = String(raw||"").toLowerCase().includes("hubungi"); return isC ? "Hubungi Kami" : (formatRp(raw)||raw); })();
+                    const vehicleStr = svc.category === "traveling" && sidebarVehicle ? `\nArmada: ${sidebarVehicle.vehicle} (${sidebarVehicle.capacity})` : "";
+                    handleBook({ ...activeSidebarPkg, price: priceStr, _extraMsg: vehicleStr });
+                  }}
+                    style={{ width: "100%", padding: "15px 20px", background: "linear-gradient(135deg,#0891b2,#0ea5c5)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 10, transition: "all .2s", letterSpacing: ".01em" }}>
                     <span style={{ fontSize: "1.1rem" }}>💬</span> Pesan via WhatsApp
                   </button>
                   <button onClick={() => onWaOpen && onWaOpen()} className="mg-cta-tel"
-                    style={{ width: "100%", padding: "13px 20px", background: "#edf8fb", color: "#0d3b66", border: "1.5px solid #c0e8f0", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "background .2s", cursor: "pointer" }}>
+                    style={{ width: "100%", padding: "13px 20px", background: "rgba(255,255,255,.08)", color: "rgba(255,255,255,.9)", border: "1.5px solid rgba(255,255,255,.15)", borderRadius: 10, fontSize: "0.875rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "all .2s", cursor: "pointer" }}>
                     <span style={{ fontSize: "1rem" }}>📞</span> Hubungi Langsung
                   </button>
                 </div>
@@ -5757,7 +6220,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   <div>
                     <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(3, 1fr)" : "repeat(auto-fill, minmax(300px, 1fr))", gap: colLayout === 1 ? 20 : 24 }}>
                       {regularSvcs.map(svc => (
-                        <EventWeddingPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} isWide={colLayout === 1} />
+                        <EventWeddingPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} isWide={colLayout === 1} categoryPackages={filteredServices} />
                       ))}
                     </div>
                     {customPkg && (
@@ -5894,9 +6357,10 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
     const existing = svcForm.paketTypes || [];
     const usedIds = existing.map(pt => pt.id);
     const nextLetter = letters.split("").find(l => !usedIds.includes(l)) || `P${existing.length+1}`;
+    const isEventOrWedding = svcForm.category === "event" || svcForm.category === "wedding";
     const newPt = {
       id: nextLetter, name: `Paket ${nextLetter}`,
-      price: "", priceNote: "/ orang",
+      price: "", priceNote: isEventOrWedding ? "/ event" : "/ orang",
       featureChecks: (svcForm.features || []).map(() => true),
       facilityChecks: (svcForm.facilities || []).map(() => true),
       destinationChecks: (svcForm.destinations || []).map(() => true),
@@ -6010,15 +6474,18 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
           📦 Master Paket
         </button>
         {/* Dynamic tabs */}
-        {(svcForm.paketTypes||[]).map(pt => (
+        {(svcForm.paketTypes||[]).map((pt, ptIdx) => (
           <div key={pt.id} style={{ display:"flex", alignItems:"center", flexShrink:0 }}>
             <button onClick={() => setActivePaketTab(pt.id)}
               style={{ padding:"12px 12px 12px 16px", fontSize:12, fontWeight: activePaketTab===pt.id ? 800 : 600,
                 color: activePaketTab===pt.id ? "#8e44ad" : "#5090aa",
                 background: activePaketTab===pt.id ? "#fff" : "transparent",
                 border:"none", borderBottom: activePaketTab===pt.id ? "3px solid #8e44ad" : "3px solid transparent",
-                cursor:"pointer", whiteSpace:"nowrap", transition:"all .15s" }}>
+                cursor:"pointer", whiteSpace:"nowrap", transition:"all .15s", display:"flex", alignItems:"center", gap:5 }}>
               🏷 {pt.name}
+              {ptIdx === 0 && (
+                <span style={{ fontSize:9, background:"#10d0e0", color:"#0d3b66", borderRadius:8, padding:"2px 7px", fontWeight:800, letterSpacing:".08em" }}>UTAMA</span>
+              )}
             </button>
             <button onClick={() => { if(window.confirm(`Hapus ${pt.name}?`)) removePaketType(pt.id); }}
               style={{ padding:"1px 6px 2px", fontSize:16, background:"none", border:"none",
@@ -6412,36 +6879,52 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
       {activePaketTab !== "master" && (() => {
         const pt = (svcForm.paketTypes||[]).find(x => x.id === activePaketTab);
         if (!pt) return null;
+        const ptIdx = (svcForm.paketTypes||[]).findIndex(x => x.id === activePaketTab);
+        const isUtama = ptIdx === 0;
         const features = svcForm.features || [];
         const facilities = svcForm.facilities || [];
         const destinations = svcForm.destinations || [];
         const fChecks = pt.featureChecks || [];
         const facChecks = pt.facilityChecks || [];
         const dChecks = pt.destinationChecks || [];
+        const isEventOrWedding = svcForm.category === "event" || svcForm.category === "wedding";
         return (
           <div style={{ padding:"24px 28px" }} className="fade-in">
+            {/* UTAMA banner — hanya untuk index 0 */}
+            {isUtama && (
+              <div style={{ display:"flex", alignItems:"center", gap:10, background:"linear-gradient(130deg,#0d3b66,#0875a8 55%,#10d0e0)", borderRadius:10, padding:"12px 18px", marginBottom:18 }}>
+                <span style={{ fontSize:18 }}>⭐</span>
+                <div>
+                  <div style={{ fontSize:13, fontWeight:800, color:"#fff" }}>Paket UTAMA (Tampil Pertama di Website)</div>
+                  <div style={{ fontSize:11, color:"rgba(255,255,255,.7)", marginTop:2 }}>Paket ini akan tampil dengan highlight biru & badge "UTAMA" di halaman detail</div>
+                </div>
+              </div>
+            )}
             {/* Paket Name + Price */}
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:20, marginBottom:20 }}>
               {/* Nama Paket */}
-              <div style={{ background:"#fff", borderRadius:12, padding:"22px 20px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:"3px solid #8e44ad" }}>
-                <div style={{ fontSize:12, fontWeight:800, color:"#8e44ad", textTransform:"uppercase", letterSpacing:"1px", marginBottom:16 }}>🏷 Identitas Tipe Paket</div>
+              <div style={{ background:"#fff", borderRadius:12, padding:"22px 20px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:`3px solid ${isUtama?"#10d0e0":"#8e44ad"}` }}>
+                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:16 }}>
+                  <div style={{ fontSize:12, fontWeight:800, color: isUtama?"#0891b2":"#8e44ad", textTransform:"uppercase", letterSpacing:"1px" }}>🏷 Identitas Tipe Paket</div>
+                  {isUtama && <span style={{ fontSize:9, background:"#10d0e0", color:"#0d3b66", borderRadius:8, padding:"2px 7px", fontWeight:800 }}>UTAMA</span>}
+                </div>
                 <div style={{ marginBottom:14 }}>
                   <label style={{ display:"block", fontSize:11, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", marginBottom:6 }}>Nama Tipe Paket</label>
                   <input value={pt.name} onChange={e => updatePaketTypeField(pt.id,"name",e.target.value)}
                     placeholder="Paket A"
-                    style={{ width:"100%", padding:"10px 12px", border:"1.5px solid #d8b4fe", borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                    style={{ width:"100%", padding:"10px 12px", border:`1.5px solid ${isUtama?"#7dd3fc":"#d8b4fe"}`, borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
                 </div>
                 <div style={{ marginBottom:14 }}>
                   <label style={{ display:"block", fontSize:11, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", marginBottom:6 }}>Harga Khusus Paket Ini</label>
                   <input value={pt.price||""} onChange={e => updatePaketTypeField(pt.id,"price",e.target.value)}
-                    placeholder="Rp 1.500.000"
-                    style={{ width:"100%", padding:"10px 12px", border:"1.5px solid #d8b4fe", borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                    placeholder={isEventOrWedding ? "Rp 5.000.000" : "Rp 1.500.000"}
+                    style={{ width:"100%", padding:"10px 12px", border:`1.5px solid ${isUtama?"#7dd3fc":"#d8b4fe"}`, borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
                 </div>
                 <div>
                   <label style={{ display:"block", fontSize:11, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", marginBottom:6 }}>Keterangan Harga</label>
                   <input value={pt.priceNote||""} onChange={e => updatePaketTypeField(pt.id,"priceNote",e.target.value)}
-                    placeholder="/ orang (mulai)"
-                    style={{ width:"100%", padding:"10px 12px", border:"1.5px solid #d8b4fe", borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                    placeholder={isEventOrWedding ? "/ event" : "/ orang (mulai)"}
+                    style={{ width:"100%", padding:"10px 12px", border:`1.5px solid ${isUtama?"#7dd3fc":"#d8b4fe"}`, borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
                 </div>
               </div>
 
