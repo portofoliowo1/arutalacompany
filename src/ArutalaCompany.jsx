@@ -6405,7 +6405,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
           </div>
         )}
 
-      </div>{/* end 3×3 grid */}
+      </div>
       )}{/* end activePaketTab === "master" */}
 
       {/* ── Paket Variant Panel (Paket A, B, C, ...) ── */}
