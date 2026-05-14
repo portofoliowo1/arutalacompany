@@ -1975,7 +1975,7 @@ const GS = () => (
     .cms-editor-grid{display:grid;grid-template-columns:1fr 300px;min-height:700px}
     @media(max-width:900px){.cms-editor-grid{grid-template-columns:1fr}}
     .cms-editor-left{padding:32px 40px;border-right:1px solid #e0f7fa;overflow-y:auto}
-    .cms-editor-right{padding:24px 20px;background:#f5fdff;display:flex;flex-direction:column;gap:20px;overflow-y:auto;max-height:calc(100vh - 120px);position:sticky;top:0}
+    .cms-editor-right{padding:16px 16px;background:#f5fdff;display:flex;flex-direction:column;gap:12px;overflow-y:auto;max-height:calc(100vh - 60px);position:sticky;top:0;scrollbar-width:thin}
     @media(max-width:900px){
       .cms-editor-left{padding:20px 16px;border-right:none;border-bottom:1px solid #e0f7fa}
       .cms-editor-right{padding:16px;max-height:none;position:static}
@@ -3039,8 +3039,8 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
       {publishModal && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(20,35,55,.55)", zIndex: 9999,
           display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)" }}>
-          <div className="fade-in" style={{ background: "#fff", borderRadius: 14, padding: "36px 40px", maxWidth: 440, width: "90%",
-            boxShadow: "0 24px 60px rgba(0,0,0,.22)" }}>
+          <div className="fade-in" style={{ background: "#fff", borderRadius: 14, padding: "28px 32px", maxWidth: 440, width: "90%",
+            boxShadow: "0 24px 60px rgba(0,0,0,.22)", maxHeight: "90vh", overflowY: "auto" }}>
             <div style={{ textAlign: "center", marginBottom: 8 }}>
               <span style={{ fontSize: 32 }}>🚀</span>
             </div>
@@ -3351,17 +3351,17 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
         <div className="cms-editor-right">
           {/* Section Selector */}
           <div style={{ background: "#fff", borderRadius: 8, border: "1px solid #e0f7fa", overflow: "hidden" }}>
-            <div style={{ background: "#edfafc", padding: "12px 16px", borderBottom: "1px solid #e0f7fa" }}>
-              <span style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66", letterSpacing: ".5px" }}>PUBLISH TO</span>
+            <div style={{ background: "#edfafc", padding: "8px 14px", borderBottom: "1px solid #e0f7fa" }}>
+              <span style={{ fontSize: 11, fontWeight: 600, color: "#0d3b66", letterSpacing: ".5px" }}>PUBLISH TO</span>
             </div>
-            <div style={{ padding: "12px 16px", display: "flex", flexDirection: "column", gap: 6 }}>
+            <div style={{ padding: "8px 12px", display: "flex", flexDirection: "column", gap: 5 }}>
               {Object.entries(SECTION_LABELS).map(([key, label]) => (
                 <button key={key} onClick={() => onSectionChange && onSectionChange(key)} style={{
-                  padding: "8px 12px", borderRadius: 6, fontSize: 12, fontWeight: section === key ? 600 : 400,
+                  padding: "6px 10px", borderRadius: 6, fontSize: 12, fontWeight: section === key ? 600 : 400,
                   border: section === key ? "none" : "1px solid #b0dce8",
                   background: section === key ? "#0d3b66" : "#fff",
                   color: section === key ? "#fff" : "#4a6680",
-                  textAlign: "left", transition: "all .15s"
+                  textAlign: "left", transition: "all .15s", cursor: "pointer"
                 }}>{section === key ? "✓ " : ""}{label}</button>
               ))}
             </div>
@@ -3369,14 +3369,14 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
 
           {/* Publish Box */}
           <div style={{ background: "#fff", borderRadius: 8, border: "1px solid #e0f7fa", overflow: "hidden" }}>
-            <div style={{ background: "#edfafc", padding: "12px 16px", borderBottom: "1px solid #e0f7fa" }}>
-              <span style={{ fontSize: 12, fontWeight: 600, color: "#0d3b66", letterSpacing: ".5px" }}>PUBLISH</span>
+            <div style={{ background: "#edfafc", padding: "8px 14px", borderBottom: "1px solid #e0f7fa" }}>
+              <span style={{ fontSize: 11, fontWeight: 600, color: "#0d3b66", letterSpacing: ".5px" }}>PUBLISH</span>
             </div>
-            <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", gap: 10 }}>
+            <div style={{ padding: "10px 12px", display: "flex", flexDirection: "column", gap: 8 }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <span style={{ fontSize: 12, color: "#5090aa" }}>Status:</span>
-                <span style={{ fontSize: 12, fontWeight: 500, color: form.status === "published" ? "#27ae60" : "#f39c12",
-                  background: form.status === "published" ? "#eeffee" : "#fff9ee", padding: "2px 10px", borderRadius: 10 }}>
+                <span style={{ fontSize: 11, fontWeight: 500, color: form.status === "published" ? "#27ae60" : "#f39c12",
+                  background: form.status === "published" ? "#eeffee" : "#fff9ee", padding: "2px 9px", borderRadius: 10 }}>
                   {form.status === "published" ? "Published" : "Draft"}
                 </span>
               </div>
@@ -3384,14 +3384,14 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
                 <span style={{ fontSize: 12, color: "#5090aa" }}>Visibility:</span>
                 <span style={{ fontSize: 12, color: "#4a6680", fontWeight: 500 }}>Public</span>
               </div>
-              <div style={{ borderTop: "1px solid #e0f7fa", paddingTop: 12, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ borderTop: "1px solid #e0f7fa", paddingTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
                 <button onClick={() => handleSave("draft")} style={{
-                  padding: "8px 0", border: "1px solid #b0dce8", borderRadius: 6,
-                  fontSize: 12, color: "#4a6680", background: "#fff", fontWeight: 500
+                  padding: "7px 0", border: "1px solid #b0dce8", borderRadius: 6,
+                  fontSize: 12, color: "#4a6680", background: "#fff", fontWeight: 500, cursor: "pointer"
                 }}>Save Draft</button>
                 <button onClick={() => setPublishModal(true)} style={{
-                  padding: "10px 0", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", border: "none",
-                  borderRadius: 6, fontSize: 12, color: "#fff", fontWeight: 600, letterSpacing: ".5px"
+                  padding: "8px 0", background: "linear-gradient(130deg,#063d5c 0%,#0875a8 45%,#0aa8bf 78%,#10d0e0 100%)", border: "none",
+                  borderRadius: 6, fontSize: 12, color: "#fff", fontWeight: 600, letterSpacing: ".5px", cursor: "pointer"
                 }}>🚀 Publish…</button>
               </div>
             </div>
@@ -3403,38 +3403,38 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
             { label: "Category", key: "category", placeholder: "e.g. Beach, Gear, Asia" },
           ].map(f => (
             <div key={f.key}>
-              <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>{f.label}</label>
+              <label style={{ display: "block", fontSize: 10, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 4 }}>{f.label}</label>
               <input type={f.type || "text"} value={form[f.key] || ""} placeholder={f.placeholder || ""}
                 onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
-                style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
+                style={{ width: "100%", padding: "7px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none", boxSizing: "border-box" }} />
             </div>
           ))}
 
           {/* Author — auto dari akun yang login */}
           <div>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>
+            <label style={{ display: "block", fontSize: 10, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 4 }}>
               Author <span style={{ fontSize: 10, color: "#27ae60", fontWeight: 500, textTransform: "none", letterSpacing: 0 }}>· otomatis</span>
             </label>
             <div style={{ position: "relative" }}>
               <input value={form.author || ""} readOnly
-                style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none", background: "#edfafc", color: "#0d3b66", fontWeight: 600, cursor: "default" }} />
-              <span style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", fontSize: 12 }}>🔒</span>
+                style={{ width: "100%", padding: "7px 28px 7px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none", background: "#edfafc", color: "#0d3b66", fontWeight: 600, cursor: "default", boxSizing: "border-box" }} />
+              <span style={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)", fontSize: 11 }}>🔒</span>
             </div>
-            <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4 }}>Diisi otomatis dari akun yang login</p>
+            <p style={{ fontSize: 10, color: "#5090aa", marginTop: 3 }}>Diisi otomatis dari akun yang login</p>
           </div>
 
           {/* Tags */}
           <div>
-            <label style={{ display: "block", fontSize: 11, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>Tags</label>
+            <label style={{ display: "block", fontSize: 10, fontWeight: 600, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 4 }}>Tags</label>
             <input value={typeof form.tags === "string" ? form.tags : (form.tags || []).join(", ")}
               onChange={e => setForm(p => ({ ...p, tags: e.target.value }))}
               placeholder="beach, travel, gear"
-              style={{ width: "100%", padding: "8px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 13, outline: "none" }} />
-            <p style={{ fontSize: 11, color: "#5090aa", marginTop: 4 }}>Separate with commas</p>
+              style={{ width: "100%", padding: "7px 10px", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, outline: "none", boxSizing: "border-box" }} />
+            <p style={{ fontSize: 10, color: "#5090aa", marginTop: 3 }}>Separate with commas</p>
           </div>
 
           {/* Section badge */}
-          <div style={{ fontSize: 11, color: "#5090aa", fontStyle: "italic", textAlign: "center", paddingTop: 4 }}>
+          <div style={{ fontSize: 11, color: "#5090aa", fontStyle: "italic", textAlign: "center", paddingBottom: 8 }}>
             Posting to: <strong style={{ color: "#0ea5c5" }}>{SECTION_LABELS[section] || section}</strong>
           </div>
         </div>
@@ -4099,7 +4099,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
           display: "flex", flexDirection: "row", minHeight: 260,
         }}>
         {/* Gambar kiri full height */}
-        <div style={{ position: "relative", width: "40%", flexShrink: 0, overflow: "hidden" }}>
+        <div onClick={onDetail} style={{ position: "relative", width: "40%", flexShrink: 0, overflow: "hidden", cursor: "pointer" }}>
           <img loading="lazy" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block",
               transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
@@ -4181,7 +4181,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide }) {
         transform: hovered ? "translateY(-5px)" : "none", position: "relative" }}>
 
       {/* Hero image with overlay title */}
-      <div style={{ position: "relative", height: 190, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
+      <div onClick={onDetail} style={{ position: "relative", height: 190, overflow: "hidden", borderRadius: "14px 14px 0 0", cursor: "pointer" }}>
         <img loading="lazy" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
           onError={e => { e.target.src = ""; }} />
@@ -4288,7 +4288,7 @@ function TravelPackageCardWide({ svc, onDetail, onWaOpen }) {
         fontFamily: "'DM Sans',sans-serif",
       }}>
       {/* Image */}
-      <div style={{ position: "relative", width: isMobile ? "100%" : 340, height: isMobile ? 210 : "auto", flexShrink: 0, overflow: "hidden" }}>
+      <div onClick={onDetail} style={{ position: "relative", width: isMobile ? "100%" : 340, height: isMobile ? 210 : "auto", flexShrink: 0, overflow: "hidden", cursor: "pointer" }}>
         <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.07)" : "scale(1)" }}
           onError={e => { e.target.src = ""; }} />
@@ -4365,7 +4365,7 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
         }}>
 
         {/* Gambar kiri — full height */}
-        <div style={{ position: "relative", width: "42%", flexShrink: 0, overflow: "hidden" }}>
+        <div onClick={onDetail} style={{ position: "relative", width: "42%", flexShrink: 0, overflow: "hidden", cursor: "pointer" }}>
           <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block",
               transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
@@ -4510,7 +4510,7 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
       style={{ background: "#fff", borderRadius: 16, overflow: "visible", boxShadow: hovered ? "0 16px 48px rgba(13,59,102,.18)" : "0 4px 20px rgba(13,59,102,.09)", border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "transparent"}`, fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)", transform: hovered ? "translateY(-5px)" : "none", position: "relative" }}>
 
       {/* Hero image */}
-      <div style={{ position: "relative", height: 180, overflow: "hidden", borderRadius: "14px 14px 0 0" }}>
+      <div onClick={onDetail} style={{ position: "relative", height: 180, overflow: "hidden", borderRadius: "14px 14px 0 0", cursor: "pointer" }}>
         <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
           style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
           onError={e => { e.target.src = ""; }} />
