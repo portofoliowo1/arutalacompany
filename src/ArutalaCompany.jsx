@@ -8818,6 +8818,78 @@ function WaPickerModal({ admins, msgText, onClose }) {
   );
 }
 
+/* ─────────────── PORTFOLIO SECTION SUB-COMPONENT ─────────────── */
+function PortfolioSection({ data, navigateTo, openArticle, PostCard }) {
+  const allPosts = [
+    ...(data.posts?.news || []),
+    ...(data.posts?.shop || []),
+    ...(data.posts?.destinations || []),
+  ].filter(p => p.status === "published");
+
+  const [slots, setSlots] = useState(() => {
+    if (allPosts.length === 0) return [];
+    const shuffled = [...allPosts].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, Math.min(3, shuffled.length));
+  });
+  const [fadingIdx, setFadingIdx] = useState(null);
+
+  useEffect(() => {
+    if (allPosts.length <= 3) return;
+    const tick = () => {
+      const replaceIdx = Math.floor(Math.random() * 3);
+      setFadingIdx(replaceIdx);
+      setTimeout(() => {
+        setSlots(prev => {
+          const currentIds = new Set(prev.map(p => p.id));
+          const pool = allPosts.filter(p => !currentIds.has(p.id));
+          if (pool.length === 0) {
+            const any = allPosts.filter(p => p.id !== prev[replaceIdx]?.id);
+            if (!any.length) return prev;
+            const pick = any[Math.floor(Math.random() * any.length)];
+            const next = [...prev];
+            next[replaceIdx] = pick;
+            return next;
+          }
+          const pick = pool[Math.floor(Math.random() * pool.length)];
+          const next = [...prev];
+          next[replaceIdx] = pick;
+          return next;
+        });
+        setFadingIdx(null);
+      }, 500);
+    };
+    const interval = setInterval(tick, 3000);
+    return () => clearInterval(interval);
+  }, [allPosts.length]);
+
+  if (allPosts.length === 0) return null;
+  return (
+    <section className="section-md" style={{ background: "#fff" }}>
+      <style>{`
+        @keyframes portCardIn  { from { opacity:0; transform:translateY(14px) scale(.97); } to { opacity:1; transform:none; } }
+        @keyframes portCardOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateY(-10px) scale(.97); } }
+        .port-card-enter { animation: portCardIn  .5s cubic-bezier(.22,1,.36,1) both; }
+        .port-card-exit  { animation: portCardOut .45s ease both; pointer-events:none; }
+      `}</style>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 36 }}>
+          <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#0d3b66" }}>Our Portofolio</h2>
+          <button onClick={() => navigateTo("news")} style={{ fontSize: "0.875rem", color: "#0891b2", border: "none", background: "none", fontWeight: 600 }}>
+            View all →
+          </button>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
+          {slots.map((post, i) => (
+            <div key={post.id} className={fadingIdx === i ? "port-card-exit" : "port-card-enter"}>
+              <PostCard post={post} onClick={() => openArticle(post)} view="grid" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function BricksyTravel() {
   const [data, setData] = useState(DEFAULT_DATA);
   const dataRef = useRef(DEFAULT_DATA); // selalu up-to-date, aman dipakai di closure stale (popstate)
@@ -10219,78 +10291,7 @@ export default function BricksyTravel() {
                   </section>
 
                   {/* Our Portofolio — 3 kartu random auto-rotate dari semua post */}
-                  {(() => {
-                    const allPosts = [
-                      ...(data.posts?.news || []),
-                      ...(data.posts?.shop || []),
-                      ...(data.posts?.destinations || []),
-                    ].filter(p => p.status === "published");
-
-                    const [slots, setSlots] = React.useState(() => {
-                      if (allPosts.length === 0) return [];
-                      const shuffled = [...allPosts].sort(() => Math.random() - 0.5);
-                      return shuffled.slice(0, Math.min(3, shuffled.length));
-                    });
-                    const [fadingIdx, setFadingIdx] = React.useState(null);
-                    const usedIdsRef = React.useRef(new Set(slots.map(p => p.id)));
-
-                    React.useEffect(() => {
-                      if (allPosts.length <= 3) return;
-                      const tick = () => {
-                        const replaceIdx = Math.floor(Math.random() * 3);
-                        setFadingIdx(replaceIdx);
-                        setTimeout(() => {
-                          setSlots(prev => {
-                            const currentIds = new Set(prev.map(p => p.id));
-                            const pool = allPosts.filter(p => !currentIds.has(p.id));
-                            if (pool.length === 0) {
-                              // reset pool jika habis
-                              const any = allPosts.filter(p => p.id !== prev[replaceIdx]?.id);
-                              if (!any.length) return prev;
-                              const pick = any[Math.floor(Math.random() * any.length)];
-                              const next = [...prev];
-                              next[replaceIdx] = pick;
-                              return next;
-                            }
-                            const pick = pool[Math.floor(Math.random() * pool.length)];
-                            const next = [...prev];
-                            next[replaceIdx] = pick;
-                            return next;
-                          });
-                          setFadingIdx(null);
-                        }, 500);
-                      };
-                      const interval = setInterval(tick, 3000);
-                      return () => clearInterval(interval);
-                    }, [allPosts.length]);
-
-                    if (allPosts.length === 0) return null;
-                    return (
-                      <section className="section-md" style={{ background: "#fff" }}>
-                        <style>{`
-                          @keyframes portCardIn  { from { opacity:0; transform:translateY(14px) scale(.97); } to { opacity:1; transform:none; } }
-                          @keyframes portCardOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateY(-10px) scale(.97); } }
-                          .port-card-enter { animation: portCardIn  .5s cubic-bezier(.22,1,.36,1) both; }
-                          .port-card-exit  { animation: portCardOut .45s ease both; pointer-events:none; }
-                        `}</style>
-                        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 36 }}>
-                            <h2 className="display" style={{ fontSize: "clamp(1.5rem,3.5vw,2.25rem)", fontWeight: 900, color: "#0d3b66" }}>Our Portofolio</h2>
-                            <button onClick={() => navigateTo("news")} style={{ fontSize: "0.875rem", color: "#0891b2", border: "none", background: "none", fontWeight: 600 }}>
-                              View all →
-                            </button>
-                          </div>
-                          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
-                            {slots.map((post, i) => (
-                              <div key={post.id} className={fadingIdx === i ? "port-card-exit" : "port-card-enter"}>
-                                <PostCard post={post} onClick={() => openArticle(post)} view="grid" />
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </section>
-                    );
-                  })()}
+                  <PortfolioSection data={data} navigateTo={navigateTo} openArticle={openArticle} PostCard={PostCard} />
 
                   {/* Globe / Maps Search Section */}
                   <section style={{ padding: "0", background: "#04080f", overflow: "hidden", position: "relative", minHeight: 420 }}>
