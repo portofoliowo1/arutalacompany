@@ -5708,10 +5708,10 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 
     const activePrice = svc.category === "traveling"
       ? (sidebarVehicle?.price || activePt?.price || activeSidebarPkg.price)
-      : (activeSidebarPkg.price || activePt?.price || svc.price);
+      : (activePt?.price || activeSidebarPkg.price || svc.price);
     const activePriceNote = svc.category === "traveling"
       ? (sidebarVehicle ? `/ orang · ${sidebarVehicle.vehicle}` : activePt?.priceNote || activeSidebarPkg.priceNote)
-      : (activeSidebarPkg.priceNote || activePt?.priceNote || svc.priceNote);
+      : (activePt?.priceNote || activeSidebarPkg.priceNote || svc.priceNote);
     const activeMinPeserta = activePt?.minPeserta || svc.minPeserta;
 
     return (
@@ -5883,24 +5883,57 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 <FacilitiesSection svc={svc} />
               )}
 
-              {/* PAKET A/B/C — untuk event plan & wedding (dan traveling jika ada paketTypes) */}
+              {/* TIPE PAKET — compact button grid untuk semua kategori */}
               {(svc.paketTypes || []).length > 0 && (
-                <PaketTypesSection svc={svc} catInfo={catInfo}
-                  activePaketTypeId={resolvedActiveId}
-                  onSelectPaketType={id => { setActivePaketTypeId(id); window.scrollTo({top:0,behavior:"smooth"}); }} />
-              )}
-
-              {/* PRICE ACCORDION — only for traveling packages */}
-              {svc.category === "traveling" && svc.prices?.length > 0 && (
                 <div className="mg-fade-3" style={{ marginBottom: 48 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
-                    <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${svc.accent || "#e8a020"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+                  {/* Section header */}
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+                    <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || svc.accent || "#0891b2"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
                     <div>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: svc.accent || "#e8a020", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Pilihan Armada</div>
-                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Harga per Kendaraan</div>
+                      <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: catInfo.color || svc.accent || "#0891b2", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Pilihan Paket</div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Tipe Paket Tersedia</div>
                     </div>
+                    <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
                   </div>
-                  <TravelDetailPriceBlock svc={svc} />
+
+                  {/* Compact button grid */}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                    {(svc.paketTypes || []).map(pt => {
+                      const isActive = pt.id === resolvedActiveId;
+                      const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
+                      const ac = catInfo.color || svc.accent || "#0891b2";
+                      return (
+                        <button key={pt.id}
+                          onClick={() => { setActivePaketTypeId(pt.id); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                          style={{
+                            display: "flex", alignItems: "center", gap: 8,
+                            padding: "8px 16px", borderRadius: 22,
+                            border: isActive ? `2px solid ${ac}` : "2px solid #d0eaf3",
+                            background: isActive ? `linear-gradient(135deg, ${ac}22, ${ac}10)` : "#fff",
+                            cursor: "pointer", transition: "all .18s",
+                            boxShadow: isActive ? `0 4px 14px ${ac}30` : "0 1px 4px rgba(0,0,0,.06)",
+                          }}
+                          onMouseEnter={e => { if (!isActive) { e.currentTarget.style.borderColor = ac; e.currentTarget.style.background = `${ac}08`; } }}
+                          onMouseLeave={e => { if (!isActive) { e.currentTarget.style.borderColor = "#d0eaf3"; e.currentTarget.style.background = "#fff"; } }}
+                        >
+                          {isUtama && (
+                            <span style={{
+                              fontSize: "0.5rem", fontWeight: 800, letterSpacing: ".08em",
+                              textTransform: "uppercase", padding: "2px 7px", borderRadius: 10,
+                              background: "#10d0e0", color: "#0d3b66", flexShrink: 0,
+                            }}>UTAMA</span>
+                          )}
+                          <span style={{ fontSize: "0.8125rem", fontWeight: isActive ? 700 : 600, color: isActive ? ac : "#0d3b66" }}>{pt.name}</span>
+                          {pt.price && (
+                            <span style={{ fontSize: "0.75rem", fontWeight: 700, color: isActive ? ac : "#7ab5cc", fontFamily: "'Playfair Display',serif" }}>
+                              {formatRp(pt.price) || pt.price}
+                            </span>
+                          )}
+                          {isActive && <span style={{ fontSize: "0.75rem", color: ac, fontWeight: 800 }}>✓</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
 
@@ -5919,45 +5952,90 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "rgba(255,255,255,.35)", textTransform: "uppercase", fontWeight: 700, textAlign: "center", marginBottom: 14 }}>— Penawaran Spesial —</div>
 
                   {/* ── SELECTOR PAKET (event & wedding & traveling) ── */}
-                  {allCatPackages.length > 1 && (
-                    <div style={{ marginBottom: 16 }}>
-                      <div style={{ fontSize: "0.5625rem", letterSpacing: "2px", color: "rgba(255,255,255,.45)", textTransform: "uppercase", fontWeight: 700, marginBottom: 8, textAlign: "center" }}>Pilih Paket</div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                        {allCatPackages.map(pkg => {
-                          const isActive = (selectedPkgId || svc.id) === pkg.id;
-                          const pkgRawPrice = svc.category === "traveling" && pkg.prices?.[selectedVehicleIdx]
-                            ? pkg.prices[selectedVehicleIdx].price
-                            : pkg.price;
-                          const isContact = String(pkgRawPrice || "").toLowerCase().includes("hubungi");
-                          return (
-                            <button key={pkg.id}
-                              onClick={() => setSelectedPkgId(pkg.id)}
-                              style={{
-                                display: "flex", alignItems: "center", justifyContent: "space-between",
-                                padding: "8px 12px", borderRadius: 9, border: "none", cursor: "pointer",
-                                background: isActive
-                                  ? `linear-gradient(135deg,${catInfo.color || "#0891b2"},${catInfo.color || "#0891b2"}aa)`
-                                  : "rgba(255,255,255,.07)",
-                                transition: "all .18s",
-                                boxShadow: isActive ? `0 4px 14px ${catInfo.color || "#0891b2"}55` : "none",
-                              }}
-                              onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,.13)"; }}
-                              onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,.07)"; }}>
-                              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", minWidth: 0 }}>
-                                {pkg.badge && (
-                                  <span style={{ fontSize: "0.5rem", fontWeight: 800, color: isActive ? "rgba(255,255,255,.8)" : pkg.badgeColor || catInfo.color || "#0891b2", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 1 }}>{pkg.badge}</span>
-                                )}
-                                <span style={{ fontSize: "0.75rem", fontWeight: isActive ? 700 : 500, color: isActive ? "#fff" : "rgba(255,255,255,.72)", lineHeight: 1.2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 140 }}>{pkg.title}</span>
-                              </div>
-                              <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 800, color: isActive ? "#fff" : "rgba(255,255,255,.6)", flexShrink: 0, marginLeft: 8 }}>
-                                {isContact ? "Konsultasi" : formatRp(pkgRawPrice) || pkgRawPrice}
-                              </span>
-                            </button>
-                          );
-                        })}
+                  {allCatPackages.length > 1 && (() => {
+                    const [pkgDropOpen, setPkgDropOpen] = React.useState(false);
+                    const activePkg = allCatPackages.find(p => p.id === (selectedPkgId || svc.id)) || allCatPackages[0];
+                    return (
+                      <div style={{ marginBottom: 16, position: "relative" }}>
+                        <div style={{ fontSize: "0.5625rem", letterSpacing: "2px", color: "rgba(255,255,255,.45)", textTransform: "uppercase", fontWeight: 700, marginBottom: 8, textAlign: "center" }}>Pilih Paket</div>
+
+                        {/* Trigger Button */}
+                        <button
+                          onClick={() => setPkgDropOpen(o => !o)}
+                          style={{
+                            width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
+                            padding: "9px 13px", borderRadius: 10, border: "1.5px solid rgba(255,255,255,.18)",
+                            background: "rgba(255,255,255,.08)", cursor: "pointer", transition: "all .18s",
+                          }}
+                          onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.14)"}
+                          onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.08)"}
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
+                            {activePkg.badge && (
+                              <span style={{
+                                fontSize: "0.5rem", fontWeight: 800, letterSpacing: ".07em",
+                                textTransform: "uppercase", padding: "2px 7px", borderRadius: 20,
+                                background: activePkg.badgeColor || catInfo.color || "#0891b2",
+                                color: "#fff", flexShrink: 0,
+                              }}>{activePkg.badge}</span>
+                            )}
+                            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{activePkg.title}</span>
+                          </div>
+                          <span style={{ color: "rgba(255,255,255,.55)", fontSize: "0.75rem", flexShrink: 0, marginLeft: 6, display: "inline-block", transform: pkgDropOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform .2s" }}>▾</span>
+                        </button>
+
+                        {/* Dropdown List */}
+                        {pkgDropOpen && (
+                          <div style={{
+                            position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 99,
+                            background: "linear-gradient(145deg,#0d1f35,#0d3b66)",
+                            borderRadius: 12, overflow: "hidden",
+                            boxShadow: "0 12px 40px rgba(0,0,0,.55)",
+                            border: "1px solid rgba(255,255,255,.1)",
+                            animation: "mgFadeUp .18s cubic-bezier(.22,1,.36,1) both",
+                          }}>
+                            {allCatPackages.map((pkg, idx) => {
+                              const isActive = (selectedPkgId || svc.id) === pkg.id;
+                              const pkgRawPrice = svc.category === "traveling" && pkg.prices?.[selectedVehicleIdx]
+                                ? pkg.prices[selectedVehicleIdx].price
+                                : (activePt?.price || pkg.price);
+                              const isContact = String(pkgRawPrice || "").toLowerCase().includes("hubungi");
+                              return (
+                                <button key={pkg.id}
+                                  onClick={() => { setSelectedPkgId(pkg.id); setPkgDropOpen(false); }}
+                                  style={{
+                                    width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
+                                    padding: "10px 14px", border: "none", cursor: "pointer",
+                                    borderBottom: idx < allCatPackages.length - 1 ? "1px solid rgba(255,255,255,.06)" : "none",
+                                    background: isActive
+                                      ? `linear-gradient(135deg,${catInfo.color || "#0891b2"}cc,${catInfo.color || "#0891b2"}66)`
+                                      : "transparent",
+                                    transition: "background .15s",
+                                  }}
+                                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = "rgba(255,255,255,.08)"; }}
+                                  onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}>
+                                  <div style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
+                                    {pkg.badge && (
+                                      <span style={{
+                                        fontSize: "0.5rem", fontWeight: 800, letterSpacing: ".07em",
+                                        textTransform: "uppercase", padding: "2px 7px", borderRadius: 20,
+                                        background: isActive ? "rgba(255,255,255,.25)" : (pkg.badgeColor || catInfo.color || "#0891b2"),
+                                        color: "#fff", flexShrink: 0,
+                                      }}>{pkg.badge}</span>
+                                    )}
+                                    <span style={{ fontSize: "0.8rem", fontWeight: isActive ? 700 : 500, color: isActive ? "#fff" : "rgba(255,255,255,.75)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 130 }}>{pkg.title}</span>
+                                  </div>
+                                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.875rem", fontWeight: 800, color: isActive ? "#fff" : "rgba(255,255,255,.55)", flexShrink: 0, marginLeft: 8 }}>
+                                    {isContact ? "Konsultasi" : formatRp(pkgRawPrice) || pkgRawPrice}
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  )}
+                    );
+                  })()}
 
                   {/* ── SELECTOR KENDARAAN (traveling saja) ── */}
                   {svc.category === "traveling" && sidebarPrices.length > 0 && (
