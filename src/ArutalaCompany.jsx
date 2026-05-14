@@ -5803,6 +5803,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChange, onCancelEdit }) {
   const [editSvc, setEditSvc] = useState(null);
   const [svcForm, setSvcForm] = useState({});
+  const [activePaketTab, setActivePaketTab] = useState("master"); // "master" | paket id ("A","B",...)
   const [uploadProgresses, setUploadProgresses] = useState([]); // [{name, pct, done, error}]
   const svcs = data.services || [];
 
@@ -5822,7 +5823,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
       accent: "#e8a020", accentLight: "#fff8e6", duration: "3 Hari 2 Malam", minPeserta: "20",
       price: "", priceNote: "/ orang", images: [], image: "", coverIndex: 0,
       description: "", features: [], highlight: false,
-      destinations: [], facilities: [],
+      destinations: [], facilities: [], paketTypes: [],
       prices: [
         { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "", points: ["Full AC Double Blower", "TV LCD + Audio System", "Toilet dalam bus"] },
         { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "", points: ["Full AC Split", "Monitor + Speaker", "Kursi empuk & nyaman"] },
@@ -5842,11 +5843,12 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
       destinations: (s.destinations || []).map(d => ({ ...d, points: [...(d.points || [])] })),
       facilities: (s.facilities || []).map(f => ({ ...f })),
       prices: (s.prices || []).map(p => ({ ...p, points: [...(p.points || [])] })),
+      paketTypes: (s.paketTypes || []).map(pt => ({ ...pt, featureChecks:[...(pt.featureChecks||[])], facilityChecks:[...(pt.facilityChecks||[])], destinationChecks:[...(pt.destinationChecks||[])] })),
     });
     setUploadProgresses([]);
     setEditSvc(s.id);
   };
-  const cancelEdit = () => { setEditSvc(null); setSvcForm({}); setUploadProgresses([]); };
+  const cancelEdit = () => { setEditSvc(null); setSvcForm({}); setUploadProgresses([]); setActivePaketTab("master"); };
 
   const saveSvc = () => {
     if (!svcForm.title?.trim()) return notify("Judul paket wajib diisi.", "error");
@@ -5859,7 +5861,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
     const idx = svcs.findIndex(x => x.id === finalForm.id);
     const updated = idx >= 0 ? svcs.map((x, i) => i === idx ? finalForm : x) : [...svcs, finalForm];
     save({ ...data, services: updated });
-    setEditSvc(null); setSvcForm({}); setUploadProgresses([]);
+    setEditSvc(null); setSvcForm({}); setUploadProgresses([]); setActivePaketTab("master");
     notify("Paket layanan disimpan!");
   };
   const deleteSvc = (id) => {
@@ -5885,6 +5887,40 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
   const addDestPoint = (i) => setSvcForm(p => { const d=[...(p.destinations||[])]; d[i]={...d[i],points:[...(d[i].points||[]),""]}; return {...p,destinations:d}; });
   const updateDestPoint = (di,pi,val) => setSvcForm(p => { const d=[...(p.destinations||[])]; const pts=[...(d[di].points||[])]; pts[pi]=val; d[di]={...d[di],points:pts}; return {...p,destinations:d}; });
   const removeDestPoint = (di,pi) => setSvcForm(p => { const d=[...(p.destinations||[])]; d[di]={...d[di],points:(d[di].points||[]).filter((_,idx)=>idx!==pi)}; return {...p,destinations:d}; });
+
+  /* ── Tipe Paket helpers ── */
+  const addPaketType = () => {
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const existing = svcForm.paketTypes || [];
+    const usedIds = existing.map(pt => pt.id);
+    const nextLetter = letters.split("").find(l => !usedIds.includes(l)) || `P${existing.length+1}`;
+    const newPt = {
+      id: nextLetter, name: `Paket ${nextLetter}`,
+      price: "", priceNote: "/ orang",
+      featureChecks: (svcForm.features || []).map(() => true),
+      facilityChecks: (svcForm.facilities || []).map(() => true),
+      destinationChecks: (svcForm.destinations || []).map(() => true),
+    };
+    setSvcForm(p => ({ ...p, paketTypes: [...(p.paketTypes || []), newPt] }));
+    setActivePaketTab(nextLetter);
+  };
+  const removePaketType = (id) => {
+    setSvcForm(p => ({ ...p, paketTypes: (p.paketTypes || []).filter(pt => pt.id !== id) }));
+    setActivePaketTab("master");
+  };
+  const updatePaketTypeField = (id, key, val) =>
+    setSvcForm(p => ({ ...p, paketTypes: (p.paketTypes||[]).map(pt => pt.id===id ? {...pt,[key]:val} : pt) }));
+  const togglePaketCheck = (id, arrKey, idx) =>
+    setSvcForm(p => ({
+      ...p,
+      paketTypes: (p.paketTypes||[]).map(pt => {
+        if (pt.id !== id) return pt;
+        const arr = [...(pt[arrKey]||[])];
+        while (arr.length <= idx) arr.push(true);
+        arr[idx] = !arr[idx];
+        return { ...pt, [arrKey]: arr };
+      })
+    }));
   const [destUploadProgress, setDestUploadProgress] = useState({}); // { [destIndex]: { pct, done, error } }
 
   const handleDestImg = async (i, e) => {
@@ -5962,10 +5998,45 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
         </div>
       </div>
 
-      {/* ── 3×3 Grid utama ── */}
-      <div style={{ padding: "24px 28px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
+      {/* ── Tipe Paket Tab Bar ── */}
+      <div style={{ padding:"0 28px", background:"#f0f9fc", borderBottom:"2px solid #e0f7fa", display:"flex", alignItems:"center", gap:0, overflowX:"auto", flexWrap:"nowrap" }}>
+        {/* Master Paket */}
+        <button onClick={() => setActivePaketTab("master")}
+          style={{ padding:"12px 20px", fontSize:12, fontWeight: activePaketTab==="master" ? 800 : 600,
+            color: activePaketTab==="master" ? "#0d3b66" : "#5090aa",
+            background: activePaketTab==="master" ? "#fff" : "transparent",
+            border:"none", borderBottom: activePaketTab==="master" ? "3px solid #0891b2" : "3px solid transparent",
+            cursor:"pointer", whiteSpace:"nowrap", transition:"all .15s", flexShrink:0 }}>
+          📦 Master Paket
+        </button>
+        {/* Dynamic tabs */}
+        {(svcForm.paketTypes||[]).map(pt => (
+          <div key={pt.id} style={{ display:"flex", alignItems:"center", flexShrink:0 }}>
+            <button onClick={() => setActivePaketTab(pt.id)}
+              style={{ padding:"12px 12px 12px 16px", fontSize:12, fontWeight: activePaketTab===pt.id ? 800 : 600,
+                color: activePaketTab===pt.id ? "#8e44ad" : "#5090aa",
+                background: activePaketTab===pt.id ? "#fff" : "transparent",
+                border:"none", borderBottom: activePaketTab===pt.id ? "3px solid #8e44ad" : "3px solid transparent",
+                cursor:"pointer", whiteSpace:"nowrap", transition:"all .15s" }}>
+              🏷 {pt.name}
+            </button>
+            <button onClick={() => { if(window.confirm(`Hapus ${pt.name}?`)) removePaketType(pt.id); }}
+              style={{ padding:"1px 6px 2px", fontSize:16, background:"none", border:"none",
+                color:"#c0392b", cursor:"pointer", fontWeight:800, opacity:.6, lineHeight:1 }} title="Hapus tipe ini">×</button>
+          </div>
+        ))}
+        {/* Add button */}
+        <button onClick={addPaketType}
+          style={{ margin:"10px 0 10px 10px", padding:"7px 14px", fontSize:12, fontWeight:700, color:"#27ae60",
+            background:"#e8f8ef", border:"1.5px dashed #27ae60", borderRadius:8,
+            cursor:"pointer", whiteSpace:"nowrap", flexShrink:0, transition:"all .15s" }}>
+          ＋ Tambah Tipe Paket
+        </button>
+      </div>
 
-        {/* [1,1] Informasi Dasar */}
+      {/* ── 3×3 Grid utama (Master Paket only) ── */}
+      {activePaketTab === "master" && (
+      <div style={{ padding: "24px 28px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
         <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #0891b2" }}>
           <div style={{ fontSize: 12, fontWeight: 800, color: "#0891b2", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 16 }}>📋 Informasi Dasar</div>
           <div style={{ marginBottom: 14 }}>
@@ -6335,6 +6406,145 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
         )}
 
       </div>{/* end 3×3 grid */}
+      )}{/* end activePaketTab === "master" */}
+
+      {/* ── Paket Variant Panel (Paket A, B, C, ...) ── */}
+      {activePaketTab !== "master" && (() => {
+        const pt = (svcForm.paketTypes||[]).find(x => x.id === activePaketTab);
+        if (!pt) return null;
+        const features = svcForm.features || [];
+        const facilities = svcForm.facilities || [];
+        const destinations = svcForm.destinations || [];
+        const fChecks = pt.featureChecks || [];
+        const facChecks = pt.facilityChecks || [];
+        const dChecks = pt.destinationChecks || [];
+        return (
+          <div style={{ padding:"24px 28px" }} className="fade-in">
+            {/* Paket Name + Price */}
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:20, marginBottom:20 }}>
+              {/* Nama Paket */}
+              <div style={{ background:"#fff", borderRadius:12, padding:"22px 20px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:"3px solid #8e44ad" }}>
+                <div style={{ fontSize:12, fontWeight:800, color:"#8e44ad", textTransform:"uppercase", letterSpacing:"1px", marginBottom:16 }}>🏷 Identitas Tipe Paket</div>
+                <div style={{ marginBottom:14 }}>
+                  <label style={{ display:"block", fontSize:11, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", marginBottom:6 }}>Nama Tipe Paket</label>
+                  <input value={pt.name} onChange={e => updatePaketTypeField(pt.id,"name",e.target.value)}
+                    placeholder="Paket A"
+                    style={{ width:"100%", padding:"10px 12px", border:"1.5px solid #d8b4fe", borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                </div>
+                <div style={{ marginBottom:14 }}>
+                  <label style={{ display:"block", fontSize:11, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", marginBottom:6 }}>Harga Khusus Paket Ini</label>
+                  <input value={pt.price||""} onChange={e => updatePaketTypeField(pt.id,"price",e.target.value)}
+                    placeholder="Rp 1.500.000"
+                    style={{ width:"100%", padding:"10px 12px", border:"1.5px solid #d8b4fe", borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                </div>
+                <div>
+                  <label style={{ display:"block", fontSize:11, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", marginBottom:6 }}>Keterangan Harga</label>
+                  <input value={pt.priceNote||""} onChange={e => updatePaketTypeField(pt.id,"priceNote",e.target.value)}
+                    placeholder="/ orang (mulai)"
+                    style={{ width:"100%", padding:"10px 12px", border:"1.5px solid #d8b4fe", borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                </div>
+              </div>
+
+              {/* Fitur Termasuk checklist */}
+              <div style={{ background:"#fff", borderRadius:12, padding:"22px 20px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:"3px solid #0891b2" }}>
+                <div style={{ fontSize:12, fontWeight:800, color:"#0891b2", textTransform:"uppercase", letterSpacing:"1px", marginBottom:4 }}>✅ Fitur Termasuk</div>
+                <div style={{ fontSize:11, color:"#5090aa", marginBottom:14 }}>Centang = tampil di website</div>
+                {features.length===0
+                  ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada fitur di Master Paket.</p>
+                  : <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+                      {features.map((feat,i) => {
+                        const checked = fChecks[i] !== false;
+                        return (
+                          <label key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 10px", borderRadius:7,
+                            background: checked ? "#f0faff" : "#f9f9f9",
+                            border: `1.5px solid ${checked ? "#b0dce8" : "#e5e7eb"}`,
+                            cursor:"pointer", transition:"all .15s" }}>
+                            <input type="checkbox" checked={checked} onChange={() => togglePaketCheck(pt.id,"featureChecks",i)}
+                              style={{ width:16, height:16, accentColor:"#0891b2", cursor:"pointer", flexShrink:0 }} />
+                            <span style={{ fontSize:12, color: checked ? "#0d3b66" : "#9ca3af", fontWeight: checked ? 600 : 400, flex:1 }}>{feat||`Fitur ${i+1}`}</span>
+                            <span style={{ fontSize:10, padding:"2px 7px", borderRadius:8, fontWeight:700,
+                              background: checked ? "#e0f7fa" : "#f3f4f6",
+                              color: checked ? "#0891b2" : "#9ca3af" }}>{checked?"Tampil":"Disembunyikan"}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                }
+              </div>
+
+              {/* Fasilitas checklist */}
+              <div style={{ background:"#fff", borderRadius:12, padding:"22px 20px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:"3px solid #27ae60" }}>
+                <div style={{ fontSize:12, fontWeight:800, color:"#27ae60", textTransform:"uppercase", letterSpacing:"1px", marginBottom:4 }}>🛎 Fasilitas</div>
+                <div style={{ fontSize:11, color:"#5090aa", marginBottom:14 }}>Centang = tampil di website</div>
+                {facilities.length===0
+                  ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada fasilitas di Master Paket.</p>
+                  : <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
+                      {facilities.map((fac,i) => {
+                        const checked = facChecks[i] !== false;
+                        return (
+                          <label key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"8px 10px", borderRadius:7,
+                            background: checked ? "#f0fff6" : "#f9f9f9",
+                            border: `1.5px solid ${checked ? "#a7f3d0" : "#e5e7eb"}`,
+                            cursor:"pointer", transition:"all .15s" }}>
+                            <input type="checkbox" checked={checked} onChange={() => togglePaketCheck(pt.id,"facilityChecks",i)}
+                              style={{ width:16, height:16, accentColor:"#27ae60", cursor:"pointer", flexShrink:0 }} />
+                            <span style={{ fontSize:18, flexShrink:0 }}>{fac.icon||"•"}</span>
+                            <span style={{ fontSize:12, color: checked ? "#0d3b66" : "#9ca3af", fontWeight: checked ? 600 : 400, flex:1 }}>{fac.label||`Fasilitas ${i+1}`}</span>
+                            <span style={{ fontSize:10, padding:"2px 7px", borderRadius:8, fontWeight:700,
+                              background: checked ? "#d1fae5" : "#f3f4f6",
+                              color: checked ? "#27ae60" : "#9ca3af" }}>{checked?"Tampil":"Disembunyikan"}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                }
+              </div>
+            </div>
+
+            {/* Destinasi checklist — full width */}
+            <div style={{ background:"#fff", borderRadius:12, padding:"22px 24px", boxShadow:"0 2px 10px rgba(0,0,0,.06)", borderTop:"3px solid #e8a020" }}>
+              <div style={{ fontSize:12, fontWeight:800, color:"#e8a020", textTransform:"uppercase", letterSpacing:"1px", marginBottom:4 }}>🗺 Destinasi Wisata</div>
+              <div style={{ fontSize:11, color:"#5090aa", marginBottom:14 }}>Centang = destinasi tampil di website untuk tipe paket ini</div>
+              {destinations.length===0
+                ? <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada destinasi di Master Paket.</p>
+                : <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10 }}>
+                    {destinations.map((dest,i) => {
+                      const checked = dChecks[i] !== false;
+                      return (
+                        <label key={i} style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 14px", borderRadius:8,
+                          background: checked ? "#fffbeb" : "#f9f9f9",
+                          border: `1.5px solid ${checked ? "#fde68a" : "#e5e7eb"}`,
+                          cursor:"pointer", transition:"all .15s" }}>
+                          <input type="checkbox" checked={checked} onChange={() => togglePaketCheck(pt.id,"destinationChecks",i)}
+                            style={{ width:16, height:16, accentColor:"#e8a020", cursor:"pointer", flexShrink:0 }} />
+                          <div style={{ flex:1, minWidth:0 }}>
+                            <div style={{ fontSize:13, fontWeight: checked ? 700 : 400, color: checked ? "#0d3b66" : "#9ca3af",
+                              whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>
+                              {dest.name||`Destinasi ${i+1}`}
+                            </div>
+                            {dest.tag && <div style={{ fontSize:10, color:"#a08060", marginTop:2, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{dest.tag}</div>}
+                          </div>
+                          <span style={{ fontSize:10, padding:"2px 7px", borderRadius:8, fontWeight:700, flexShrink:0,
+                            background: checked ? "#fef9c3" : "#f3f4f6",
+                            color: checked ? "#d97706" : "#9ca3af" }}>{checked?"Tampil":"Tersembunyi"}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+              }
+            </div>
+
+            {/* Danger zone */}
+            <div style={{ marginTop:16, display:"flex", justifyContent:"flex-end" }}>
+              <button onClick={() => { if(window.confirm(`Hapus ${pt.name} secara permanen?`)) removePaketType(pt.id); }}
+                style={{ padding:"9px 20px", background:"#fee", color:"#c0392b", border:"1.5px solid #fca5a5",
+                  borderRadius:8, fontSize:12, fontWeight:700, cursor:"pointer" }}>
+                🗑 Hapus Tipe Paket Ini
+              </button>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ── Footer sticky ── */}
       <div style={{ position:"sticky", bottom:0, display:"flex", gap:12, padding:"14px 28px", background:"#fff", borderTop:"1px solid #d0eaf4", boxShadow:"0 -4px 16px rgba(0,0,0,.07)" }}>
