@@ -4986,7 +4986,8 @@ function DestinationsSection({ svc, catInfo }) {
         <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${ac}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
         <div>
           <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: ac, fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Itinerary</div>
-          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Destinasi Wisata</div>
+          <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Pilihan Destinasi yang tersedia</div>
+          <div style={{ fontSize: "0.75rem", color: "#4a7f98", fontWeight: 400, marginTop: 3 }}>pilih sesuai kesepakatan harga</div>
         </div>
         <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
       </div>
