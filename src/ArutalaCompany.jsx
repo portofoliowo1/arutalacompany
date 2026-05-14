@@ -4768,47 +4768,52 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
           }}>▼</div>
         </div>
         <p style={{ color: "rgba(255,255,255,.45)", fontSize: "0.6rem", marginTop: 5, letterSpacing: ".04em" }}>
-          {priceOpen ? "Klik untuk tutup harga kendaraan" : "Klik untuk lihat harga per kendaraan"}
+          {(svc.paketTypes||[]).length > 0 ? (priceOpen ? "Klik untuk tutup tipe paket" : "Klik untuk lihat semua tipe paket") : "Nego / Konsultasi dulu"}
         </p>
       </div>
 
-      {/* Price cards accordion — hidden until priceOpen */}
-      <div style={{ maxHeight: priceOpen ? "600px" : "0", overflow: "hidden", transition: "max-height .4s cubic-bezier(.22,1,.36,1)" }}>
-        <div style={{ background: al, padding: "16px 12px 12px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25` }}>
-          <p style={{ fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8, paddingLeft: 4 }}>Harga per Kendaraan</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
-            {(svc.prices || []).map((p, i) => {
-              const isOpen = openIdx === i;
-              return (
-                <div key={i} style={{ background: "#fff", borderRadius: 9, border: `1px solid ${isOpen ? ac : ac + "20"}`, overflow: "hidden", transition: "border-color .2s, box-shadow .2s", boxShadow: isOpen ? `0 3px 12px ${ac}25` : "none" }}>
-                  <div onClick={e => { e.stopPropagation(); setOpenIdx(isOpen ? null : i); }}
-                    style={{ padding: "9px 10px", cursor: "pointer" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                      <span style={{ fontSize: 15 }}>{p.icon}</span>
-                      <span style={{ fontWeight: 600, fontSize: "0.75rem", color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
-                      <span style={{ fontSize: "0.5625rem", color: ac, fontWeight: 700, display: "inline-block", transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+      {/* Paket Types accordion — hidden until priceOpen */}
+      {(svc.paketTypes || []).length > 0 && (
+        <div style={{ maxHeight: priceOpen ? "600px" : "0", overflow: "hidden", transition: "max-height .4s cubic-bezier(.22,1,.36,1)" }}>
+          <div style={{ background: al, padding: "16px 12px 12px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25` }}>
+            <p style={{ fontSize: "0.625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8, paddingLeft: 4 }}>Tipe Paket Tersedia</p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 7 }}>
+              {(svc.paketTypes || []).map((pt, i) => {
+                const isOpen = openIdx === i;
+                const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
+                return (
+                  <div key={pt.id} style={{ background: isUtama ? `${ac}12` : "#fff", borderRadius: 9, border: `1px solid ${isOpen ? ac : isUtama ? ac + "55" : ac + "20"}`, overflow: "hidden", transition: "border-color .2s, box-shadow .2s", boxShadow: isOpen ? `0 3px 12px ${ac}25` : "none" }}>
+                    <div onClick={e => { e.stopPropagation(); setOpenIdx(isOpen ? null : i); }}
+                      style={{ padding: "9px 10px", cursor: "pointer" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 3 }}>
+                        {isUtama && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", padding: "1px 5px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66", flexShrink: 0 }}>UTAMA</span>}
+                        <span style={{ fontWeight: 700, fontSize: "0.6875rem", color: "#0d3b66", flex: 1, lineHeight: 1.3 }}>{pt.name}</span>
+                        <span style={{ fontSize: "0.5625rem", color: ac, fontWeight: 700, display: "inline-block", transition: "transform .25s", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", flexShrink: 0 }}>▼</span>
+                      </div>
+                      <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 700, color: ac }}>
+                        {formatRp(pt.price) || pt.price || "—"}
+                      </div>
+                      {pt.priceNote && <div style={{ fontSize: "0.5625rem", color: "#888", marginTop: 1 }}>{pt.priceNote}</div>}
                     </div>
-                    <div style={{ fontSize: "0.625rem", color: "#888", margin: "2px 0" }}>{p.capacity}</div>
-                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.9375rem", fontWeight: 700, color: ac }}>
-                      {p.price === "Hubungi kami" ? p.price : `Rp ${fmt(p.price)}`}
+                    <div style={{ maxHeight: isOpen ? "300px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
+                      <div style={{ borderTop: `1px solid ${ac}15`, padding: "7px 10px 9px" }}>
+                        {(svc.features || []).filter((_, fi) => (pt.featureChecks || [])[fi] !== false).slice(0, 4).map((f, fi) => (
+                          <div key={fi} style={{ display: "flex", alignItems: "flex-start", gap: 5, fontSize: "0.625rem", color: "#3a5266", marginBottom: 3 }}>
+                            <span style={{ color: "#27ae60", fontWeight: 800, flexShrink: 0 }}>✓</span>{f}
+                          </div>
+                        ))}
+                        <button onClick={e => { e.stopPropagation(); onDetail(); }} style={{ marginTop: 7, width: "100%", padding: "5px 0", background: `linear-gradient(135deg,#0d3b66,${ac})`, color: "#fff", border: "none", borderRadius: 5, fontSize: "0.625rem", fontWeight: 700, cursor: "pointer" }}>
+                          Lihat Detail →
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div style={{ maxHeight: isOpen ? "300px" : "0", overflow: "hidden", transition: "max-height .35s ease" }}>
-                    <ul style={{ listStyle: "none", padding: "0 10px 9px", display: "flex", flexDirection: "column", gap: 3, borderTop: `1px solid ${ac}15` }}>
-                      {(p.points || []).map((pt, pi) => (
-                        <li key={pi} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.6875rem", color: "#3a5266", marginTop: pi === 0 ? 6 : 0 }}>
-                          <span style={{ width: 4, height: 4, borderRadius: "50%", background: ac, flexShrink: 0, display: "inline-block" }} />
-                          {pt}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Footer CTA */}
       <div style={{ padding: "12px 14px 14px", background: al, borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderBottom: `1px solid ${ac}25`, borderRadius: "0 0 14px 14px", display: "flex", gap: 8 }}>
@@ -5124,11 +5129,15 @@ function TravelPackageDetailModal({ svc, onClose, onWaOpen }) {
 }
 
 /* ─────────────── DESTINATIONS SECTION (full-page detail) ─────────────── */
-function DestinationsSection({ svc, catInfo }) {
+function DestinationsSection({ svc, catInfo, activePt }) {
   const [destIdx, setDestIdx] = useState(0);
-  const ac = svc.accent || "#e8a020";
-  const dests = svc.destinations || [];
-  const dest = dests[destIdx];
+  const ac = svc.accent || catInfo?.color || "#e8a020";
+  const allDests = svc.destinations || [];
+  // Filter berdasarkan destinationChecks tipe paket aktif
+  const dChecks = activePt?.destinationChecks || [];
+  const dests = dChecks.length > 0 ? allDests.filter((_, i) => dChecks[i] !== false) : allDests;
+  const safeIdx = destIdx < dests.length ? destIdx : 0;
+  const dest = dests[safeIdx];
 
   return (
     <div className="mg-fade-3" style={{ marginBottom: 48 }}>
@@ -5195,9 +5204,12 @@ function DestinationsSection({ svc, catInfo }) {
 }
 
 /* ─────────────── FACILITIES SECTION (read-only) ─────────────── */
-function FacilitiesSection({ svc }) {
-  const ac = svc.accent || "#e8a020";
-  const facilities = svc.facilities || [];
+function FacilitiesSection({ svc, catInfo, activePt }) {
+  const ac = svc.accent || catInfo?.color || "#e8a020";
+  const allFacilities = svc.facilities || [];
+  // Filter berdasarkan facilityChecks tipe paket aktif
+  const fChecks = activePt?.facilityChecks || [];
+  const facilities = fChecks.length > 0 ? allFacilities.filter((_, i) => fChecks[i] !== false) : allFacilities;
   return (
     <div className="mg-fade-3" style={{ marginBottom: 48 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
@@ -5657,6 +5669,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
     setActivePaketTypeId(utamaId);
     setSelectedVehicleIdx(0);
     setSelectedPkgId(svc.id);
+    setPkgDropOpen(false);
   };
   const closeDetail = () => {
     if (onClosePaket) onClosePaket();   // restore URL di parent
@@ -5681,6 +5694,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
   // ── State untuk selector kendaraan (traveling) dan selector paket (event/wedding) di sidebar
   const [selectedVehicleIdx, setSelectedVehicleIdx] = useState(0);
   const [selectedPkgId, setSelectedPkgId] = useState(null); // id paket aktif di sidebar
+  const [pkgDropOpen, setPkgDropOpen] = useState(false); // dropdown pilih paket di sidebar
 
   /* ── Service Detail Page — Magazine Aesthetic ── */
   if (selectedService) {
@@ -5850,37 +5864,47 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 );
               })()}
 
-              {/* FEATURES — 2-col magazine checklist */}
-              <div className="mg-fade-3" style={{ marginBottom: 48 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 26 }}>
-                  <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || "#0891b2"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
-                  <div>
-                    <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Sudah Termasuk</div>
-                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Yang Anda Dapatkan</div>
-                  </div>
-                  <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
-                </div>
-                <div className="mg-feat-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                  {(svc.features || []).map((feat, i) => (
-                    <div key={i} className="mg-feat-row" style={{ display: "flex", gap: 11, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px 13px 18px", border: "1px solid #c8eaf2", transition: "background .18s", position: "relative", overflow: "hidden" }}>
-                      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: catInfo.color || "#0891b2", borderRadius: "10px 0 0 10px" }} />
-                      <div style={{ width: 20, height: 20, borderRadius: "50%", background: catInfo.color ? `${catInfo.color}15` : "#e4f2f8", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
-                        <span style={{ color: catInfo.color || "#0891b2", fontSize: "0.6875rem", fontWeight: 900 }}>✓</span>
+              {/* FEATURES — 2-col magazine checklist, difilter oleh activePt.featureChecks */}
+              {(() => {
+                const allFeats = svc.features || [];
+                const fChecks = activePt?.featureChecks || [];
+                const filteredFeats = fChecks.length > 0
+                  ? allFeats.filter((_, i) => fChecks[i] !== false)
+                  : allFeats;
+                if (!filteredFeats.length) return null;
+                return (
+                  <div className="mg-fade-3" style={{ marginBottom: 48 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 26 }}>
+                      <div style={{ width: 4, height: 30, background: `linear-gradient(to bottom, ${catInfo.color || "#0891b2"}, transparent)`, borderRadius: 2, flexShrink: 0 }} />
+                      <div>
+                        <div style={{ fontSize: "0.5625rem", letterSpacing: "3px", color: "#7ab5cc", fontWeight: 700, textTransform: "uppercase", marginBottom: 2 }}>Sudah Termasuk</div>
+                        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 800, color: "#0d3b66", lineHeight: 1.1 }}>Yang Anda Dapatkan</div>
                       </div>
-                      <span style={{ fontSize: "0.85rem", color: "#0ea5c5", lineHeight: 1.5, fontWeight: 500 }}>{feat}</span>
+                      <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
                     </div>
-                  ))}
-                </div>
-              </div>
+                    <div className="mg-feat-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                      {filteredFeats.map((feat, i) => (
+                        <div key={i} className="mg-feat-row" style={{ display: "flex", gap: 11, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px 13px 18px", border: "1px solid #c8eaf2", transition: "background .18s", position: "relative", overflow: "hidden" }}>
+                          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: catInfo.color || "#0891b2", borderRadius: "10px 0 0 10px" }} />
+                          <div style={{ width: 20, height: 20, borderRadius: "50%", background: catInfo.color ? `${catInfo.color}15` : "#e4f2f8", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+                            <span style={{ color: catInfo.color || "#0891b2", fontSize: "0.6875rem", fontWeight: 900 }}>✓</span>
+                          </div>
+                          <span style={{ fontSize: "0.85rem", color: "#0ea5c5", lineHeight: 1.5, fontWeight: 500 }}>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
 
-              {/* DESTINATIONS — itinerary tabs, hanya untuk traveling */}
-              {svc.category === "traveling" && (svc.destinations || []).length > 0 && (
-                <DestinationsSection svc={svc} catInfo={catInfo} />
+              {/* DESTINATIONS — semua kategori, difilter oleh activePt.destinationChecks */}
+              {(svc.destinations || []).length > 0 && (
+                <DestinationsSection svc={svc} catInfo={catInfo} activePt={activePt} />
               )}
 
-              {/* FACILITIES — hanya untuk traveling */}
-              {svc.category === "traveling" && (svc.facilities || []).length > 0 && (
-                <FacilitiesSection svc={svc} />
+              {/* FACILITIES — semua kategori, difilter oleh activePt.facilityChecks */}
+              {(svc.facilities || []).length > 0 && (
+                <FacilitiesSection svc={svc} catInfo={catInfo} activePt={activePt} />
               )}
 
               {/* TIPE PAKET — compact button grid untuk semua kategori */}
@@ -5953,7 +5977,6 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 
                   {/* ── SELECTOR PAKET (event & wedding & traveling) ── */}
                   {allCatPackages.length > 1 && (() => {
-                    const [pkgDropOpen, setPkgDropOpen] = React.useState(false);
                     const activePkg = allCatPackages.find(p => p.id === (selectedPkgId || svc.id)) || allCatPackages[0];
                     return (
                       <div style={{ marginBottom: 16, position: "relative" }}>
