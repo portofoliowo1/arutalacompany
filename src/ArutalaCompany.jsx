@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback, useMemo, Suspense, laz
 
 /* ─────────────── DASHBOARD TABS SUB-COMPONENT ─────────────── */
 function DashTabs({ user, allPosts, publishedCount, draftCount, data, canEdit, canCS, isAdmin, setAdminTab, setCmsEditPost, SECTION_LABELS, SECTIONS, formatDate }) {
+  // setAdminTab is navigateAdminTab from parent; alias it so inline references resolve
+  const navigateAdminTab = setAdminTab;
   const [dashTab, setDashTab] = useState("notifications");
   const tabs = [
     { id: "notifications", label: "Notifikasi" },
@@ -7755,6 +7757,8 @@ function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
   const [photoUploading, setPhotoUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [err, setErr] = useState("");
+  // ⚠ Must be declared here (before any early return) to obey Rules of Hooks
+  const [photoUploadItem, setPhotoUploadItem] = useState(null); // {name, pct, done, error}
 
   // Tunggu data selesai load dari Firestore sebelum validasi token
   if (isLoading) return (
@@ -7799,8 +7803,6 @@ function ReviewForm({ token, onSubmitDone, data, save, notify, isLoading }) {
       </div>
     </div>
   );
-
-  const [photoUploadItem, setPhotoUploadItem] = useState(null); // {name, pct, done, error}
 
   const handlePhotoUpload = async (file) => {
     if (!file) return;
