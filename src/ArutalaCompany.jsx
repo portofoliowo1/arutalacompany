@@ -1746,7 +1746,7 @@ const GS = () => (
     .post-card:hover .post-card-title{color:#38c5d8}
 
     /* DESKTOP-ONLY ANIMATIONS */
-    @media(pointer:fine){
+    @media(min-width:901px){
       .anim-fade-up{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
       .anim-fade-up.visible{opacity:1;transform:translateY(0)}
       .anim-zoom{opacity:0;transform:scale(.94);transition:opacity .65s ease,transform .65s ease}
@@ -8952,9 +8952,9 @@ export default function BricksyTravel() {
     } catch { return ""; }
   });
 
-  /* ── Desktop cursor glow + scroll-reveal (pointer:fine only) ── */
+  /* ── Desktop cursor glow + scroll-reveal (desktop width only) ── */
   useEffect(() => {
-    const isDesktop = window.matchMedia("(pointer:fine)").matches;
+    const isDesktop = window.innerWidth > 900;
     if (!isDesktop) return;
 
 
@@ -9654,8 +9654,8 @@ export default function BricksyTravel() {
 
       {/* DESKTOP CURSOR GLOW + SCROLL ANIMATIONS */}
       {typeof window !== "undefined" && (() => {
-        // Only on pointer:fine (mouse/desktop)
-        const isDesktop = window.matchMedia && window.matchMedia("(pointer:fine)").matches;
+        // Only on desktop width (>900px)
+        const isDesktop = window.innerWidth > 900;
         if (!isDesktop) return null;
         return null; // rendered via useEffect below
       })()}
