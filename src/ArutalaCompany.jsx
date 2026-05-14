@@ -4182,18 +4182,18 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
               </div>
             </div>
             {/* Paket Pills — selalu tampil */}
-            {allCatPkgs.length > 0 && (
+            {(svc.paketTypes||[]).length > 0 && (
               <div style={{ background: al, padding: "12px 20px 14px", borderTop: `1px solid ${ac}25` }}>
                 <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Pilihan Paket</p>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
-                  {allCatPkgs.map((pkg) => {
-                    const isCurrent = pkg.id === svc.id;
-                    const isContact = String(pkg.price || "").toLowerCase().includes("hubungi");
+                  {(svc.paketTypes||[]).map((pt) => {
+                    const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
+                    const isContact = String(pt.price || "").toLowerCase().includes("hubungi");
                     return (
-                      <span key={pkg.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "6px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isCurrent ? ac : ac + "40"}`, background: isCurrent ? `${ac}12` : "#fff", fontSize: "0.75rem", fontWeight: 600, color: "#0d3b66" }}>
-                        {isCurrent && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 6px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>INI</span>}
-                        {pkg.title}
-                        {pkg.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.6875rem", fontWeight: 700, color: ac }}>{isContact ? "Konsultasi" : formatRp(pkg.price) || pkg.price}</span>}
+                      <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "6px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.75rem", fontWeight: 600, color: "#0d3b66" }}>
+                        {isUtama && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 6px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
+                        {pt.name}
+                        {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.6875rem", fontWeight: 700, color: ac }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
                       </span>
                     );
                   })}
@@ -4297,19 +4297,19 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
         <p style={{ color: "rgba(255,255,255,.45)", fontSize: "0.6rem", marginTop: 4, letterSpacing: ".04em" }}>Nego / Konsultasi dulu</p>
       </div>
 
-      {/* Paket Pills — selalu tampil jika ada paketTypes */}
-      {allCatPkgs.length > 0 && (
+      {/* Paket Pills — tampil jika ada paketTypes */}
+      {(svc.paketTypes||[]).length > 0 && (
         <div style={{ background: al, padding: "12px 14px 14px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderTop: `1px solid ${ac}20` }}>
           <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Pilihan Paket</p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
-            {allCatPkgs.map((pkg) => {
-              const isCurrent = pkg.id === svc.id;
-              const isContact = String(pkg.price || "").toLowerCase().includes("hubungi");
+            {(svc.paketTypes||[]).map((pt) => {
+              const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
+              const isContact = String(pt.price || "").toLowerCase().includes("hubungi");
               return (
-                <span key={pkg.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "6px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isCurrent ? ac : ac + "40"}`, background: isCurrent ? `${ac}12` : "#fff", fontSize: "0.75rem", fontWeight: 600, color: "#0d3b66" }}>
-                  {isCurrent && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 6px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>INI</span>}
-                  {pkg.title}
-                  {pkg.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.6875rem", fontWeight: 700, color: ac }}>{isContact ? "Konsultasi" : formatRp(pkg.price) || pkg.price}</span>}
+                <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "6px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.75rem", fontWeight: 600, color: "#0d3b66" }}>
+                  {isUtama && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 6px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
+                  {pt.name}
+                  {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.6875rem", fontWeight: 700, color: ac }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
                 </span>
               );
             })}
