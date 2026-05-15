@@ -2925,7 +2925,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
       setAutoSaveStatus("Menyimpan…");
       const p = {
         ...form, content: blocks, status: "draft",
-        id: form.id || Date.now(), section,
+        id: form.id || Date.now(), section: form.section || section,
         tags: typeof form.tags === "string" ? form.tags.split(",").map(t => t.trim()).filter(Boolean) : form.tags,
         slug: form.slug || slugify(form.title || "artikel"),
         _autoSaved: true,
@@ -3020,6 +3020,8 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
       tags: typeof form.tags === "string" ? form.tags.split(",").map(t => t.trim()).filter(Boolean) : form.tags,
       slug: form.slug || slugify(form.title || "artikel"),
     };
+    // Sync form.section agar autosave berikutnya pakai seksi yang benar
+    setForm(f => ({ ...f, section: targetSection }));
     // Hapus draft persisten setelah publish / save manual
     try { await window.storage?.delete(draftKey); } catch {}
     onSave(p);
@@ -3492,9 +3494,7 @@ function PostCard({ post, onClick, view = "grid" }) {
         <p style={{ fontSize: "0.875rem", color: "#1a5a78", lineHeight: 1.7 }}>
           {post.excerpt?.length > 110 ? post.excerpt.slice(0, 110) + "…" : post.excerpt}
         </p>
-        {post.price && (
-          <div style={{ marginTop: 12, fontSize: "1.25rem", fontWeight: 700, color: "#0891b2", fontFamily: "'Playfair Display',serif" }}>{post.price}</div>
-        )}
+
         {post.tags?.length > 0 && (
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
             {post.tags.slice(0, 3).map(t => (
@@ -7617,7 +7617,7 @@ function AdvSection({ data, navigateTo }) {
 
 /* ─────────────── HOME INTRO SLIDESHOW (panel kiri beranda) ─────────────── */
 function HomeIntroSlideshow({ data }) {
-  // Kumpulkan foto dari: Foto Destinasi, Foto Paket Layanan, Foto Postingan Artikel
+  // Hanya dari Foto Postingan Artikel (news + shop + destinations)
   const seen = new Set();
   const allImgs = [];
   const add = (src, label = "") => {
@@ -7627,16 +7627,8 @@ function HomeIntroSlideshow({ data }) {
     }
   };
 
-  // 1. Foto Paket Layanan (images[] & image utama)
-  (data.services || []).forEach(svc => {
-    (svc.images || []).forEach(src => add(src, svc.title));
-    add(svc.image, svc.title);
-    // 2. Foto Destinasi dalam tiap paket
-    (svc.destinations || []).forEach(d => add(d.img, d.name || d.title));
-  });
-
-  // 3. Foto Postingan Artikel (news & destinations, bukan shop)
-  ["news", "destinations"].forEach(sec => {
+  // Foto Postingan Artikel — semua seksi
+  ["news", "shop", "destinations"].forEach(sec => {
     (data.posts?.[sec] || []).forEach(p => {
       const firstImg = (p.content || []).find(b => b.type === "image" && b.value);
       add(firstImg?.value || p.coverImage, p.title);
@@ -7688,8 +7680,7 @@ function HomeIntroSlideshow({ data }) {
 function HeroSlideshow({ data, navigateTo }) {
   const heroMode = data.content?.heroMode || "slideshow";
 
-  // ── Compute slides ──
-  // 1. Foto dari Paket Layanan (svc.images & svc.image & svc.destinations[].img)
+  // ── Compute slides — hanya dari Foto Postingan Artikel ──
   const slides = [];
   const seenSrc = new Set();
   const addSlide = (src, title, section, excerpt) => {
@@ -7698,18 +7689,8 @@ function HeroSlideshow({ data, navigateTo }) {
     slides.push({ src, title, section, excerpt: excerpt || "" });
   };
 
-  // 1a. Foto Paket Layanan
-  (data.services || []).forEach(svc => {
-    (svc.images || []).forEach(img => addSlide(img, svc.title, "services", svc.description));
-    if (svc.image) addSlide(svc.image, svc.title, "services", svc.description);
-    // 2. Foto Destinasi dalam paket
-    (svc.destinations || []).forEach(d => {
-      if (d.img) addSlide(d.img, d.name || d.title || svc.title, "destinations", d.desc || "");
-    });
-  });
-
-  // 3. Foto Postingan Artikel (news & destinations section, bukan shop)
-  ["news", "destinations"].forEach(sec => {
+  // Foto Postingan Artikel — semua seksi
+  ["news", "shop", "destinations"].forEach(sec => {
     (data.posts?.[sec] || []).filter(p => p.status === "published").forEach(p => {
       const firstImageBlock = (p.content || []).find(b => b.type === "image" && b.value);
       const src = firstImageBlock?.value || p.coverImage;
@@ -9741,17 +9722,29 @@ export default function BricksyTravel() {
   // Post operations
   // silent=true → auto-save, tetap di editor, tanpa notif
   const savePost = (post, silent = false) => {
-    const section = post.section;
+    // Validasi section — jika tidak valid, fallback ke "news"
+    const validSections = ["news", "shop", "destinations"];
+    const section = validSections.includes(post.section) ? post.section : "news";
+    const postWithSection = { ...post, section };
     const existing = (data.posts[section] || []);
-    const idx = existing.findIndex(p => p.id === post.id);
+    const idx = existing.findIndex(p => p.id === postWithSection.id);
+    // Jika post lama ada di seksi yang berbeda, hapus dari seksi lama dulu
+    let newPosts = { ...data.posts };
+    if (idx < 0) {
+      validSections.forEach(sec => {
+        if (sec !== section) {
+          newPosts[sec] = (newPosts[sec] || []).filter(p => p.id !== postWithSection.id);
+        }
+      });
+    }
     const updated = idx >= 0
-      ? existing.map((p, i) => i === idx ? post : p)
-      : [...existing, post];
-    const newPosts = { ...data.posts, [section]: updated };
+      ? existing.map((p, i) => i === idx ? postWithSection : p)
+      : [...existing, postWithSection];
+    newPosts = { ...newPosts, [section]: updated };
     save({ ...data, posts: newPosts });
     if (!silent) {
       setCmsEditPost(null);
-      notify(post.status === "published" ? "Post published!" : "Saved as draft.");
+      notify(postWithSection.status === "published" ? "Post published!" : "Saved as draft.");
     }
   };
 
