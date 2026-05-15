@@ -4046,7 +4046,7 @@ function EventWeddingCustomCardWide({ svc, onDetail, onWaOpen }) {
           {(svc.features || []).map((feat, i) => (
             <div key={i} style={{ display: "flex", gap: 6, alignItems: "center", background: "rgba(255,255,255,.12)", borderRadius: 8, padding: "5px 12px", backdropFilter: "blur(4px)" }}>
               <span style={{ color: "#4ade80", fontWeight: 700, fontSize: "0.875rem" }}>&#10003;</span>
-              <span style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.9)", fontWeight: 500 }}>{feat}</span>
+              <span style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,.9)", fontWeight: 500, whiteSpace: "pre-wrap" }}>{feat}</span>
             </div>
           ))}
         </div>
@@ -4147,7 +4147,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
               {(svc.features || []).slice(0, 4).map((f, i) => (
                 <div key={i} style={{ display: "flex", gap: 5, alignItems: "center" }}>
                   <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem" }}>✓</span>
-                  <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 500 }}>{f}</span>
+                  <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 500, whiteSpace: "pre-wrap" }}>{f}</span>
                 </div>
               ))}
               {(svc.features || []).length > 4 && <span style={{ fontSize: "0.75rem", color: "#0891b2", fontWeight: 600 }}>+{svc.features.length - 4} lainnya</span>}
@@ -4261,7 +4261,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
           {(svc.features || []).slice(0, 3).map((f, i) => (
             <div key={i} style={{ display: "flex", gap: 7, alignItems: "flex-start", marginBottom: 5 }}>
               <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem", flexShrink: 0, marginTop: 1 }}>✓</span>
-              <span style={{ fontSize: "0.75rem", color: "#1a5a78", fontWeight: 500, lineHeight: 1.45 }}>{f}</span>
+              <span style={{ fontSize: "0.75rem", color: "#1a5a78", fontWeight: 500, lineHeight: 1.45, whiteSpace: "pre-wrap" }}>{f}</span>
             </div>
           ))}
           {(svc.features || []).length > 3 && (
@@ -4377,7 +4377,7 @@ function TravelPackageCardWide({ svc, onDetail, onWaOpen }) {
           {(svc.features || []).map((feat, i) => (
             <div key={i} style={{ display: "flex", gap: 6, alignItems: "center", background: "#f0f7fb", borderRadius: 8, padding: "5px 12px" }}>
               <span style={{ color: "#27ae60", fontWeight: 700, fontSize: "0.875rem" }}>✓</span>
-              <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 500 }}>{feat}</span>
+              <span style={{ fontSize: "0.8125rem", color: "#1a5a78", fontWeight: 500, whiteSpace: "pre-wrap" }}>{feat}</span>
             </div>
           ))}
         </div>
@@ -5486,7 +5486,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                           <div style={{ width: 20, height: 20, borderRadius: "50%", background: catInfo.color ? `${catInfo.color}15` : "#e4f2f8", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
                             <span style={{ color: catInfo.color || "#0891b2", fontSize: "0.6875rem", fontWeight: 900 }}>✓</span>
                           </div>
-                          <span style={{ fontSize: "0.85rem", color: "#0ea5c5", lineHeight: 1.5, fontWeight: 500 }}>{feat}</span>
+                          <span style={{ fontSize: "0.85rem", color: "#0ea5c5", lineHeight: 1.5, fontWeight: 500, whiteSpace: "pre-wrap" }}>{feat}</span>
                         </div>
                       ))}
                     </div>
@@ -6240,10 +6240,12 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
           </div>
           <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
             {(svcForm.features||[]).map((feat,i)=>(
-              <div key={i} style={{ display:"flex", gap:8 }}>
-                <input value={feat} onChange={e=>updateFeature(i,e.target.value)} placeholder={`Fitur ${i+1}...`}
-                  style={{ flex:1, padding:"9px 11px", border:"1px solid #b0dce8", borderRadius:7, fontSize:13, outline:"none" }} />
-                <button onClick={()=>removeFeature(i)} style={{ padding:"9px 12px", background:"#fee", color:"#e74c3c", border:"none", borderRadius:7, cursor:"pointer", fontWeight:700 }}>✕</button>
+              <div key={i} style={{ display:"flex", gap:8, alignItems:"flex-start" }}>
+                <textarea value={feat} onChange={e=>updateFeature(i,e.target.value)} placeholder={`Fitur ${i+1}...`}
+                  rows={feat.split("\n").length || 1}
+                  style={{ flex:1, padding:"9px 11px", border:"1px solid #b0dce8", borderRadius:7, fontSize:13, outline:"none", resize:"none", fontFamily:"inherit", lineHeight:1.5, overflow:"hidden", minHeight:38, boxSizing:"border-box" }}
+                  onInput={e=>{ e.target.style.height="auto"; e.target.style.height=e.target.scrollHeight+"px"; }} />
+                <button onClick={()=>removeFeature(i)} style={{ padding:"9px 12px", background:"#fee", color:"#e74c3c", border:"none", borderRadius:7, cursor:"pointer", fontWeight:700, flexShrink:0, marginTop:0 }}>✕</button>
               </div>
             ))}
             {(svcForm.features||[]).length===0 && <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada fitur. Klik + Tambah.</p>}
@@ -6475,7 +6477,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                             cursor:"pointer", transition:"all .15s" }}>
                             <input type="checkbox" checked={checked} onChange={() => togglePaketCheck(pt.id,"featureChecks",i)}
                               style={{ width:16, height:16, accentColor:"#0891b2", cursor:"pointer", flexShrink:0 }} />
-                            <span style={{ fontSize:12, color: checked ? "#0d3b66" : "#9ca3af", fontWeight: checked ? 600 : 400, flex:1 }}>{feat||`Fitur ${i+1}`}</span>
+                            <span style={{ fontSize:12, color: checked ? "#0d3b66" : "#9ca3af", fontWeight: checked ? 600 : 400, flex:1, whiteSpace: "pre-wrap" }}>{feat||`Fitur ${i+1}`}</span>
                             <span style={{ fontSize:10, padding:"2px 7px", borderRadius:8, fontWeight:700,
                               background: checked ? "#e0f7fa" : "#f3f4f6",
                               color: checked ? "#0891b2" : "#9ca3af" }}>{checked?"Tampil":"Disembunyikan"}</span>
@@ -6795,13 +6797,15 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                   <label style={{ fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase" }}>Fitur / Yang Termasuk</label>
                   <button onClick={addFeature} style={{ fontSize: 12, padding: "5px 14px", background: "#e8f8ef", color: "#27ae60", border: "none", borderRadius: 6, cursor: "pointer", fontWeight: 700 }}>+ Tambah</button>
                 </div>
-                <div style={{ maxHeight: 260, overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                <div style={{ maxHeight: 400, overflowY: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
                   {(svcForm.features || []).map((feat, i) => (
-                    <div key={i} style={{ display: "flex", gap: 8 }}>
-                      <input value={feat} onChange={e => updateFeature(i, e.target.value)}
+                    <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+                      <textarea value={feat} onChange={e => updateFeature(i, e.target.value)}
                         placeholder={`Fitur ${i + 1}...`}
-                        style={{ flex: 1, padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none" }} />
-                      <button onClick={() => removeFeature(i)} style={{ padding: "9px 14px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 700 }}>✕</button>
+                        rows={feat.split("\n").length || 1}
+                        style={{ flex: 1, padding: "9px 12px", border: "1px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", resize: "none", fontFamily: "inherit", lineHeight: 1.5, overflow: "hidden", minHeight: 38, boxSizing: "border-box" }}
+                        onInput={e => { e.target.style.height = "auto"; e.target.style.height = e.target.scrollHeight + "px"; }} />
+                      <button onClick={() => removeFeature(i)} style={{ padding: "9px 14px", background: "#fee", color: "#e74c3c", border: "none", borderRadius: 8, cursor: "pointer", fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✕</button>
                     </div>
                   ))}
                   {(svcForm.features || []).length === 0 && (
