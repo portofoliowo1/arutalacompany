@@ -7617,7 +7617,7 @@ function AdvSection({ data, navigateTo }) {
 
 /* ─────────────── HOME INTRO SLIDESHOW (panel kiri beranda) ─────────────── */
 function HomeIntroSlideshow({ data }) {
-  // Kumpulkan SEMUA foto dari seluruh sumber di website
+  // Kumpulkan foto dari: Foto Destinasi, Foto Paket Layanan, Foto Postingan Artikel
   const seen = new Set();
   const allImgs = [];
   const add = (src, label = "") => {
@@ -7627,31 +7627,25 @@ function HomeIntroSlideshow({ data }) {
     }
   };
 
-  // 1. Hero images (galeri utama)
-  (data.images?.hero || []).forEach(src => add(src, "Hero"));
-
-  // 2. Gallery images lainnya
-  Object.entries(data.images || {}).forEach(([key, val]) => {
-    if (key !== "hero" && Array.isArray(val)) val.forEach(src => add(src, key));
-    else if (key !== "hero" && typeof val === "string") add(val, key);
-  });
-
-  // 3. Semua postingan (news, shop, destinations) — coverImage
-  ["news", "shop", "destinations"].forEach(sec => {
-    (data.posts?.[sec] || []).forEach(p => add(p.coverImage, p.title));
-  });
-
-  // 4. Semua paket layanan — images[] dan image
+  // 1. Foto Paket Layanan (images[] & image utama)
   (data.services || []).forEach(svc => {
     (svc.images || []).forEach(src => add(src, svc.title));
     add(svc.image, svc.title);
-    // 5. Foto destinasi dalam tiap paket
-    (svc.destinations || []).forEach(d => add(d.img, d.name));
+    // 2. Foto Destinasi dalam tiap paket
+    (svc.destinations || []).forEach(d => add(d.img, d.name || d.title));
   });
 
-  // Fallback
+  // 3. Foto Postingan Artikel (news & destinations, bukan shop)
+  ["news", "destinations"].forEach(sec => {
+    (data.posts?.[sec] || []).forEach(p => {
+      const firstImg = (p.content || []).find(b => b.type === "image" && b.value);
+      add(firstImg?.value || p.coverImage, p.title);
+    });
+  });
+
+  // Fallback ke hero images jika belum ada foto sama sekali
   if (allImgs.length === 0) {
-    add("", "");
+    (data.images?.hero || []).forEach(src => add(src, "Hero"));
   }
 
   const [cur, setCur] = useState(0);
@@ -7694,19 +7688,38 @@ function HomeIntroSlideshow({ data }) {
 function HeroSlideshow({ data, navigateTo }) {
   const heroMode = data.content?.heroMode || "slideshow";
 
-  // ── Compute slides (needed for slidesLenRef initialisation below) ──
-  const allSections = ["news", "shop", "destinations"];
+  // ── Compute slides ──
+  // 1. Foto dari Paket Layanan (svc.images & svc.image & svc.destinations[].img)
   const slides = [];
-  allSections.forEach(sec => {
+  const seenSrc = new Set();
+  const addSlide = (src, title, section, excerpt) => {
+    if (!src || seenSrc.has(src)) return;
+    seenSrc.add(src);
+    slides.push({ src, title, section, excerpt: excerpt || "" });
+  };
+
+  // 1a. Foto Paket Layanan
+  (data.services || []).forEach(svc => {
+    (svc.images || []).forEach(img => addSlide(img, svc.title, "services", svc.description));
+    if (svc.image) addSlide(svc.image, svc.title, "services", svc.description);
+    // 2. Foto Destinasi dalam paket
+    (svc.destinations || []).forEach(d => {
+      if (d.img) addSlide(d.img, d.name || d.title || svc.title, "destinations", d.desc || "");
+    });
+  });
+
+  // 3. Foto Postingan Artikel (news & destinations section, bukan shop)
+  ["news", "destinations"].forEach(sec => {
     (data.posts?.[sec] || []).filter(p => p.status === "published").forEach(p => {
       const firstImageBlock = (p.content || []).find(b => b.type === "image" && b.value);
       const src = firstImageBlock?.value || p.coverImage;
-      if (src) slides.push({ src, title: p.title, section: sec, excerpt: p.excerpt || "" });
+      addSlide(src, p.title, sec, p.excerpt || "");
     });
   });
+
   if (slides.length === 0) {
-    (data.images?.hero || []).forEach((src) => {
-      slides.push({ src, title: data.content.heroTitle, section: "home", excerpt: data.content.heroSub });
+    (data.images?.hero || []).forEach(src => {
+      addSlide(src, data.content.heroTitle, "home", data.content.heroSub);
     });
   }
 
