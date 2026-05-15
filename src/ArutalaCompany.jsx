@@ -4885,13 +4885,44 @@ function DestinationsSection({ svc, catInfo, activePt }) {
 
       {/* Tab selector */}
       {dests.length > 1 && (
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
-          {dests.map((d, i) => (
-            <button key={i} onClick={() => setDestIdx(i)}
-              style={{ padding: "7px 16px", borderRadius: 20, border: `1.5px solid ${i === destIdx ? ac : ac + "30"}`, background: i === destIdx ? ac : "#fff", color: i === destIdx ? "#fff" : ac, fontSize: "0.75rem", fontWeight: 600, cursor: "pointer", transition: "all .2s", fontFamily: "'DM Sans',sans-serif" }}>
-              {d.no}. {d.name}
-            </button>
-          ))}
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 20 }}>
+          {dests.map((d, i) => {
+            const isActive = i === destIdx;
+            return (
+              <button key={i} onClick={() => setDestIdx(i)}
+                style={{
+                  padding: "11px 20px",
+                  borderRadius: 10,
+                  border: `2px solid ${isActive ? ac : ac + "40"}`,
+                  background: isActive
+                    ? `linear-gradient(130deg, ${ac}, ${ac}cc)`
+                    : "#fff",
+                  color: isActive ? "#fff" : ac,
+                  fontSize: "0.8rem",
+                  fontWeight: 800,
+                  cursor: "pointer",
+                  transition: "all .2s",
+                  fontFamily: "'DM Sans',sans-serif",
+                  letterSpacing: ".01em",
+                  boxShadow: isActive
+                    ? `0 4px 16px ${ac}50`
+                    : `0 2px 6px ${ac}18`,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  whiteSpace: "nowrap",
+                }}>
+                <span style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  width: 26, height: 26, borderRadius: 6,
+                  background: isActive ? "rgba(255,255,255,.22)" : ac + "18",
+                  fontSize: "0.6875rem", fontWeight: 900, flexShrink: 0,
+                  color: isActive ? "#fff" : ac,
+                }}>{d.no}</span>
+                <span>{d.name}</span>
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -5347,6 +5378,12 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   </div>
                   <div style={{ padding: "6px 14px", background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.14)", borderRadius: 20, fontSize: "0.75rem", color: "rgba(255,255,255,.72)", fontStyle: "italic", marginBottom: 4 }}>Nego &amp; Konsultasi</div>
                 </div>
+                {svc.minPeserta && (
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 10, padding: "5px 14px", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.13)", borderRadius: 20 }}>
+                    <span style={{ fontSize: "0.875rem" }}>👥</span>
+                    <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,.72)", fontWeight: 600 }}>Min. <strong style={{ color: "#fff" }}>{svc.minPeserta} peserta</strong></span>
+                  </div>
+                )}
               </div>
 
               {/* Right: Hero Slideshow dari destinasi */}
@@ -5408,6 +5445,16 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 );
               })()}
 
+              {/* FACILITIES — semua kategori, difilter oleh activePt.facilityChecks */}
+              {(svc.facilities || []).length > 0 && (
+                <FacilitiesSection svc={svc} catInfo={catInfo} activePt={activePt} />
+              )}
+
+              {/* DESTINATIONS — semua kategori, difilter oleh activePt.destinationChecks */}
+              {(svc.destinations || []).length > 0 && (
+                <DestinationsSection svc={svc} catInfo={catInfo} activePt={activePt} />
+              )}
+
               {/* FEATURES — 2-col magazine checklist, difilter oleh activePt.featureChecks */}
               {(() => {
                 const allFeats = svc.features || [];
@@ -5440,16 +5487,6 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   </div>
                 );
               })()}
-
-              {/* DESTINATIONS — semua kategori, difilter oleh activePt.destinationChecks */}
-              {(svc.destinations || []).length > 0 && (
-                <DestinationsSection svc={svc} catInfo={catInfo} activePt={activePt} />
-              )}
-
-              {/* FACILITIES — semua kategori, difilter oleh activePt.facilityChecks */}
-              {(svc.facilities || []).length > 0 && (
-                <FacilitiesSection svc={svc} catInfo={catInfo} activePt={activePt} />
-              )}
 
             </div>
 
@@ -5561,6 +5598,12 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                       })()}
                     </div>
                     <div style={{ fontSize: "0.875rem", color: "rgba(255,255,255,.45)", fontWeight: 500 }}>{activePriceNote}</div>
+                    {activeMinPeserta && (
+                      <div style={{ display: "inline-flex", alignItems: "center", gap: 5, marginTop: 8, padding: "4px 12px", background: "rgba(255,255,255,.07)", border: "1px solid rgba(255,255,255,.1)", borderRadius: 20 }}>
+                        <span style={{ fontSize: "0.8rem" }}>👥</span>
+                        <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,.65)", fontWeight: 600 }}>Min. <strong style={{ color: "#fff" }}>{activeMinPeserta} peserta</strong></span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Nego info */}
@@ -6079,6 +6122,20 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
             </div>
           ))}
           <div style={{ marginBottom: 14 }}>
+            <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 6 }}>👥 Jumlah Minimal Peserta</label>
+            <div style={{ position: "relative" }}>
+              <input
+                type="number" min="1"
+                value={svcForm.minPeserta || ""}
+                onChange={e => setSvcForm(p => ({ ...p, minPeserta: e.target.value }))}
+                placeholder="mis: 20"
+                style={{ width: "100%", padding: "10px 12px 10px 42px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", boxSizing: "border-box" }}
+              />
+              <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", fontSize: 12, fontWeight: 700, color: "#5090aa", pointerEvents: "none" }}>org</span>
+            </div>
+            {svcForm.minPeserta && <div style={{ fontSize: 11, color: "#27ae60", fontWeight: 600, marginTop: 4 }}>✓ Min. {svcForm.minPeserta} peserta</div>}
+          </div>
+          <div style={{ marginBottom: 14 }}>
             <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 6 }}>Deskripsi</label>
             <textarea value={svcForm.description || ""} onChange={e => setSvcForm(p => ({ ...p, description: e.target.value }))}
               rows={4} placeholder="Deskripsi singkat paket layanan..."
@@ -6184,101 +6241,6 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
               </div>
             ))}
             {(svcForm.features||[]).length===0 && <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"20px 0" }}>Belum ada fitur. Klik + Tambah.</p>}
-          </div>
-        </div>
-
-        {/* [2,2] Harga per Kendaraan */}
-        <div style={{ background: "#fff", borderRadius: 12, padding: "22px 20px", boxShadow: "0 2px 10px rgba(0,0,0,.06)", borderTop: "3px solid #0891b2" }}>
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:4 }}>
-            <div style={{ fontSize:12, fontWeight:800, color:"#0891b2", textTransform:"uppercase", letterSpacing:"1px" }}>🚌 Harga per Kendaraan</div>
-            <button onClick={() => setSvcForm(p => ({ ...p, prices: [...(p.prices||[]), { icon:"🚌", vehicle:"", capacity:"", price:"", specs:[] }] }))}
-              style={{ fontSize:13, padding:"8px 16px", background:"#0891b2", color:"#fff", border:"none", borderRadius:7, cursor:"pointer", fontWeight:800, boxShadow:"0 2px 6px rgba(8,145,178,.35)" }}>+ Tambah</button>
-          </div>
-          <div style={{ fontSize:11, color:"#5090aa", marginBottom:14 }}>Kendaraan pertama = harga utama di kartu paket</div>
-          <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-            {(svcForm.prices||[]).length === 0 && (
-              <p style={{ fontSize:12, color:"#a0c4d8", textAlign:"center", padding:"16px 0" }}>Belum ada kendaraan. Klik + Tambah.</p>
-            )}
-            {(svcForm.prices||[]).map((p,i)=>(
-              <div key={i} style={{ background: i===0?"#edfafc":"#f9fdff", borderRadius:10, border:i===0?"1.5px solid #0891b2":"1px solid #d0eaf4", overflow:"hidden" }}>
-                {/* Header bar */}
-                <div style={{ display:"flex", alignItems:"center", gap:8, padding:"10px 14px", background: i===0?"rgba(8,145,178,.08)":"rgba(0,0,0,.02)", borderBottom:"1px solid rgba(8,145,178,.1)" }}>
-                  {/* Icon dropdown */}
-                  <select value={p.icon||"🚌"} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],icon:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
-                    style={{ fontSize:18, padding:"4px 6px", border:"1.5px solid #b0dce8", borderRadius:7, background:"#fff", cursor:"pointer", outline:"none", flexShrink:0 }}>
-                    {[["🚌","🚌 Bus"],["🚐","🚐 Minibus"],["🚑","🚑 Hiace"],["🏎","🏎 ELF"],["🚗","🚗 Avanza"],["🚙","🚙 Innova"],["🛻","🛻 Terios"],["✈","✈ Pesawat"],["🚢","🚢 Kapal"],["🏍","🏍 Motor"],["🚎","🚎 Bus Besar"],["🚁","🚁 Helikopter"]].map(([v,l])=>(
-                      <option key={v} value={v}>{l}</option>
-                    ))}
-                  </select>
-                  <input value={p.vehicle||""} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],vehicle:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
-                    placeholder="Nama Kendaraan (mis: Bus Executive)"
-                    style={{ flex:1, padding:"7px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none", fontWeight:700 }} />
-                  {i===0
-                    ? <span style={{ fontSize:9, background:"#0891b2", color:"#fff", borderRadius:5, padding:"3px 8px", fontWeight:800, flexShrink:0, whiteSpace:"nowrap" }}>UTAMA</span>
-                    : <button onClick={()=>{ const np=(svcForm.prices||[]).filter((_,j)=>j!==i); setSvcForm(s=>({...s,prices:np})); }}
-                        style={{ width:28, height:28, background:"#fee", color:"#e74c3c", border:"none", borderRadius:6, cursor:"pointer", flexShrink:0, fontWeight:700, fontSize:13 }}>✕</button>
-                  }
-                </div>
-                {/* Fields */}
-                <div style={{ padding:"12px 14px", display:"flex", flexDirection:"column", gap:10 }}>
-                  {/* Kapasitas + Harga */}
-                  <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
-                    <div>
-                      <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Kapasitas</label>
-                      <input value={p.capacity||""} onChange={e=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],capacity:e.target.value}; setSvcForm(s=>({...s,prices:np})); }}
-                        placeholder="mis: 35–60 orang"
-                        style={{ width:"100%", padding:"8px 10px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none", boxSizing:"border-box" }} />
-                    </div>
-                    <div>
-                      <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", display:"block", marginBottom:4 }}>Harga / orang (Rp)</label>
-                      <div style={{ position:"relative" }}>
-                        <span style={{ position:"absolute", left:8, top:"50%", transform:"translateY(-50%)", fontSize:11, fontWeight:700, color:"#0891b2", pointerEvents:"none" }}>Rp</span>
-                        <input type="number" min="0" value={p.price||""} onChange={e=>{
-                          const np=[...(svcForm.prices||[])]; np[i]={...np[i],price:e.target.value};
-                          const ns={...svcForm,prices:np}; if(i===0)ns.price=formatRp(e.target.value); setSvcForm(ns);
-                        }} placeholder="500000"
-                          style={{ width:"100%", padding:"8px 8px 8px 26px", border:"1.5px solid #b0dce8", borderRadius:7, fontSize:12, outline:"none", boxSizing:"border-box" }} />
-                      </div>
-                      {p.price && !isNaN(p.price) && Number(p.price)>0 && <div style={{ fontSize:10, color:"#27ae60", fontWeight:700, marginTop:3 }}>✓ {formatRp(p.price)}</div>}
-                    </div>
-                  </div>
-                  {/* Spesifikasi */}
-                  <div>
-                    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:6 }}>
-                      <label style={{ fontSize:10, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px" }}>Spesifikasi Kendaraan</label>
-                      <button onClick={()=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],specs:[...(np[i].specs||[]),""]}; setSvcForm(s=>({...s,prices:np})); }}
-                        style={{ fontSize:11, padding:"3px 10px", background:"#0891b2", color:"#fff", border:"none", borderRadius:5, cursor:"pointer", fontWeight:700 }}>+ Tambah</button>
-                    </div>
-                    {/* Quick-add preset specs */}
-                    <div style={{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:8 }}>
-                      {["Full AC","Full Musik","Toilet","WiFi","Reclining Seat","Bantal & Selimut","TV LCD","Colokan Listrik","Charger USB","Bagasi Besar","Kursi VIP","Lampu LED","Supir Berpengalaman","Asuransi"].map(s=>(
-                        <button key={s} onClick={()=>{
-                          const np=[...(svcForm.prices||[])];
-                          const cur = np[i].specs||[];
-                          if(!cur.includes(s)){ np[i]={...np[i],specs:[...cur,s]}; setSvcForm(st=>({...st,prices:np})); }
-                        }}
-                          style={{ fontSize:10, padding:"3px 8px", background:(p.specs||[]).includes(s)?"#0891b2":"#edfafc", color:(p.specs||[]).includes(s)?"#fff":"#0891b2",
-                            border:`1px solid ${(p.specs||[]).includes(s)?"#0891b2":"#b0dce8"}`, borderRadius:20, cursor:"pointer", fontWeight:600, transition:"all .12s" }}>{s}</button>
-                      ))}
-                    </div>
-                    {/* Manual spec inputs */}
-                    <div style={{ display:"flex", flexDirection:"column", gap:5 }}>
-                      {(p.specs||[]).map((sp,si)=>(
-                        <div key={si} style={{ display:"flex", gap:6, alignItems:"center" }}>
-                          <span style={{ color:"#0891b2", fontWeight:700, flexShrink:0, fontSize:12 }}>✓</span>
-                          <input value={sp} onChange={e=>{ const np=[...(svcForm.prices||[])]; const sps=[...(np[i].specs||[])]; sps[si]=e.target.value; np[i]={...np[i],specs:sps}; setSvcForm(s=>({...s,prices:np})); }}
-                            placeholder={`Spesifikasi ${si+1}`}
-                            style={{ flex:1, padding:"5px 8px", border:"1px solid #b0dce8", borderRadius:6, fontSize:12, outline:"none" }} />
-                          <button onClick={()=>{ const np=[...(svcForm.prices||[])]; np[i]={...np[i],specs:(np[i].specs||[]).filter((_,k)=>k!==si)}; setSvcForm(s=>({...s,prices:np})); }}
-                            style={{ width:22, height:22, background:"#fee", color:"#e74c3c", border:"none", borderRadius:4, cursor:"pointer", flexShrink:0, fontSize:11 }}>✕</button>
-                        </div>
-                      ))}
-                      {(p.specs||[]).length===0 && <p style={{ fontSize:11, color:"#a0c4d8", fontStyle:"italic" }}>Klik preset di atas atau + Tambah untuk menambah spesifikasi.</p>}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
 
@@ -6473,11 +6435,21 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                     placeholder={isEventOrWedding ? "Rp 5.000.000" : "Rp 1.500.000"}
                     style={{ width:"100%", padding:"10px 12px", border:`1.5px solid ${isUtama?"#7dd3fc":"#d8b4fe"}`, borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
                 </div>
-                <div>
+                <div style={{ marginBottom:14 }}>
                   <label style={{ display:"block", fontSize:11, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", marginBottom:6 }}>Keterangan Harga</label>
                   <input value={pt.priceNote||""} onChange={e => updatePaketTypeField(pt.id,"priceNote",e.target.value)}
                     placeholder={isEventOrWedding ? "/ event" : "/ orang (mulai)"}
                     style={{ width:"100%", padding:"10px 12px", border:`1.5px solid ${isUtama?"#7dd3fc":"#d8b4fe"}`, borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                </div>
+                <div>
+                  <label style={{ display:"block", fontSize:11, fontWeight:700, color:"#5090aa", textTransform:"uppercase", letterSpacing:"1px", marginBottom:6 }}>👥 Minimal Peserta</label>
+                  <div style={{ position:"relative" }}>
+                    <input type="number" min="1" value={pt.minPeserta||""} onChange={e => updatePaketTypeField(pt.id,"minPeserta",e.target.value)}
+                      placeholder="mis: 20"
+                      style={{ width:"100%", padding:"10px 12px 10px 42px", border:`1.5px solid ${isUtama?"#7dd3fc":"#d8b4fe"}`, borderRadius:8, fontSize:13, outline:"none", boxSizing:"border-box" }} />
+                    <span style={{ position:"absolute", left:12, top:"50%", transform:"translateY(-50%)", fontSize:11, fontWeight:700, color:"#5090aa", pointerEvents:"none" }}>org</span>
+                  </div>
+                  {pt.minPeserta && <div style={{ fontSize:11, color:"#27ae60", fontWeight:600, marginTop:4 }}>✓ Min. {pt.minPeserta} peserta</div>}
                 </div>
               </div>
 
@@ -6652,6 +6624,17 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                       style={{ width: "100%", padding: "10px 12px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                   </div>
                 ))}
+                {/* Jumlah Minimal Peserta */}
+                <div>
+                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 6 }}>👥 Min. Peserta</label>
+                  <div style={{ position: "relative" }}>
+                    <input type="number" min="1" value={svcForm.minPeserta || ""} onChange={e => setSvcForm(p => ({ ...p, minPeserta: e.target.value }))}
+                      placeholder="mis: 20"
+                      style={{ width: "100%", padding: "10px 12px 10px 40px", border: "1.5px solid #b0dce8", borderRadius: 8, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
+                    <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", fontSize: 11, fontWeight: 700, color: "#5090aa", pointerEvents: "none" }}>org</span>
+                  </div>
+                  {svcForm.minPeserta && <div style={{ fontSize: 11, color: "#27ae60", fontWeight: 600, marginTop: 3 }}>✓ Min. {svcForm.minPeserta} peserta</div>}
+                </div>
               </div>
 
               {/* Warna Badge */}
@@ -6820,57 +6803,6 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
                   )}
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* ══════════ HARGA PER KENDARAAN ══════════ */}
-          <div style={{ padding: "24px 32px", borderTop: "2px solid #edfafc", background: "#f9fdff" }}>
-            <div style={{ marginBottom: 14, display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: 18 }}>🚌</span>
-              <span style={{ fontSize: 14, fontWeight: 800, color: "#0d3b66", letterSpacing: ".02em" }}>Harga per Kendaraan</span>
-              <span style={{ fontSize: 11, color: "#5090aa", fontWeight: 500 }}>· Harga Bus tampil sebagai harga utama di kartu</span>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
-              {(svcForm.prices || []).map((p, i) => (
-                <div key={i} style={{ background: "#fff", borderRadius: 10, border: i === 0 ? "2px solid #0891b2" : "1.5px solid #b0dce8", padding: "14px 16px", boxShadow: i === 0 ? "0 2px 10px rgba(8,145,178,.12)" : "none", position: "relative" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                    <span style={{ fontSize: 18 }}>{p.icon}</span>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: "#0d3b66", flex: 1 }}>{p.vehicle}</span>
-                    {i === 0 && <span style={{ fontSize: 9, background: "#0891b2", color: "#fff", borderRadius: 6, padding: "2px 7px", fontWeight: 800, letterSpacing: ".06em" }}>UTAMA</span>}
-                    <button onClick={() => {
-                      const newPrices = (svcForm.prices || []).filter((_, j) => j !== i);
-                      setSvcForm(s => ({ ...s, prices: newPrices }));
-                    }}
-                      style={{ width: 20, height: 20, borderRadius: "50%", background: "#fee", color: "#e74c3c", border: "1px solid #fbb", fontSize: 11, fontWeight: 800, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1, flexShrink: 0 }}
-                      title="Hapus kendaraan ini">✕</button>
-                  </div>
-                  <div style={{ fontSize: 10, color: "#5090aa", marginBottom: 6 }}>{p.capacity}</div>
-                  <label style={{ display: "block", fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", marginBottom: 5 }}>Harga / orang</label>
-                  <div style={{ position: "relative" }}>
-                    <span style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", fontSize: 12, fontWeight: 700, color: "#0891b2", pointerEvents: "none" }}>Rp</span>
-                    <input
-                      type="number"
-                      min="0"
-                      value={p.price || ""}
-                      onChange={e => {
-                        const newPrices = [...(svcForm.prices || [])];
-                        newPrices[i] = { ...newPrices[i], price: e.target.value };
-                        // Jika Bus (index 0), update harga utama secara realtime
-                        const newState = { ...svcForm, prices: newPrices };
-                        if (i === 0) newState.price = formatRp(e.target.value);
-                        setSvcForm(newState);
-                      }}
-                      placeholder="500000"
-                      style={{ width: "100%", padding: "9px 10px 9px 30px", border: "1.5px solid #b0dce8", borderRadius: 7, fontSize: 13, outline: "none", boxSizing: "border-box" }}
-                    />
-                  </div>
-                  {p.price && !isNaN(p.price) && Number(p.price) > 0 && (
-                    <div style={{ fontSize: 11, color: "#27ae60", fontWeight: 600, marginTop: 4 }}>
-                      ✓ {formatRp(p.price)}
-                    </div>
-                  )}
-                </div>
-              ))}
             </div>
           </div>
 
