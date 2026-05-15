@@ -3992,9 +3992,9 @@ function SectionPage({ section, posts, onReadPost }) {
 
 /* Shared hook: returns true when viewport width ≤ 640px */
 function useIsMobile() {
-  const [mobile, setMobile] = useState(() => window.innerWidth <= 640);
+  const [mobile, setMobile] = useState(() => window.innerWidth <= 768);
   useEffect(() => {
-    const handler = () => setMobile(window.innerWidth <= 640);
+    const handler = () => setMobile(window.innerWidth <= 768);
     window.addEventListener("resize", handler);
     return () => window.removeEventListener("resize", handler);
   }, []);
@@ -4185,12 +4185,12 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
             {(svc.paketTypes||[]).length > 0 && (
               <div style={{ background: al, padding: "12px 20px 14px", borderTop: `1px solid ${ac}25` }}>
                 <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Pilihan Paket</p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {(svc.paketTypes||[]).map((pt) => {
                     const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
                     const isContact = String(pt.price || "").toLowerCase().includes("hubungi");
                     return (
-                      <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "6px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.75rem", fontWeight: 600, color: "#0d3b66" }}>
+                      <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 5, padding: "5px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.6875rem", fontWeight: 600, color: "#0d3b66", flexShrink: 0 }}>
                         {isUtama && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 6px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
                         {pt.name}
                         {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.6875rem", fontWeight: 700, color: ac }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
@@ -4288,7 +4288,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
               return isContact ? (
                 <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.2rem", fontWeight: 700, color: "#fff" }}>Hubungi Kami</span>
               ) : (
-                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "1.5rem", fontWeight: 900, color: "#fff", lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{formatRp(rawPrice) || rawPrice}</span>
+                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.1rem,4vw,1.5rem)", fontWeight: 900, color: "#fff", lineHeight: 1, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>{formatRp(rawPrice) || rawPrice}</span>
               );
             })()}
             <span style={{ color: "rgba(255,255,255,.65)", fontSize: "0.75rem" }}>{svc.priceNote}</span>
@@ -4301,15 +4301,15 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
       {(svc.paketTypes||[]).length > 0 && (
         <div style={{ background: al, padding: "12px 14px 14px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderTop: `1px solid ${ac}20` }}>
           <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Pilihan Paket</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
             {(svc.paketTypes||[]).map((pt) => {
               const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
               const isContact = String(pt.price || "").toLowerCase().includes("hubungi");
               return (
-                <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "6px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.75rem", fontWeight: 600, color: "#0d3b66" }}>
-                  {isUtama && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 6px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
+                <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 5, padding: "5px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.6875rem", fontWeight: 600, color: "#0d3b66", flexShrink: 0 }}>
+                  {isUtama && <span style={{ fontSize: "0.4375rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 5px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
                   {pt.name}
-                  {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.6875rem", fontWeight: 700, color: ac }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
+                  {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.625rem", fontWeight: 700, color: ac }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
                 </span>
               );
             })}
@@ -4885,20 +4885,20 @@ function DestinationsSection({ svc, catInfo, activePt }) {
 
       {/* Tab selector */}
       {dests.length > 1 && (
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 20 }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
           {dests.map((d, i) => {
             const isActive = i === destIdx;
             return (
               <button key={i} onClick={() => setDestIdx(i)}
                 style={{
-                  padding: "11px 20px",
+                  padding: "8px 14px",
                   borderRadius: 10,
                   border: `2px solid ${isActive ? ac : ac + "40"}`,
                   background: isActive
                     ? `linear-gradient(130deg, ${ac}, ${ac}cc)`
                     : "#fff",
                   color: isActive ? "#fff" : ac,
-                  fontSize: "0.8rem",
+                  fontSize: "0.75rem",
                   fontWeight: 800,
                   cursor: "pointer",
                   transition: "all .2s",
@@ -4909,14 +4909,15 @@ function DestinationsSection({ svc, catInfo, activePt }) {
                     : `0 2px 6px ${ac}18`,
                   display: "flex",
                   alignItems: "center",
-                  gap: 8,
+                  gap: 6,
                   whiteSpace: "nowrap",
+                  flexShrink: 0,
                 }}>
                 <span style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
-                  width: 26, height: 26, borderRadius: 6,
+                  width: 22, height: 22, borderRadius: 5,
                   background: isActive ? "rgba(255,255,255,.22)" : ac + "18",
-                  fontSize: "0.6875rem", fontWeight: 900, flexShrink: 0,
+                  fontSize: "0.625rem", fontWeight: 900, flexShrink: 0,
                   color: isActive ? "#fff" : ac,
                 }}>{d.no}</span>
                 <span>{d.name}</span>
@@ -4929,7 +4930,7 @@ function DestinationsSection({ svc, catInfo, activePt }) {
       {/* Destination card */}
       {dest ? (
         <div style={{ background: "#fff", borderRadius: 14, overflow: "hidden", border: `1px solid ${ac}22`, boxShadow: `0 4px 20px ${ac}12` }}>
-          <div style={{ width: "100%", position: "relative", height: 320, overflow: "hidden" }}>
+          <div style={{ width: "100%", position: "relative", height: "min(320px, 52vw)", minHeight: 180, overflow: "hidden" }}>
             {dest.img ? (
               <img loading="lazy" src={dest.img} alt={dest.name}
                 style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block", transition: "transform .4s ease" }}
@@ -4983,7 +4984,7 @@ function FacilitiesSection({ svc, catInfo, activePt }) {
         <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, #c0e8f0, transparent)" }} />
       </div>
       {facilities.length > 0 ? (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))", gap: 10 }}>
           {facilities.map((f, i) => (
             <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", background: "#fff", borderRadius: 10, padding: "13px 15px", border: "1px solid #c8eaf2", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, background: ac, borderRadius: "10px 0 0 10px" }} />
@@ -5136,7 +5137,7 @@ function DestGallerySlideshow({ slides, catColor, svcTitle }) {
 
       {/* Slideshow frame */}
       <div
-        style={{ position: "relative", borderRadius: 14, overflow: "hidden", boxShadow: "0 8px 36px rgba(13,59,102,.16)", height: 420, background: "#0d3b66", cursor: "pointer" }}
+        style={{ position: "relative", borderRadius: 14, overflow: "hidden", boxShadow: "0 8px 36px rgba(13,59,102,.16)", height: "min(420px, 56vw)", minHeight: 220, background: "#0d3b66", cursor: "pointer" }}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -5322,6 +5323,11 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
             .mg-body-grid { grid-template-columns: 1fr !important; }
             .mg-deco-shape { display: none !important; }
             .mg-feat-grid { grid-template-columns: 1fr !important; }
+            .mg-pkg-sidebar { position: static !important; top: auto !important; }
+            .svc-cat-scroll::-webkit-scrollbar { display: none; }
+          }
+          @media(max-width:480px){
+            .mg-hero-grid { min-height: auto !important; }
           }
         `}</style>
 
@@ -5370,7 +5376,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   <div>
                     <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: "rgba(255,255,255,.65)", fontWeight: 700, textTransform: "uppercase", marginBottom: 5 }}>Harga Mulai</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "2.4rem", fontWeight: 900, color: "#fff", lineHeight: 1 }}>
+                      <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(1.6rem,5vw,2.4rem)", fontWeight: 900, color: "#fff", lineHeight: 1 }}>
                         {(() => { const raw = activePrice; const isC = String(raw||"").toLowerCase().includes("hubungi"); return isC ? "Hubungi Kami" : (formatRp(raw)||raw); })()}
                       </span>
                       <span style={{ fontSize: "0.875rem", color: "rgba(255,255,255,.68)", fontWeight: 500 }}>{activePriceNote}</span>
@@ -5400,7 +5406,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
         </div>
 
         {/* ── BODY ── */}
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "52px 5% 80px" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(28px,5vw,52px) 5% clamp(48px,6vw,80px)" }}>
           <div className="mg-body-grid" style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 48, alignItems: "start" }}>
 
             {/* ── LEFT COLUMN ── */}
@@ -5491,7 +5497,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
             </div>
 
             {/* ── RIGHT SIDEBAR ── */}
-            <div style={{ position: "sticky", top: 128 }}>
+            <div className="mg-pkg-sidebar" style={{ position: "sticky", top: 128 }}>
 
               {/* Price Card */}
               <div className="mg-fade-2" style={{ background: "linear-gradient(145deg,#0d1f35 0%,#0d3b66 55%,#0875a8 100%)", borderRadius: 16, overflow: "hidden", boxShadow: "0 24px 64px rgba(12,26,40,.5)", marginBottom: 18 }}>
@@ -5587,7 +5593,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                     <div style={{ fontSize: "0.5625rem", letterSpacing: "2.5px", color: "rgba(255,255,255,.38)", fontWeight: 700, textTransform: "uppercase", marginBottom: 6 }}>Harga Mulai</div>
                     <div key={resolvedActiveId} style={{
                       fontFamily: "'Playfair Display',serif",
-                      fontSize: "2.6rem", fontWeight: 900, color: "#fff",
+                      fontSize: "clamp(1.8rem,5vw,2.6rem)", fontWeight: 900, color: "#fff",
                       lineHeight: 1, marginBottom: 4,
                       animation: "mgFadeUp .3s cubic-bezier(.22,1,.36,1) both",
                     }}>
@@ -5707,7 +5713,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
   return (
     <div className="fade-in" style={{ minHeight: "100vh", background: "#edfafc" }}>
       {/* Header — gradient + radial flare like reference */}
-      <div style={{ background: "linear-gradient(120deg,#063d5c 0%,#0875a8 40%,#0aa8bf 72%,#1ed8e8 100%)", padding: "72px 5% 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(120deg,#063d5c 0%,#0875a8 40%,#0aa8bf 72%,#1ed8e8 100%)", padding: "clamp(40px,8vw,72px) 5% clamp(48px,8vw,80px)", textAlign: "center", position: "relative", overflow: "hidden" }}>
         {/* Flare glow center-right */}
         <div style={{ position: "absolute", top: "50%", right: "18%", transform: "translateY(-50%)", width: 480, height: 480, borderRadius: "50%", background: "radial-gradient(circle, rgba(30,216,232,.38) 0%, rgba(10,168,191,.18) 40%, transparent 70%)", pointerEvents: "none", filter: "blur(12px)" }} />
         {/* Flare glow left */}
@@ -5723,24 +5729,24 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
 
       {/* Category Buttons */}
       <div style={{ background: "#fff", borderBottom: "1px solid #c0e8f0", padding: "0 5%" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", gap: 0, overflowX: "auto" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", gap: 0, overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}>
           {CATEGORIES.map(cat => {
             const isActive = activeCategory === cat.key;
             const count = services.filter(s => s.category === cat.key).length;
             return (
               <button key={cat.key} onClick={() => setActiveCategory(isActive ? null : cat.key)}
-                style={{ padding: "20px 28px", border: "none", background: "none", fontSize: "0.9375rem", fontWeight: isActive ? 700 : 500,
+                style={{ padding: "16px 20px", border: "none", background: "none", fontSize: "0.875rem", fontWeight: isActive ? 700 : 500,
                   color: isActive ? cat.color : "#1a5a78", borderBottom: isActive ? `3px solid ${cat.color}` : "3px solid transparent",
-                  cursor: "pointer", whiteSpace: "nowrap", transition: "all .25s", display: "flex", alignItems: "center", gap: 8 }}>
+                  cursor: "pointer", whiteSpace: "nowrap", transition: "all .25s", display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
                 {cat.label}
-                <span style={{ fontSize: "0.75rem", background: isActive ? cat.color : "#edfafc", color: isActive ? "#fff" : "#4a7f98", borderRadius: 12, padding: "2px 8px", fontWeight: 700, transition: "all .25s" }}>{count}</span>
+                <span style={{ fontSize: "0.6875rem", background: isActive ? cat.color : "#edfafc", color: isActive ? "#fff" : "#4a7f98", borderRadius: 12, padding: "2px 7px", fontWeight: 700, transition: "all .25s" }}>{count}</span>
               </button>
             );
           })}
         </div>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "60px 5% 80px" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(32px,5vw,60px) 5% clamp(48px,6vw,80px)" }}>
         {/* Empty state */}
         {!activeCategory && (
           <div style={{ textAlign: "center", padding: "60px 20px" }}>
@@ -5794,7 +5800,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 const regularPkgs = filteredServices.filter(s => s.pkgId !== "custom");
                 return (
                   <div>
-                    <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(3, 1fr)" : "repeat(auto-fill, minmax(340px, 1fr))", gap: colLayout === 1 ? 20 : 28 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(auto-fill, minmax(280px, 1fr))" : "repeat(auto-fill, minmax(300px, 1fr))", gap: colLayout === 1 ? 20 : 24 }}>
                       {regularPkgs.map(svc => (
                         <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} isWide={colLayout === 1} />
                       ))}
