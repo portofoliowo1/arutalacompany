@@ -4080,6 +4080,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
   const [hovered, setHovered] = useState(false);
   const [priceOpen, setPriceOpen] = useState(false);
   const [openPkgIdx, setOpenPkgIdx] = useState(null);
+  const isMobile = useIsMobile();
   const ac = svc.accent || (svc.category === "wedding" ? "#db2777" : "#0891b2");
   const al = svc.accentLight || (svc.category === "wedding" ? "#fff0f7" : "#edfafc");
   const fmt = n => {
@@ -4107,10 +4108,11 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
           border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "#e8f4f8"}`,
           fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)",
           transform: hovered ? "translateY(-4px)" : "none",
-          display: "flex", flexDirection: "row", minHeight: 260,
+          display: "flex", flexDirection: isMobile ? "column" : "row",
+          minHeight: isMobile ? "auto" : 260,
         }}>
         {/* Gambar kiri full height */}
-        <div onClick={onDetail} style={{ position: "relative", width: "40%", flexShrink: 0, overflow: "hidden", cursor: "pointer" }}>
+        <div onClick={onDetail} style={{ position: "relative", width: isMobile ? "100%" : "40%", height: isMobile ? 210 : "auto", flexShrink: 0, overflow: "hidden", cursor: "pointer", borderRadius: isMobile ? "14px 14px 0 0" : "0" }}>
           <img loading="lazy" src={imgs[imgIdx] || imgs[0]} alt={svc.title}
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block",
               transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
@@ -4183,17 +4185,17 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
             </div>
             {/* Paket Pills — selalu tampil */}
             {(svc.paketTypes||[]).length > 0 && (
-              <div style={{ background: al, padding: "12px 20px 14px", borderTop: `1px solid ${ac}25` }}>
-                <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Pilihan Paket</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              <div style={{ background: al, padding: "10px 20px 12px", borderTop: `1px solid ${ac}25` }}>
+                <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 6 }}>Pilihan Paket</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
                   {(svc.paketTypes||[]).map((pt) => {
                     const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
                     const isContact = String(pt.price || "").toLowerCase().includes("hubungi");
                     return (
-                      <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 5, padding: "5px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.6875rem", fontWeight: 600, color: "#0d3b66", flexShrink: 0 }}>
-                        {isUtama && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 6px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
-                        {pt.name}
-                        {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.6875rem", fontWeight: 700, color: ac }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
+                      <span key={pt.id} style={{ display: "flex", alignItems: "center", gap: 4, padding: "5px 9px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.6875rem", fontWeight: 600, color: "#0d3b66", minWidth: 0, maxWidth: "100%", flexShrink: 1 }}>
+                        {isUtama && <span style={{ fontSize: "0.4rem", fontWeight: 800, letterSpacing: ".05em", textTransform: "uppercase", padding: "1px 5px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66", flexShrink: 0 }}>UTAMA</span>}
+                        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{pt.name}</span>
+                        {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.625rem", fontWeight: 700, color: ac, flexShrink: 0 }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
                       </span>
                     );
                   })}
@@ -4299,17 +4301,17 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
 
       {/* Paket Pills — tampil jika ada paketTypes */}
       {(svc.paketTypes||[]).length > 0 && (
-        <div style={{ background: al, padding: "12px 14px 14px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderTop: `1px solid ${ac}20` }}>
-          <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Pilihan Paket</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+        <div style={{ background: al, padding: "10px 14px 12px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25`, borderTop: `1px solid ${ac}20` }}>
+          <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 6 }}>Pilihan Paket</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
             {(svc.paketTypes||[]).map((pt) => {
               const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
               const isContact = String(pt.price || "").toLowerCase().includes("hubungi");
               return (
-                <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 5, padding: "5px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.6875rem", fontWeight: 600, color: "#0d3b66", flexShrink: 0 }}>
-                  {isUtama && <span style={{ fontSize: "0.4375rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 5px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
-                  {pt.name}
-                  {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.625rem", fontWeight: 700, color: ac }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
+                <span key={pt.id} style={{ display: "flex", alignItems: "center", gap: 4, padding: "5px 9px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.6875rem", fontWeight: 600, color: "#0d3b66", minWidth: 0, maxWidth: "100%", flexShrink: 1 }}>
+                  {isUtama && <span style={{ fontSize: "0.4rem", fontWeight: 800, letterSpacing: ".05em", textTransform: "uppercase", padding: "1px 5px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66", flexShrink: 0 }}>UTAMA</span>}
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{pt.name}</span>
+                  {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.625rem", fontWeight: 700, color: ac, flexShrink: 0 }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
                 </span>
               );
             })}
@@ -4409,6 +4411,7 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
   const [openIdx, setOpenIdx] = useState(null);
   const [hovered, setHovered] = useState(false);
   const [priceOpen, setPriceOpen] = useState(false);
+  const isMobile = useIsMobile();
   const ac = svc.accent || "#e8a020";
   const al = svc.accentLight || "#fff8e6";
   const fmt = n => {
@@ -4428,11 +4431,12 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
           border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "#e8f4f8"}`,
           fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)",
           transform: hovered ? "translateY(-4px)" : "none",
-          display: "flex", flexDirection: "row", minHeight: 280,
+          display: "flex", flexDirection: isMobile ? "column" : "row",
+          minHeight: isMobile ? "auto" : 280,
         }}>
 
         {/* Gambar kiri — full height */}
-        <div onClick={onDetail} style={{ position: "relative", width: "42%", flexShrink: 0, overflow: "hidden", cursor: "pointer" }}>
+        <div onClick={onDetail} style={{ position: "relative", width: isMobile ? "100%" : "42%", height: isMobile ? 210 : "auto", flexShrink: 0, overflow: "hidden", cursor: "pointer", borderRadius: isMobile ? "14px 14px 0 0" : "0" }}>
           <img loading="lazy" src={svc.images?.[0] || svc.image} alt={svc.title}
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block",
               transition: "transform .5s", transform: hovered ? "scale(1.06)" : "scale(1)" }}
@@ -4526,16 +4530,17 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
           </div>
           {/* Paket pills — tampil jika ada paketTypes */}
           {(svc.paketTypes || []).length > 0 && (
-            <div style={{ background: al, padding: "12px 20px 14px", borderTop: `1px solid ${ac}25` }}>
-              <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Pilihan Paket</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+            <div style={{ background: al, padding: "10px 20px 12px", borderTop: `1px solid ${ac}25` }}>
+              <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 6 }}>Pilihan Paket</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
                 {(svc.paketTypes || []).map((pt, i) => {
                   const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
+                  const isContact = String(pt.price || "").toLowerCase().includes("hubungi");
                   return (
-                    <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "6px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.75rem", fontWeight: 600, color: "#0d3b66" }}>
-                      {isUtama && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 6px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
-                      {pt.name}
-                      {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.6875rem", fontWeight: 700, color: ac }}>{formatRp(pt.price) || pt.price}</span>}
+                    <span key={pt.id} style={{ display: "flex", alignItems: "center", gap: 4, padding: "5px 9px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.6875rem", fontWeight: 600, color: "#0d3b66", minWidth: 0, maxWidth: "100%", flexShrink: 1 }}>
+                      {isUtama && <span style={{ fontSize: "0.4rem", fontWeight: 800, letterSpacing: ".05em", textTransform: "uppercase", padding: "1px 5px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66", flexShrink: 0 }}>UTAMA</span>}
+                      <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{pt.name}</span>
+                      {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.625rem", fontWeight: 700, color: ac, flexShrink: 0 }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
                     </span>
                   );
                 })}
@@ -4633,16 +4638,17 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
 
       {/* Paket Pills — tampil jika ada paketTypes */}
       {(svc.paketTypes || []).length > 0 && (
-        <div style={{ background: al, padding: "12px 14px 14px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25` }}>
-          <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 8 }}>Pilihan Paket</p>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 7 }}>
+        <div style={{ background: al, padding: "10px 14px 12px", borderLeft: `1px solid ${ac}25`, borderRight: `1px solid ${ac}25` }}>
+          <p style={{ fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ac, marginBottom: 6 }}>Pilihan Paket</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
             {(svc.paketTypes || []).map((pt) => {
               const isUtama = pt.id === (svc.utamaTipeId || svc.paketTypes?.[0]?.id);
+              const isContact = String(pt.price || "").toLowerCase().includes("hubungi");
               return (
-                <span key={pt.id} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "6px 10px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.75rem", fontWeight: 600, color: "#0d3b66" }}>
-                  {isUtama && <span style={{ fontSize: "0.45rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "1px 6px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66" }}>UTAMA</span>}
-                  {pt.name}
-                  {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.6875rem", fontWeight: 700, color: ac }}>{formatRp(pt.price) || pt.price}</span>}
+                <span key={pt.id} style={{ display: "flex", alignItems: "center", gap: 4, padding: "5px 9px", borderRadius: 20, boxSizing: "border-box", border: `1.5px solid ${isUtama ? ac : ac + "40"}`, background: isUtama ? `${ac}12` : "#fff", fontSize: "0.6875rem", fontWeight: 600, color: "#0d3b66", minWidth: 0, maxWidth: "100%", flexShrink: 1 }}>
+                  {isUtama && <span style={{ fontSize: "0.4rem", fontWeight: 800, letterSpacing: ".05em", textTransform: "uppercase", padding: "1px 5px", borderRadius: 8, background: "#10d0e0", color: "#0d3b66", flexShrink: 0 }}>UTAMA</span>}
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{pt.name}</span>
+                  {pt.price && <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.625rem", fontWeight: 700, color: ac, flexShrink: 0 }}>{isContact ? "Konsultasi" : formatRp(pt.price) || pt.price}</span>}
                 </span>
               );
             })}
@@ -5305,7 +5311,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
     const activeMinPeserta = activePt?.minPeserta || svc.minPeserta;
 
     return (
-      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#e8f7fc 0%,#f0fbfd 100%)", fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#e8f7fc 0%,#f0fbfd 100%)", fontFamily: "'DM Sans', sans-serif", overflowX: "hidden" }}>
         <style>{`
           @keyframes mgFadeUp { from { opacity:0; transform:translateY(28px);} to { opacity:1; transform:none;} }
           .mg-fade { animation: mgFadeUp .55s cubic-bezier(.22,1,.36,1) both; }
@@ -5319,12 +5325,13 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
           .mg-thumb { transition: all .2s; }
           .mg-thumb:hover { opacity: 1 !important; transform: scale(1.06); }
           @media(max-width:768px){
-            .mg-hero-grid { grid-template-columns: 1fr !important; }
+            .mg-hero-grid { grid-template-columns: 1fr !important; min-height: auto !important; }
             .mg-body-grid { grid-template-columns: 1fr !important; }
             .mg-deco-shape { display: none !important; }
             .mg-feat-grid { grid-template-columns: 1fr !important; }
-            .mg-pkg-sidebar { position: static !important; top: auto !important; }
+            .mg-pkg-sidebar { position: static !important; top: auto !important; width: 100% !important; box-sizing: border-box !important; }
             .svc-cat-scroll::-webkit-scrollbar { display: none; }
+            .mg-hero-right { display: none !important; }
           }
           @media(max-width:480px){
             .mg-hero-grid { min-height: auto !important; }
@@ -5345,7 +5352,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
             <div className="mg-hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 460px", gap: 0, minHeight: 480 }}>
 
               {/* Left: Title & Info */}
-              <div style={{ padding: "56px 40px 48px 0", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,.09)" }}>
+              <div style={{ padding: "clamp(32px,5vw,56px) clamp(0px,3vw,40px) clamp(32px,5vw,48px) 0", display: "flex", flexDirection: "column", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,.09)" }}>
                 {/* Category tag */}
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 22 }}>
                   <div style={{ width: 28, height: 2, background: catInfo.color || "#0891b2" }} />
@@ -5393,6 +5400,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
               </div>
 
               {/* Right: Hero Slideshow dari destinasi */}
+              <div className="mg-hero-right">
               {(() => {
                 const heroSlides = (svc.destinations || []).filter(d => d.img);
                 const fallbackSlides = imgs.filter(Boolean);
@@ -5401,12 +5409,13 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                   : fallbackSlides.map((img, i) => ({ img, name: svc.title, no: String(i+1).padStart(2,"0"), title: svc.title }));
                 return <ServiceHeroSlideshow key={svc.id} slides={allSlides} catColor={catInfo.color || "#22d3ee"} />;
               })()}
+              </div>
             </div>
           </div>
         </div>
 
         {/* ── BODY ── */}
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(28px,5vw,52px) 5% clamp(48px,6vw,80px)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(28px,5vw,52px) clamp(16px,5%,60px) clamp(48px,6vw,80px)", overflowX: "hidden" }}>
           <div className="mg-body-grid" style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 48, alignItems: "start" }}>
 
             {/* ── LEFT COLUMN ── */}
@@ -5711,7 +5720,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
   const filteredServices = activeCategory ? services.filter(s => s.category === activeCategory) : [];
 
   return (
-    <div className="fade-in" style={{ minHeight: "100vh", background: "#edfafc" }}>
+    <div className="fade-in" style={{ minHeight: "100vh", background: "#edfafc", overflowX: "hidden" }}>
       {/* Header — gradient + radial flare like reference */}
       <div style={{ background: "linear-gradient(120deg,#063d5c 0%,#0875a8 40%,#0aa8bf 72%,#1ed8e8 100%)", padding: "clamp(40px,8vw,72px) 5% clamp(48px,8vw,80px)", textAlign: "center", position: "relative", overflow: "hidden" }}>
         {/* Flare glow center-right */}
@@ -5746,7 +5755,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
         </div>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(32px,5vw,60px) 5% clamp(48px,6vw,80px)" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(24px,5vw,60px) clamp(16px,5%,60px) clamp(48px,6vw,80px)" }}>
         {/* Empty state */}
         {!activeCategory && (
           <div style={{ textAlign: "center", padding: "60px 20px" }}>
@@ -5800,7 +5809,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 const regularPkgs = filteredServices.filter(s => s.pkgId !== "custom");
                 return (
                   <div>
-                    <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(auto-fill, minmax(280px, 1fr))" : "repeat(auto-fill, minmax(300px, 1fr))", gap: colLayout === 1 ? 20 : 24 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(auto-fill, minmax(min(280px, 100%), 1fr))" : "repeat(auto-fill, minmax(min(300px, 100%), 1fr))", gap: colLayout === 1 ? 20 : 24 }}>
                       {regularPkgs.map(svc => (
                         <TravelPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} isWide={colLayout === 1} />
                       ))}
@@ -5820,7 +5829,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 const regularSvcs = filteredServices.filter(s => s.pkgId !== "custom");
                 return (
                   <div>
-                    <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(3, 1fr)" : "repeat(auto-fill, minmax(300px, 1fr))", gap: colLayout === 1 ? 20 : 24 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: colLayout === 1 ? "1fr" : colLayout === 3 ? "repeat(auto-fill, minmax(min(280px, 100%), 1fr))" : "repeat(auto-fill, minmax(min(300px, 100%), 1fr))", gap: colLayout === 1 ? 20 : 24 }}>
                       {regularSvcs.map(svc => (
                         <EventWeddingPackageCard key={svc.id} svc={svc} onDetail={() => openDetail(svc)} onWaOpen={onWaOpen} isWide={colLayout === 1} categoryPackages={filteredServices} />
                       ))}
@@ -9126,6 +9135,8 @@ export default function BricksyTravel() {
   const [userMgmtForm, setUserMgmtForm] = useState({ username: "", password: "", role: "content_writer", email: "", name: "" });
   const [userMgmtOpen, setUserMgmtOpen] = useState(false);
   const [editRoleId, setEditRoleId] = useState(null);
+  const [editUserId, setEditUserId] = useState(null);
+  const [editUserForm, setEditUserForm] = useState({ name: "", email: "", phone: "", password: "" });
   const [profileEditMode, setProfileEditMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [reviewTokenParam, setReviewTokenParam] = useState(() => {
@@ -11972,83 +11983,177 @@ export default function BricksyTravel() {
                       </thead>
                       <tbody>
                         {data.users.map((u, idx) => (
-                          <tr key={u.id} style={{ borderBottom: "1px solid #e0f7fa", background: idx % 2 === 0 ? "#fff" : "#f5fdff" }}>
-                            <td style={{ padding: "13px 16px", fontSize: 12, color: "#86cad8" }}>{idx + 1}</td>
-                            <td style={{ padding: "13px 16px" }}>
-                              <div style={{ fontWeight: 600, fontSize: 13, color: "#0d3b66" }}>{u.name || u.username}</div>
-                              <div style={{ fontSize: 11, color: "#5090aa", marginTop: 1 }}>@{u.username}</div>
-                            </td>
-                            <td style={{ padding: "13px 16px" }}>
-                              {editRoleId === u.id ? (
-                                <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                                  <select defaultValue={u.role}
-                                    id={`role-select-${u.id}`}
-                                    style={{ padding: "5px 8px", border: "1px solid #b0dce8", borderRadius: 5, fontSize: 12, outline: "none" }}>
-                                    {Object.entries(ROLES).map(([k, v]) => (
-                                      <option key={k} value={k}>{v.label}</option>
-                                    ))}
-                                  </select>
-                                  <button onClick={() => {
-                                    const sel = document.getElementById(`role-select-${u.id}`)?.value;
-                                    if (sel) {
-                                      const users = data.users.map(x => x.id === u.id ? { ...x, role: sel } : x);
-                                      save({ ...data, users }); notify("Role diperbarui.");
-                                    }
-                                    setEditRoleId(null);
-                                  }} style={{ fontSize: 11, padding: "4px 10px", background: "#27ae60", color: "#fff", borderRadius: 5, border: "none", cursor: "pointer" }}>✓</button>
-                                  <button onClick={() => setEditRoleId(null)} style={{ fontSize: 11, padding: "4px 8px", background: "#edfafc", borderRadius: 5, border: "1px solid #b0dce8", cursor: "pointer" }}>✕</button>
-                                </div>
-                              ) : (
+                          <React.Fragment key={u.id}>
+                            <tr style={{ borderBottom: editUserId === u.id ? "none" : "1px solid #e0f7fa", background: idx % 2 === 0 ? "#fff" : "#f5fdff" }}>
+                              <td style={{ padding: "13px 16px", fontSize: 12, color: "#86cad8" }}>{idx + 1}</td>
+                              <td style={{ padding: "13px 16px" }}>
+                                <div style={{ fontWeight: 600, fontSize: 13, color: "#0d3b66" }}>{u.name || u.username}</div>
+                                <div style={{ fontSize: 11, color: "#5090aa", marginTop: 1 }}>@{u.username}</div>
+                              </td>
+                              <td style={{ padding: "13px 16px" }}>
+                                {editRoleId === u.id ? (
+                                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                                    <select defaultValue={u.role}
+                                      id={`role-select-${u.id}`}
+                                      style={{ padding: "5px 8px", border: "1px solid #b0dce8", borderRadius: 5, fontSize: 12, outline: "none" }}>
+                                      {Object.entries(ROLES).map(([k, v]) => (
+                                        <option key={k} value={k}>{v.label}</option>
+                                      ))}
+                                    </select>
+                                    <button onClick={() => {
+                                      const sel = document.getElementById(`role-select-${u.id}`)?.value;
+                                      if (sel) {
+                                        const users = data.users.map(x => x.id === u.id ? { ...x, role: sel } : x);
+                                        save({ ...data, users }); notify("Role diperbarui.");
+                                      }
+                                      setEditRoleId(null);
+                                    }} style={{ fontSize: 11, padding: "4px 10px", background: "#27ae60", color: "#fff", borderRadius: 5, border: "none", cursor: "pointer" }}>✓</button>
+                                    <button onClick={() => setEditRoleId(null)} style={{ fontSize: 11, padding: "4px 8px", background: "#edfafc", borderRadius: 5, border: "1px solid #b0dce8", cursor: "pointer" }}>✕</button>
+                                  </div>
+                                ) : (
+                                  <span style={{ fontSize: 11, padding: "3px 10px", borderRadius: 10, fontWeight: 500,
+                                    background: u.role === "admin" ? "#fef0f0" : u.role === "content_writer" ? "#e8f4fd" : "#e8f8ef",
+                                    color: ROLES[u.role]?.color }}>
+                                    {ROLES[u.role]?.label}
+                                  </span>
+                                )}
+                              </td>
+                              <td style={{ padding: "13px 16px", fontSize: 12, color: "#4a7f98" }}>{u.email || "—"}</td>
+                              <td style={{ padding: "13px 16px" }}>
                                 <span style={{ fontSize: 11, padding: "3px 10px", borderRadius: 10, fontWeight: 500,
-                                  background: u.role === "admin" ? "#fef0f0" : u.role === "content_writer" ? "#e8f4fd" : "#e8f8ef",
-                                  color: ROLES[u.role]?.color }}>
-                                  {ROLES[u.role]?.label}
+                                  background: u.active ? "#e8f8ef" : "#fef0f0", color: u.active ? "#27ae60" : "#e74c3c" }}>
+                                  {u.active ? "Aktif" : "Nonaktif"}
                                 </span>
-                              )}
-                            </td>
-                            <td style={{ padding: "13px 16px", fontSize: 12, color: "#4a7f98" }}>{u.email || "—"}</td>
-                            <td style={{ padding: "13px 16px" }}>
-                              <span style={{ fontSize: 11, padding: "3px 10px", borderRadius: 10, fontWeight: 500,
-                                background: u.active ? "#e8f8ef" : "#fef0f0", color: u.active ? "#27ae60" : "#e74c3c" }}>
-                                {u.active ? "Aktif" : "Nonaktif"}
-                              </span>
-                            </td>
-                            <td style={{ padding: "13px 16px" }}>
-                              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                                {/* Ganti Role */}
-                                {u.username !== "administrator" && editRoleId !== u.id && (
-                                  <button onClick={() => setEditRoleId(u.id)}
-                                    style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, background: "#e8f4fd", color: "#0ea5c5", border: "none", cursor: "pointer", fontWeight: 500 }}>
-                                    Ganti Role
-                                  </button>
-                                )}
-                                {/* Toggle Aktif */}
-                                {u.username !== "administrator" && (
-                                  <button onClick={() => {
-                                    const users = data.users.map(x => x.id === u.id ? { ...x, active: !x.active } : x);
-                                    save({ ...data, users }); notify(`User ${u.active ? "dinonaktifkan" : "diaktifkan"}.`);
-                                  }} style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, border: "none", cursor: "pointer", fontWeight: 500,
-                                    background: u.active ? "#fff3f3" : "#e8f8ef", color: u.active ? "#e74c3c" : "#27ae60" }}>
-                                    {u.active ? "Nonaktifkan" : "Aktifkan"}
-                                  </button>
-                                )}
-                                {/* Hapus */}
-                                {u.username !== "administrator" && (
-                                  <button onClick={() => {
-                                    if (window.confirm(`Hapus user "${u.username}"? Tindakan ini tidak dapat dibatalkan.`)) {
-                                      const users = data.users.filter(x => x.id !== u.id);
-                                      save({ ...data, users }); notify(`User "${u.username}" dihapus.`);
-                                    }
-                                  }} style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, background: "#fff", border: "1px solid #f5c6c6", color: "#e74c3c", cursor: "pointer", fontWeight: 500 }}>
-                                    🗑 Hapus
-                                  </button>
-                                )}
-                                {u.username === "administrator" && (
-                                  <span style={{ fontSize: 11, color: "#86cad8", fontStyle: "italic" }}>Protected</span>
-                                )}
-                              </div>
-                            </td>
-                          </tr>
+                              </td>
+                              <td style={{ padding: "13px 16px" }}>
+                                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                                  {/* Tombol Edit */}
+                                  {u.username !== "administrator" && editUserId !== u.id && (
+                                    <button onClick={() => {
+                                      setEditUserId(u.id);
+                                      setEditUserForm({ name: u.name || "", email: u.email || "", phone: u.phone || "", password: "" });
+                                      setEditRoleId(null);
+                                    }}
+                                      style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, background: "#fff8e1", color: "#b7600a", border: "1px solid #f5d78e", cursor: "pointer", fontWeight: 600 }}>
+                                      ✏ Edit
+                                    </button>
+                                  )}
+                                  {/* Tutup Edit */}
+                                  {editUserId === u.id && (
+                                    <button onClick={() => setEditUserId(null)}
+                                      style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, background: "#edfafc", color: "#0891b2", border: "1px solid #b0dce8", cursor: "pointer", fontWeight: 600 }}>
+                                      ✕ Tutup
+                                    </button>
+                                  )}
+                                  {/* Ganti Role */}
+                                  {u.username !== "administrator" && editRoleId !== u.id && editUserId !== u.id && (
+                                    <button onClick={() => setEditRoleId(u.id)}
+                                      style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, background: "#e8f4fd", color: "#0ea5c5", border: "none", cursor: "pointer", fontWeight: 500 }}>
+                                      Ganti Role
+                                    </button>
+                                  )}
+                                  {/* Toggle Aktif */}
+                                  {u.username !== "administrator" && editUserId !== u.id && (
+                                    <button onClick={() => {
+                                      const users = data.users.map(x => x.id === u.id ? { ...x, active: !x.active } : x);
+                                      save({ ...data, users }); notify(`User ${u.active ? "dinonaktifkan" : "diaktifkan"}.`);
+                                    }} style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, border: "none", cursor: "pointer", fontWeight: 500,
+                                      background: u.active ? "#fff3f3" : "#e8f8ef", color: u.active ? "#e74c3c" : "#27ae60" }}>
+                                      {u.active ? "Nonaktifkan" : "Aktifkan"}
+                                    </button>
+                                  )}
+                                  {/* Hapus */}
+                                  {u.username !== "administrator" && editUserId !== u.id && (
+                                    <button onClick={() => {
+                                      if (window.confirm(`Hapus user "${u.username}"? Tindakan ini tidak dapat dibatalkan.`)) {
+                                        const users = data.users.filter(x => x.id !== u.id);
+                                        save({ ...data, users }); notify(`User "${u.username}" dihapus.`);
+                                      }
+                                    }} style={{ fontSize: 11, padding: "4px 10px", borderRadius: 5, background: "#fff", border: "1px solid #f5c6c6", color: "#e74c3c", cursor: "pointer", fontWeight: 500 }}>
+                                      🗑 Hapus
+                                    </button>
+                                  )}
+                                  {u.username === "administrator" && (
+                                    <span style={{ fontSize: 11, color: "#86cad8", fontStyle: "italic" }}>Protected</span>
+                                  )}
+                                </div>
+                              </td>
+                            </tr>
+
+                            {/* ── INLINE EDIT ROW ── */}
+                            {editUserId === u.id && (
+                              <tr style={{ borderBottom: "1px solid #e0f7fa", background: "#fffbea" }}>
+                                <td colSpan={6} style={{ padding: "0" }}>
+                                  <div style={{ padding: "18px 20px", borderTop: "2px solid #f5d78e", borderBottom: "2px solid #f5d78e", background: "linear-gradient(135deg,#fffef5 0%,#fffbea 100%)" }}>
+                                    <div style={{ fontSize: 11, fontWeight: 700, color: "#b7600a", letterSpacing: ".08em", textTransform: "uppercase", marginBottom: 14 }}>
+                                      ✏ Edit Data User — @{u.username}
+                                    </div>
+                                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12, marginBottom: 14 }}>
+                                      {/* Nama */}
+                                      <div>
+                                        <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Nama Lengkap</label>
+                                        <input
+                                          value={editUserForm.name}
+                                          onChange={e => setEditUserForm(f => ({ ...f, name: e.target.value }))}
+                                          placeholder="Nama lengkap"
+                                          style={{ width: "100%", padding: "7px 10px", border: "1px solid #f5d78e", borderRadius: 6, fontSize: 12, outline: "none", background: "#fff", boxSizing: "border-box" }} />
+                                      </div>
+                                      {/* Email */}
+                                      <div>
+                                        <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Email</label>
+                                        <input
+                                          type="email"
+                                          value={editUserForm.email}
+                                          onChange={e => setEditUserForm(f => ({ ...f, email: e.target.value }))}
+                                          placeholder="email@domain.com"
+                                          style={{ width: "100%", padding: "7px 10px", border: "1px solid #f5d78e", borderRadius: 6, fontSize: 12, outline: "none", background: "#fff", boxSizing: "border-box" }} />
+                                      </div>
+                                      {/* No. HP */}
+                                      <div>
+                                        <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>No. HP / WhatsApp</label>
+                                        <input
+                                          value={editUserForm.phone}
+                                          onChange={e => setEditUserForm(f => ({ ...f, phone: e.target.value }))}
+                                          placeholder="08xxxxxxxxxx"
+                                          style={{ width: "100%", padding: "7px 10px", border: "1px solid #f5d78e", borderRadius: 6, fontSize: 12, outline: "none", background: "#fff", boxSizing: "border-box" }} />
+                                      </div>
+                                      {/* Password baru */}
+                                      <div>
+                                        <label style={{ fontSize: 10, fontWeight: 700, color: "#5090aa", letterSpacing: "1px", textTransform: "uppercase", display: "block", marginBottom: 4 }}>Password Baru <span style={{ color: "#b0c4cc", fontWeight: 400 }}>(kosongkan jika tidak ganti)</span></label>
+                                        <input
+                                          type="password"
+                                          value={editUserForm.password}
+                                          onChange={e => setEditUserForm(f => ({ ...f, password: e.target.value }))}
+                                          placeholder="••••••••"
+                                          style={{ width: "100%", padding: "7px 10px", border: "1px solid #f5d78e", borderRadius: 6, fontSize: 12, outline: "none", background: "#fff", boxSizing: "border-box" }} />
+                                      </div>
+                                    </div>
+                                    <div style={{ display: "flex", gap: 8 }}>
+                                      <button onClick={() => {
+                                        const updated = {
+                                          ...u,
+                                          name: editUserForm.name.trim() || u.name,
+                                          email: editUserForm.email.trim() || u.email,
+                                          phone: editUserForm.phone.trim() || u.phone,
+                                          ...(editUserForm.password.trim() ? { password: editUserForm.password.trim() } : {}),
+                                        };
+                                        const users = data.users.map(x => x.id === u.id ? updated : x);
+                                        save({ ...data, users });
+                                        notify(`✅ Data user "@${u.username}" berhasil diperbarui.`);
+                                        setEditUserId(null);
+                                      }} style={{ padding: "7px 20px", background: "#b7600a", color: "#fff", border: "none", borderRadius: 6, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                                        💾 Simpan Perubahan
+                                      </button>
+                                      <button onClick={() => setEditUserId(null)}
+                                        style={{ padding: "7px 14px", background: "#edfafc", color: "#4a7f98", border: "1px solid #b0dce8", borderRadius: 6, fontSize: 12, cursor: "pointer" }}>
+                                        Batal
+                                      </button>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+                          </React.Fragment>
                         ))}
                       </tbody>
                     </table>
