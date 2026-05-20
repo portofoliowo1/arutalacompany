@@ -801,12 +801,13 @@ const DEFAULT_DATA = {
         { no: "04", name: "Uluwatu", sub: "Badung, Bali", tag: "Spiritual · Tebing & Samudra", title: "Pura Tebing Karang Selatan Bali", desc: "Pura Luhur Uluwatu berdiri megah di tepi tebing karang setinggi 70 meter di atas Samudra Hindia. Salah satu pura sad kahyangan di Bali yang wajib dikunjungi.", points: ["Pura di tepi tebing 70 meter", "Pemandangan Samudra Hindia", "Kecak Fire Dance saat sunset", "Konservasi monyet ekor panjang"], duration: "2–3 jam", img: "" },
         { no: "05", name: "Bedugul & Danau Beratan", sub: "Tabanan, Bali", tag: "Alam Pegunungan · Danau Vulkanik", title: "Pura Ulun Danu di Tengah Danau", desc: "Bedugul menawarkan udara sejuk pegunungan dengan pemandangan Danau Beratan yang menakjubkan. Pura Ulun Danu Beratan yang mengapung di atas danau adalah ikon paling ikonik Bali.", points: ["Pura Ulun Danu Beratan ikonik", "Kebun Raya Bedugul 157 ha", "Strawberry farm & pasar buah lokal", "Udara sejuk 18–22°C, 1.239 mdpl"], duration: "2–3 jam", img: "" },
       ],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "520.000", points: ["Full AC Double Blower","Sleeper / Reclining seat","TV LCD + Audio System","Toilet dalam bus","USB charging per kursi","Snack 2x perjalanan"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "590.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk & nyaman","Power inverter 12V","Air mineral gratis","Bagasi atas & bawah"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "720.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "290.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "520.000", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower","Sleeper / Reclining seat","TV LCD + Audio System","Toilet dalam bus","USB charging per kursi","Snack 2x perjalanan"] },
+        { id: "pt-b", name: "Paket B", price: "590.000", priceNote: "/ orang (mulai)", points: ["Full AC Split","Monitor + Speaker","Kursi empuk & nyaman","Power inverter 12V","Air mineral gratis","Bagasi atas & bawah"] },
+        { id: "pt-c", name: "Paket C", price: "720.000", priceNote: "/ orang (mulai)", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { id: "pt-d", name: "Paket D", price: "290.000", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] }
       ],
+      utamaTipeId: "pt-a",
     },
     {
       id: 5,
@@ -851,12 +852,13 @@ const DEFAULT_DATA = {
         { no: "02", name: "Candi Prambanan", sub: "Sleman, Yogyakarta", tag: "Warisan Dunia UNESCO · Hindu Kuno", title: "Kompleks Candi Hindu Termegah", desc: "Prambanan adalah kompleks candi Hindu terbesar di Indonesia. Arsitekturnya yang menjulang mencerminkan kejayaan Kerajaan Mataram Kuno. Cerita Ramayana terukir indah di setiap dindingnya.", points: ["Tiga candi utama: Siwa, Brahma & Wisnu", "Sendratari Ramayana (opsional malam)", "Area taman luas untuk diskusi", "Pemandu khusus pelajar bersertifikat"], duration: "2–3 jam", img: "" },
         { no: "03", name: "Malioboro & Keraton", sub: "Kota Yogyakarta", tag: "Budaya Lokal · Pusat Kota Jogja", title: "Jantung Budaya Yogyakarta", desc: "Jalan Malioboro adalah ikon paling terkenal Yogyakarta. Di sini siswa belajar tentang kerajinan batik, kuliner khas Jogja, dan sistem pemerintahan Kesultanan Ngayogyakarta Hadiningrat.", points: ["Kunjungan Keraton Ngayogyakarta", "Belanja oleh-oleh khas Jogja", "Naik andong & becak tradisional", "Workshop membatik bersama pengrajin"], duration: "3–4 jam", img: "" },
       ],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "285.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 1x perjalanan","USB charging per kursi","Reclining seat"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "320.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "380.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "145.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "285.000", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 1x perjalanan","USB charging per kursi","Reclining seat"] },
+        { id: "pt-b", name: "Paket B", price: "320.000", priceNote: "/ orang (mulai)", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { id: "pt-c", name: "Paket C", price: "380.000", priceNote: "/ orang (mulai)", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { id: "pt-d", name: "Paket D", price: "145.000", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] }
       ],
+      utamaTipeId: "pt-a",
     },
     {
       id: 6,
@@ -900,12 +902,13 @@ const DEFAULT_DATA = {
         { no: "02", name: "Kampung Batik Laweyan", sub: "Laweyan, Surakarta", tag: "Industri Kreatif · Warisan Budaya", title: "Sentra Batik Tertua di Indonesia", desc: "Laweyan adalah kampung batik tertua di Indonesia yang sudah ada sejak abad ke-16. Siswa bisa belajar langsung proses membatik dari pengrajin berpengalaman dan membawa pulang karya mereka sendiri.", points: ["Workshop membatik langsung dengan pengrajin", "Galeri batik tulis asli", "Sejarah batik warisan UNESCO", "Oleh-oleh langsung dari pengrajin"], duration: "2–3 jam", img: "" },
         { no: "03", name: "Pasar Gede & Kuliner Solo", sub: "Pusat Kota Solo", tag: "Kuliner & Budaya Lokal", title: "Surga Kuliner Otentik Kota Solo", desc: "Pasar Gede adalah pasar tradisional terbesar dan tertua di Solo. Siswa bisa mencicipi kuliner khas Solo seperti nasi liwet, serabi, timlo, dan brambang asem.", points: ["Arsitektur pasar kolonial Belanda bersejarah", "Kuliner: nasi liwet, serabi, timlo", "Interaksi langsung dengan pedagang lokal", "Sistem jual-beli tradisional Jawa"], duration: "1–2 jam", img: "" },
       ],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "195.000", points: ["Full AC Double Blower","TV LCD + Audio System","Reclining seat","Snack 1x perjalanan","USB charging per kursi","Toilet dalam bus"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "235.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "295.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "105.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "195.000", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower","TV LCD + Audio System","Reclining seat","Snack 1x perjalanan","USB charging per kursi","Toilet dalam bus"] },
+        { id: "pt-b", name: "Paket B", price: "235.000", priceNote: "/ orang (mulai)", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { id: "pt-c", name: "Paket C", price: "295.000", priceNote: "/ orang (mulai)", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { id: "pt-d", name: "Paket D", price: "105.000", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] }
       ],
+      utamaTipeId: "pt-a",
     },
     {
       id: 7,
@@ -948,12 +951,13 @@ const DEFAULT_DATA = {
       destinations: [
         { no: "✈", name: "Bebas Pilih Destinasi", sub: "Seluruh Indonesia", tag: "Custom · Fleksibel", title: "Pilih Destinasi Sesuai Keinginan", desc: "Tidak ada batasan! Pilih dari ratusan destinasi wisata di seluruh Indonesia. Tim kami siap merancang perjalanan terbaik untuk sekolah Anda — dari Sabang sampai Merauke.", points: ["Bali, Jogja, Solo, Lombok, Bromo", "Labuan Bajo, Raja Ampat, Belitung", "Destinasi lokal & regional Jawa Timur", "Rute kombinasi multi-kota tersedia"], duration: "Fleksibel", img: "" },
       ],
-      prices: [
-        { vehicle: "Bus Executive",  icon: "🚌", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Armada premium besar","Full AC & fasilitas lengkap","Cocok untuk grup 35–60 org","Harga terbaik grup besar"] },
-        { vehicle: "Elf / Hiace",    icon: "🚐", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Fleksibel grup kecil","AC nyaman","Cocok 12–20 org","Mudah akses lokasi kecil"] },
-        { vehicle: "Mobil Pribadi",  icon: "🚗", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Untuk keluarga / grup kecil","AC & audio modern","Privat & nyaman","Bebas atur jadwal"] },
-        { vehicle: "Pick Up",        icon: "🛻", capacity: "Sesuai kebutuhan", price: "Hubungi kami", points: ["Pilihan paling ekonomis","Cocok wisata alam terbuka","Terpal pelindung tersedia","Rute lokal & pendek"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "Hubungi kami", priceNote: "/ orang (mulai)", points: ["Armada premium besar","Full AC & fasilitas lengkap","Kapasitas grup besar","Harga terbaik grup besar"] },
+        { id: "pt-b", name: "Paket B", price: "Hubungi kami", priceNote: "/ orang (mulai)", points: ["Fleksibel grup kecil","AC nyaman","Kapasitas grup menengah","Mudah akses lokasi kecil"] },
+        { id: "pt-c", name: "Paket C", price: "Hubungi kami", priceNote: "/ orang (mulai)", points: ["Untuk keluarga / grup kecil","AC & audio modern","Privat & nyaman","Bebas atur jadwal"] },
+        { id: "pt-d", name: "Paket D", price: "Hubungi kami", priceNote: "/ orang (mulai)", points: ["Pilihan paling ekonomis","Cocok wisata alam terbuka","Terpal pelindung tersedia","Rute lokal & pendek"] }
       ],
+      utamaTipeId: "pt-a",
     },
 
     /* ── TRAVELING TAMBAHAN: MALANG & BANDUNG ── */
@@ -1032,12 +1036,13 @@ const DEFAULT_DATA = {
           duration: "2–3 jam", img: ""
         },
       ],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "245.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "285.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "360.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "125.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "245.000", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { id: "pt-b", name: "Paket B", price: "285.000", priceNote: "/ orang (mulai)", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { id: "pt-c", name: "Paket C", price: "360.000", priceNote: "/ orang (mulai)", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { id: "pt-d", name: "Paket D", price: "125.000", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] }
       ],
+      utamaTipeId: "pt-a",
     },
     {
       id: 12,
@@ -1114,12 +1119,13 @@ const DEFAULT_DATA = {
           duration: "3 jam", img: ""
         },
       ],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "310.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "360.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "440.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "165.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "310.000", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { id: "pt-b", name: "Paket B", price: "360.000", priceNote: "/ orang (mulai)", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { id: "pt-c", name: "Paket C", price: "440.000", priceNote: "/ orang (mulai)", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { id: "pt-d", name: "Paket D", price: "165.000", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] }
       ],
+      utamaTipeId: "pt-a",
     },
 
     /* ── TRAVELING TAMBAHAN: OUTBOUND, STUDY BANDING, KUNJUNGAN INDUSTRI, KUNJUNGAN KAMPUS ── */
@@ -1167,12 +1173,13 @@ const DEFAULT_DATA = {
         { no: "03", name: "High Rope & Flying Fox", sub: "Area Petualangan", tag: "Adrenalin · Keberanian", title: "Tantangan Ketinggian & Flying Fox", desc: "Puncak adrenalin di wahana high rope dan flying fox yang memacu keberanian peserta. Semua wahana dilengkapi harness dan safety equipment standar internasional, didampingi instruktur bersertifikat.", points: ["Flying fox 50–200 meter", "Jembatan gantung & panjat dinding", "Safety harness & helmet lengkap", "Instruktur bersertifikat"], duration: "90 menit", img: "" },
         { no: "04", name: "Refleksi & Penutupan", sub: "Area Aula / Terbuka", tag: "Evaluasi · Closing Ceremony", title: "Sesi Refleksi & Pemberian Award", desc: "Sesi penutup yang bermakna — setiap tim berbagi pembelajaran, dilanjutkan pemberian penghargaan untuk tim terbaik, foto bersama, dan penyerahan sertifikat peserta.", points: ["Sharing & refleksi kelompok", "Pemberian penghargaan tim terbaik", "Penyerahan sertifikat peserta", "Foto bersama penutupan"], duration: "60 menit", img: "" },
       ],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "175.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "210.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "280.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "120.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "175.000", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { id: "pt-b", name: "Paket B", price: "210.000", priceNote: "/ orang (mulai)", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { id: "pt-c", name: "Paket C", price: "280.000", priceNote: "/ orang (mulai)", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { id: "pt-d", name: "Paket D", price: "120.000", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] }
       ],
+      utamaTipeId: "pt-a",
     },
     {
       id: 31,
@@ -1218,12 +1225,13 @@ const DEFAULT_DATA = {
         { no: "03", name: "FGD & Evaluasi", sub: "Ruang Diskusi", tag: "Analisis · Focus Group Discussion", title: "Focus Group Discussion & Analisis Hasil", desc: "Setelah kunjungan, setiap kelompok melakukan FGD untuk menganalisis temuan, membandingkan dengan kondisi di instansi asal, dan merumuskan rekomendasi yang dapat diterapkan.", points: ["Diskusi antar kelompok", "Analisis perbandingan (benchmarking)", "Perumusan rekomendasi", "Presentasi hasil tiap kelompok"], duration: "90 menit", img: "" },
         { no: "04", name: "Penyusunan Laporan & Penutupan", sub: "Area Akomodasi / Hotel", tag: "Dokumentasi · Closing", title: "Penyusunan Laporan Kunjungan Resmi", desc: "Tim kami membantu penyusunan laporan kunjungan resmi yang komprehensif, siap digunakan untuk keperluan administrasi, pelaporan ke pimpinan, atau publikasi internal organisasi.", points: ["Draft laporan kunjungan tertulis", "Kompilasi dokumentasi foto & video", "Sertifikat peserta study banding", "Serah terima laporan digital & cetak"], duration: "60 menit", img: "" },
       ],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "220.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "265.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "340.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "140.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "220.000", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { id: "pt-b", name: "Paket B", price: "265.000", priceNote: "/ orang (mulai)", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { id: "pt-c", name: "Paket C", price: "340.000", priceNote: "/ orang (mulai)", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { id: "pt-d", name: "Paket D", price: "140.000", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] }
       ],
+      utamaTipeId: "pt-a",
     },
     {
       id: 32,
@@ -1269,12 +1277,13 @@ const DEFAULT_DATA = {
         { no: "03", name: "Sesi Tanya Jawab Praktisi", sub: "Aula / Ruang Meeting", tag: "Interaktif · Career Talk", title: "Dialog Interaktif dengan Praktisi Industri", desc: "Sesi diskusi langsung dengan praktisi — manajer produksi, HRD, atau direktur operasional. Peserta bisa bertanya soal karier, tantangan industri, kebutuhan kompetensi, hingga peluang magang/kerja.", points: ["Sesi QnA dengan praktisi senior", "Career talk & tips memasuki dunia kerja", "Informasi peluang magang & rekrutmen", "Motivasi dari profesional industri"], duration: "60 menit", img: "" },
         { no: "04", name: "Penutupan & Sertifikasi", sub: "Aula Perusahaan", tag: "Closing · Sertifikat Resmi", title: "Penyerahan Sertifikat & Foto Bersama", desc: "Sesi penutupan diakhiri dengan penyerahan sertifikat kunjungan industri resmi yang dapat digunakan untuk portofolio, laporan sekolah, atau persyaratan program studi.", points: ["Penyerahan sertifikat kunjungan industri", "Foto bersama dengan tim perusahaan", "Souvenir dari perusahaan (jika ada)", "Evaluasi & kesan-pesan peserta"], duration: "30 menit", img: "" },
       ],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "195.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "240.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "310.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "130.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "195.000", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { id: "pt-b", name: "Paket B", price: "240.000", priceNote: "/ orang (mulai)", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { id: "pt-c", name: "Paket C", price: "310.000", priceNote: "/ orang (mulai)", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { id: "pt-d", name: "Paket D", price: "130.000", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] }
       ],
+      utamaTipeId: "pt-a",
     },
     {
       id: 33,
@@ -1320,12 +1329,13 @@ const DEFAULT_DATA = {
         { no: "03", name: "Diskusi dengan Mahasiswa", sub: "Ruang Diskusi / Taman Kampus", tag: "Interaktif · Sharing Session", title: "Sesi Sharing & Tanya Jawab Mahasiswa Aktif", desc: "Peserta berdiskusi langsung dengan mahasiswa aktif berbagai jurusan. Sharing kehidupan kampus, tips lolos seleksi, cara adaptasi, manajemen waktu kuliah, hingga pengalaman magang dan organisasi.", points: ["Sharing pengalaman kuliah", "Tips lolos seleksi & adaptasi kampus", "Diskusi minat jurusan", "Motivasi dari kakak tingkat"], duration: "60 menit", img: "" },
         { no: "04", name: "Penutupan & Sertifikasi", sub: "Aula / Area Terbuka Kampus", tag: "Closing · Sertifikat", title: "Sertifikat & Foto Bersama di Kampus", desc: "Kunjungan ditutup dengan penyerahan sertifikat resmi, pembagian brosur jurusan & beasiswa, foto bersama di landmark kampus, dan sesi motivasi singkat dari dosen atau alumni berprestasi.", points: ["Penyerahan sertifikat kunjungan kampus", "Pembagian brosur jurusan & beasiswa", "Foto bersama di landmark kampus", "Motivasi dari dosen / alumni"], duration: "30 menit", img: "" },
       ],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "185.000", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "230.000", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "295.000", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "125.000", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] },
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "185.000", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower","TV LCD + Audio System","Toilet dalam bus","Snack 2x perjalanan","USB charging per kursi","Reclining seat"] },
+        { id: "pt-b", name: "Paket B", price: "230.000", priceNote: "/ orang (mulai)", points: ["Full AC Split","Monitor + Speaker","Kursi empuk","Air mineral gratis","Power inverter 12V","Bagasi atas & bawah"] },
+        { id: "pt-c", name: "Paket C", price: "295.000", priceNote: "/ orang (mulai)", points: ["AC Dual Zone","Captain seat","Bluetooth Audio","USB-A & USB-C","Air mineral gratis","GPS navigasi"] },
+        { id: "pt-d", name: "Paket D", price: "125.000", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami","Bangku kayu + pegangan","Terpal pelindung","Air mineral gratis","Rute lokal / pendek","Paling ekonomis"] }
       ],
+      utamaTipeId: "pt-a",
     },
 
     /* ── EVENT PLAN TAMBAHAN: TEDAK SINTEN, ANNIVERSARY, DIES NATALIS, UPACARA ADAT, REUNIAN ── */
@@ -2225,7 +2235,7 @@ const GS = () => (
 
     /* 29. Prevent any element from exceeding viewport */
     @media(max-width:640px){
-      .page-wrap,main,[class*="section"]{max-width:100vw!important;overflow-x:hidden!important}
+      .page-wrap,main,[class*="section"]{max-width:100vw!important}
     }
 
     /* ══════════════════════════════════════
@@ -2241,7 +2251,7 @@ const GS = () => (
     }
 
     /* Viewport meta helper — prevent horizontal overflow */
-    .page-wrap{width:100%;max-width:100vw;overflow-x:hidden}
+    .page-wrap{width:100%;max-width:100vw}
 
     /* ── Navbar mobile ── */
     @media(max-width:640px){
@@ -3036,7 +3046,7 @@ function CMSEditor({ post, onSave, onCancel, section, onSectionChange, user, not
   const needsValue = addType !== "divider" && addType !== "baca_juga";
 
   return (
-    <div className="fade-in" style={{ background: "#fff", borderRadius: 12, overflow: "hidden", boxShadow: "0 4px 24px rgba(0,0,0,.1)" }}>
+    <div className="fade-in" style={{ background: "#fff", borderRadius: 12, overflow: "visible", boxShadow: "0 4px 24px rgba(0,0,0,.1)" }}>
       {/* ── Publish Destination Modal ── */}
       {publishModal && (
         <div style={{ position: "fixed", inset: 0, background: "rgba(20,35,55,.55)", zIndex: 9999,
@@ -4024,7 +4034,7 @@ function EventWeddingCustomCardWide({ svc, onDetail, onWaOpen }) {
         background: gradientBg,
         display: "flex", flexDirection: isMobile ? "column" : "row",
         minHeight: isMobile ? "auto" : 280,
-        fontFamily: "'DM Sans',sans-serif", position: "relative", overflow: "hidden",
+        fontFamily: "'DM Sans',sans-serif", position: "relative", overflow: "visible",
       }}>
       <div style={{ position: "absolute", right: -60, top: -60, width: 240, height: 240, borderRadius: "50%", background: "rgba(255,255,255,.06)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", right: 100, bottom: -80, width: 180, height: 180, borderRadius: "50%", background: "rgba(255,255,255,.04)", pointerEvents: "none" }} />
@@ -4103,7 +4113,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
-          background: "#fff", borderRadius: 16, overflow: "hidden",
+          background: "#fff", borderRadius: 16, overflow: "visible",
           boxShadow: hovered ? "0 20px 56px rgba(13,59,102,.2)" : "0 4px 24px rgba(13,59,102,.1)",
           border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "#e8f4f8"}`,
           fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)",
@@ -4160,7 +4170,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
             <div style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between",
                 padding: "14px 20px", background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`,
-                position: "relative", overflow: "hidden",
+                position: "relative",
               }}>
               <div style={{ position: "absolute", right: -12, top: -12, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,.05)" }} />
               <div>
@@ -4275,7 +4285,7 @@ function EventWeddingPackageCard({ svc, onDetail, onWaOpen, isWide, categoryPack
       {/* Price block */}
       <div style={{
           background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`,
-          padding: "14px 14px 16px", overflow: "hidden", position: "relative",
+          padding: "14px 14px 16px", position: "relative",
           borderTop: "3px solid rgba(255,255,255,.15)",
           boxShadow: "inset 0 1px 0 rgba(255,255,255,.18)",
           userSelect: "none",
@@ -4347,7 +4357,7 @@ function TravelPackageCardWide({ svc, onDetail, onWaOpen }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         background: "#fff", borderRadius: 18,
-        overflow: "hidden",
+        overflow: "visible",
         boxShadow: hovered ? "0 20px 60px rgba(13,59,102,.18)" : "0 4px 24px rgba(13,59,102,.10)",
         border: `2px solid ${hovered ? ac : ac + "50"}`,
         transition: "all .3s cubic-bezier(.22,1,.36,1)",
@@ -4426,7 +4436,7 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
-          background: "#fff", borderRadius: 16, overflow: "hidden",
+          background: "#fff", borderRadius: 16, overflow: "visible",
           boxShadow: hovered ? "0 20px 56px rgba(13,59,102,.2)" : "0 4px 24px rgba(13,59,102,.1)",
           border: `2px solid ${hovered ? ac : svc.highlight ? ac + "80" : "#e8f4f8"}`,
           fontFamily: "'DM Sans',sans-serif", transition: "all .3s cubic-bezier(.22,1,.36,1)",
@@ -4491,7 +4501,7 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
             <div style={{
                 flex: 1, padding: "14px 20px",
                 background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 55%,${ac} 100%)`,
-                position: "relative", overflow: "hidden",
+                position: "relative",
               }}>
               <div style={{ position: "absolute", right: -12, top: -12, width: 80, height: 80, borderRadius: "50%", background: "rgba(255,255,255,.06)" }} />
               <p style={{ color: "rgba(255,255,255,.65)", fontSize: "0.5625rem", fontWeight: 700, letterSpacing: ".12em", textTransform: "uppercase", marginBottom: 3 }}>Harga Mulai Dari</p>
@@ -4609,7 +4619,6 @@ function TravelPackageCard({ svc, onDetail, onWaOpen, isWide }) {
           position: "relative",
           background: `linear-gradient(135deg,#0d3b66 0%,#1a5a78 50%,${ac} 100%)`,
           padding: "16px 16px 18px",
-          overflow: "hidden",
           borderTop: "3px solid rgba(255,255,255,.18)",
         }}>
         <div style={{ position: "absolute", right: -20, top: -20, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,.06)" }} />
@@ -5304,14 +5313,14 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
     const activePt = paketTypes.find(pt => pt.id === resolvedActiveId) || paketTypes[0] || null;
 
     // Harga aktif: dari tipe paket yang dipilih, fallback ke harga global (semua kategori)
-    const sidebarPrices = activeSidebarPkg.prices || [];
+    // sidebarPrices removed — prices migrated to paketTypes
 
     const activePrice = activePt?.price || activeSidebarPkg.price || svc.price;
     const activePriceNote = activePt?.priceNote || activeSidebarPkg.priceNote || svc.priceNote;
     const activeMinPeserta = activePt?.minPeserta || svc.minPeserta;
 
     return (
-      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#e8f7fc 0%,#f0fbfd 100%)", fontFamily: "'DM Sans', sans-serif", overflowX: "hidden" }}>
+      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#e8f7fc 0%,#f0fbfd 100%)", fontFamily: "'DM Sans', sans-serif" }}>
         <style>{`
           @keyframes mgFadeUp { from { opacity:0; transform:translateY(28px);} to { opacity:1; transform:none;} }
           .mg-fade { animation: mgFadeUp .55s cubic-bezier(.22,1,.36,1) both; }
@@ -5329,7 +5338,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
             .mg-body-grid { grid-template-columns: 1fr !important; }
             .mg-deco-shape { display: none !important; }
             .mg-feat-grid { grid-template-columns: 1fr !important; }
-            .mg-pkg-sidebar { position: static !important; top: auto !important; width: 100% !important; box-sizing: border-box !important; }
+            .mg-pkg-sidebar { position: static !important; top: auto !important; width: 100% !important; box-sizing: border-box !important; overflow: visible !important; }
             .svc-cat-scroll::-webkit-scrollbar { display: none; }
             .mg-hero-right { display: none !important; }
           }
@@ -5415,7 +5424,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
         </div>
 
         {/* ── BODY ── */}
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(28px,5vw,52px) clamp(16px,5%,60px) clamp(48px,6vw,80px)", overflowX: "hidden" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(28px,5vw,52px) clamp(16px,5%,60px) clamp(48px,6vw,80px)" }}>
           <div className="mg-body-grid" style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 48, alignItems: "start" }}>
 
             {/* ── LEFT COLUMN ── */}
@@ -5509,9 +5518,9 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
             <div className="mg-pkg-sidebar" style={{ position: "sticky", top: 128 }}>
 
               {/* Price Card */}
-              <div className="mg-fade-2" style={{ background: "linear-gradient(145deg,#0d1f35 0%,#0d3b66 55%,#0875a8 100%)", borderRadius: 16, overflow: "hidden", boxShadow: "0 24px 64px rgba(12,26,40,.5)", marginBottom: 18 }}>
+              <div className="mg-fade-2" style={{ background: "linear-gradient(145deg,#0d1f35 0%,#0d3b66 55%,#0875a8 100%)", borderRadius: 16, overflow: "visible", boxShadow: "0 24px 64px rgba(12,26,40,.5)", marginBottom: 18 }}>
                 {/* Top gradient bar */}
-                <div style={{ height: 4, background: `linear-gradient(to right, ${catInfo.color || "#0891b2"}, ${svc.badgeColor || catInfo.color || "#10d0e0"})` }} />
+                <div style={{ height: 4, background: `linear-gradient(to right, ${catInfo.color || "#0891b2"}, ${svc.badgeColor || catInfo.color || "#10d0e0"})`, borderRadius: "16px 16px 0 0" }} />
 
                 <div style={{ padding: "20px 18px 0" }}>
                   {/* Header label */}
@@ -5540,7 +5549,9 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                             {isUtamaActive && (
                               <span style={{ fontSize: "0.4375rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "2px 7px", borderRadius: 20, background: "#10d0e0", color: "#0d3b66", flexShrink: 0 }}>UTAMA</span>
                             )}
-                            <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{activePt2?.name}</span>
+                            <div style={{ display: "flex", flexDirection: "column", minWidth: 0, flex: 1 }}>
+                              <span style={{ fontSize: "0.8rem", fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{activePt2?.name}</span>
+                            </div>
                             {activePt2?.price && (
                               <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "rgba(255,255,255,.75)", fontFamily: "'Playfair Display',serif", flexShrink: 0 }}>{formatRp(activePt2.price) || activePt2.price}</span>
                             )}
@@ -5581,7 +5592,9 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                                     {isUtama && (
                                       <span style={{ fontSize: "0.4375rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", padding: "2px 7px", borderRadius: 20, background: isActive ? "rgba(255,255,255,.25)" : "#10d0e0", color: isActive ? "#fff" : "#0d3b66", flexShrink: 0 }}>UTAMA</span>
                                     )}
-                                    <span style={{ fontSize: "0.8rem", fontWeight: isActive ? 700 : 500, color: isActive ? "#fff" : "rgba(255,255,255,.75)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 130 }}>{pt.name}</span>
+                                    <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
+                                      <span style={{ fontSize: "0.8rem", fontWeight: isActive ? 700 : 500, color: isActive ? "#fff" : "rgba(255,255,255,.75)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 130 }}>{pt.name}</span>
+                                    </div>
                                   </div>
                                   <span style={{ fontFamily: "'Playfair Display',serif", fontSize: "0.875rem", fontWeight: 800, color: isActive ? "#fff" : "rgba(255,255,255,.55)", flexShrink: 0, marginLeft: 8 }}>
                                     {isContact ? "Konsultasi" : (formatRp(ptRawPrice) || ptRawPrice || "")}
@@ -5629,12 +5642,11 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
                 </div>
 
                 {/* CTA Buttons */}
-                <div style={{ padding: "16px" }}>
+                <div style={{ padding: "16px", borderRadius: "0 0 16px 16px", overflow: "hidden" }}>
                   <button className="mg-cta-wa" onClick={() => {
                     const pkgTitle = activeSidebarPkg.title;
                     const priceStr = (() => { const raw = activePrice; const isC = String(raw||"").toLowerCase().includes("hubungi"); return isC ? "Hubungi Kami" : (formatRp(raw)||raw); })();
-                    const vehicleStr = "";
-                    handleBook({ ...activeSidebarPkg, price: priceStr, _extraMsg: vehicleStr });
+                    handleBook({ ...activeSidebarPkg, price: priceStr });
                   }}
                     style={{ width: "100%", padding: "15px 20px", background: "linear-gradient(135deg,#0891b2,#0ea5c5)", color: "#fff", border: "none", borderRadius: 10, fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 10, transition: "all .2s", letterSpacing: ".01em" }}>
                     <span style={{ fontSize: "1.1rem" }}>💬</span> Pesan via WhatsApp
@@ -5720,7 +5732,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
   const filteredServices = activeCategory ? services.filter(s => s.category === activeCategory) : [];
 
   return (
-    <div className="fade-in" style={{ minHeight: "100vh", background: "#edfafc", overflowX: "hidden" }}>
+    <div className="fade-in" style={{ minHeight: "100vh", background: "#edfafc", /* overflowX removed */ }}>
       {/* Header — gradient + radial flare like reference */}
       <div style={{ background: "linear-gradient(120deg,#063d5c 0%,#0875a8 40%,#0aa8bf 72%,#1ed8e8 100%)", padding: "clamp(40px,8vw,72px) 5% clamp(48px,8vw,80px)", textAlign: "center", position: "relative", overflow: "hidden" }}>
         {/* Flare glow center-right */}
@@ -5755,7 +5767,7 @@ function ServicesPage({ content, services, navigateTo, activePaket, onOpenPaket,
         </div>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(24px,5vw,60px) clamp(16px,5%,60px) clamp(48px,6vw,80px)" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "clamp(24px,5vw,60px) clamp(16px,5%,60px) clamp(48px,6vw,80px)", overflow: "visible" }}>
         {/* Empty state */}
         {!activeCategory && (
           <div style={{ textAlign: "center", padding: "60px 20px" }}>
@@ -5897,13 +5909,14 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
       accent: "#e8a020", accentLight: "#fff8e6", duration: "3 Hari 2 Malam", minPeserta: "20",
       price: "", priceNote: "/ orang", images: [], image: "", coverIndex: 0,
       description: "", features: [], highlight: false,
-      destinations: [], facilities: [], paketTypes: [],
-      prices: [
-        { vehicle: "Bus Executive", icon: "🚌", capacity: "35–60 org", price: "", points: ["Full AC Double Blower", "TV LCD + Audio System", "Toilet dalam bus"] },
-        { vehicle: "Elf / Hiace",   icon: "🚐", capacity: "12–20 org", price: "", points: ["Full AC Split", "Monitor + Speaker", "Kursi empuk & nyaman"] },
-        { vehicle: "Mobil Innova",  icon: "🚗", capacity: "5–7 org",   price: "", points: ["AC Dual Zone", "Captain seat", "Bluetooth Audio"] },
-        { vehicle: "Pick Up",       icon: "🛻", capacity: "8–15 org",  price: "", points: ["Terbuka / angin alami", "Bangku kayu + pegangan", "Terpal pelindung"] },
-      ]
+      destinations: [], facilities: [],
+      paketTypes: [
+        { id: "pt-a", name: "Paket A", price: "", priceNote: "/ orang (mulai)", points: ["Full AC Double Blower", "TV LCD + Audio System", "Toilet dalam bus"] },
+        { id: "pt-b", name: "Paket B", price: "", priceNote: "/ orang (mulai)", points: ["Full AC Split", "Monitor + Speaker", "Kursi empuk & nyaman"] },
+        { id: "pt-c", name: "Paket C", price: "", priceNote: "/ orang (mulai)", points: ["AC Dual Zone", "Captain seat", "Bluetooth Audio"] },
+        { id: "pt-d", name: "Paket D", price: "", priceNote: "/ orang (mulai)", points: ["Terbuka / angin alami", "Bangku kayu + pegangan", "Terpal pelindung"] }
+      ],
+      utamaTipeId: "pt-a",
     });
     setUploadProgresses([]);
     setEditSvc("new");
@@ -5916,7 +5929,7 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
       coverIndex: s.coverIndex || 0,
       destinations: (s.destinations || []).map(d => ({ ...d, points: [...(d.points || [])] })),
       facilities: (s.facilities || []).map(f => ({ ...f })),
-      prices: (s.prices || []).map(p => ({ ...p, points: [...(p.points || [])] })),
+      // prices field migrated to paketTypes
       paketTypes: (s.paketTypes || []).map(pt => ({ ...pt, featureChecks:[...(pt.featureChecks||[])], facilityChecks:[...(pt.facilityChecks||[])], destinationChecks:[...(pt.destinationChecks||[])] })),
     });
     setUploadProgresses([]);
@@ -5928,9 +5941,8 @@ function ServicesAdmin({ data, save, notify, uploadToCloudinary, onEditStateChan
     if (!svcForm.title?.trim()) return notify("Judul paket wajib diisi.", "error");
     const ci = svcForm.coverIndex || 0;
     const coverUrl = (svcForm.images || [])[ci] || svcForm.image || "";
-    // Harga utama otomatis dari Bus Executive (prices[0]), diformat Rupiah
-    const busPrice = (svcForm.prices || [])[0]?.price || svcForm.price || "";
-    const autoPrice = formatRp(busPrice);
+    // Harga utama otomatis dari paketTypes[0] (Paket A), diformat Rupiah
+    const autoPrice = formatRp((svcForm.paketTypes || [])[0]?.price || svcForm.price || "");
     const finalForm = { ...svcForm, image: coverUrl, price: autoPrice };
     const idx = svcs.findIndex(x => x.id === finalForm.id);
     const updated = idx >= 0 ? svcs.map((x, i) => i === idx ? finalForm : x) : [...svcs, finalForm];
@@ -9275,12 +9287,12 @@ export default function BricksyTravel() {
               // JANGAN overwrite destinations/facilities/prices jika user sudah punya data
               if (!savedItem.destinations?.length && def.destinations) patched.destinations = def.destinations;
               if (!savedItem.facilities?.length   && def.facilities)   patched.facilities   = def.facilities;
-              if (!savedItem.prices?.length        && def.prices)       patched.prices       = def.prices;
+              if (!savedItem.paketTypes?.length    && def.paketTypes)   patched.paketTypes   = def.paketTypes;
               if (!savedItem.services?.length      && def.services)     patched.services     = def.services;
               // highlight hanya inject jika belum pernah di-set user
               if (savedItem.highlight === undefined) patched.highlight = def.highlight;
             }
-            for (const field of ["facilities", "destinations", "services", "images", "prices", "pkgId", "tagline", "accent", "accentLight", "duration", "minPeserta", "description", "features", "highlight", "badge", "badgeColor", "priceNote", "category"]) {
+            for (const field of ["facilities", "destinations", "services", "images", "pkgId", "tagline", "accent", "accentLight", "duration", "minPeserta", "description", "features", "highlight", "badge", "badgeColor", "priceNote", "category"]) {
               // Hanya inject dari DEFAULT jika field benar-benar belum ada (undefined/null)
               // Jangan overwrite array kosong [] karena user mungkin sengaja mengosongkan
               if (patched[field] === undefined || patched[field] === null) {
